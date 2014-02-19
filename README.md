@@ -26,5 +26,5 @@ The class Turtle has an instance variable that remembers its last position (x, y
 <br>Dan Zhang: Module Parser
 <br>We may both work on Main(), which should be simple
 
-<br>see image attached for the UML diagram
+<br>See image attached for the UML diagram and our intended view interface
 

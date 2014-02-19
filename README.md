@@ -17,6 +17,7 @@ We also could have had the Turtle class perform all of the necessary position ca
 The class Turtle has an instance variable that remembers its last position (x, y). Once t.draw(double newX, double newY) is called, the turtle t will move to the new position (newX, newY) and leaves a trail between the point (x, y) and the point (newX, newY). 
 
 <br>List of each team member's role in the project:
+<br>
 <br>Front-end Team: Chris Dee, Oscar Wang 
 <br>Both working on turtle module and rest of front end. Projects haven’t been broken up.
 <br>

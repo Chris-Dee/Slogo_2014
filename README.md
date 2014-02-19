@@ -28,4 +28,5 @@ Justin Zhang: Module Command
 Dan Zhang: Module Parser
 We may both work on Main(), which should be simple
 
+see image attached for UML
 

@@ -8,25 +8,25 @@ Design Goals:
 We also could have had the Turtle class perform all of the necessary position calculations and command parsing. We decided against this to break up the work between classes and to make the turtle class as short as possible. This way, the turtle class’ only externally called method would be draw().
 
 <br>
-#Module Layout
-##AbstractParser
-###CommandParser
-####CommandParser()
-####list<String> Parse(String s)
-##ICommand
-###void execute()
-###String getCommandType()
-###subclasses:
-####FdCommand
-#####FdCommand(int dist)
-#####void execute()
-#####String getCommandType()
-##CommandFactory
-###CommandFactory()
-###makeCommands(List<String> cmds)
-##ModelManager
-###ModelManager()
-###String receiveTextInput(TextInput txt)
+Module Layout
+  * AbstractParser
+    * CommandParser
+      * CommandParser()
+      * List<String> Parse(String s)
+  * ICommand
+    * void execute()
+    * String getCommandType()
+    * subclasses:
+      * FdCommand
+        * FdCommand(int dist)
+        * void execute()
+        * String getCommandType()
+  * CommandFactory
+    * CommandFactory()
+    * makeCommands(List<String> cmds)
+  * ModelManager
+    * ModelManager()
+    * String receiveTextInput(TextInput txt)
 
 
 

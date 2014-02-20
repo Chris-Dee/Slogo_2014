@@ -7,6 +7,29 @@ Design Goals:
 <br>As an alternative to our design, we were considering using an interface for our different command sets. We chose to do this with an abstract class hierarchy instead, as it would allow us to define these certain methods for each different type of command.  We could also define some of the methods as “do-nothing” methods in order to make only certain commands move, for example.
 We also could have had the Turtle class perform all of the necessary position calculations and command parsing. We decided against this to break up the work between classes and to make the turtle class as short as possible. This way, the turtle class’ only externally called method would be draw().
 
+<br>Module Layout
+<br>
+<br>AbstractParser
+	<br>CommandParser
+		<br>CommandParser()
+		<br>list<String> Parse(String s)
+<br>ICommand
+	<br>void execute()
+	<br>String getCommandType()
+	<br>subclasses:
+		<br>FdCommand
+			<br>FdCommand(int dist)
+			<br>void execute()
+			<br>String getCommandType()
+<br>CommandFactory
+	<br>CommandFactory()
+	<br>makeCommands(List<String> cmds)
+<br>ModelManager
+	<br>ModelManager()
+	<br>String receiveTextInput(TextInput txt)
+
+
+
 <br>Example Code:
 <br>User types fd 50
 <br>Command c = Parser.parseText(string s, Turtle t);  //creates command from factory
@@ -23,7 +46,7 @@ The class Turtle has an instance variable that remembers its last position (x, y
 <br>
 <br>Back-end Team: Justin Zhang, Dan Zhang
 <br>Justin Zhang: Module Command
-<br>Dan Zhang: Module Parser
+<br>Dan Zhang: Parser
 <br>We may both work on Main(), which should be simple
 
 <br>See image attached for the UML diagram and our intended view interface

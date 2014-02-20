@@ -45,9 +45,8 @@ The class Turtle has an instance variable that remembers its last position (x, y
 <br>Both working on turtle module and rest of front end. Projects haven’t been broken up.
 <br>
 <br>Back-end Team: Justin Zhang, Dan Zhang
-<br>Justin Zhang: Module Command
-<br>Dan Zhang: Parser
-<br>We may both work on Main(), which should be simple
+<br>Justin Zhang: ICommand, ModelManager
+<br>Dan Zhang: AbstractParser, CommandFactory 
 
 <br>See image attached for the UML diagram and our intended view interface
 

@@ -14,8 +14,8 @@ We also could have had the Turtle class perform all of the necessary position ca
 ####CommandParser()
 ####list<String> Parse(String s)
 ##ICommand
-###void execute()
-###String getCommandType()
+####void execute()
+####String getCommandType()
 ###subclasses:
 ####FdCommand
 #####FdCommand(int dist)

@@ -30,10 +30,16 @@ Model Layout
     * String receiveTextInput(TextInput txt)
 
 View Layout
+  * Text Layout //Will be the Text Input file
+     * sendCode(ParserObject)
+     * clearCode()
+     * setPreferences(Preferences p)
   * AbstractTurtle //assuming we use JGame, this will extend JGObject
     *AbstractTurtle()
-    * doFrame()
-    * paintFrame()
+    * doFrame() //assuming JGame
+    * paintFrame() //assuming Jgame
+    * clearLines()
+    * setPreferences(Preferences p)
     * goToNewPosition(double x, double y, boolean drawTrail)
     * subclasses:
       * Turtle

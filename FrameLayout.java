@@ -43,21 +43,14 @@ JTextArea textInput;
 		//JPanel panel=new JPanel(){
 			
 		//}
-		JPanel turtle=new JPanel(){
-			@Override
-			public void paintComponent(Graphics g){
-				super.paintComponent(g);
-				g.drawRect(20,20,20,20);
-//				Image img;
-//				img=Toolkit.getDefaultToolkit().createImage(new File("cartoon_turtle.gif").getAbsolutePath());
-//				g.drawImage(img, 10,10,this);
-				}
-		};
-		turtle.setBackground(new java.awt.Color(200,200,200));
-		turtle.setSize(200,200);
-		turtle.setMinimumSize(new Dimension(200,200));
-		
-		return turtle;
+		TurtleDrawer turt=new TurtleDrawer(30,30);
+		drawingPanel.setBackground(new java.awt.Color(200,200,200));
+		drawingPanel.setSize(200,200);
+		drawingPanel.setMinimumSize(new Dimension(200,200));
+		turt.setMinimumSize(new Dimension(200,200));
+		turt.setSize(200,200);
+		drawingPanel.add(turt);
+		return drawingPanel;
 	}
 	public JPanel makeOptionsPanel(){
 		JPanel optionsPanel=new JPanel();

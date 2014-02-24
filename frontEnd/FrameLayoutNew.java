@@ -35,7 +35,7 @@ public class FrameLayoutNew extends JFrame{
 	public JPanel makeInputPanel(){
 		JPanel textPanel=new JPanel(new FlowLayout());
 		textPanel.setBackground(new java.awt.Color(0,0,0));
-		textInput=new JTextArea(5,30);
+		textInput=new JTextArea(10,30);
 		textInput.setSize(100,300);
 		textPanel.add(textInput);
 		Button submit=new Button("Submit Text");
@@ -111,6 +111,7 @@ public class FrameLayoutNew extends JFrame{
 				textInput.setText("");
 				for(JTextArea text:savedBoxes)
 					text.setText("");
+				turtleSpace.refresh();
 			}
 		});   
 		optionsPanel.add(refresh);

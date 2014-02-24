@@ -34,7 +34,7 @@ public void setPositionAndPaintTurtle(int x, int y){
 @Override
 public void initCanvas() {
 	
-	setCanvasSettings(1, 1, 300, 300, null, JGColor.grey, null);
+	setCanvasSettings(1, 1, 300, 300, null, JGColor.white, null);
 }
 @Override
 public void initGame() {
@@ -53,5 +53,8 @@ public void doFrame(){
 public void paintFrame(){
 	Point currPos=new Point((int)turt.x,(int) turt.y);
 	turt.runPen(2,JGColor.black,true);
+}
+public void refresh(){
+	
 }
 }

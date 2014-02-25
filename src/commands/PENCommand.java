@@ -3,7 +3,7 @@ package commands;
 import java.util.List;
 import frontEnd.Turtle;
 
-public class PENCommand extends ICommand{
+public class PENCommand extends AbstractCommand{
 	
 	public PENCommand(String string, List<Turtle> turtles){
 		super(string, turtles);

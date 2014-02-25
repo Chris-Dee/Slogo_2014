@@ -3,12 +3,12 @@ package commands;
 import java.util.List;
 import frontEnd.Turtle;
 
-public abstract class ICommand {
+public abstract class AbstractCommand {
 	
 	protected String myString;
 	protected List<Turtle> myTurtles;
 	
-	public ICommand(String string, List<Turtle> turtles){
+	public AbstractCommand(String string, List<Turtle> turtles){
 		myString = string;
 		myTurtles = turtles;
 	}

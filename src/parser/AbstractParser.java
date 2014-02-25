@@ -1,4 +1,4 @@
-package backEnd.parser;
+package parser;
 
 import java.util.*;
 

@@ -13,15 +13,19 @@ import jgame.platform.JGEngine;
 
 
 public class Turtle extends JGObject {
-private int targetx=20;
-private int targety=20;
+	public static final int TURTLE_INIT_X=100;
+	public static final int TURTLE_INIT_Y=100;
+private int targetx=TURTLE_INIT_X;
+private int targety=TURTLE_INIT_Y;
 Map<ArrayList<Point>,JGColor> lines=new HashMap<ArrayList<Point>,JGColor>();
 private Point origPoint;
+private double myRotation=90;
+private JGColor penColor=JGColor.black;
 JGEngine myEngine;
 private double velocity=0.05;
 	public Turtle() {
 		
-		super("Turtle", true, 20, 20, 0, "Turtle",0, 0);
+		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
 		// TODO Auto-generated constructor stub
 	}
 private void  moveToTarget(){
@@ -37,11 +41,17 @@ private void  moveToTarget(){
 		yspeed=0;
 	}
 }
+public void goForward(int offset){
+	double rot=Math.toRadians(myRotation);
+	double xOffset=Math.cos(rot)*offset;
+	double yOffset=Math.sin(rot)*offset;
+	setTarget(new Point((int)(x+xOffset),(int)(y+yOffset)));
+}
 public void setVelocity(double velo){
 	velocity= velo;
 }
 	private int setDir(double curr, double target){
-		 return (int) ((target-curr));//Math.abs(target-curr));
+		 return (int) ((target-curr));
 	}
 	public void move(){
 		moveToTarget();
@@ -52,17 +62,25 @@ public void setVelocity(double velo){
 		targetx=target.x;
 		targety=target.y;
 	}
-	public void runPen(int thickness, JGColor color, boolean penActive){
+	public void runPen(int thickness, boolean penActive){
+		if(Math.abs(xdir)>0||Math.abs(ydir)>0){
 		List<Point> loc=new ArrayList<Point>();
 		loc.add(new Point((int)x,(int)y));
 		loc.add(new Point(origPoint.x,origPoint.y));
-		lines.put((ArrayList<Point>) loc,color);
-		if(penActive&&origPoint!=null){
+		lines.put((ArrayList<Point>) loc,penColor);
+		}
+		if(origPoint!=null){
 			for(ArrayList<Point> line:lines.keySet())
+				if(lines.get(line)!=null)
 			myEngine.drawLine(line.get(0).x+10, line.get(0).y+10, line.get(1).x+10, line.get(1).y+10,thickness,lines.get(line));
 		}
 		
 	}
-	
+	public void setPen(JGColor color){
+		penColor=color;
+	}
+	public void addRotation(double addRotation){
+		myRotation+=addRotation;
+	}
 
 }

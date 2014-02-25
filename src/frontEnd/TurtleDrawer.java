@@ -15,7 +15,7 @@ public class TurtleDrawer extends JGEngine {
 	private int xPos;
 	private int yPos;
 	private Point prevPos;
-	private JGColor penColor=JGColor.black;
+	
 	public TurtleDrawer(int x, int y){
 		int height = 800;
 		double aspect = 1.0;
@@ -51,8 +51,8 @@ public class TurtleDrawer extends JGEngine {
 		moveObjects(null,0);
 	}
 	public void paintFrame(){
+		turt.runPen(2,true);
 		checkColorKeys();
-		turt.runPen(2,penColor,true);
 	}
 	public boolean checkKey(char ch){
 		if(getLastKey()+32==(int)ch||(getLastKey()<60&&getLastKey()==ch)){
@@ -63,19 +63,23 @@ public class TurtleDrawer extends JGEngine {
 	public void checkColorKeys(){
 		if(checkKey('r')){
 			clearLastKey();
-			penColor=JGColor.red;
+			turt.setPen(JGColor.red);
 		}
 		if(checkKey('g')){
 			clearLastKey();
-			penColor=JGColor.green;
+			turt.setPen(JGColor.green);
 		}
 		if(checkKey('b')){
 			clearLastKey();
-			penColor=JGColor.blue;
+			turt.setPen(JGColor.blue);
 		}
 		if(checkKey('o')){
 			clearLastKey();
-			penColor=JGColor.orange;
+			turt.setPen(JGColor.orange);
+		}
+		if(checkKey('n')){
+			clearLastKey();
+			turt.setPen(null);
 		}
 	}
 	public void refresh(){

@@ -37,20 +37,52 @@ public class FrameLayoutNew extends JFrame{
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static final HelpPage helpPage=new HelpPage();
 	private JTextArea textInput;
+	
 	public JPanel makeInputPanel(){
 		JPanel textPanel=new JPanel();
+		JPanel forwardPanel=new JPanel();
+		forwardPanel.setLayout(new BoxLayout(forwardPanel,BoxLayout.Y_AXIS));
+		JButton forwardButton=new JButton("Move Forward");
+		final JTextField forwardInput=new JTextField(5);
+		forwardButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{                
+				turtleSpace.turt.goForward(Integer.parseInt(forwardInput.getText()));
+			}
+		});   
+		
+		forwardPanel.add(forwardButton);
+		forwardPanel.add(forwardInput);
+		
+		JPanel rotationPanel=new JPanel();
+		rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
+		JButton rotationButton=new JButton("Rotate Turtle");
+		
+		final JTextField rotationInput=new JTextField(5);
+		rotationButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{                
+				turtleSpace.turt.addRotation(Integer.parseInt(rotationInput.getText()));
+			}
+		});   
+		rotationPanel.add(rotationButton);
+		rotationPanel.add(rotationInput);
 		textPanel.setBackground(new java.awt.Color(0,0,0));
 		textInput=new JTextArea(10,30);
 		textInput.setSize(100,300);
-		textPanel.add(textInput);
 		Button submit=new Button("Submit Text");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{                
-				turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
+				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
+			turtleSpace.turt.goForward(30);
+			turtleSpace.turt.addRotation(45);
 			}
 		});   
+		textPanel.add(rotationPanel);
+		textPanel.add(textInput);
 		textPanel.add(submit);
+		textPanel.add(forwardPanel);
 		return textPanel;
 	}
 	public JPanel makeSavedTextBoxes(){

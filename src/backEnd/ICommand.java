@@ -2,7 +2,7 @@ package backEnd;
 
 public interface ICommand {
 	
-	public void execute();
+	public double execute();
 	
 	public String getCommandType();
 	

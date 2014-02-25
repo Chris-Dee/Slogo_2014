@@ -68,6 +68,24 @@ public class FrameLayoutNew extends JFrame{
 		rotationPanel.add(rotationButton);
 		rotationPanel.add(rotationInput);
 		textPanel.setBackground(new java.awt.Color(0,0,0));
+		
+		// create textArea for turtle commands 
+				final JTextArea turtcommands = new JTextArea(10,15);
+				textPanel.add(turtcommands);
+				turtcommands.setEditable(false);
+				
+				// create textArea and button to decide on image
+				final JTextArea imageChooser = new JTextArea(10, 15);
+				textPanel.add(imageChooser);
+				JButton selectImage= new JButton("Select Image");
+				selectImage.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						String imageFile = imageChooser.getText();
+						turtleSpace.newTurtle(imageFile);
+					}
+				});
+				textPanel.add(selectImage);
 		textInput=new JTextArea(10,30);
 		textInput.setText("Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing turtle image(?)");
 		textInput.setSize(100,300);
@@ -78,6 +96,7 @@ public class FrameLayoutNew extends JFrame{
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 			turtleSpace.turt.goForward(30);
 			turtleSpace.turt.addRotation(45);
+			turtcommands.setText(textInput.getText());
 			}
 		});   
 		textPanel.add(rotationPanel);

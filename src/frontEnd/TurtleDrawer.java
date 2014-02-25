@@ -15,6 +15,7 @@ public class TurtleDrawer extends JGEngine {
 	private int xPos;
 	private int yPos;
 	private Point prevPos;
+	private String chosenImage;
 	
 	public TurtleDrawer(int x, int y){
 		int height = 800;
@@ -88,5 +89,16 @@ public class TurtleDrawer extends JGEngine {
 turt.destroy();
 turt=new Turtle();
 turt.clearLines();
+	}
+	
+	public void newTurtle(String imageFile) {
+		int targetx = turt.getPosx();
+		int targety = turt.getPosy();
+		turt.remove();
+		defineImage("Turtle","Turt",0,imageFile,"-");
+		chosenImage = imageFile;
+		turt=new Turtle();
+		turt.setPos(targetx, targety);
+		turt.myEngine=this;
 	}
 }

@@ -93,5 +93,12 @@ public void setVelocity(double velo){
 	public void addRotation(double addRotation){
 		myRotation+=addRotation;
 	}
+	public int getPosx(){
+		return targetx;
+	}
+	
+	public int getPosy(){
+		return targety;
+	}
 
 }

@@ -1,4 +1,4 @@
-package backEnd;
+package commands;
 
 import java.util.List;
 

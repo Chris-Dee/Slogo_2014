@@ -1,4 +1,4 @@
-package backEnd;
+package commands;
 
 public interface ICommand {
 	

@@ -20,6 +20,7 @@ private int targety=TURTLE_INIT_Y;
 Map<ArrayList<Point>,JGColor> lines=new HashMap<ArrayList<Point>,JGColor>();
 private Point origPoint;
 private double myRotation=90;
+private JGColor drawingColor=JGColor.black;
 private JGColor penColor=JGColor.black;
 JGEngine myEngine;
 private double velocity=0.05;
@@ -67,7 +68,7 @@ public void setVelocity(double velo){
 		List<Point> loc=new ArrayList<Point>();
 		loc.add(new Point((int)x,(int)y));
 		loc.add(new Point(origPoint.x,origPoint.y));
-		lines.put((ArrayList<Point>) loc,penColor);
+		lines.put((ArrayList<Point>) loc,drawingColor);
 		}
 		if(origPoint!=null){
 			for(ArrayList<Point> line:lines.keySet())
@@ -81,6 +82,13 @@ public void setVelocity(double velo){
 	}
 	public void setPen(JGColor color){
 		penColor=color;
+		drawingColor=color;
+	}
+	public void raisePen(){
+		drawingColor=null;
+	}
+	public void lowerPen(){
+		drawingColor=penColor;
 	}
 	public void addRotation(double addRotation){
 		myRotation+=addRotation;

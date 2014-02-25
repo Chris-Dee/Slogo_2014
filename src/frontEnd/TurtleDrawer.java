@@ -78,8 +78,10 @@ public class TurtleDrawer extends JGEngine {
 			turt.setPen(JGColor.orange);
 		}
 		if(checkKey('n')){
-			clearLastKey();
-			turt.setPen(null);
+			turt.raisePen();
+		}
+		if(checkKey('m')){
+			turt.lowerPen();
 		}
 	}
 	public void refresh(){

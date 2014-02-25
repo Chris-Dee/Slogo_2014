@@ -2,8 +2,11 @@ package frontEnd;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+
 import jgame.JGColor;
 import jgame.JGObject;
 import jgame.platform.JGEngine;
@@ -12,7 +15,7 @@ import jgame.platform.JGEngine;
 public class Turtle extends JGObject {
 private int targetx=20;
 private int targety=20;
-List<ArrayList<Point>> lines=new ArrayList<ArrayList<Point>>();
+Map<ArrayList<Point>,JGColor> lines=new HashMap<ArrayList<Point>,JGColor>();
 private Point origPoint;
 JGEngine myEngine;
 private double velocity=0.05;
@@ -53,10 +56,10 @@ public void setVelocity(double velo){
 		List<Point> loc=new ArrayList<Point>();
 		loc.add(new Point((int)x,(int)y));
 		loc.add(new Point(origPoint.x,origPoint.y));
-		lines.add((ArrayList<Point>) loc);
+		lines.put((ArrayList<Point>) loc,color);
 		if(penActive&&origPoint!=null){
-			for(ArrayList<Point> line:lines)
-			myEngine.drawLine(line.get(0).x+10, line.get(0).y+10, line.get(1).x+10, line.get(1).y+10,thickness,JGColor.black);
+			for(ArrayList<Point> line:lines.keySet())
+			myEngine.drawLine(line.get(0).x+10, line.get(0).y+10, line.get(1).x+10, line.get(1).y+10,thickness,lines.get(line));
 		}
 		
 	}

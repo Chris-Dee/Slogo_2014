@@ -13,11 +13,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -31,9 +35,10 @@ import javax.swing.JTextField;
 public class FrameLayoutNew extends JFrame{
 	private TurtleDrawer turtleSpace;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
+	private static final HelpPage helpPage=new HelpPage();
 	private JTextArea textInput;
 	public JPanel makeInputPanel(){
-		JPanel textPanel=new JPanel(new FlowLayout());
+		JPanel textPanel=new JPanel();
 		textPanel.setBackground(new java.awt.Color(0,0,0));
 		textInput=new JTextArea(10,30);
 		textInput.setSize(100,300);
@@ -41,10 +46,7 @@ public class FrameLayoutNew extends JFrame{
 		Button submit=new Button("Submit Text");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
-			{                //Execute when button is pressed
-				//submitMethods();
-				//These are just cases to test. DELETE THESE BEFORE THE FINAL RUN!!!
-				//turtleSpace.turt.setVelocity((Math.random()+0.01)/5);
+			{                
 				turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 			}
 		});   
@@ -58,6 +60,7 @@ public class FrameLayoutNew extends JFrame{
 			oneBox.setLayout(new BoxLayout(oneBox,BoxLayout.Y_AXIS));
 			final JTextArea savedText=new JTextArea(30,10);
 			savedBoxes.add(savedText);
+			savedText.setEditable(false);
 			//put in preferences
 			JButton loader=new JButton("Load script"+" "+(i+1));
 			loader.addActionListener(new ActionListener() {
@@ -102,12 +105,20 @@ public class FrameLayoutNew extends JFrame{
 	}
 	public JPanel makeOptionsPanel(){
 		JPanel optionsPanel=new JPanel();
+		JButton helpButton=new JButton("Help Button");
+		helpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{             
+				helpPage.setVisible(!helpPage.isVisible());
+			}
+		});   
+		optionsPanel.add(helpButton);
 		optionsPanel.setBackground(new java.awt.Color(0,0,0));
 		JButton refresh=new JButton("Refresh");
 		refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-				//refresh();
+				//need to reset turtle and clear lines
 				textInput.setText("");
 				for(JTextArea text:savedBoxes)
 					text.setText("");
@@ -115,7 +126,7 @@ public class FrameLayoutNew extends JFrame{
 			}
 		});   
 		optionsPanel.add(refresh);
-		return optionsPanel;
+ return optionsPanel;
 	}
 	public void createMainPanel(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -129,8 +140,10 @@ public class FrameLayoutNew extends JFrame{
 		mainPanel.add(makeSavedTextBoxes(),BorderLayout.EAST);
 		pack();
 		setTitle("Slow Go Team 16");
+		
 		//mainPanel.add()
 	}
+	
 
 	public static void main(String[] args) {
 		FrameLayoutNew x=new FrameLayoutNew();

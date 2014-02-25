@@ -15,5 +15,4 @@ public class TextParser extends AbstractParser {
 		return myCommandList;
 	}
 	
-	
 }

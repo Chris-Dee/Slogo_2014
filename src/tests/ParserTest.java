@@ -1,12 +1,13 @@
 package tests;
 
 import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.junit.Test;
 
-import backEnd.parser.AbstractParser;
-import backEnd.parser.TextParser;
+import parser.AbstractParser;
+import parser.TextParser;
 
 public class ParserTest {
 

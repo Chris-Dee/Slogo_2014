@@ -69,6 +69,7 @@ public class FrameLayoutNew extends JFrame{
 		rotationPanel.add(rotationInput);
 		textPanel.setBackground(new java.awt.Color(0,0,0));
 		textInput=new JTextArea(10,30);
+		textInput.setText("Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing turtle image(?)");
 		textInput.setSize(100,300);
 		Button submit=new Button("Submit Text");
 		submit.addActionListener(new ActionListener() {
@@ -151,6 +152,7 @@ public class FrameLayoutNew extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{             
 				//need to reset turtle and clear lines
+				turtleSpace.refresh();
 				textInput.setText("");
 				for(JTextArea text:savedBoxes)
 					text.setText("");

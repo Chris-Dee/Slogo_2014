@@ -76,6 +76,9 @@ public void setVelocity(double velo){
 		}
 		
 	}
+	public void clearLines(){
+		lines.clear();
+	}
 	public void setPen(JGColor color){
 		penColor=color;
 	}

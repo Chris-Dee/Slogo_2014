@@ -3,7 +3,7 @@ package commands;
 import java.util.List;
 import frontEnd.Turtle;
 
-public abstract class ActionCommand extends ICommand{
+public abstract class ActionCommand extends AbstractCommand{
 
 	protected double myMagnitude;
 	

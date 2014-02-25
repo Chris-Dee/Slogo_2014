@@ -5,7 +5,7 @@ import java.util.List;
 
 import frontEnd.Turtle;
 
-public class HomeCommand extends ICommand {
+public class HomeCommand extends AbstractCommand {
 	
 	public static final int HOME_X = 0;
 	public static final int HOME_Y = 0;

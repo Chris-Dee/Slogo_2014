@@ -4,7 +4,7 @@ import java.util.List;
 
 import frontEnd.Turtle;
 
-public class STHTCommand extends ICommand{
+public class STHTCommand extends AbstractCommand{
 	
 	public STHTCommand(String string, List<Turtle> turtles){
 		super(string, turtles);

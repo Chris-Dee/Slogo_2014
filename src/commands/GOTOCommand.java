@@ -4,7 +4,7 @@ import java.util.List;
 
 import frontEnd.Turtle;
 
-public class GOTOCommand extends ICommand{
+public class GOTOCommand extends AbstractCommand{
 
 	protected double myNewX;
 	protected double myNewY;

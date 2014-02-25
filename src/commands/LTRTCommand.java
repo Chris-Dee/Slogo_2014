@@ -9,12 +9,13 @@ public class LTRTCommand extends ActionCommand {
 	
 	public LTRTCommand(String string, double degrees, List<Turtle> turtles) {
 		super(string, degrees, turtles);
-		if(myString.startsWith("l")){ turnLeft = true; }
+		if(myString.startsWith("L")){ turnLeft = true; }
 		turnLeft = false;
 	}
 
 	@Override
-	protected void moveTurtle(Turtle turtle) {
+	protected double moveTurtle(Turtle turtle) {
 		//current.setTarget();
+		return 1;
 	}
 }

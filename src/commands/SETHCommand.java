@@ -11,8 +11,8 @@ public class SETHCommand extends ActionCommand{
 	}
 	
 	@Override
-	protected void moveTurtle(Turtle turtle) {
-		
+	protected double moveTurtle(Turtle turtle) {
+		return 1;
 	}
 
 }

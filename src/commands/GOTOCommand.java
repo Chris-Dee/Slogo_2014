@@ -4,18 +4,15 @@ import java.util.List;
 
 import frontEnd.Turtle;
 
-public class GOTOCommand implements ICommand{
+public class GOTOCommand extends ICommand{
 
-	protected String myString;
 	protected double myNewX;
 	protected double myNewY;
-	protected List<Turtle> myTurtles;
 	
 	public GOTOCommand(String string, double newX, double newY, List<Turtle> turtles){
-		myString = string;
+		super(string, turtles);
 		myNewX = newX;
 		myNewY = newY;
-		myTurtles = turtles;
 	}
 
 	@Override
@@ -27,15 +24,8 @@ public class GOTOCommand implements ICommand{
 		return distance;
 	}
 	
-	
 	// need revision
 	protected double moveTurtle(Turtle turtle){
 		return 1;
 	}
-
-	@Override
-	public String getCommandType() {
-		return myString;
-	}
-
 }

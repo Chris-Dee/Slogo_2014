@@ -9,12 +9,13 @@ public class FDBKCommand extends ActionCommand {
 	
 	public FDBKCommand(String string, double pixels, List<Turtle> turtles) {
 		super(string, pixels, turtles);
-		if(myString.startsWith("f")){ moveForward = true; }
+		if(myString.startsWith("F")){ moveForward = true; }
 		moveForward = false;
 	}
 
 	@Override
-	protected void moveTurtle(Turtle turtle) {
+	protected double moveTurtle(Turtle turtle) {
 		//current.setTarget();
+		return 1;
 	}
 }

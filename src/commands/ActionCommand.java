@@ -3,31 +3,23 @@ package commands;
 import java.util.List;
 import frontEnd.Turtle;
 
-public abstract class ActionCommand implements ICommand{
+public abstract class ActionCommand extends ICommand{
 
-	protected String myString;
 	protected double myMagnitude;
-	protected List<Turtle> myTurtles;
 	
 	public ActionCommand(String string, double magnitude, List<Turtle> turtles){
-		myString = string;
+		super(string, turtles);
 		myMagnitude = magnitude;
-		myTurtles = turtles;
 	}
 
 	@Override
 	public double execute() {
+		double distance = 0;
 		for(Turtle current: myTurtles){
-			moveTurtle(current);
+			distance += moveTurtle(current);
 		}
-		return myMagnitude;
+		return distance;
 	}
 
-	protected abstract void moveTurtle(Turtle turtle);
-
-	@Override
-	public String getCommandType() {
-		return myString;
-	}
-	
+	protected abstract double moveTurtle(Turtle turtle);
 }

@@ -86,14 +86,13 @@ public class TurtleDrawer extends JGEngine {
 		}
 	}
 	public void refresh(){
-turt.destroy();
-turt=new Turtle();
-turt.clearLines();
+turt.reset();
 	}
 	
 	public void newTurtle(String imageFile) {
-		int targetx = turt.getPosx();
-		int targety = turt.getPosy();
+		Position newPos=turt.getStats().getPos();
+		double targetx = newPos.xPos();
+		double targety = newPos.yPos();
 		turt.remove();
 		defineImage("Turtle","Turt",0,imageFile,"-");
 		chosenImage = imageFile;

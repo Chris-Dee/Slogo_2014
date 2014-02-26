@@ -1,5 +1,5 @@
 package frontEnd;
-import java.awt.Point;
+
 import java.awt.geom.Point2D;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,21 +13,20 @@ import jgame.platform.JGEngine;
 
 
 public class Turtle extends JGObject {
+	private boolean penActive=true;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
-private int targetx=TURTLE_INIT_X;
-private int targety=TURTLE_INIT_Y;
-Map<ArrayList<Point>,JGColor> lines=new HashMap<ArrayList<Point>,JGColor>();
-private Point origPoint;
+private double targetx=TURTLE_INIT_X;
+private double targety=TURTLE_INIT_Y;
+Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
+private Position origPosition;
 private double myRotation=90;
 private JGColor drawingColor=JGColor.black;
 private JGColor penColor=JGColor.black;
 JGEngine myEngine;
 private double velocity=0.05;
 	public Turtle() {
-		
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
-		// TODO Auto-generated constructor stub
 	}
 private void  moveToTarget(){
 	double dist=Point2D.distance(x, y, targetx, targety);
@@ -42,14 +41,17 @@ private void  moveToTarget(){
 		yspeed=0;
 	}
 }
-public void goForward(double distance){
+
+public double goForward(double distance){
 	double rot=Math.toRadians(myRotation);
 	double xOffset=Math.cos(rot)*distance;
 	double yOffset=Math.sin(rot)*distance;
-	setTarget(new Point((int)(x+xOffset),(int)(y+yOffset)));
+	setTarget(new Position((int)(x+xOffset),(int)(y+yOffset)));
+	return distance;
 }
-public void setVelocity(double velo){
+public double setVelocity(double velo){
 	velocity= velo;
+	return velo;
 }
 	private int setDir(double curr, double target){
 		 return (int) ((target-curr));
@@ -58,22 +60,23 @@ public void setVelocity(double velo){
 		moveToTarget();
 		
 	}
-	public void setTarget(Point target){
-		origPoint=new Point(targetx,targety);
-		targetx=target.x;
-		targety=target.y;
+	public Position setTarget(Position target){
+		origPosition=new Position(targetx,targety);
+		targetx=target.xPos();
+		targety=target.yPos();
+		return target;
 	}
 	public void runPen(int thickness, boolean penActive){
 		if(Math.abs(xdir)>0||Math.abs(ydir)>0){
-		List<Point> loc=new ArrayList<Point>();
-		loc.add(new Point((int)x,(int)y));
-		loc.add(new Point(origPoint.x,origPoint.y));
-		lines.put((ArrayList<Point>) loc,drawingColor);
+		List<Position> loc=new ArrayList<Position>();
+		loc.add(new Position((int)x,(int)y));
+		loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
+		lines.put((ArrayList<Position>) loc,drawingColor);
 		}
-		if(origPoint!=null){
-			for(ArrayList<Point> line:lines.keySet())
+		if(origPosition!=null){
+			for(ArrayList<Position> line:lines.keySet())
 				if(lines.get(line)!=null)
-			myEngine.drawLine(line.get(0).x+10, line.get(0).y+10, line.get(1).x+10, line.get(1).y+10,thickness,lines.get(line));
+			myEngine.drawLine(line.get(0).xPos()+10, line.get(0).yPos()+10, line.get(1).xPos()+10, line.get(1).yPos()+10,thickness,lines.get(line));
 		}
 		
 	}
@@ -85,20 +88,31 @@ public void setVelocity(double velo){
 		drawingColor=color;
 	}
 	public void raisePen(){
+		penActive=false;
 		drawingColor=null;
 	}
 	public void lowerPen(){
+		penActive=true;
 		drawingColor=penColor;
+	}
+	public Position setPosition(Position dest){
+		x=dest.xPos();
+		y=dest.yPos();
+		return dest;
+	}
+	public void reset(){
+		setPosition(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
+		clearLines();
+		setTarget(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
 	}
 	public void addRotation(double addRotation){
 		myRotation+=addRotation;
 	}
-	public int getPosx(){
-		return targetx;
+	public void setRotation(double setRotation){
+		myRotation=0;
+		addRotation(setRotation);
 	}
-	
-	public int getPosy(){
-		return targety;
+	public Stats getStats(){
+		return new Stats(x,y,myRotation,xdir,ydir,drawingColor);
 	}
-
 }

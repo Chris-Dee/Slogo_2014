@@ -1,7 +1,9 @@
 package commands;
 
 import frontEnd.Turtle;
-
+/*
+ * This command makes the turtle move forward or backward by certain pixels
+ */
 public class FDBKCommand extends TurtleCommand {
 	
 	protected double forwardSign;

@@ -11,13 +11,13 @@ import frontEnd.Turtle;
 
 public class CommandTest {
 	
-	List<Turtle> myTurtles = new ArrayList<Turtle>();
+	Turtle myTurtle = new Turtle();
 
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testFDBKCommand() {
-		AbstractCommand fd = new FDBKCommand("FD", 50, myTurtles);
-		AbstractCommand bk = new FDBKCommand("BK", 50, myTurtles);
+		AbstractCommand fd = new FDBKCommand("FD", 50, myTurtle);
+		AbstractCommand bk = new FDBKCommand("BK", 50, myTurtle);
 		assertEquals(50, fd.execute());
 		assertEquals(50, bk.execute());
 		

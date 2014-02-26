@@ -83,8 +83,6 @@ public class FrameLayoutNew extends JFrame{
 	}
 	public JPanel makeInputPanel(){
 		JPanel textPanel=new JPanel();
-		JPanel forwardPanel=new JPanel();
-		JPanel rotationPanel=new JPanel();
 		textPanel.setBackground(new java.awt.Color(100,100,100));
 		JPanel inputTextPanel=new JPanel();
 		// create textArea for turtle commands 

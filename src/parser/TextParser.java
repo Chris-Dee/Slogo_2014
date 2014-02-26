@@ -2,7 +2,6 @@ package parser;
 import java.util.*;
 public class TextParser extends AbstractParser {
 	
-	private List<String> myCommandList = new ArrayList<String>();
 
 	@Override
 	public List<String> parse(String s) {

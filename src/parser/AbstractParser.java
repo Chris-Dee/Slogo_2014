@@ -4,8 +4,23 @@ import java.util.*;
 
 public abstract class AbstractParser {
 	
+	protected List<String> myCommandList = new ArrayList<String>();
+	
 	public abstract List<String> parse(String s);
-
+	
+	public static boolean isParameter(String s) {
+	    try { 
+	        Double.parseDouble(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
+	}
+	
+	public static double convertToDouble(String s) {
+		return Double.parseDouble(s);
+	}
+	
 	protected String convertTextToSingleLine(String s) {
 		// TODO Auto-generated method stub
 		String singleLineString;

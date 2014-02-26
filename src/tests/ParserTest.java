@@ -43,5 +43,21 @@ public class ParserTest {
 		AbstractParser parser = new TextParser();
 		assertEquals(parser.parse("heLLO THis wAs not UPpERcaSE"), parser.parse("hElLo thiS WaS NOT upPerCAse"));
 	}
+	
+	@Test
+	public void testNumbersInText() {
+		AbstractParser parser = new TextParser();
+		List<String> commands = parser.parse("fd 10 fd 20 fd 30");
+		for (int i = 0; i < commands.size(); i++) {
+			String command = commands.get(i);
+			double parameter = 0;
+			if (parser.isParameter(command))
+				parameter = parser.convertToDouble(command);
+			if(i % 2 == 1)
+				assertEquals("fd", command);
+			else
+				assertEquals(5, parameter/i);
+		}
+	}
 
 }

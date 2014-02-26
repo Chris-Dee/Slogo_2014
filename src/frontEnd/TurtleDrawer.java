@@ -85,8 +85,6 @@ public class TurtleDrawer extends JGEngine {
 		}
 	}
 	public void refresh(){
-turt.destroy();
-turt=new Turtle();
-turt.clearLines();
+turt.reset();
 	}
 }

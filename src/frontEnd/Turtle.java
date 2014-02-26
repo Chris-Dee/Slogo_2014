@@ -16,8 +16,8 @@ public class Turtle extends JGObject {
 	private boolean penActive=true;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
-private double targetx=TURTLE_INIT_X;
-private double targety=TURTLE_INIT_Y;
+public double targetx=TURTLE_INIT_X;
+public double targety=TURTLE_INIT_Y;
 Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
 private Position origPosition;
 private double myRotation=90;
@@ -30,15 +30,18 @@ private double velocity=0.05;
 	}
 private void  moveToTarget(){
 	double dist=Point2D.distance(x, y, targetx, targety);
-	if(dist>1){
+	if(dist>2){
 	xdir=setDir(x,targetx);
 	ydir=setDir(y,targety);
 	xspeed=velocity;
 	yspeed=velocity;
 	}
 	else{
+		x=targetx;
+		y=targety;
 		xspeed=0;
 		yspeed=0;
+		
 	}
 }
 

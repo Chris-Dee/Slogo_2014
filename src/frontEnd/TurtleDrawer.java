@@ -19,10 +19,10 @@ public class TurtleDrawer extends JGEngine {
 	
 	public TurtleDrawer(int x, int y){
 		int height = 800;
-		double aspect = 1.0;
+		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
 
-		setMinimumSize(new Dimension(200,200));
+		//setMinimumSize(new Dimension(200,200));
 		setBackground(new java.awt.Color(255,255,255));
 		xPos=x;
 		yPos=y;
@@ -48,6 +48,7 @@ public class TurtleDrawer extends JGEngine {
 	}
 	public void doFrame(){
 		//turt.movePosition(Math.random()*100, Math.random()*100, 1);
+		System.out.println(turt.getStats().getPos().xPos()+"  "+turt.getStats().getPos().yPos()+" "+turt.targetx+"  "+turt.targety);
 		prevPos=new Point((int)turt.x,(int)turt.y);
 		moveObjects(null,0);
 	}

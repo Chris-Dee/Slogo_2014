@@ -4,18 +4,16 @@ import java.util.List;
 
 import frontEnd.Turtle;
 
-public class CSCommand extends AbstractCommand{
+public class CSCommand extends TurtleCommand{
 	
-	public CSCommand(String string, List<Turtle> turtles){
-		super(string, turtles);
+	public CSCommand(String string, Turtle turtle){
+		super(string, turtle);
 	}
 
 	@Override
 	public double execute() {
-		for(Turtle current: myTurtles){
-			// erase trails
-		}
-		HomeCommand homeCom = new HomeCommand("HOME", myTurtles);
+		//myTurtle.eraseTrail();
+		HomeCommand homeCom = new HomeCommand("HOME", myTurtle);
 		return homeCom.execute();
 	}
 }

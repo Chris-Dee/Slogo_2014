@@ -1,21 +1,24 @@
 package commands;
 
-import java.util.List;
 import frontEnd.Turtle;
 
-public class PENCommand extends AbstractCommand{
+public class PENCommand extends TurtleCommand{
 	
-	public PENCommand(String string, List<Turtle> turtles){
-		super(string, turtles);
+	protected boolean penDown;
+	
+	public PENCommand(String string, Turtle turtle){
+		super(string, turtle);
+		if(myString.endsWith("D")){ penDown = true; }
+		else{ penDown = false; }
 	}
 
 	@Override
 	public double execute() {
-		if(myString.endsWith("D")){
-			// revision
+		if(penDown){
+			myTurtle.lowerPen();
 			return 1;
 		}
-		// revision
+		myTurtle.raisePen();
 		return 0;
 	}	
 }

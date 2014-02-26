@@ -41,12 +41,13 @@ private void  moveToTarget(){
 		yspeed=0;
 	}
 }
-public int goForward(int offset){
+
+public double goForward(double distance){
 	double rot=Math.toRadians(myRotation);
-	double xOffset=Math.cos(rot)*offset;
-	double yOffset=Math.sin(rot)*offset;
+	double xOffset=Math.cos(rot)*distance;
+	double yOffset=Math.sin(rot)*distance;
 	setTarget(new Position((int)(x+xOffset),(int)(y+yOffset)));
-	return offset;
+	return distance;
 }
 public double setVelocity(double velo){
 	velocity= velo;
@@ -111,6 +112,7 @@ public double setVelocity(double velo){
 		myRotation=0;
 		addRotation(setRotation);
 	}
-
-
+	public Stats getStats(){
+		return new Stats(x,y,myRotation,xdir,ydir,drawingColor);
+	}
 }

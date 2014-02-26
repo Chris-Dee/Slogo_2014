@@ -1,19 +1,21 @@
 package commands;
 
-import java.util.List;
-
 import frontEnd.Turtle;
 
-public class STHTCommand extends AbstractCommand{
+public class STHTCommand extends TurtleCommand{
 	
-	public STHTCommand(String string, List<Turtle> turtles){
-		super(string, turtles);
+	protected boolean showTurtle;
+	
+	public STHTCommand(String string, Turtle turtle){
+		super(string, turtle);
+		if(myString.startsWith("S")){ showTurtle = true; }
+		else{ showTurtle = false; }
 	}
 
 	@Override
 	public double execute() {
-		if(myString.startsWith("S")){
-			// revision
+		if(showTurtle){
+			// need revision
 			return 1;
 		}
 		// revision

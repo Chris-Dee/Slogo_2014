@@ -1,26 +1,23 @@
 package commands;
 
 import java.awt.Point;
-import java.util.List;
 
 import frontEnd.Turtle;
 
-public class HomeCommand extends AbstractCommand {
+public class HomeCommand extends TurtleCommand {
 	
 	public static final int HOME_X = 0;
 	public static final int HOME_Y = 0;
 	
-	public HomeCommand(String string, List<Turtle> turtles){
-		super(string, turtles);
+	public HomeCommand(String string, Turtle turtle){
+		super(string, turtle);
 	}
 
 	@Override
 	public double execute() {
+		// need revision
 		double distance = 0;
-		for(Turtle current: myTurtles){
-			// need revision
-			current.setTarget(new Point(HOME_X, HOME_Y));
-		}
+		myTurtle.setTarget(new Point(HOME_X, HOME_Y));
 		return distance;
 	}
 }

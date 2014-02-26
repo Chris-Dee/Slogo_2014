@@ -1,21 +1,20 @@
 package commands;
 
-import java.util.List;
 import frontEnd.Turtle;
 
-public class LTRTCommand extends ActionCommand {
+public class LTRTCommand extends TurtleCommand {
 
 	protected boolean turnLeft;
 	
-	public LTRTCommand(String string, double degrees, List<Turtle> turtles) {
-		super(string, degrees, turtles);
+	public LTRTCommand(String string, double degrees, Turtle turtle) {
+		super(string, degrees, turtle);
 		if(myString.startsWith("L")){ turnLeft = true; }
 		turnLeft = false;
 	}
 
 	@Override
-	protected double moveTurtle(Turtle turtle) {
-		//current.setTarget();
-		return 1;
+	public double execute() {
+		//myTurtle.
+		return myMagnitude;
 	}
 }

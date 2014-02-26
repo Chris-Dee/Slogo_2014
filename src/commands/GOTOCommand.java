@@ -1,31 +1,29 @@
 package commands;
 
-import java.util.List;
+import java.awt.Point;
 
 import frontEnd.Turtle;
 
-public class GOTOCommand extends AbstractCommand{
+public class GOTOCommand extends TurtleCommand{
 
 	protected double myNewX;
 	protected double myNewY;
 	
-	public GOTOCommand(String string, double newX, double newY, List<Turtle> turtles){
-		super(string, turtles);
+	public GOTOCommand(String string, double newX, double newY, Turtle turtle){
+		super(string, turtle);
 		myNewX = newX;
 		myNewY = newY;
+	}
+	
+	protected double computeEuclidean(double x1, double y1, double x2, double y2){
+		return Math.sqrt( Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) );
 	}
 
 	@Override
 	public double execute() {
-		double distance = 0;
-		for(Turtle current: myTurtles){
-			distance = distance + moveTurtle(current);
-		}
-		return distance;
-	}
-	
-	// need revision
-	protected double moveTurtle(Turtle turtle){
+//		Point destination = new Point();
+//		destination.setLocation(myNewX, myNewY);
+//		turtle.setTarget(destination);
 		return 1;
 	}
 }

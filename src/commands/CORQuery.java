@@ -22,8 +22,8 @@ public class CORQuery extends TurtleCommand {
 	 */
 	public double execute() {
 		if(queryX){
-			//return myTurtle.;	
+			return myTurtle.getStats().getPos().xPos();
 		}
-		//return myTurtle.getPosy();
+		return myTurtle.getStats().getPos().xPos();
 	}
 }

@@ -1,18 +1,17 @@
 package commands;
 
-import java.util.List;
-
 import frontEnd.Turtle;
 
-public class SETHCommand extends ActionCommand{
+public class SETHCommand extends TurtleCommand{
 
-	public SETHCommand(String string, double degrees, List<Turtle> turtles) {
-		super(string, degrees, turtles);
+	public SETHCommand(String string, double degrees, Turtle turtle) {
+		super(string, degrees, turtle);
 	}
-	
+
 	@Override
-	protected double moveTurtle(Turtle turtle) {
-		return 1;
+	public double execute() {
+		// need revision
+		return 0;
 	}
 
 }

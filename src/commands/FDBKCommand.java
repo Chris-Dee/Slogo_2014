@@ -1,21 +1,21 @@
 package commands;
 
-import java.util.List;
 import frontEnd.Turtle;
 
-public class FDBKCommand extends ActionCommand {
+public class FDBKCommand extends TurtleCommand {
 	
-	protected boolean moveForward;
+	protected double forwardSign;
 	
-	public FDBKCommand(String string, double pixels, List<Turtle> turtles) {
-		super(string, pixels, turtles);
-		if(myString.startsWith("F")){ moveForward = true; }
-		moveForward = false;
+	public FDBKCommand(String string, double pixels, Turtle turtle) {
+		super(string, pixels, turtle);
+		if(myString.startsWith("F")){ forwardSign = 1.0; }
+		else { forwardSign = -1.0; }
 	}
 
 	@Override
-	protected double moveTurtle(Turtle turtle) {
-		//current.setTarget();
-		return 1;
+	public double execute() {
+		double distance = forwardSign * myMagnitude;
+		myTurtle.goForward(distance);
+		return distance;
 	}
 }

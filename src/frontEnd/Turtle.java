@@ -42,10 +42,10 @@ private void  moveToTarget(){
 		yspeed=0;
 	}
 }
-public void goForward(int offset){
+public void goForward(double distance){
 	double rot=Math.toRadians(myRotation);
-	double xOffset=Math.cos(rot)*offset;
-	double yOffset=Math.sin(rot)*offset;
+	double xOffset=Math.cos(rot)*distance;
+	double yOffset=Math.sin(rot)*distance;
 	setTarget(new Point((int)(x+xOffset),(int)(y+yOffset)));
 }
 public void setVelocity(double velo){

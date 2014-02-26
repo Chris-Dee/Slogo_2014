@@ -73,7 +73,7 @@ public class FrameLayoutNew extends JFrame{
 			{                
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 				turtleSpace.turt.goForward(30);
-				turtleSpace.turt.addRotation(55);
+				turtleSpace.turt.addRotation(45);
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 			}

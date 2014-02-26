@@ -19,7 +19,7 @@ public class Turtle extends JGObject {
 public double targetx=TURTLE_INIT_X;
 public double targety=TURTLE_INIT_Y;
 Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
-private Position origPosition;
+private Position origPosition=new Position(TURTLE_INIT_X,TURTLE_INIT_Y);
 private double myRotation=90;
 private JGColor drawingColor=JGColor.black;
 private JGColor penColor=JGColor.black;

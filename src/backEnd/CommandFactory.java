@@ -22,9 +22,7 @@ public class CommandFactory {
 	 * Called by TextParser to process a tree of Strings of commands
 	 * Passed in the root of the tree
 	 */
-	public void runCommands(String root){
-		Turtle turtle = new Turtle(); // need to be deleted later
-		// Turtle turtle = FrameLayoutNew.getTurtle();
+	public void runCommands(String root, Turtle turtle){
 		makeCommand("FD", 10, DEFAULT_MAGNITUDE, turtle);
 		makeCommand("GOTO", 10, 10, turtle);
 	}
@@ -34,7 +32,7 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	private void makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
+	protected void makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
 		try { 
 			Class<?> commandClass = Class.forName(myResources.getString(cmd));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();

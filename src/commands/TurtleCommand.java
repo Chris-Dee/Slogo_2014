@@ -10,6 +10,4 @@ public abstract class TurtleCommand implements AbstractCommand{
 			myTurtle = turtle;
 		}
 	}
-	
-	public abstract String getCommandType();
 }

@@ -1,8 +1,8 @@
 package backEnd;
 
-public class ModelManager {
+public class SlogoModel {
 	
-	public ModelManager(){
+	public SlogoModel(){
 		
 	}
 	

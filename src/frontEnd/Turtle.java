@@ -98,10 +98,12 @@ public double setVelocity(double velo){
 		penActive=true;
 		drawingColor=penColor;
 	}
-	public Position setPosition(Position dest){
+	//returns distance traveled
+	public double setPosition(Position dest){
+		double dist=Point2D.distance(x, y, dest.xPos(), dest.yPos());
 		x=dest.xPos();
 		y=dest.yPos();
-		return dest;
+		return dist;
 	}
 	public void reset(){
 		setPosition(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
@@ -111,9 +113,11 @@ public double setVelocity(double velo){
 	public void addRotation(double addRotation){
 		myRotation+=addRotation;
 	}
-	public void setRotation(double setRotation){
+	public double setRotation(double setRotation){
+		double rot=myRotation;
 		myRotation=0;
 		addRotation(setRotation);
+		return rot;
 	}
 	public Stats getStats(){
 		return new Stats(x,y,myRotation,xdir,ydir,drawingColor);

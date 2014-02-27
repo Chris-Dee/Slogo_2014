@@ -72,7 +72,7 @@ public class FrameLayoutNew extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{                
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
-				turtleSpace.turt.goForward(30);
+				turtleSpace.turt.goForward(50);
 				turtleSpace.turt.addRotation(45);
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
@@ -85,10 +85,6 @@ public class FrameLayoutNew extends JFrame{
 		JPanel textPanel=new JPanel();
 		textPanel.setBackground(new java.awt.Color(100,100,100));
 		JPanel inputTextPanel=new JPanel();
-		// create textArea for turtle commands 
-		//		final JTextArea turtcommands = new JTextArea(10,15);
-		//		textPanel.add(turtcommands);
-		//		turtcommands.setEditable(false);
 		makeCommandPanel(inputTextPanel);
 		textPanel.add(inputTextPanel);
 		return textPanel;

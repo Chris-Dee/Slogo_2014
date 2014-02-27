@@ -16,52 +16,52 @@ public class Turtle extends JGObject {
 	private boolean penActive=true;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
-public double targetx=TURTLE_INIT_X;
-public double targety=TURTLE_INIT_Y;
-Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
-private Position origPosition=new Position(TURTLE_INIT_X,TURTLE_INIT_Y);
-private double myRotation=90;
-private JGColor drawingColor=JGColor.black;
-private JGColor penColor=JGColor.black;
-JGEngine myEngine;
-private double velocity=0.05;
+	public double targetx=TURTLE_INIT_X;
+	public double targety=TURTLE_INIT_Y;
+	Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
+	private Position origPosition=new Position(TURTLE_INIT_X,TURTLE_INIT_Y);
+	private double myRotation=90;
+	private JGColor drawingColor=JGColor.black;
+	private JGColor penColor=JGColor.black;
+	JGEngine myEngine;
+	private double velocity=0.05;
 	public Turtle() {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
 	}
-private void  moveToTarget(){
-	double dist=Point2D.distance(x, y, targetx, targety);
-	if(dist>2){
-	xdir=setDir(x,targetx);
-	ydir=setDir(y,targety);
-	xspeed=velocity;
-	yspeed=velocity;
-	}
-	else{
-		x=targetx;
-		y=targety;
-		xspeed=0;
-		yspeed=0;
-		
-	}
-}
+	private void  moveToTarget(){
+		double dist=Point2D.distance(x, y, targetx, targety);
+		if(dist>2){
+			xdir=setDir(x,targetx);
+			ydir=setDir(y,targety);
+			xspeed=velocity;
+			yspeed=velocity;
+		}
+		else{
+			x=targetx;
+			y=targety;
+			xspeed=0;
+			yspeed=0;
 
-public double goForward(double distance){
-	double rot=Math.toRadians(myRotation);
-	double xOffset=Math.cos(rot)*distance;
-	double yOffset=Math.sin(rot)*distance;
-	setTarget(new Position((int)(x+xOffset),(int)(y+yOffset)));
-	return distance;
-}
-public double setVelocity(double velo){
-	velocity= velo;
-	return velo;
-}
+		}
+	}
+
+	public double goForward(double distance){
+		double rot=Math.toRadians(myRotation);
+		double xOffset=Math.cos(rot)*distance;
+		double yOffset=Math.sin(rot)*distance;
+		setTarget(new Position((x+xOffset),(y+yOffset)));
+		return distance;
+	}
+	public double setVelocity(double velo){
+		velocity= velo;
+		return velo;
+	}
 	private int setDir(double curr, double target){
-		 return (int) ((target-curr));
+		return (int) ((target-curr));
 	}
 	public void move(){
 		moveToTarget();
-		
+
 	}
 	public Position setTarget(Position target){
 		origPosition=new Position(targetx,targety);
@@ -71,17 +71,22 @@ public double setVelocity(double velo){
 	}
 	public void runPen(int thickness, boolean penActive){
 		if(Math.abs(xdir)>0||Math.abs(ydir)>0){
-		List<Position> loc=new ArrayList<Position>();
-		loc.add(new Position((int)x,(int)y));
-		loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
-		lines.put((ArrayList<Position>) loc,drawingColor);
-		}
+			List<Position> loc=new ArrayList<Position>();
+			
+			loc.add(new Position((double)(int)x,(double)(int)y));
+			loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
+			System.out.println(loc.get(loc.size()-1).xPos());
+				lines.put((ArrayList<Position>) loc,drawingColor);
+				System.out.println("llll");
+lines.remove(loc);
+lines.put((ArrayList<Position>) loc,drawingColor);
+			}
 		if(origPosition!=null){
 			for(ArrayList<Position> line:lines.keySet())
 				if(lines.get(line)!=null)
-			myEngine.drawLine(line.get(0).xPos()+10, line.get(0).yPos()+10, line.get(1).xPos()+10, line.get(1).yPos()+10,thickness,lines.get(line));
+					myEngine.drawLine(line.get(0).xPos()+10, line.get(0).yPos()+10, line.get(1).xPos()+10, line.get(1).yPos()+10,thickness,lines.get(line));
 		}
-		
+
 	}
 	public void clearLines(){
 		lines.clear();

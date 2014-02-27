@@ -48,7 +48,7 @@ public class TurtleDrawer extends JGEngine {
 	}
 	public void doFrame(){
 		//turt.movePosition(Math.random()*100, Math.random()*100, 1);
-		System.out.println(turt.getStats().getPos().xPos()+"  "+turt.getStats().getPos().yPos()+" "+turt.targetx+"  "+turt.targety);
+		//System.out.println(turt.getStats().getPos().xPos()+"  "+turt.getStats().getPos().yPos()+" "+turt.targetx+"  "+turt.targety);
 		prevPos=new Point((int)turt.x,(int)turt.y);
 		moveObjects(null,0);
 	}

@@ -23,24 +23,30 @@ public class CommandFactory {
 	 * Passed in the root of the tree
 	 */
 	public void runCommands(String root){
-		makeCommand("FD", 50);
-		makeCommand("GOTO", 10, 10);
+		Turtle turtle = new Turtle(); // need to be deleted later
+		// Turtle turtle = FrameLayoutNew.getTurtle();
+		makeCommand("FD", 10, DEFAULT_MAGNITUDE, turtle);
+		makeCommand("GOTO", 10, 10, turtle);
 	}
 	
 	/*
 	 * This method should not be called from the outside.
+	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
+	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	private void makeCommand(String cmd, double magnitude1, double magnitude2){
-		Turtle turtle = new Turtle(); // need to be deleted later
-		// Turtle turtle = FrameLayoutNew.getTurtle();
-		
+	private void makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
 		try { 
 			Class<?> commandClass = Class.forName(myResources.getString(cmd));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
 			for (Method m: methods){
-				passInTurtle(turtle, command, m);
+				if(m.getName().equals("setTurtle")){
+					m.invoke(command, turtle);
+				}
 				if(m.getName().equals("setMagnitude")){
+					m.invoke(command, magnitude1);
+				}
+				if(m.getName().equals("setDoubleMagnitude")){
 					m.invoke(command, magnitude1, magnitude2);
 				}
 		    }
@@ -61,51 +67,10 @@ public class CommandFactory {
 		catch (IllegalArgumentException e) {
 			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
-		} 
-		catch (InvocationTargetException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
-		}
-	}
-	
-	/*
-	 * This method should not be called from the outside.
-	 */
-	protected void makeCommand(String cmd, double magnitude){
-		Turtle turtle = new Turtle(); // need to be deleted later
-		// Turtle turtle = FrameLayoutNew.getTurtle();
-		try { 
-			Class<?> commandClass = Class.forName(myResources.getString(cmd));
-			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
-			Method[] methods = commandClass.getMethods();
-			for (Method m: methods){
-				passInTurtle(turtle, command, m);
-				if(m.getName().equals("setMagnitude")){
-					m.invoke(command, magnitude);
-				}
-		    }
-			callExecuteMethod(command, methods);
-		}
-		catch (ClassNotFoundException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		catch (InstantiationException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
-		} 
-		catch (IllegalAccessException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
-		} 
-		catch (IllegalArgumentException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
-		} 
-		catch (InvocationTargetException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
-		}
 	}
 
 	protected void callExecuteMethod(AbstractCommand command, Method[] methods)
@@ -114,13 +79,6 @@ public class CommandFactory {
 			if (cur.getName().equals("execute")){
 				cur.invoke(command);
 		    }	
-		}
-	}
-	
-	protected void passInTurtle(Turtle turtle, AbstractCommand command, Method m)
-			throws IllegalAccessException, InvocationTargetException {
-		if(m.getName().equals("setTurtle")){
-			m.invoke(command, turtle);
 		}
 	}
 }

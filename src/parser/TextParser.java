@@ -1,7 +1,6 @@
 package parser;
 import java.util.*;
 public class TextParser extends AbstractParser {
-	
 
 	@Override
 	public List<String> parse(String s) {

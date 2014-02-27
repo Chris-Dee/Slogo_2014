@@ -11,7 +11,7 @@ import parser.TextParser;
 
 public class ParserTest {
 	
-	@org.junit.Test
+	@Test
 	public void testNumbersInText() {
 		AbstractParser parser = new TextParser();
 		List<String> commands = parser.parse("fd 10 fd 20 fd 30");
@@ -21,12 +21,11 @@ public class ParserTest {
 			double parameter = 0;
 			if (parser.isParameter(command))
 				parameter = parser.convertToDouble(command);
-			if(i % 2 == 1)
-				assertEquals("fd", command);
+			if(i % 2 == 0)
+				assertEquals("FD", command);
 			else
-				assertEquals(5, parameter/i, .001);
+				assertEquals(5.0, parameter/(double)(i+1), .001);
 		}		
-		
 	}
 
 	@Test

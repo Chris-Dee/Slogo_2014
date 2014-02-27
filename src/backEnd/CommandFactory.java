@@ -65,7 +65,8 @@ public class CommandFactory {
 		catch (IllegalArgumentException e) {
 			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+		} 
+		catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

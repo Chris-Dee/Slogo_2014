@@ -18,7 +18,7 @@ public class TurtleDrawer extends JGEngine {
 	private String chosenImage;
 	
 	public TurtleDrawer(int x, int y){
-		int height = 800;
+		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
 
@@ -51,6 +51,7 @@ public class TurtleDrawer extends JGEngine {
 		//System.out.println(turt.getStats().getPos().xPos()+"  "+turt.getStats().getPos().yPos()+" "+turt.targetx+"  "+turt.targety);
 		prevPos=new Point((int)turt.x,(int)turt.y);
 		moveObjects(null,0);
+		FrameLayoutNew.updateInfo();
 	}
 	public void paintFrame(){
 		turt.runPen(2,true);
@@ -101,4 +102,8 @@ turt.reset();
 		turt.setPos(targetx, targety);
 		turt.myEngine=this;
 	}
+	public Stats getStats(){
+		return turt.getStats();
+	}
+	
 }

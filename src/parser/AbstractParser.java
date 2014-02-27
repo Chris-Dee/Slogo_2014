@@ -2,13 +2,17 @@ package parser;
 
 import java.util.*;
 
+import parser.tree.StringNode;
+
 public abstract class AbstractParser {
 	
 	protected List<String> myCommandList = new ArrayList<String>();
 	
-	public abstract List<String> parse(String s);
+	public abstract StringNode parse(String s);
 	
-	public static boolean isParameter(String s) {
+	protected abstract void buildTree(List<String> commands, StringNode node);
+	
+	public boolean isParameter(String s) {
 	    try { 
 	        Double.parseDouble(s); 
 	    } catch(NumberFormatException e) { 
@@ -17,7 +21,7 @@ public abstract class AbstractParser {
 	    return true;
 	}
 	
-	public static double convertToDouble(String s) {
+	public double convertToDouble(String s) {
 		return Double.parseDouble(s);
 	}
 	
@@ -30,5 +34,9 @@ public abstract class AbstractParser {
 			singleLineString = s;
 		
 		return singleLineString.toUpperCase();
+	}
+	
+	protected boolean checkValidInput(String s) {
+		return true;
 	}
 }

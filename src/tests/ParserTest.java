@@ -10,6 +10,23 @@ import parser.AbstractParser;
 import parser.TextParser;
 
 public class ParserTest {
+	
+	@Test
+	public void testNumbersInText() {
+		AbstractParser parser = new TextParser();
+		List<String> commands = parser.parse("fd 10 fd 20 fd 30");
+		
+		for (int i = 0; i < commands.size(); i++) {
+			String command = commands.get(i);
+			double parameter = 0;
+			if (parser.isParameter(command))
+				parameter = parser.convertToDouble(command);
+			if(i % 2 == 0)
+				assertEquals("FD", command);
+			else
+				assertEquals(5.0, parameter/(double)(i+1), .001);
+		}		
+	}
 
 	@Test
 	public void testListReturn() {
@@ -44,20 +61,6 @@ public class ParserTest {
 		assertEquals(parser.parse("heLLO THis wAs not UPpERcaSE"), parser.parse("hElLo thiS WaS NOT upPerCAse"));
 	}
 	
-	@Test
-	public void testNumbersInText() {
-		AbstractParser parser = new TextParser();
-		List<String> commands = parser.parse("fd 10 fd 20 fd 30");
-		for (int i = 0; i < commands.size(); i++) {
-			String command = commands.get(i);
-			double parameter = 0;
-			if (parser.isParameter(command))
-				parameter = parser.convertToDouble(command);
-			if(i % 2 == 1)
-				assertEquals("fd", command);
-			else
-				assertEquals(5, parameter/i);
-		}
-	}
+
 
 }

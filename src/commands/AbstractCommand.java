@@ -1,16 +1,6 @@
 package commands;
 
-public abstract class AbstractCommand {
-	
-	protected String myString;
-	
-	public AbstractCommand(String string){
-		myString = string;
-	}
-	
+public interface AbstractCommand {
 	public abstract double execute();
-	
-	public String getCommandType(){
-		return myString;
-	}
+	public abstract String getCommandType();
 }

@@ -1,9 +1,9 @@
 package commands;
 
-import java.util.List;
-
 import frontEnd.Turtle;
-
+/*
+ * This command erases turtle's trails and sends it to the home position.
+ */
 public class CSCommand extends TurtleCommand{
 	
 	public CSCommand(String string, Turtle turtle){
@@ -11,8 +11,12 @@ public class CSCommand extends TurtleCommand{
 	}
 
 	@Override
+	/*
+	 * @see commands.AbstractCommand#execute()
+	 * return the distance turtle moved from sending it to the home position
+	 */
 	public double execute() {
-		//myTurtle.eraseTrail();
+		myTurtle.clearLines();
 		HomeCommand homeCom = new HomeCommand("HOME", myTurtle);
 		return homeCom.execute();
 	}

@@ -1,7 +1,10 @@
 package commands;
 
 import frontEnd.Turtle;
-
+/*
+ * Depending on the string of command passed into the constructor,
+ * this command is used to get a turtle's X or Y coordinate from the center of the screen
+ */
 public class CORQuery extends TurtleCommand {
 	
 	protected boolean queryX;
@@ -13,12 +16,14 @@ public class CORQuery extends TurtleCommand {
 	}
 
 	@Override
+	/*
+	 * @see commands.AbstractCommand#execute()
+	 * Return the turtle's X or Y coordinate from the center of the screen
+	 */
 	public double execute() {
 		if(queryX){
-			// need revision
-			return myTurtle.getPosx();	
+			return myTurtle.getStats().getPos().xPos();
 		}
-		// need revision
-		return myTurtle.getPosy();
+		return myTurtle.getStats().getPos().xPos();
 	}
 }

@@ -2,11 +2,15 @@ package parser;
 
 import java.util.*;
 
+import parser.tree.StringNode;
+
 public abstract class AbstractParser {
 	
 	protected List<String> myCommandList = new ArrayList<String>();
 	
-	public abstract List<String> parse(String s);
+	public abstract StringNode parse(String s);
+	
+	protected abstract void buildTree(List<String> commands, StringNode node);
 	
 	public boolean isParameter(String s) {
 	    try { 
@@ -30,5 +34,9 @@ public abstract class AbstractParser {
 			singleLineString = s;
 		
 		return singleLineString.toUpperCase();
+	}
+	
+	protected boolean checkValidInput(String s) {
+		return true;
 	}
 }

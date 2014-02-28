@@ -29,54 +29,54 @@ public class TextParser extends AbstractParser {
 			myCommandList.add(stringArray[i]);
 		}
 		initializeTree(myCommandList);
-		buildTree(myCommandList, myRoot);
+		buildTree(myRoot, 0);
 		return myRoot;
 	}
 
 	@Override
-	protected void buildTree(List<String> commands, StringNode node) {
-		// TODO Auto-generated method stub
-		if(commands.isEmpty()) return;
-		int parameterNumber = getNumberOfParameters(node.getCommandString());
-		if(parameterNumber == 0) {
-			StringNode child = node.addChild(commands.get(0));
-			commands.remove(0);
-			buildTree(commands, child);
-		}
-		else {
-			for (int i = 0; i < parameterNumber; i++) {
-				node.addChild(commands.get(i));
-			}
+	protected int buildTree(StringNode current, int index) {
+		int parameterNumber = getNumberOfParameters(current.getCommandString());
+
+		if(index >= myCommandList.size()) return 0;
+		//if leafnode
+		if( parameterNumber == 0 && !allParentsHaveParameters(current) ){
+			return 1;
 		}
 		
-		if (!isParameter(commands.get(0))) {
-			for (int i = 0; i < parameterNumber; i++) {
-				node.addChild(commands.get(i));
-			}
-			for (int i = 0; i < parameterNumber; i++) {
-				myCommandList.remove(i);
-			}
-			for (StringNode child : node.getChildren()) {
-				if (!isParameter(child.getCommandString()))
-					buildTree(commands, child);
-			}
+		if(parameterNumber == 2) {
+			StringNode child1 = current.addChild(myCommandList.get(index+1));
+			int offset = buildTree(child1, index+1) + 1;
+			StringNode child2 = current.addChild(myCommandList.get(index+offset));
+			buildTree(child2, index+offset);
 		}
 		else {
-			StringNode child = node.addChild(commands.get(0));
-			commands.remove(0);
-			buildTree(commands, child);
+			StringNode child = current.addChild(myCommandList.get(index+1));
+			buildTree(child, index+1);
 		}
+
+		return 1;
 		
+	}
+	
+	private boolean allParentsHaveParameters(StringNode current){
+		while(current.getParent() != null){ // not a root
+			current = current.getParent();
+			int parameterNum = getNumberOfParameters(current.getCommandString());
+			if(current.getChildren().size() != parameterNum){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void initializeTree(List<String> commands) {
 		// TODO Auto-generated method stub
 		myRoot = new StringNode(commands.get(0));
-		commands.remove(0);
 	}
 
 	private int getNumberOfParameters(String commandString) {
 		// TODO Auto-generated method stub
+		if (isParameter(commandString)) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

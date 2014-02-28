@@ -152,7 +152,8 @@ public class SlogoView extends JFrame{
 		final JTextField rotationInput=new JTextField(4);
 		rotationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
-			{                
+			{             
+				updateInfo();
 				turtleSpace.turt.addRotation(Double.parseDouble(rotationInput.getText()));
 				imageString= "Turtle" + Math.random();
 				Stats s = turtleSpace.getStats();
@@ -173,7 +174,6 @@ public class SlogoView extends JFrame{
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				turtleSpace.turt.setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
-				
 			}
 		});
 		scrollPanel.add(veloSlider);
@@ -184,6 +184,7 @@ public void makeSunButton(JPanel homePanel){
 		sunButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{      
+				updateInfo();
 				turtleSpace.turt.addRotation(45);
 				for(int k=0;k<4;k++){
 				turtleSpace.turt.addRotation(90);

@@ -11,9 +11,10 @@ import frontEnd.Turtle;
 
 public class CommandFactory {
     public static final String DEFAULT_COMMAND_PACKAGE = "commands/";
-    public static final String DEFAULT_PARAMETER_PACKAGE = "";
+    public static final String DEFAULT_COMMANDPATH_PACKAGE = "backEnd/";
+    public static final String DEFAULT_COMMANDPARAMETER_PACKAGE = "backEnd/";
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
-    public static final String DEFAULT_NUMPARAMETERS = "";
+    public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
     public static final String COMMAND_INVALID_MESSAGE = "Please enter a valid command!";
     public static final double DEFAULT_MAGNITUDE = 0;
     
@@ -22,8 +23,8 @@ public class CommandFactory {
     private AbstractParser myParser;
 	
 	public CommandFactory(AbstractParser parser){
-		myCommands = ResourceBundle.getBundle(DEFAULT_COMMAND_PACKAGE + DEFAULT_COMMANDPATH);
-		myParameters = ResourceBundle.getBundle(DEFAULT_PARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
+		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
+		myParameters = ResourceBundle.getBundle(DEFAULT_COMMANDPARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myParser = parser;
 	}
 	
@@ -31,14 +32,21 @@ public class CommandFactory {
 	 * Called by TextParser to process a tree of Strings of commands
 	 * Passed in the root of the tree
 	 * return the returned value of the root command
+	 * return -1 if invalid command
 	 */
 	public double runCommands(StringNode root, Turtle turtle){
 		//makeCommand("FD", 10, DEFAULT_MAGNITUDE, turtle);
 		return processStringNode(root, turtle);
 	}
 	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to build a command or a parameter for the current StringNode
+	 * return -1 if invalid command
+	 */
 	protected double processStringNode(StringNode current, Turtle turtle){
-		if(current.getChildren().isEmpty()){ // left StringNode
+		if(current == null){ return 0; } // make sure the current node is not null
+		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
 				return myParser.convertToDouble(current.getCommandString());	
 			}
@@ -89,7 +97,8 @@ public class CommandFactory {
 	 */
 	protected double makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
 		try { 
-			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
+			Class<?> commandClass = Class.forName(DEFAULT_COMMAND_PACKAGE + myCommands.getString(cmd));
+			System.out.println(DEFAULT_COMMAND_PACKAGE + myCommands.getString(cmd));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
 			for (Method m: methods){
@@ -110,23 +119,20 @@ public class CommandFactory {
 			}
 		}
 		catch (ClassNotFoundException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
+			return -1;
+			//e.printStackTrace();
 		} 
 		catch (InstantiationException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
 		} 
 		catch (IllegalAccessException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
 		} 
 		catch (IllegalArgumentException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
+			return -1;
+			//e.printStackTrace();
 		} 
 		catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0; 

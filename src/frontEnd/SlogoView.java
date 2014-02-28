@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -153,6 +154,10 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{                
 				turtleSpace.turt.addRotation(Double.parseDouble(rotationInput.getText()));
+				imageString= "Turtle" + Math.random();
+				Stats s = turtleSpace.getStats();
+				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+				turtleSpace.turt.setImage(imageString);
 			}
 		});   
 		rotatePanel.add(rotationButton);
@@ -174,6 +179,24 @@ public class SlogoView extends JFrame{
 		scrollPanel.add(veloSlider);
 		homePanel.add(scrollPanel);
 	}
+public void makeSunButton(JPanel homePanel){
+		Button sunButton=new Button("press 8x");
+		sunButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{      
+				turtleSpace.turt.addRotation(45);
+				for(int k=0;k<4;k++){
+				turtleSpace.turt.addRotation(90);
+				turtleSpace.turt.goForward(30);
+				}
+				imageString= "Turtle" + Math.random();
+				Stats s = turtleSpace.getStats();
+				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+				turtleSpace.turt.setImage(imageString);
+			}
+		});  
+		homePanel.add(sunButton);
+	}
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
 		createSaveButton(inputTextPanel);
@@ -186,20 +209,23 @@ public class SlogoView extends JFrame{
 		Button submit=new Button("Submit Text");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
-			{     
-				model.receiveTextInput(textInput.getText(), turtleSpace.turt);
+			{ 
+				//model.receiveTextInput(textInput.getText(), turtleSpace.turt);
 				updateInfo();          
-				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
-				turtleSpace.turt.goForward(30);
+				
 				turtleSpace.turt.addRotation(45);
+				for(int k=0;k<4;k++){
+				turtleSpace.turt.addRotation(90);
+				turtleSpace.turt.goForward(30);
+				}
 				imageString= "Turtle" + Math.random();
 				Stats s = turtleSpace.getStats();
 				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
 				turtleSpace.turt.setImage(imageString);
-				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 				
 			}
+			
 		});   
 		inputTextPanel.add(inputPane);
 		inputTextPanel.add(submit);
@@ -323,6 +349,7 @@ public class SlogoView extends JFrame{
 		optionsPanel.add(makeRefreshButton());
 		makeRotatePanel(optionsPanel);
 		makeForwardPanel(optionsPanel);
+		makeSunButton(optionsPanel);
 		return optionsPanel;
 	}
 	public void createMainPanel(){

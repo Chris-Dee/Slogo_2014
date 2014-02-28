@@ -27,6 +27,7 @@ public class TextParser extends AbstractParser {
 		for (int i = 0; i < stringArray.length; i++) {
 			myCommandList.add(stringArray[i]);
 		}
+		System.out.println(myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
 		return myRoot;
@@ -48,7 +49,8 @@ public class TextParser extends AbstractParser {
 			StringNode child2 = current.addChild(myCommandList.get(index+offset));
 			buildTree(child2, index+offset);
 		}
-		else {
+		else if (index+1 < myCommandList.size()){
+			System.out.println(index+1);
 			StringNode child = current.addChild(myCommandList.get(index+1));
 			buildTree(child, index+1);
 		}

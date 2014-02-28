@@ -34,23 +34,22 @@ public class TextParser extends AbstractParser {
 	}
 
 	@Override
+	// This method needs revision
 	protected int buildTree(StringNode current, int index) {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
 
 		if(index >= myCommandList.size()) return 0;
-		//if leafnode
-		if( parameterNumber == 0 && !allParentsHaveParameters(current) ){
+		if( parameterNumber == 0 && !allParentsHaveParameters(current) ){ // if leaf node
 			return 1;
 		}
 		
 		if(parameterNumber == 2) {
 			StringNode child1 = current.addChild(myCommandList.get(index+1));
 			int offset = buildTree(child1, index+1) + 1;
-			StringNode child2 = current.addChild(myCommandList.get(index+offset));
-			buildTree(child2, index+offset);
+			StringNode child2 = current.addChild(myCommandList.get(index + offset));
+			buildTree(child2, index + offset);
 		}
 		else if (index+1 < myCommandList.size()){
-			System.out.println(index+1);
 			StringNode child = current.addChild(myCommandList.get(index+1));
 			buildTree(child, index+1);
 		}
@@ -62,8 +61,7 @@ public class TextParser extends AbstractParser {
 	private boolean allParentsHaveParameters(StringNode current){
 		while(current.getParent() != null){ // not a root
 			current = current.getParent();
-			int parameterNum = getNumberOfParameters(current.getCommandString());
-			if(current.getChildren().size() != parameterNum){
+			if(current.getChildren().size() != getNumberOfParameters(current.getCommandString()) ){
 				return false;
 			}
 		}

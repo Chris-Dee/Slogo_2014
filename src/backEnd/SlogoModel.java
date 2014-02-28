@@ -25,7 +25,9 @@ public class SlogoModel {
 	public void receiveTextInput(String userCommands, Turtle turtle){
 		StringNode root = myParser.parse(userCommands);
 		myHistory.add(userCommands);
-		myCommandFactory.runCommands(root, turtle);
+		if (myCommandFactory.runCommands(root, turtle) == -1){ // error messages
+			
+		}
 	}
 	
 	public List<String> getHistory(){

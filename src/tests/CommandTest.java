@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.junit.Test;
@@ -8,14 +9,10 @@ import org.junit.Test;
 import commands.AbstractCommand;
 import commands.CORQuery;
 import commands.CSCommand;
-import commands.FDBKCommand;
-import commands.GOTOCommand;
+import commands.Forward;
 import commands.HEADINGCommand;
 import commands.HomeCommand;
-import commands.LTRTCommand;
-import commands.PENCommand;
 import commands.PENDOWNPCommand;
-import commands.SETHCommand;
 import commands.SHOWINGPCommand;
 import commands.STHTCommand;
 import frontEnd.Turtle;
@@ -27,8 +24,8 @@ public class CommandTest {
 
 	@org.junit.Test
 	public void testFDBKCommand() {
-		AbstractCommand fd = new FDBKCommand("FD", 50, myTurtle);
-		AbstractCommand bk = new FDBKCommand("BK", 50, myTurtle);
+		AbstractCommand fd = new Forward();
+		AbstractCommand bk = new Forward();
 		assertEquals(50, fd.execute(), .001);
 		assertEquals(50, bk.execute(), .001);
 	}

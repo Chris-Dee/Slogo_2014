@@ -98,7 +98,7 @@ public class CommandFactory {
 	protected double makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
 		try { 
 			Class<?> commandClass = Class.forName(DEFAULT_COMMAND_PACKAGE + myCommands.getString(cmd));
-			System.out.println(DEFAULT_COMMAND_PACKAGE + myCommands.getString(cmd));
+//			System.out.println(DEFAULT_COMMAND_PACKAGE + myCommands.getString(cmd));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
 			for (Method m: methods){

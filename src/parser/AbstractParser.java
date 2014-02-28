@@ -6,7 +6,7 @@ import parser.tree.StringNode;
 
 public abstract class AbstractParser {
 	
-	protected List<String> myCommandList = new ArrayList<String>();
+	protected List<String> myCommandList;
 	
 	public abstract StringNode parse(String s);
 	

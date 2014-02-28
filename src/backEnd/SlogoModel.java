@@ -15,7 +15,7 @@ public class SlogoModel {
 	
 	public SlogoModel(){
 		myParser = new TextParser();
-		myCommandFactory = new CommandFactory(myParser);
+		myCommandFactory = new CommandFactory();
 		myHistory = new ArrayList<String>();
 	}
 	

@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
 import parser.AbstractParser;
+import parser.TextParser;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
 import frontEnd.Turtle;
@@ -21,10 +22,11 @@ public class CommandFactory {
     private ResourceBundle myParameters;
     private AbstractParser myParser;
 	
-	public CommandFactory(AbstractParser parser){
+	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_COMMANDPARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
-		myParser = parser;
+		myParser = new TextParser(); // intended to use some convenient methods in AbstarctParser class
+		// myParser is different from the real TextParser object stored in the SlogoModel class
 	}
 	
 	

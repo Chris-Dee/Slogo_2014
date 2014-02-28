@@ -6,18 +6,16 @@ import parser.tree.StringNode;
 
 
 public class TextParser extends AbstractParser {
-	//This is super hardcoded MUST BE REFACTORED
-//	private final String[] twoParams = {"SETXY", "GOTO", "SUM", "+", "DIFFERENCE",
-//			"-", "PRODUCT", "*", "QUOTIENT", "/", "REMAINDER", "%", "POW", "LESS?", 
-//			"LESSP", "GREATER?", "GREATERP", "EQUAL?", "EQUALP", "NOTEQUAL?", 
-//			"NOTEQUALP", "AND", "OR"};
+	
 	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
 	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
+	
 	private ResourceBundle myResources;
 	private StringNode myRoot;
 	
 	public TextParser() {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
+		myCommandList = new ArrayList<String>();
 	}
 	
 	@Override
@@ -27,9 +25,10 @@ public class TextParser extends AbstractParser {
 		for (int i = 0; i < stringArray.length; i++) {
 			myCommandList.add(stringArray[i]);
 		}
-		System.out.println(myCommandList.size());
+		System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
+		myCommandList.clear();
 		return myRoot;
 	}
 
@@ -38,7 +37,7 @@ public class TextParser extends AbstractParser {
 	protected int buildTree(StringNode current, int index) {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
 
-		if(index >= myCommandList.size()) return 0;
+		if(index == myCommandList.size()) return 0;
 		if( parameterNumber == 0 && !allParentsHaveParameters(current) ){ // if leaf node
 			return 1;
 		}

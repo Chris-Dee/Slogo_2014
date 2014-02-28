@@ -218,7 +218,6 @@ public void makeSunButton(JPanel homePanel){
 				turtleSpace.turt.setImage(imageString);
 				savePanel(textInput);
 			}
-			
 		});   
 		inputTextPanel.add(inputPane);
 		inputTextPanel.add(submit);

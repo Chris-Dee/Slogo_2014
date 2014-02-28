@@ -1,18 +1,24 @@
 package parser;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import parser.tree.StringNode;
 
 
 public class TextParser extends AbstractParser {
 	//This is super hardcoded MUST BE REFACTORED
-	private final String[] twoParams = {"SETXY", "GOTO", "SUM", "+", "DIFFERENCE",
-			"-", "PRODUCT", "*", "QUOTIENT", "/", "REMAINDER", "%", "POW", "LESS?", 
-			"LESSP", "GREATER?", "GREATERP", "EQUAL?", "EQUALP", "NOTEQUAL?", 
-			"NOTEQUALP", "AND", "OR"};
+//	private final String[] twoParams = {"SETXY", "GOTO", "SUM", "+", "DIFFERENCE",
+//			"-", "PRODUCT", "*", "QUOTIENT", "/", "REMAINDER", "%", "POW", "LESS?", 
+//			"LESSP", "GREATER?", "GREATERP", "EQUAL?", "EQUALP", "NOTEQUAL?", 
+//			"NOTEQUALP", "AND", "OR"};
+	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
+	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters.properties";
+	private ResourceBundle myResources;
 	private StringNode myRoot;
+	
+	public TextParser() {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
+	}
 	
 	@Override
 	public StringNode parse(String s) {
@@ -29,25 +35,35 @@ public class TextParser extends AbstractParser {
 	@Override
 	protected void buildTree(List<String> commands, StringNode node) {
 		// TODO Auto-generated method stub
-		while (!commands.isEmpty()) {
-			if (!isParameter(commands.get(0))) {
-				int parameterNumber = getNumberOfParameters(node.getCommandString());
-				for (int i = 0; i < parameterNumber; i++) {
-					node.addChild(commands.get(i));
-				}
-				for (int i = 0; i < parameterNumber; i++) {
-					myCommandList.remove(i);
-				}
-				for (StringNode child : node.getChildren()) {
-					if (!isParameter(child.getCommandString()))
-						buildTree(commands, child);
-				}
+		if(commands.isEmpty()) return;
+		int parameterNumber = getNumberOfParameters(node.getCommandString());
+		if(parameterNumber == 0) {
+			StringNode child = node.addChild(commands.get(0));
+			commands.remove(0);
+			buildTree(commands, child);
+		}
+		else {
+			for (int i = 0; i < parameterNumber; i++) {
+				node.addChild(commands.get(i));
 			}
-			else {
-				StringNode child = node.addChild(commands.get(0));
-				commands.remove(0);
-				buildTree(commands, child);
+		}
+		
+		if (!isParameter(commands.get(0))) {
+			for (int i = 0; i < parameterNumber; i++) {
+				node.addChild(commands.get(i));
 			}
+			for (int i = 0; i < parameterNumber; i++) {
+				myCommandList.remove(i);
+			}
+			for (StringNode child : node.getChildren()) {
+				if (!isParameter(child.getCommandString()))
+					buildTree(commands, child);
+			}
+		}
+		else {
+			StringNode child = node.addChild(commands.get(0));
+			commands.remove(0);
+			buildTree(commands, child);
 		}
 		
 	}
@@ -60,9 +76,7 @@ public class TextParser extends AbstractParser {
 
 	private int getNumberOfParameters(String commandString) {
 		// TODO Auto-generated method stub
-		if(Arrays.asList(twoParams).contains(commandString))
-			return 2;
-		return 1;
+		return Integer.parseInt(myResources.getString(commandString));
 	}
 	
 }

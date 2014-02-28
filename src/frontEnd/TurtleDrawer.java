@@ -52,6 +52,7 @@ public class TurtleDrawer extends JGEngine {
 		prevPos=new Point((int)turt.x,(int)turt.y);
 		moveObjects(null,0);
 		FrameLayoutNew.updateInfo();
+		
 	}
 	public void paintFrame(){
 		turt.runPen(2,true);
@@ -104,6 +105,10 @@ turt.reset();
 	}
 	public Stats getStats(){
 		return turt.getStats();
+	}
+	
+	public String getImage(){
+		return chosenImage;
 	}
 	
 }

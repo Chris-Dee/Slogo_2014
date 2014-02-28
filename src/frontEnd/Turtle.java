@@ -75,9 +75,9 @@ public class Turtle extends JGObject {
 			
 			loc.add(new Position((double)(int)x,(double)(int)y));
 			loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
-			System.out.println(loc.get(loc.size()-1).xPos());
+			//System.out.println(loc.get(loc.size()-1).xPos());
 				lines.put((ArrayList<Position>) loc,drawingColor);
-				System.out.println("llll");
+				//System.out.println("llll");
 lines.remove(loc);
 lines.put((ArrayList<Position>) loc,drawingColor);
 			}
@@ -117,6 +117,10 @@ lines.put((ArrayList<Position>) loc,drawingColor);
 	}
 	public void addRotation(double addRotation){
 		myRotation+=addRotation;
+	}
+	
+	public double getangle(){
+		return myRotation;
 	}
 	public double setRotation(double setRotation){
 		double rot=myRotation;

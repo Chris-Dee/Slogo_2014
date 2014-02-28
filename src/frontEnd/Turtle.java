@@ -24,7 +24,7 @@ public class Turtle extends JGObject {
 	private JGColor drawingColor=JGColor.black;
 	private JGColor penColor=JGColor.black;
 	JGEngine myEngine;
-	private double velocity=0.05;
+	private double velocity=0.02;
 	public Turtle() {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
 	}
@@ -77,10 +77,10 @@ public class Turtle extends JGObject {
 			loc.add(new Position(x,y));
 			
 			loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
-			System.out.println(lines.size()+"  "+xspeed+"  "+yspeed);
-			if(xspeed>0.03&&yspeed>0.03)
+			if(xspeed>velocity/2&&yspeed>velocity/2)
 				lines.put((ArrayList<Position>) loc,drawingColor);
-}
+
+			}
 		if(origPosition!=null){
 			for(ArrayList<Position> line:lines.keySet())
 				if(lines.get(line)!=null)

@@ -197,6 +197,10 @@ public class SlogoView extends JFrame{
 				Stats s = turtleSpace.getStats();
 				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
 				turtleSpace.turt.setImage(imageString);
+<<<<<<< HEAD
+				System.out.println(s.getRot()%360);
+=======
+>>>>>>> 8bb0352948eea3dd9fa2a74d6490cf0c04a2865e
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 			}

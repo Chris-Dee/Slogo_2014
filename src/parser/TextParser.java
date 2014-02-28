@@ -16,7 +16,6 @@ public class TextParser extends AbstractParser {
 	
 	@Override
 	public StringNode parse(String s) {
-		// TODO Auto-generated method stub
 		String singleLineString = convertTextToSingleLine(s);
 		String[] stringArray = singleLineString.split(" ");
 		for (int i = 0; i < stringArray.length; i++) {

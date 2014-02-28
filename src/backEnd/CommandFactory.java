@@ -38,7 +38,7 @@ public class CommandFactory {
 	}
 	
 	protected double processStringNode(StringNode current, Turtle turtle){
-		if(current.getChildren().isEmpty()){ // left StringNode
+		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
 				return myParser.convertToDouble(current.getCommandString());	
 			}

@@ -106,4 +106,8 @@ turt.reset();
 		return turt.getStats();
 	}
 	
+	public String getImage(){
+		return chosenImage;
+	}
+	
 }

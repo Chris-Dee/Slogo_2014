@@ -39,6 +39,10 @@ public class SlogoView extends JFrame{
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static final HelpPage helpPage=new HelpPage();
 	private JTextArea textInput;
+	public SlogoView(){
+		super();
+		initiate();
+	}
 	public SlogoView(SlogoModel modelSlog){
 		super();
 		initiate();
@@ -311,13 +315,10 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
-		//	mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		setResizable(false);
 		pack();
 		setTitle("Slow Go Team 16");
-
-		//mainPanel.add()
 	}
 
 

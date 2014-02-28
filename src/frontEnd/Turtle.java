@@ -80,7 +80,7 @@ public class Turtle extends JGObject {
 			System.out.println(lines.size()+"  "+xspeed+"  "+yspeed);
 			if(xspeed>0.03&&yspeed>0.03)
 				lines.put((ArrayList<Position>) loc,drawingColor);
-			}
+}
 		if(origPosition!=null){
 			for(ArrayList<Position> line:lines.keySet())
 				if(lines.get(line)!=null)
@@ -118,6 +118,10 @@ public class Turtle extends JGObject {
 	public void addRotation(double addRotation){
 		if(xspeed==0&&yspeed==0)
 		myRotation+=addRotation;
+	}
+	
+	public double getangle(){
+		return myRotation;
 	}
 	public double setRotation(double setRotation){
 		double rot=myRotation;

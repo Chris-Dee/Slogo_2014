@@ -34,6 +34,7 @@ public class FrameLayoutNew extends JFrame{
 	private static JTextField headingx;
 	private static JTextField headingy;
 	private static JTextField angle;
+	private String imageString;
 	private static TurtleDrawer turtleSpace;
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
@@ -169,6 +170,11 @@ public class FrameLayoutNew extends JFrame{
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 				turtleSpace.turt.goForward(30);
 				turtleSpace.turt.addRotation(45);
+				imageString= "Turtle" + Math.random();
+				Stats s = turtleSpace.getStats();
+				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+				turtleSpace.turt.setImage(imageString);
+				System.out.println(s.getRot()%360);
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 				

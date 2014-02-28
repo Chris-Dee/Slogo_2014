@@ -10,7 +10,7 @@ public abstract class AbstractParser {
 	
 	public abstract StringNode parse(String s);
 	
-	protected abstract void buildTree(List<String> commands, StringNode node);
+	protected abstract int buildTree(StringNode node, int index);
 	
 	public boolean isParameter(String s) {
 	    try { 

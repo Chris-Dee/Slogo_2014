@@ -32,13 +32,20 @@ public class CommandFactory {
 	 * Called by TextParser to process a tree of Strings of commands
 	 * Passed in the root of the tree
 	 * return the returned value of the root command
+	 * return -1 if invalid command
 	 */
 	public double runCommands(StringNode root, Turtle turtle){
 		//makeCommand("FD", 10, DEFAULT_MAGNITUDE, turtle);
 		return processStringNode(root, turtle);
 	}
 	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to build a command or a parameter for the current StringNode
+	 * return -1 if invalid command
+	 */
 	protected double processStringNode(StringNode current, Turtle turtle){
+		if(current == null){ return 0; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
 				return myParser.convertToDouble(current.getCommandString());	
@@ -112,23 +119,20 @@ public class CommandFactory {
 			}
 		}
 		catch (ClassNotFoundException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
+			return -1;
+			//e.printStackTrace();
 		} 
 		catch (InstantiationException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
 		} 
 		catch (IllegalAccessException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
 			e.printStackTrace();
 		} 
 		catch (IllegalArgumentException e) {
-			//System.out.println(COMMAND_INVALID_MESSAGE);
-			e.printStackTrace();
+			return -1;
+			//e.printStackTrace();
 		} 
 		catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0; 

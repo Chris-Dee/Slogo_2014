@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
-public class FrameLayoutNew extends JFrame{
+public class SlogoView extends JFrame{
 	private Stats turtleStats;
 	private SlogoModel model;
 	private static JTextField xPos;
@@ -34,13 +34,16 @@ public class FrameLayoutNew extends JFrame{
 	private static JTextField headingx;
 	private static JTextField headingy;
 	private static JTextField angle;
-	private String imageString;
 	private static TurtleDrawer turtleSpace;
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static final HelpPage helpPage=new HelpPage();
 	private JTextArea textInput;
-	public FrameLayoutNew(SlogoModel modelSlog){
+	public SlogoView(){
+		super();
+		initiate();
+	}
+	public SlogoView(SlogoModel modelSlog){
 		super();
 		initiate();
 		model=modelSlog;
@@ -170,11 +173,6 @@ public class FrameLayoutNew extends JFrame{
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 				turtleSpace.turt.goForward(30);
 				turtleSpace.turt.addRotation(45);
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.turt.setImage(imageString);
-				System.out.println(s.getRot()%360);
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 				
@@ -317,13 +315,10 @@ public class FrameLayoutNew extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
-		//	mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		setResizable(false);
 		pack();
 		setTitle("Slow Go Team 16");
-
-		//mainPanel.add()
 	}
 
 

@@ -11,7 +11,7 @@ import jgame.platform.JGEngine;
 @SuppressWarnings("serial")
 
 public class TurtleDrawer extends JGEngine {
-	Turtle turt;
+	private Turtle turt;
 	private int xPos;
 	private int yPos;
 	private Point prevPos;
@@ -27,6 +27,9 @@ public class TurtleDrawer extends JGEngine {
 		xPos=x;
 		yPos=y;
 
+	}
+	public Turtle getTurtle(){
+		return turt;
 	}
 	public void setPositionAndPaintTurtle(int x, int y){
 		xPos=x;
@@ -44,7 +47,7 @@ public class TurtleDrawer extends JGEngine {
 		setPFSize(30,30);
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle();
-		turt.myEngine=this;
+		turt.setEngine(this);
 	}
 	public void doFrame(){
 		//turt.movePosition(Math.random()*100, Math.random()*100, 1);
@@ -99,7 +102,7 @@ turt.reset();
 		chosenImage = imageFile;
 		turt=new Turtle();
 		turt.setPos(targetx, targety);
-		turt.myEngine=this;
+		turt.setEngine(this);
 	}
 	public Stats getStats(){
 		return turt.getStats();

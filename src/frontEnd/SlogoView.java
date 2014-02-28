@@ -64,7 +64,7 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{              
 				updateInfo();
-				turtleSpace.turt.goForward(Integer.parseInt(forwardInput.getText()));
+				turtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
 			}
 		});   
 
@@ -154,11 +154,11 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{             
 				updateInfo();
-				turtleSpace.turt.addRotation(Double.parseDouble(rotationInput.getText()));
+				turtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
 				imageString= "Turtle" + Math.random();
 				Stats s = turtleSpace.getStats();
 				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.turt.setImage(imageString);
+				turtleSpace.getTurtle().setImage(imageString);
 			}
 		});   
 		rotatePanel.add(rotationButton);
@@ -173,7 +173,7 @@ public class SlogoView extends JFrame{
 		veloSlider.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				turtleSpace.turt.setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
+				turtleSpace.getTurtle().setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
 			}
 		});
 		scrollPanel.add(veloSlider);
@@ -185,15 +185,15 @@ public void makeSunButton(JPanel homePanel){
 			public void actionPerformed(ActionEvent e)
 			{      
 				updateInfo();
-				turtleSpace.turt.addRotation(45);
+				turtleSpace.getTurtle().addRotation(45);
 				for(int k=0;k<4;k++){
-				turtleSpace.turt.addRotation(90);
-				turtleSpace.turt.goForward(30);
+				turtleSpace.getTurtle().addRotation(90);
+				turtleSpace.getTurtle().goForward(30);
 				}
 				imageString= "Turtle" + Math.random();
 				Stats s = turtleSpace.getStats();
 				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.turt.setImage(imageString);
+				turtleSpace.getTurtle().setImage(imageString);
 			}
 		});  
 		homePanel.add(sunButton);
@@ -211,12 +211,12 @@ public void makeSunButton(JPanel homePanel){
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ 
-				model.receiveTextInput(textInput.getText(), turtleSpace.turt);
+				model.receiveTextInput(textInput.getText(), turtleSpace.getTurtle());
 				updateInfo();          
 				imageString= "Turtle" + Math.random();
 				Stats s = turtleSpace.getStats();
 				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.turt.setImage(imageString);
+				turtleSpace.getTurtle().setImage(imageString);
 				savePanel(textInput);
 			}
 		});   
@@ -247,7 +247,7 @@ public void makeSunButton(JPanel homePanel){
 			{       
 				updateInfo();    
 				//TODO Need to make this run hte script in textFile
-				turtleSpace.turt.goForward(10);
+				turtleSpace.getTurtle().goForward(10);
 				
 			}
 		});   

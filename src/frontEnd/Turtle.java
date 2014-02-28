@@ -16,14 +16,14 @@ public class Turtle extends JGObject {
 	private boolean penActive=true;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
-	public double targetx=TURTLE_INIT_X;
-	public double targety=TURTLE_INIT_Y;
+	private double targetx=TURTLE_INIT_X;
+	private double targety=TURTLE_INIT_Y;
 	Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
 	private Position origPosition=new Position(TURTLE_INIT_X,TURTLE_INIT_Y);
 	private double myRotation=90;
 	private JGColor drawingColor=JGColor.black;
 	private JGColor penColor=JGColor.black;
-	JGEngine myEngine;
+	private JGEngine myEngine;
 	private double velocity=0.02;
 	public Turtle() {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
@@ -44,7 +44,9 @@ public class Turtle extends JGObject {
 
 		}
 	}
-
+public void setEngine(JGEngine engine){
+	myEngine=engine;
+}
 	public double goForward(double distance){
 		double rot=Math.toRadians(myRotation);
 		double xOffset=Math.cos(rot)*distance;

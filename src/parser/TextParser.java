@@ -38,7 +38,8 @@ public class TextParser extends AbstractParser {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
 
 		if(index == myCommandList.size()) return 0;
-		if( parameterNumber == 0 && !allParentsHaveParameters(current) ){ // if leaf node
+		if( (parameterNumber == 0 && !allParentsHaveParameters(current)) || 
+				index + 1 == myCommandList.size()){ // if leaf node
 			return 1;
 		}
 		
@@ -48,7 +49,7 @@ public class TextParser extends AbstractParser {
 			StringNode child2 = current.addChild(myCommandList.get(index + offset));
 			buildTree(child2, index + offset);
 		}
-		else if (index+1 < myCommandList.size()){
+		else {
 			StringNode child = current.addChild(myCommandList.get(index+1));
 			buildTree(child, index+1);
 		}

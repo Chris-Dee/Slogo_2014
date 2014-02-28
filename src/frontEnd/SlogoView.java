@@ -15,9 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 //to-do
 //need to put in different preferences
 //need to put in panel of previous scripts
@@ -34,6 +37,8 @@ public class SlogoView extends JFrame{
 	private static JTextField headingx;
 	private static JTextField headingy;
 	private static JTextField angle;
+	private static double velocity;
+	private String imageString;
 	private static TurtleDrawer turtleSpace;
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
@@ -133,8 +138,6 @@ public class SlogoView extends JFrame{
 		JPanel dataPanel=new JPanel();
 		dataPanel.setLayout(new BoxLayout(dataPanel,BoxLayout.Y_AXIS));
 		dataPanel.setBackground(new java.awt.Color(100,100,100));
-		
-		
 		makePosPanel(dataPanel);
 		makeHeadingPanel(dataPanel);
 		makeAnglePanel(dataPanel);
@@ -156,6 +159,21 @@ public class SlogoView extends JFrame{
 		rotatePanel.add(rotationInput);
 		rotationPanel.add(rotatePanel);
 	}
+	public void makeScroller(JPanel homePanel){
+		JPanel scrollPanel=new JPanel();
+		scrollPanel.setLayout(new BoxLayout(scrollPanel,BoxLayout.Y_AXIS));
+		scrollPanel.add(new JLabel("Velocity SLider"));
+		JSlider veloSlider=new JSlider(JSlider.HORIZONTAL, 1,10,5);
+		veloSlider.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				turtleSpace.turt.setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
+				
+			}
+		});
+		scrollPanel.add(veloSlider);
+		homePanel.add(scrollPanel);
+	}
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
 		createSaveButton(inputTextPanel);
@@ -173,6 +191,10 @@ public class SlogoView extends JFrame{
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 				turtleSpace.turt.goForward(30);
 				turtleSpace.turt.addRotation(45);
+				imageString= "Turtle" + Math.random();
+				Stats s = turtleSpace.getStats();
+				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+				turtleSpace.turt.setImage(imageString);
 				//turtcommands.setText(textInput.getText());
 				savePanel(textInput);
 				
@@ -293,10 +315,9 @@ public class SlogoView extends JFrame{
 	}
 	public JPanel makeOptionsPanel(){
 		JPanel optionsPanel=new JPanel();
-
+		makeScroller(optionsPanel);
 		optionsPanel.add(makeHelpButton());
 		optionsPanel.setBackground(new java.awt.Color(100,100,100));
-		// create textArea and button to decide on image
 		makeImageChooserButton(optionsPanel);
 		optionsPanel.add(makeRefreshButton());
 		makeRotatePanel(optionsPanel);
@@ -315,10 +336,13 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
+		//	mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		setResizable(false);
 		pack();
 		setTitle("Slow Go Team 16");
+
+		//mainPanel.add()
 	}
 
 

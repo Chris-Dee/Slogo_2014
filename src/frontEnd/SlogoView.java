@@ -38,7 +38,6 @@ public class SlogoView extends JFrame{
 	private static JTextField headingy;
 	private static JTextField angle;
 	private static double velocity;
-	private String imageString;
 	private static TurtleDrawer turtleSpace;
 	private String imageString;
 	private static final int NUM_BOXES=3;

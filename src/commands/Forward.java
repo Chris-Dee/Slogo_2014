@@ -22,6 +22,7 @@ public class Forward extends TurtleCommand {
 
 	@Override
 	public double execute() {
+		System.out.println("i "+myMagnitude);
 		myTurtle.goForward(myMagnitude);
 		return myMagnitude;
 	}

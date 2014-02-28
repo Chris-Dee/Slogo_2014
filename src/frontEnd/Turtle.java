@@ -20,7 +20,7 @@ public class Turtle extends JGObject {
 	private double targety=TURTLE_INIT_Y;
 	Map<ArrayList<Position>,JGColor> lines=new HashMap<ArrayList<Position>,JGColor>();
 	private Position origPosition=new Position(TURTLE_INIT_X,TURTLE_INIT_Y);
-	private double myRotation=90;
+	private double myRotation=0;
 	private JGColor drawingColor=JGColor.black;
 	private JGColor penColor=JGColor.black;
 	private JGEngine myEngine;
@@ -132,6 +132,6 @@ public void setEngine(JGEngine engine){
 		return rot;
 	}
 	public Stats getStats(){
-		return new Stats(x,y,myRotation,xdir,ydir,drawingColor);
+		return new Stats(xspeed, yspeed, x,y,myRotation,xdir,ydir,drawingColor);
 	}
 }

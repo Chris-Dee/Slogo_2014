@@ -11,13 +11,22 @@ public class Stats {
 	int xDirect;
 	int yDirect;
 	JGColor penColor;
-public Stats(double xPos, double yPos, double rot, int xDir, int yDir, JGColor pen){
+	double velox;
+	double veloy;
+public Stats(double vx, double vy,double xPos, double yPos, double rot, int xDir, int yDir, JGColor pen){
 	x=xPos;
 	y=yPos;
 	rotation=rot;
 	xDirect=xDir;
 	yDirect=yDir;
 	penColor=pen;
+	velox=vx;
+	veloy=vy;
+	
+	
+}
+public Position getSpeed(){
+	return new Position(velox,veloy);
 }
 public Position getPos(){
 	return new Position(x,y);

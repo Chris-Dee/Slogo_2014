@@ -12,7 +12,7 @@ public class TextParser extends AbstractParser {
 //			"LESSP", "GREATER?", "GREATERP", "EQUAL?", "EQUALP", "NOTEQUAL?", 
 //			"NOTEQUALP", "AND", "OR"};
 	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
-	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters.properties";
+	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
 	private ResourceBundle myResources;
 	private StringNode myRoot;
 	

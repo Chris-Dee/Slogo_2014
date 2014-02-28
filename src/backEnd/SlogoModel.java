@@ -26,7 +26,7 @@ public class SlogoModel {
 		myHistory.add(userCommands);
 		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 		StringNode root = myParser.parse(userCommands);
-		System.out.println("turtle: "+turtle.getName());
+	//	System.out.println("turtle: "+turtle.getName());
 		System.out.println("root data: "+root.getCommandString());
 		System.out.println("root child data: "+root.getChildren().get(0).getCommandString());
 		if (myCommandFactory.runCommands(root, turtle) == -1){ // error messages

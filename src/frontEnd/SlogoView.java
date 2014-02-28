@@ -63,9 +63,13 @@ public class SlogoView extends JFrame{
 
 			public void actionPerformed(ActionEvent e)
 			{              
-				showError("Input number is not valid");
-				updateInfo();
+				
+				
+				try{
 				turtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
+			updateInfo();
+			}catch(Exception e1){
+				showError("Input number is not valid");}
 			}
 		});   
 
@@ -157,12 +161,12 @@ public class SlogoView extends JFrame{
 		rotationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-			showError("Input number is not valid");
+			try{
 				turtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.getTurtle().setImage(imageString);
+			}catch(Exception e1){
+				showError("Input number is not valid");
+			}
+				rotateImage();
 				updateInfo();
 			}
 		});   
@@ -196,10 +200,7 @@ public class SlogoView extends JFrame{
 						turtleSpace.getTurtle().addRotation(90);
 						turtleSpace.getTurtle().goForward(30);
 					}
-					imageString= "Turtle" + Math.random();
-					Stats s = turtleSpace.getStats();
-					turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-					turtleSpace.getTurtle().setImage(imageString);
+					rotateImage();
 				}
 		});  
 		homePanel.add(sunButton);
@@ -219,16 +220,14 @@ public class SlogoView extends JFrame{
 			{ 
 				try{
 				model.receiveTextInput(textInput.getText(), turtleSpace.getTurtle());
+				rotateImage();
+				savePanel(textInput);
 				}
 				catch(MissingResourceException e1){
 					showError("Not a recognized command");
 				}
 				updateInfo();          
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.getTurtle().setImage(imageString);
-				savePanel(textInput);
+				
 			}
 		});   
 		inputTextPanel.add(inputPane);
@@ -395,6 +394,12 @@ public class SlogoView extends JFrame{
 		setVisible(true);
 		// TODO Auto-generated method stub
 
+	}
+	private void rotateImage() {
+		imageString= "Turtle" + Math.random();
+		Stats s = turtleSpace.getStats();
+		turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+		turtleSpace.getTurtle().setImage(imageString);
 	}
 
 

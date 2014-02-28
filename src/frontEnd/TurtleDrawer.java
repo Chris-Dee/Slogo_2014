@@ -97,10 +97,11 @@ turt.reset();
 		Position newPos=turt.getStats().getPos();
 		double targetx = newPos.xPos();
 		double targety = newPos.yPos();
-		turt.remove();
+		//turt.remove();
 		defineImage("Turtle","Turt",0,imageFile,"-");
-		chosenImage = imageFile;
-		turt=new Turtle();
+		chosenImage = "Turtle";
+		//turt=new Turtle();
+		turt.setImage(chosenImage);
 		turt.setPos(targetx, targety);
 		turt.setEngine(this);
 	}

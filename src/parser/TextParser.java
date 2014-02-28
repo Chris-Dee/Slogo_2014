@@ -69,12 +69,10 @@ public class TextParser extends AbstractParser {
 	}
 
 	private void initializeTree(List<String> commands) {
-		// TODO Auto-generated method stub
 		myRoot = new StringNode(commands.get(0));
 	}
 
 	private int getNumberOfParameters(String commandString) {
-		// TODO Auto-generated method stub
 		if (isParameter(commandString)) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}

@@ -187,6 +187,7 @@ public class SlogoView extends JFrame{
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{     
+				model.receiveTextInput(textInput.getText(), turtleSpace.turt);
 				updateInfo();          
 				//turtleSpace.turt.setTarget(new Point((int)(Math.random()*200),(int)(Math.random()*200)));
 				turtleSpace.turt.goForward(30);

@@ -49,6 +49,7 @@ public class Turtle extends JGObject {
 		double rot=Math.toRadians(myRotation);
 		double xOffset=Math.cos(rot)*distance;
 		double yOffset=Math.sin(rot)*distance;
+		if(xspeed==0&&yspeed==0)
 		setTarget(new Position((x+xOffset),(y+yOffset)));
 		return distance;
 	}
@@ -73,13 +74,12 @@ public class Turtle extends JGObject {
 		if(Math.abs(xdir)>0||Math.abs(ydir)>0){
 			List<Position> loc=new ArrayList<Position>();
 			
-			loc.add(new Position((double)(int)x,(double)(int)y));
+			loc.add(new Position(x,y));
+			
 			loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
-			System.out.println(loc.get(loc.size()-1).xPos());
+			System.out.println(lines.size()+"  "+xspeed+"  "+yspeed);
+			if(xspeed>0.03&&yspeed>0.03)
 				lines.put((ArrayList<Position>) loc,drawingColor);
-				System.out.println("llll");
-lines.remove(loc);
-lines.put((ArrayList<Position>) loc,drawingColor);
 			}
 		if(origPosition!=null){
 			for(ArrayList<Position> line:lines.keySet())
@@ -116,6 +116,7 @@ lines.put((ArrayList<Position>) loc,drawingColor);
 		setTarget(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
 	}
 	public void addRotation(double addRotation){
+		if(xspeed==0&&yspeed==0)
 		myRotation+=addRotation;
 	}
 	public double setRotation(double setRotation){

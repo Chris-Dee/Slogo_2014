@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
-public class FrameLayoutNew extends JFrame{
+public class SlogoView extends JFrame{
 	private Stats turtleStats;
 	private SlogoModel model;
 	private static JTextField xPos;
@@ -39,7 +39,7 @@ public class FrameLayoutNew extends JFrame{
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static final HelpPage helpPage=new HelpPage();
 	private JTextArea textInput;
-	public FrameLayoutNew(SlogoModel modelSlog){
+	public SlogoView(SlogoModel modelSlog){
 		super();
 		initiate();
 		model=modelSlog;

@@ -1,25 +1,23 @@
 package frontEnd;
 import java.awt.BorderLayout;
 import java.awt.Button;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 //to-do
@@ -32,6 +30,7 @@ import backEnd.SlogoModel;
 @SuppressWarnings("serial")
 public class SlogoView extends JFrame{
 	private Stats turtleStats;
+	private JPanel mainPanel;
 	private SlogoModel model;
 	private static JTextField xPos;
 	private static JTextField yPos;
@@ -41,9 +40,10 @@ public class SlogoView extends JFrame{
 	private static double velocity;
 	private static TurtleDrawer turtleSpace;
 	private String imageString;
+	private static final String numberError="Number entered not valid!";
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
-	private static final HelpPage helpPage=new HelpPage();
+	private static HelpPage helpPage;
 	private JTextArea textInput;
 	public SlogoView(){
 		super();
@@ -63,8 +63,13 @@ public class SlogoView extends JFrame{
 
 			public void actionPerformed(ActionEvent e)
 			{              
-				updateInfo();
+				
+				
+				try{
 				turtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
+			updateInfo();
+			}catch(Exception e1){
+				showError("Input number is not valid");}
 			}
 		});   
 
@@ -99,7 +104,10 @@ public class SlogoView extends JFrame{
 		posPanel.add(xPanel);
 		posPanel.add(yPanel);
 		dataPanel.add(posPanel);
-		
+
+	}
+	private void showError(String s){
+		JOptionPane.showMessageDialog(mainPanel,s);
 	}
 	private void makeHeadingPanel(JPanel dataPanel){
 		JPanel headingPanel=new JPanel();
@@ -153,12 +161,13 @@ public class SlogoView extends JFrame{
 		rotationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-				updateInfo();
+			try{
 				turtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.getTurtle().setImage(imageString);
+			}catch(Exception e1){
+				showError("Input number is not valid");
+			}
+				rotateImage();
+				updateInfo();
 			}
 		});   
 		rotatePanel.add(rotationButton);
@@ -179,22 +188,20 @@ public class SlogoView extends JFrame{
 		scrollPanel.add(veloSlider);
 		homePanel.add(scrollPanel);
 	}
-public void makeSunButton(JPanel homePanel){
+	public void makeSunButton(JPanel homePanel){
 		Button sunButton=new Button("press 8x");
 		sunButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{      
 				updateInfo();
-				turtleSpace.getTurtle().addRotation(45);
-				for(int k=0;k<4;k++){
-				turtleSpace.getTurtle().addRotation(90);
-				turtleSpace.getTurtle().goForward(30);
+					turtleSpace.getTurtle().addRotation(45);
+					
+					for(int k=0;k<4;k++){
+						turtleSpace.getTurtle().addRotation(90);
+						turtleSpace.getTurtle().goForward(30);
+					}
+					rotateImage();
 				}
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.getTurtle().setImage(imageString);
-			}
 		});  
 		homePanel.add(sunButton);
 	}
@@ -211,13 +218,16 @@ public void makeSunButton(JPanel homePanel){
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ 
+				try{
 				model.receiveTextInput(textInput.getText(), turtleSpace.getTurtle());
-				updateInfo();          
-				imageString= "Turtle" + Math.random();
-				Stats s = turtleSpace.getStats();
-				turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-				turtleSpace.getTurtle().setImage(imageString);
+				rotateImage();
 				savePanel(textInput);
+				}
+				catch(MissingResourceException e1){
+					showError("Not a recognized command");
+				}
+				updateInfo();          
+				
 			}
 		});   
 		inputTextPanel.add(inputPane);
@@ -246,9 +256,8 @@ public void makeSunButton(JPanel homePanel){
 			public void actionPerformed(ActionEvent e)
 			{       
 				updateInfo();    
-				//TODO Need to make this run hte script in textFile
 				turtleSpace.getTurtle().goForward(10);
-				
+
 			}
 		});   
 		oneBox.add(loader);
@@ -297,10 +306,17 @@ public void makeSunButton(JPanel homePanel){
 	}
 	public Button makeHelpButton(){
 		Button helpButton=new Button("Help Button");
+		//final HelpPage helpPage=new HelpPage();
+		 boolean page=true;
+		if(helpPage!=null)
+		page=helpPage.isVisible();
+		final boolean finalPage=page;
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
-			{             
-				helpPage.setVisible(!helpPage.isVisible());
+			{     
+				helpPage=new HelpPage();
+				helpPage.setVisible(finalPage);
+				
 			}
 		});   
 		return helpButton;
@@ -328,7 +344,12 @@ public void makeSunButton(JPanel homePanel){
 			public void actionPerformed(ActionEvent e)
 			{
 				String imageFile = imageChooser.getText();
+				try{
 				turtleSpace.newTurtle(imageFile);
+				}
+				catch(Exception e1){
+				showError("File was not found");
+				}
 			}
 		});
 		panel.add(selectImage);
@@ -349,7 +370,7 @@ public void makeSunButton(JPanel homePanel){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(400,600));
 		setVisible(true);
-		JPanel mainPanel=(JPanel) getContentPane();
+		mainPanel=(JPanel) getContentPane();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		rightPanel.add(makeSavedTextBoxes());
@@ -368,11 +389,17 @@ public void makeSunButton(JPanel homePanel){
 
 
 	public void  initiate() {
-		
+
 		createMainPanel();
 		setVisible(true);
 		// TODO Auto-generated method stub
 
+	}
+	private void rotateImage() {
+		imageString= "Turtle" + Math.random();
+		Stats s = turtleSpace.getStats();
+		turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+		turtleSpace.getTurtle().setImage(imageString);
 	}
 
 

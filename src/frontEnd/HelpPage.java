@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -30,8 +31,7 @@ public class HelpPage extends JFrame {
 			helpPagePane=helpPanel;
 					
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Not connected to the internet");
 		}
 
 		return helpPagePane;

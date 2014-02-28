@@ -29,7 +29,7 @@ public abstract class AbstractParser {
 		// TODO Auto-generated method stub
 		String singleLineString;
 		if (s.contains("\n"))
-			singleLineString = s.replaceAll("\n", "");
+			singleLineString = s.replaceAll("\n", " ");
 		else
 			singleLineString = s;
 		

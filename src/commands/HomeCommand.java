@@ -4,13 +4,12 @@ import java.awt.Point;
 
 import frontEnd.Turtle;
 
-public class HomeCommand extends TurtleCommand {
+public class Home extends TurtleCommand {
 	
 	public static final int HOME_X = 0;
 	public static final int HOME_Y = 0;
 	
-	public HomeCommand(String string, Turtle turtle){
-		super(string, turtle);
+	public Home(){
 	}
 
 	@Override

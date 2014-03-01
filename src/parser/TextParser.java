@@ -28,7 +28,7 @@ public class TextParser extends AbstractParser {
 		for (int i = 0; i < stringArray.length; i++) {
 			myCommandList.add(stringArray[i]);
 		}
-		System.out.println("myCommandList: " + myCommandList.size());
+//		System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
 		return myRoot;
@@ -64,7 +64,7 @@ public class TextParser extends AbstractParser {
 	private boolean allParentsHaveParameters(StringNode current){
 		while(current.getParent() != null){ // not a root
 			current = current.getParent();
-			if(!hasRightNumChildren(current) ){ return false; }
+			if(!hasRightNumChildren(current) && getNumberOfParameters(current.getCommandString()) != 0 ){ return false; }
 		}
 		return true;
 	}
@@ -73,7 +73,8 @@ public class TextParser extends AbstractParser {
 	public boolean checkForErrors() {
 		boolean answer = true;
 		for (StringNode leaf : myLeaves) {
-			if( !hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf) ){ answer = false; }
+			if( (!hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf)) 
+					&& getNumberOfParameters(leaf.getCommandString()) != 0 ){ answer = false; }
 		}
 		myLeaves.clear();
 		return answer;

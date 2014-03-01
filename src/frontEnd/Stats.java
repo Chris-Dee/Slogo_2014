@@ -8,17 +8,17 @@ public class Stats {
 	double x;
 	double y;
 	double rotation;
-	int xDirect;
-	int yDirect;
+	int targetx;
+	int targety;
 	JGColor penColor;
 	double velox;
 	double veloy;
-public Stats(double vx, double vy,double xPos, double yPos, double rot, int xDir, int yDir, JGColor pen){
+public Stats(double vx, double vy,double xPos, double yPos, double rot, int xTarg, int yTarg, JGColor pen){
 	x=xPos;
 	y=yPos;
 	rotation=rot;
-	xDirect=xDir;
-	yDirect=yDir;
+	targetx=xTarg;
+	targety=yTarg;
 	penColor=pen;
 	velox=vx;
 	veloy=vy;
@@ -31,8 +31,8 @@ public Position getSpeed(){
 public Position getPos(){
 	return new Position(x,y);
 }
-public Point getHeading(){
-	return new Point(xDirect,yDirect);
+public Point getTarget(){
+	return new Point(targetx,targety);
 }
 public double getRot(){
 	return rotation;

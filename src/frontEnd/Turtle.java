@@ -53,7 +53,7 @@ public class Turtle extends JGObject {
 				targetx=targetQueue.get(targetCount).xPos();
 				targety=targetQueue.get(targetCount).yPos();
 				targetCount++;
-				System.out.println(targetx+"  "+targety+"   "+targetCount);
+				
 			}
 		}
 	}
@@ -64,7 +64,7 @@ public class Turtle extends JGObject {
 			double rot=Math.toRadians(myRotation);
 			double xOffset=Math.cos(rot)*distance;
 			double yOffset=Math.sin(rot)*distance;
-			if(xspeed==0&&yspeed==0)
+			if(xspeed<=0.01&&yspeed<=0.01)
 				setTarget(new Position((targetQueue.get(targetQueue.size()-1).xPos()+xOffset),(targetQueue.get(targetQueue.size()-1).yPos()+yOffset)));
 			return distance;
 		}
@@ -77,13 +77,12 @@ public class Turtle extends JGObject {
 		}
 		public void move(){
 			moveToTarget();
-
 		}
 		public double setTarget(Position target){
 			double dist=Point2D.distance(x,y,targetx,targety);
 			origPosition=new Position(targetx,targety);
 			targetQueue.add(new Position(target.xPos(),target.yPos()));
-			System.out.println(targetQueue);
+			System.out.println(targetQueue.size()+"  "+targetCount);
 			return dist;
 		}
 		public void runPen(int thickness, boolean penActive){
@@ -151,6 +150,6 @@ public class Turtle extends JGObject {
 			return rot-setRotation;
 		}
 		public Stats getStats(){
-			return new Stats(xspeed, yspeed, x,y,myRotation,xdir,ydir,drawingColor);
+			return new Stats(xspeed,yspeed,targetx,targety,myRotation,xdir,ydir,drawingColor);
 		}
 	}

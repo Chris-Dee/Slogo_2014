@@ -35,14 +35,16 @@ public class SlogoView extends JFrame{
 	private SlogoModel model;
 	private static JTextField xPos;
 	private static JTextField yPos;
+	private static JTextField results;
 	private static JTextField headingx;
 	private static JTextField headingy;
 	private static JTextField angle;
 	private static double velocity;
+	private double result=0;
 	private static TurtleDrawer TurtleSpace;
 	private String imageString;
 	private static final String numberError="Number entered not valid!";
-    public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
+	public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
@@ -65,13 +67,13 @@ public class SlogoView extends JFrame{
 
 			public void actionPerformed(ActionEvent e)
 			{              
-				
-				
+
+
 				try{
-				TurtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
-			updateInfo();
-			}catch(Exception e1){
-				showError("Input number is not valid");}
+					TurtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
+					updateInfo();
+				}catch(Exception e1){
+					showError("Input number is not valid");}
 			}
 		});   
 
@@ -84,8 +86,8 @@ public class SlogoView extends JFrame{
 		Stats s=TurtleSpace.getStats();
 		xPos.setText(decFor.format(s.getPos().xPos()-Turtle.TURTLE_INIT_X)+"");
 		yPos.setText(decFor.format(s.getPos().yPos()-Turtle.TURTLE_INIT_Y)+"");
-		headingy.setText(s.getHeading().y+"");
-		headingx.setText(s.getHeading().x+"");
+		headingy.setText(s.getTarget().y+"");
+		headingx.setText(s.getTarget().x+"");
 		angle.setText(decFor.format(s.getRot()%360)+"");
 	}
 	private void makePosPanel(JPanel dataPanel){
@@ -111,7 +113,16 @@ public class SlogoView extends JFrame{
 	public void showError(String s){
 		JOptionPane.showMessageDialog(mainPanel,s);
 	}
-	private void makeHeadingPanel(JPanel dataPanel){
+	private void makeResultsPanel(JPanel homePanel){
+		JPanel resultsPanel=new JPanel();
+		resultsPanel.setLayout(new BoxLayout(resultsPanel,BoxLayout.Y_AXIS ));
+		resultsPanel.add(new JLabel("Equation Results"));
+		results=new JTextField();
+		results.setEditable(false);
+		resultsPanel.add(results);
+		homePanel.add(resultsPanel);
+	}
+	private void makeTargetPanel(JPanel dataPanel){
 		JPanel headingPanel=new JPanel();
 		JPanel x=new JPanel();
 		x.setLayout(new BoxLayout(x,BoxLayout.Y_AXIS));
@@ -119,13 +130,13 @@ public class SlogoView extends JFrame{
 		y.setLayout(new BoxLayout(y,BoxLayout.Y_AXIS));
 		headingx=new JTextField(4);
 		headingx.setEditable(false);
-		JLabel xLabel=new JLabel("x Heading");
+		JLabel xLabel=new JLabel("x Target");
 		//xLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		x.add(xLabel);
 		x.add(headingx);
 		headingy=new JTextField(4);
 		headingy.setEditable(false);
-		JLabel yLabel= new JLabel("y heading");
+		JLabel yLabel= new JLabel("y Target");
 		//yLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		y.add(yLabel);
 		y.add(headingy);
@@ -149,8 +160,9 @@ public class SlogoView extends JFrame{
 		JPanel dataPanel=new JPanel();
 		dataPanel.setLayout(new BoxLayout(dataPanel,BoxLayout.Y_AXIS));
 		dataPanel.setBackground(new java.awt.Color(100,100,100));
+		makeResultsPanel(dataPanel);
 		makePosPanel(dataPanel);
-		makeHeadingPanel(dataPanel);
+		makeTargetPanel(dataPanel);
 		makeAnglePanel(dataPanel);
 		homePanel.add(dataPanel);
 	}
@@ -163,11 +175,11 @@ public class SlogoView extends JFrame{
 		rotationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-			try{
-				TurtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
-			}catch(Exception e1){
-				showError("Input number is not valid");
-			}
+				try{
+					TurtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
+				}catch(Exception e1){
+					showError("Input number is not valid");
+				}
 				rotateImage();
 				updateInfo();
 			}
@@ -196,14 +208,15 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{      
 				updateInfo();
-					TurtleSpace.getTurtle().addRotation(45);
-					
-					for(int k=0;k<4;k++){
-						TurtleSpace.getTurtle().addRotation(90);
-						TurtleSpace.getTurtle().goForward(30);
-					}
-					rotateImage();
+				
+				TurtleSpace.getTurtle().addRotation(45);
+				for(int k=0;k<3;k++){
+					TurtleSpace.getTurtle().addRotation(90);
+					TurtleSpace.getTurtle().goForward(30);
 				}
+				rotateImage();
+				}
+			
 		});  
 		homePanel.add(sunButton);
 	}
@@ -221,14 +234,14 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
-				model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle());
-				rotateImage();
-				savePanel(textInput);
+					results.setText(model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle())+"");
+					rotateImage();
+					savePanel(textInput);
 				}
 				catch(MissingResourceException e1){
 					showError(ILLEGAL_COMMAND_MESSAGE);
 				}
-				          
+
 				updateInfo();
 			}
 		});   
@@ -246,7 +259,7 @@ public class SlogoView extends JFrame{
 	}
 
 
-	private void fillSavedBoxes(JPanel oneBox, int i){
+	private void fillSavedBoxes(JPanel oneBox, final int i){
 
 		oneBox.setLayout(new BoxLayout(oneBox,BoxLayout.Y_AXIS));
 		final JTextArea savedText=new JTextArea(28,10);
@@ -257,8 +270,8 @@ public class SlogoView extends JFrame{
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
+				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), TurtleSpace.getTurtle())+"");
 				updateInfo();    
-				TurtleSpace.getTurtle().goForward(10);
 
 			}
 		});   
@@ -309,16 +322,16 @@ public class SlogoView extends JFrame{
 	public Button makeHelpButton(){
 		Button helpButton=new Button("Help Button");
 		//final HelpPage helpPage=new HelpPage();
-		 boolean page=true;
+		boolean page=true;
 		if(helpPage!=null)
-		page=helpPage.isVisible();
+			page=helpPage.isVisible();
 		final boolean finalPage=page;
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{     
 				helpPage=new HelpPage();
 				helpPage.setVisible(finalPage);
-				
+
 			}
 		});   
 		return helpButton;
@@ -347,10 +360,10 @@ public class SlogoView extends JFrame{
 			{
 				String imageFile = imageChooser.getText();
 				try{
-				TurtleSpace.newTurtle(imageFile);
+					TurtleSpace.newTurtle(imageFile);
 				}
 				catch(Exception e1){
-				showError("File was not found");
+					showError("File was not found");
 				}
 			}
 		});

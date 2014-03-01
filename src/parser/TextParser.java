@@ -28,7 +28,7 @@ public class TextParser extends AbstractParser {
 		for (int i = 0; i < stringArray.length; i++) {
 			myCommandList.add(stringArray[i]);
 		}
-//		System.out.println("myCommandList: " + myCommandList.size());
+//		//System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
 		return myRoot;

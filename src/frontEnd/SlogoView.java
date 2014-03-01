@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 //need to put in panel of previous scripts
 //need to add pen
 
+
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
@@ -41,6 +42,7 @@ public class SlogoView extends JFrame{
 	private static TurtleDrawer turtleSpace;
 	private String imageString;
 	private static final String numberError="Number entered not valid!";
+    public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
@@ -106,7 +108,7 @@ public class SlogoView extends JFrame{
 		dataPanel.add(posPanel);
 
 	}
-	private void showError(String s){
+	public void showError(String s){
 		JOptionPane.showMessageDialog(mainPanel,s);
 	}
 	private void makeHeadingPanel(JPanel dataPanel){
@@ -224,7 +226,7 @@ public class SlogoView extends JFrame{
 				savePanel(textInput);
 				}
 				catch(MissingResourceException e1){
-					showError("Not a recognized command");
+					showError(ILLEGAL_COMMAND_MESSAGE);
 				}
 				updateInfo();          
 				

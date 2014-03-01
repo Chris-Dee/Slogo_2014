@@ -9,14 +9,19 @@ public class Home extends TurtleCommand {
 	public static final int HOME_X = 0;
 	public static final int HOME_Y = 0;
 	
-	public Home(){
-	}
+	public Home(){}
 
 	@Override
 	public double execute() {
 		// need revision
 		double distance = 0;
-		myTurtle.setTarget(new Point(HOME_X, HOME_Y));
+		myTurtle.setTarget(new Point(init_turtle_x, init_turtle_y));
 		return distance;
+	}
+
+	@Override
+	public String getCommandType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

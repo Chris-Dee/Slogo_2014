@@ -26,6 +26,8 @@ public class TextParser extends AbstractParser {
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
 //		System.out.println("myCommandList: " + myCommandList.size());
+
+//		//System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
 		return myRoot;

@@ -13,4 +13,8 @@ public double xPos(){
 public double yPos(){
 	return y;
 }
+@Override
+public String toString(){
+	return xPos()+" "+yPos();
+}
 }

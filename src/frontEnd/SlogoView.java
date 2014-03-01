@@ -30,7 +30,7 @@ import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
 public class SlogoView extends JFrame{
-	private Stats turtleStats;
+	private Stats TurtleStats;
 	private JPanel mainPanel;
 	private SlogoModel model;
 	private static JTextField xPos;
@@ -39,7 +39,7 @@ public class SlogoView extends JFrame{
 	private static JTextField headingy;
 	private static JTextField angle;
 	private static double velocity;
-	private static TurtleDrawer turtleSpace;
+	private static TurtleDrawer TurtleSpace;
 	private String imageString;
 	private static final String numberError="Number entered not valid!";
     public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
@@ -68,7 +68,7 @@ public class SlogoView extends JFrame{
 				
 				
 				try{
-				turtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
+				TurtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
 			updateInfo();
 			}catch(Exception e1){
 				showError("Input number is not valid");}
@@ -81,7 +81,7 @@ public class SlogoView extends JFrame{
 	}
 	public static void updateInfo(){
 		DecimalFormat decFor=new DecimalFormat("0.000");
-		Stats s=turtleSpace.getStats();
+		Stats s=TurtleSpace.getStats();
 		xPos.setText(decFor.format(s.getPos().xPos()-Turtle.TURTLE_INIT_X)+"");
 		yPos.setText(decFor.format(s.getPos().yPos()-Turtle.TURTLE_INIT_Y)+"");
 		headingy.setText(s.getHeading().y+"");
@@ -164,7 +164,7 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{             
 			try{
-				turtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
+				TurtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
 			}catch(Exception e1){
 				showError("Input number is not valid");
 			}
@@ -184,7 +184,7 @@ public class SlogoView extends JFrame{
 		veloSlider.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				turtleSpace.getTurtle().setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
+				TurtleSpace.getTurtle().setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
 			}
 		});
 		scrollPanel.add(veloSlider);
@@ -196,11 +196,11 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{      
 				updateInfo();
-					turtleSpace.getTurtle().addRotation(45);
+					TurtleSpace.getTurtle().addRotation(45);
 					
 					for(int k=0;k<4;k++){
-						turtleSpace.getTurtle().addRotation(90);
-						turtleSpace.getTurtle().goForward(30);
+						TurtleSpace.getTurtle().addRotation(90);
+						TurtleSpace.getTurtle().goForward(30);
 					}
 					rotateImage();
 				}
@@ -214,22 +214,22 @@ public class SlogoView extends JFrame{
 		textInput=new JTextArea(5,20);
 		JScrollPane inputPane=new JScrollPane(textInput);
 		textInput.setText("");
-		//"Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing turtle image(?)");
+		//"Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing Turtle image(?)");
 		textInput.setSize(100,300);
 		Button submit=new Button("Submit Text");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
-				model.receiveTextInput(textInput.getText(), turtleSpace.getTurtle());
+				model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle());
 				rotateImage();
 				savePanel(textInput);
 				}
 				catch(MissingResourceException e1){
 					showError(ILLEGAL_COMMAND_MESSAGE);
 				}
-				updateInfo();          
-				
+				          
+				updateInfo();
 			}
 		});   
 		inputTextPanel.add(inputPane);
@@ -258,7 +258,7 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{       
 				updateInfo();    
-				turtleSpace.getTurtle().goForward(10);
+				TurtleSpace.getTurtle().goForward(10);
 
 			}
 		});   
@@ -297,13 +297,13 @@ public class SlogoView extends JFrame{
 		JPanel drawingPanel=new JPanel();
 		JScrollPane scroller=new JScrollPane(drawingPanel);
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-		turtleSpace=new TurtleDrawer(30,30);
+		TurtleSpace=new TurtleDrawer(30,30);
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
 		drawingPanel.setSize(200,200);
 		drawingPanel.setMinimumSize(new Dimension(200,200));
-		turtleSpace.setMinimumSize(new Dimension(200,200));
-		turtleSpace.setSize(200,200);
-		drawingPanel.add(turtleSpace);
+		TurtleSpace.setMinimumSize(new Dimension(200,200));
+		TurtleSpace.setSize(200,200);
+		drawingPanel.add(TurtleSpace);
 		return scroller;
 	}
 	public Button makeHelpButton(){
@@ -328,12 +328,12 @@ public class SlogoView extends JFrame{
 		refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-				//need to reset turtle and clear lines
-				turtleSpace.refresh();
+				//need to reset Turtle and clear lines
+				TurtleSpace.refresh();
 				textInput.setText("");
 				for(JTextArea text:savedBoxes)
 					text.setText("");
-				turtleSpace.refresh();
+				TurtleSpace.refresh();
 			}
 		});   
 		return refresh;
@@ -347,7 +347,7 @@ public class SlogoView extends JFrame{
 			{
 				String imageFile = imageChooser.getText();
 				try{
-				turtleSpace.newTurtle(imageFile);
+				TurtleSpace.newTurtle(imageFile);
 				}
 				catch(Exception e1){
 				showError("File was not found");
@@ -399,9 +399,9 @@ public class SlogoView extends JFrame{
 	}
 	private void rotateImage() {
 		imageString= "Turtle" + Math.random();
-		Stats s = turtleSpace.getStats();
-		turtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-		turtleSpace.getTurtle().setImage(imageString);
+		Stats s = TurtleSpace.getStats();
+		TurtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+		TurtleSpace.getTurtle().setImage(imageString);
 	}
 
 

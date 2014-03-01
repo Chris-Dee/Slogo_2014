@@ -31,15 +31,19 @@ public class SlogoModel {
 	 */
 	public double receiveTextInput(String userCommands, Turtle turtle){
 		myHistory.add(userCommands);
-		System.out.println("userCommands passed in SLogoModel: "+userCommands);
+		//System.out.println("userCommands passed in SLogoModel: "+userCommands);
+//		System.out.println();
+//		System.out.println();
+//		System.out.println("userCommands passed in SLogoModel: "+userCommands);
+
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
 			myViewer.showError(SlogoView.ILLEGAL_COMMAND_MESSAGE);
 			return 0;
 		}
-		System.out.println("Pass Legality Check");
-//		System.out.println("root data: "+root.getCommandString());
-//		System.out.println("root child data: "+root.getChildren().get(0).getCommandString());
+		//System.out.println("Pass Legality Check");
+//		//System.out.println("root data: "+root.getCommandString());
+//		//System.out.println("root child data: "+root.getChildren().get(0).getCommandString());
 		return myCommandFactory.runCommands(root, turtle);
 	}
 	

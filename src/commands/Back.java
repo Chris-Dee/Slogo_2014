@@ -15,9 +15,7 @@ public class Back extends TurtleCommand {
 	}
 	
 	public void setMagnitude(double magnitude){
-		if(magnitude >= 0){
-			myMagnitude = magnitude;
-		}
+		myMagnitude = magnitude;
 	}
 
 	@Override

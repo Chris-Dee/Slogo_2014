@@ -43,19 +43,14 @@ public class TextParser extends AbstractParser {
 	        }else if(c==']'){
 	            depth--;
 	        }else if(c==' ' && depth==0){
-	        	if (sb.toString().startsWith("["))
-	        		myCommandList.add(sb.toString().substring(1, sb.toString().length()-1));
-	        	else
-	        		myCommandList.add(sb.toString());
+	        	myCommandList.add(sb.toString());
 	            sb = new StringBuilder();
 	            continue;
 	        }
 	        sb.append(c);
 		}
-    	if (sb.toString().startsWith("["))
-    		myCommandList.add(sb.toString().substring(1, sb.toString().length()-1));
-    	else
-    		myCommandList.add(sb.toString());
+
+		myCommandList.add(sb.toString());
 	}
 
 	@Override

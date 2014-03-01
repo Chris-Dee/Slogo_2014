@@ -41,7 +41,7 @@ public class ParserTest {
 		StringNode root = parser.parse("repeat 3 [fd 50 repeat 5 [fd 50]] fd 50");
 		assertEquals("REPEAT", root.getCommandString());
 		assertEquals("3", root.getChildren().get(0).getCommandString());
-		assertEquals("FD 50 REPEAT 5 [FD 50]", root.getChildren().get(1).getCommandString());
+		assertEquals("[FD 50 REPEAT 5 [FD 50]]", root.getChildren().get(1).getCommandString());
 		assertEquals("FD", root.getChildren().get(1).getChildren().get(0).getCommandString());
 	}
 	

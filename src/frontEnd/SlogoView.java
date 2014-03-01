@@ -259,7 +259,7 @@ public class SlogoView extends JFrame{
 	}
 
 
-	private void fillSavedBoxes(JPanel oneBox, int i){
+	private void fillSavedBoxes(JPanel oneBox, final int i){
 
 		oneBox.setLayout(new BoxLayout(oneBox,BoxLayout.Y_AXIS));
 		final JTextArea savedText=new JTextArea(28,10);
@@ -270,8 +270,8 @@ public class SlogoView extends JFrame{
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
+				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), TurtleSpace.getTurtle())+"");
 				updateInfo();    
-				TurtleSpace.getTurtle().goForward(10);
 
 			}
 		});   

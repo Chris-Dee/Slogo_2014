@@ -66,11 +66,12 @@ public void setEngine(JGEngine engine){
 		moveToTarget();
 
 	}
-	public Position setTarget(Position target){
+	public double setTarget(Position target){
+		double dist= Point2D.distance(x,y,targetx,targety);
 		origPosition=new Position(targetx,targety);
 		targetx=target.xPos();
 		targety=target.yPos();
-		return target;
+		return dist;
 	}
 	public void runPen(int thickness, boolean penActive){
 		if(Math.abs(xdir)>0||Math.abs(ydir)>0){
@@ -129,7 +130,7 @@ public void setEngine(JGEngine engine){
 		double rot=myRotation;
 		myRotation=0;
 		addRotation(setRotation);
-		return rot;
+		return rot-setRotation;
 	}
 	public Stats getStats(){
 		return new Stats(xspeed, yspeed, x,y,myRotation,xdir,ydir,drawingColor);

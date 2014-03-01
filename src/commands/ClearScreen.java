@@ -16,8 +16,10 @@ public class ClearScreen extends TurtleCommand{
 	 * return the distance turtle moved from sending it to the home position
 	 */
 	public double execute() {
-		double distance = myTurtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
 		myTurtle.clearLines();
+		myTurtle.raisePen();
+		double distance = myTurtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
+		myTurtle.lowerPen();
 		return distance;
 	}
 

@@ -14,18 +14,18 @@ public class If extends ControlCommand{
 
 	@Override
 	public String getCommandType() {
-		// TODO Auto-generated method stub
 		return "IF";
 	}
 
 	@Override
 	public double execute() {
-		if (myMagnitude == 0)
+		StringNode expr = myParser.parse(myExpression);
+		double magnitude = myFactory.runCommands(expr, myTurtle);
+		if (magnitude == 0)
 			return 0;
 		
 		StringNode root = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(root, myTurtle);
-		
 		return answer;
 	}
 

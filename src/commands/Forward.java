@@ -1,5 +1,7 @@
 package commands;
 
+import frontEnd.SlogoView;
+
 /*
  * This command makes the turtle move forward by certain pixels
  */
@@ -22,7 +24,7 @@ public class Forward extends TurtleCommand {
 
 	@Override
 	public double execute() {
-		System.out.println("Forward magnitude: " + myMagnitude);
+		System.out.println("Forward executed: " + myMagnitude);
 		myTurtle.goForward(myMagnitude);
 		return myMagnitude;
 	}

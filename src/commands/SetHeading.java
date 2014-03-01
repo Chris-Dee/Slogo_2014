@@ -8,8 +8,7 @@ public class SetHeading extends TurtleCommand{
 
 	@Override
 	public double execute() {
-		myTurtle.setRotation(myDegree);
-		return 0; // need revision
+		return myTurtle.setRotation(myDegree);
 	}
 
 	@Override

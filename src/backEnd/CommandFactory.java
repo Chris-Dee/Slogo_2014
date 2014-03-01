@@ -8,6 +8,7 @@ import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
+import frontEnd.SlogoView;
 import frontEnd.Turtle;
 
 public class CommandFactory {
@@ -106,7 +107,9 @@ public class CommandFactory {
 		    }
 			for (Method cur: methods){
 				if (cur.getName().equals("execute")){
-					return (Double) cur.invoke(command);
+					double answer = (Double) cur.invoke(command);
+					SlogoView.updateInfo();
+					return answer;
 			    }	
 			}
 		} catch (ClassNotFoundException e) {

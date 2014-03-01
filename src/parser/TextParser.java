@@ -64,7 +64,7 @@ public class TextParser extends AbstractParser {
 	private boolean allParentsHaveParameters(StringNode current){
 		while(current.getParent() != null){ // not a root
 			current = current.getParent();
-			if(hasRightNumChildren(current) ){ return false; }
+			if(!hasRightNumChildren(current) ){ return false; }
 		}
 		return true;
 	}
@@ -73,14 +73,14 @@ public class TextParser extends AbstractParser {
 	public boolean checkForErrors() {
 		boolean answer = true;
 		for (StringNode leaf : myLeaves) {
-			if( hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf) ){ answer = false; }
+			if( !hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf) ){ answer = false; }
 		}
 		myLeaves.clear();
 		return answer;
 	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
-		return node.getChildren().size() != getNumberOfParameters(node.getCommandString());
+		return node.getChildren().size() == getNumberOfParameters(node.getCommandString());
 	}
 
 	private void initializeTree(List<String> commands) {

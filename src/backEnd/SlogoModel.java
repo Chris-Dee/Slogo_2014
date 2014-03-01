@@ -34,11 +34,11 @@ public class SlogoModel {
 		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
-			myViewer.showError(myViewer.ILLEGAL_COMMAND_MESSAGE);
+			myViewer.showError(SlogoView.ILLEGAL_COMMAND_MESSAGE);
 			return 0;
 		}
 		System.out.println("Pass Legality Check");
-		System.out.println("root data: "+root.getCommandString());
+//		System.out.println("root data: "+root.getCommandString());
 //		System.out.println("root child data: "+root.getChildren().get(0).getCommandString());
 		return myCommandFactory.runCommands(root, turtle);
 	}

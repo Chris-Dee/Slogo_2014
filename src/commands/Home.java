@@ -1,7 +1,6 @@
 package commands;
 
 import java.awt.Point;
-
 import frontEnd.Turtle;
 
 public class Home extends TurtleCommand {
@@ -15,13 +14,12 @@ public class Home extends TurtleCommand {
 	public double execute() {
 		// need revision
 		double distance = 0;
-		myTurtle.setTarget(new Point(init_turtle_x, init_turtle_y));
+		myTurtle.setTarget(new Point(myTurtle.TURTLE_INIT_X, myTurtle.TURTLE_INIT_Y));
 		return distance;
 	}
 
 	@Override
 	public String getCommandType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "HOME";
 	}
 }

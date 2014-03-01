@@ -15,8 +15,6 @@ public class SlogoModel {
 	private AbstractParser myParser;
     private List<String> myHistory;
     private SlogoView myViewer;
-    
-    public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
 	
 	public SlogoModel(){
 		myParser = new TextParser();
@@ -36,7 +34,7 @@ public class SlogoModel {
 		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
-			myViewer.showError(ILLEGAL_COMMAND_MESSAGE);
+			myViewer.showError(myViewer.ILLEGAL_COMMAND_MESSAGE);
 			return 0;
 		}
 		System.out.println("Pass Legality Check");

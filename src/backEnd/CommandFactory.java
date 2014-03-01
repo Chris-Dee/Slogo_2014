@@ -19,9 +19,9 @@ public class CommandFactory {
     public static final String COMMAND_INVALID_MESSAGE = "Please enter a valid command!";
     public static final double DEFAULT_MAGNITUDE = 0;
     
-    private ResourceBundle myCommands;
-    private ResourceBundle myParameters;
-    private AbstractParser myParser;
+    protected ResourceBundle myCommands;
+    protected ResourceBundle myParameters;
+    protected AbstractParser myParser;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
@@ -69,7 +69,7 @@ public class CommandFactory {
 			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle) + answer;
 		}
 		else if(hasOneParameter(current)){
-			System.out.println(current.getCommandString() + " has only one parameter");
+//			System.out.println(current.getCommandString() + " has only one parameter");
 			double answer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
 		}

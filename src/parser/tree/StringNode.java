@@ -31,4 +31,8 @@ public class StringNode {
 	public List<StringNode> getChildren() {
 		return myChildren;
 	}
+	
+	public void setCommandString(String s){
+		if(s != null){ myData = s; }
+	}
 }

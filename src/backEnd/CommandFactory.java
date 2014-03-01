@@ -210,12 +210,6 @@ public class CommandFactory {
 		return false;
 	}
 	
-//	protected boolean isListOfCommands(StringNode current){
-//		if(current.getCommandString().startsWith("[") 
-//				&& current.getCommandString().endsWith("]")){ return true; }
-//		return false;
-//	}
-	
 	protected boolean hasOneParameter(StringNode current){
 		if(myParameters.getString(current.getCommandString()).equals("1")){ return true; }
 		return false;
@@ -225,5 +219,4 @@ public class CommandFactory {
 		if(myParameters.getString(current.getCommandString()).equals("2")){ return true; }
 		return false;
 	}
-	
 }

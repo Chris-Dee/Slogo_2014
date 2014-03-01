@@ -72,11 +72,13 @@ public class TextParser extends AbstractParser {
 	}
 	
 	public boolean checkForErrors() {
+		boolean noErrors = true;
 		for (StringNode leaf : myLeaves) {
 			if(!allParentsHaveParameters(leaf))
-				return false;
+				noErrors = false;
 		}
-		return true;
+		myLeaves.clear();
+		return noErrors;
 	}
 
 	private void initializeTree(List<String> commands) {

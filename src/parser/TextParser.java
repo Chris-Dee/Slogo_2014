@@ -61,10 +61,11 @@ public class TextParser extends AbstractParser {
 	// This method needs revision
 	protected int buildTree(StringNode current, int index) {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
-
+		System.out.println(parameterNumber);
 		if(index == myCommandList.size()) return 0;
 		if( (parameterNumber == 0 && !allParentsHaveParameters(current)) || 
 				index + 1 == myCommandList.size()){ // if leaf node
+			System.out.println(current.getCommandString() + " is the base case");
 			myLeaves.add(current);
 			return 1;
 		}
@@ -105,9 +106,6 @@ public class TextParser extends AbstractParser {
 	
 
 	private int handleIfElseNode(IfElseNode node, int index) {
-		// TODO Auto-generated method stub
-		
-		
 		StringBuilder sb = new StringBuilder();
 		String truecommands = null;
 		String falsecommands = null;

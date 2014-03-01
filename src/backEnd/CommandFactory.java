@@ -52,6 +52,7 @@ public class CommandFactory {
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
 	public double runCommands(StringNode root, Turtle turtle){
+		myParser.printTree(root);
 		return processStringNode(root, turtle);
 	}
 	
@@ -70,6 +71,7 @@ public class CommandFactory {
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
+					System.out.println(current.getCommandString() + " is a control command");
 					ControlNode cur = (ControlNode) current;
 					return makeControlCommand(cur, turtle);
 				}

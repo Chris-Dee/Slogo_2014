@@ -12,14 +12,17 @@ public class TextParser extends AbstractParser {
 	
 	private ResourceBundle myResources;
 	private StringNode myRoot;
+	private List<StringNode> myLeaves;
 	
 	public TextParser() {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
 		myCommandList = new ArrayList<String>();
+		myLeaves = new ArrayList<StringNode>();
 	}
 	
 	@Override
 	public StringNode parse(String s) {
+		myCommandList.clear();
 		String singleLineString = convertTextToSingleLine(s);
 		String[] stringArray = singleLineString.split(" ");
 		for (int i = 0; i < stringArray.length; i++) {
@@ -28,7 +31,6 @@ public class TextParser extends AbstractParser {
 		System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
-		myCommandList.clear();
 		return myRoot;
 	}
 
@@ -40,6 +42,7 @@ public class TextParser extends AbstractParser {
 		if(index == myCommandList.size()) return 0;
 		if( (parameterNumber == 0 && !allParentsHaveParameters(current)) || 
 				index + 1 == myCommandList.size()){ // if leaf node
+			myLeaves.add(current);
 			return 1;
 		}
 		
@@ -64,6 +67,14 @@ public class TextParser extends AbstractParser {
 			if(current.getChildren().size() != getNumberOfParameters(current.getCommandString()) ){
 				return false;
 			}
+		}
+		return true;
+	}
+	
+	public boolean checkForErrors(List<StringNode> leaves) {
+		for (StringNode leaf : leaves) {
+			if(!allParentsHaveParameters(leaf))
+				return false;
 		}
 		return true;
 	}

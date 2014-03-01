@@ -11,5 +11,13 @@ public class ControlNode extends StringNode{
 		myExpression = expression;
 		myCommands = commands;
 	}
+	
+	public String getExpression() {
+		return myExpression;
+	}
+	
+	public String getCommands() {
+		return myCommands;
+	}
 
 }

@@ -10,5 +10,9 @@ public class IfElseNode extends ControlNode{
 		// TODO Auto-generated constructor stub
 		myElseCommands = elseCommands;
 	}
+	
+	public String getElseCommands() {
+		return myElseCommands;
+	}
 
 }

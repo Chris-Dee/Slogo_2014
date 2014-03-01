@@ -35,7 +35,6 @@ public class SlogoModel {
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("userCommands passed in SLogoModel: "+userCommands);
-
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
 			myViewer.showError(SlogoView.ILLEGAL_COMMAND_MESSAGE);

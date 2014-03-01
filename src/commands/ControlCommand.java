@@ -7,7 +7,7 @@ import parser.TextParser;
 public abstract class ControlCommand implements AbstractCommand {
 
 	protected AbstractParser myParser;
-	protected double myMagnitude;
+	protected String myExpression;
 	protected Turtle myTurtle;
 	protected String myCommands;
 	
@@ -15,8 +15,8 @@ public abstract class ControlCommand implements AbstractCommand {
 		myParser = new TextParser();
 	}
 	
-	public void setMagnitude(double magnitude){
-		myMagnitude = magnitude;
+	public void setExpression(String s){
+		myExpression = s;
 	}
 	
 	public void setTurtle(Turtle turtle){

@@ -9,6 +9,7 @@ public class Repeat extends ControlCommand{
 	
 	public Repeat(){
 		super();
+		System.out.println("Repeat Command");
 		myFactory = new RepeatFactory();
 	}
 
@@ -19,15 +20,15 @@ public class Repeat extends ControlCommand{
 
 	@Override
 	public double execute() {
-		if(myMagnitude <= 0) return 0;
+		StringNode expr = myParser.parse(myExpression);
+		double loop = myFactory.runCommands(expr, myTurtle);
+		if(loop <= 0) return 0;
 		
-		StringNode root = myParser.parse(myCommands);
+		StringNode commands = myParser.parse(myCommands);
 		double answer = 0;
-		
-		for(int i = 1; i <= myMagnitude; i ++){
-			answer = myFactory.runCommands(root, myMagnitude, myTurtle);
+		for(int i = 1; i <= loop; i ++){
+			answer = myFactory.runCommands(commands, loop, myTurtle);
 		}
-		
 		return answer;
 	}
 }

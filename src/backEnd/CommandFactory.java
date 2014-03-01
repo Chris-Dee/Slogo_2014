@@ -65,8 +65,8 @@ public class CommandFactory {
 			return myParser.convertToDouble(current.getCommandString());	
 		}
 		else if(hasNoParameter(current)){
-			double answer = processStringNode(current.getChildren().get(0), turtle);
-			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle) + answer;
+			processStringNode(current.getChildren().get(0), turtle);
+			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 		}
 		else if(hasOneParameter(current)){
 //			System.out.println(current.getCommandString() + " has only one parameter");
@@ -104,6 +104,9 @@ public class CommandFactory {
 				if(m.getName().equals("setDoubleMagnitude")){
 					m.invoke(command, magnitude1, magnitude2);
 				}
+//				if(m.getName().equals("setCommands")){
+//					m.invoke(command, magnitude1, magnitude2);
+//				}
 		    }
 			for (Method cur: methods){
 				if (cur.getName().equals("execute")){
@@ -132,6 +135,12 @@ public class CommandFactory {
 		if(myParameters.getString(current.getCommandString()).equals("0")){ return true; }
 		return false;
 	}
+	
+//	protected boolean isListOfCommands(StringNode current){
+//		if(current.getCommandString().startsWith("[") 
+//				&& current.getCommandString().endsWith("]")){ return true; }
+//		return false;
+//	}
 	
 	protected boolean hasOneParameter(StringNode current){
 		if(myParameters.getString(current.getCommandString()).equals("1")){ return true; }

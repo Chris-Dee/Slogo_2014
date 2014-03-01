@@ -1,7 +1,5 @@
 package commands;
 
-import frontEnd.SlogoView;
-
 /*
  * This command makes the turtle move forward by certain pixels
  */

@@ -1,5 +1,8 @@
 package commands;
 
+import frontEnd.Position;
+import frontEnd.Turtle;
+
 /*
  * This command erases turtle's trails and sends it to the home position.
  */
@@ -14,8 +17,7 @@ public class ClearScreen extends TurtleCommand{
 	 */
 	public double execute() {
 		myTurtle.clearLines();
-		Home homeCom = new Home();
-		return homeCom.execute();
+		return myTurtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
 	}
 
 	@Override

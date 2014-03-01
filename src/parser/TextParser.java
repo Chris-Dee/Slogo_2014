@@ -60,7 +60,6 @@ public class TextParser extends AbstractParser {
 	@Override
 	protected int buildTree(StringNode current, int index) {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
-		System.out.println(parameterNumber);
 		if(index == myCommandList.size()) return 0;
 		if( (parameterNumber == 0 && !allParentsHaveParameters(current)) || 
 				index + 1 == myCommandList.size()){ // if leaf node

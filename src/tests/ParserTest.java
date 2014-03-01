@@ -39,6 +39,7 @@ public class ParserTest {
 	public void testBrackets() {
 		AbstractParser parser = new TextParser();
 		StringNode root = parser.parse("repeat 3 [fd 50 repeat 5 [fd 50]] fd 50");
+		parser.printTree(root);
 		assertEquals("REPEAT", root.getCommandString());
 		assertEquals("3", root.getChildren().get(0).getCommandString());
 		//assertEquals("[FD 50 REPEAT 5 [FD 50]]", root.getChildren().get(1).getCommandString());

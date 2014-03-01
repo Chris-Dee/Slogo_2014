@@ -104,9 +104,6 @@ public class CommandFactory {
 				if(m.getName().equals("setDoubleMagnitude")){
 					m.invoke(command, magnitude1, magnitude2);
 				}
-//				if(m.getName().equals("setCommands")){
-//					m.invoke(command, magnitude1, magnitude2);
-//				}
 		    }
 			for (Method cur: methods){
 				if (cur.getName().equals("execute")){

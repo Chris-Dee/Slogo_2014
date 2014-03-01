@@ -1,14 +1,11 @@
 package commands;
 
-import frontEnd.Turtle;
 /*
  * This command erases turtle's trails and sends it to the home position.
  */
-public class CSCommand extends TurtleCommand{
+public class ClearScreen extends TurtleCommand{
 	
-	public CSCommand(String string, Turtle turtle){
-		super(string, turtle);
-	}
+	public ClearScreen(){ }
 
 	@Override
 	/*
@@ -17,7 +14,12 @@ public class CSCommand extends TurtleCommand{
 	 */
 	public double execute() {
 		myTurtle.clearLines();
-		HomeCommand homeCom = new HomeCommand("HOME", myTurtle);
+		Home homeCom = new Home();
 		return homeCom.execute();
+	}
+
+	@Override
+	public String getCommandType() {
+		return "CS";
 	}
 }

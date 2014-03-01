@@ -2,10 +2,13 @@ package backEnd;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import parser.AbstractParser;
 import parser.TextParser;
+import parser.tree.ControlNode;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
 import frontEnd.SlogoView;
@@ -16,18 +19,28 @@ public class CommandFactory {
     public static final String DEFAULT_COMMANDPARAMETER_PACKAGE = "backEnd/";
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
+    public static final String DEFAULT_CONTROLS = "ControlCommands";
     public static final String COMMAND_INVALID_MESSAGE = "Please enter a valid command!";
     public static final double DEFAULT_MAGNITUDE = 0;
     
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
+    protected ResourceBundle myPossibleControls;
     protected AbstractParser myParser;
+    protected List<String> myControlCommands;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_COMMANDPARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
-		myParser = new TextParser(); // intended to use some convenient methods in AbstarctParser class
+		myPossibleControls = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_CONTROLS);
+		myParser = new TextParser(); // created to use some convenient methods in AbstarctParser class
 		// myParser is different from the real TextParser object stored in the SlogoModel class
+		
+		myControlCommands = new ArrayList<String>();
+		String[] controlList = myPossibleControls.getString("Control").split(",");
+		for(String s:controlList){
+			myControlCommands.add(s);
+		}
 	}
 	
 	
@@ -56,6 +69,10 @@ public class CommandFactory {
 				return myParser.convertToDouble(current.getCommandString());	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
+				if(ifControlCommand(current)){
+					ControlNode cur = (ControlNode) current;
+					return makeControlCommand(cur, turtle);
+				}
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 			}
 		}
@@ -66,6 +83,10 @@ public class CommandFactory {
 		}
 		else if(hasNoParameter(current)){
 			processStringNode(current.getChildren().get(0), turtle);
+			if(ifControlCommand(current)){
+				ControlNode cur = (ControlNode) current;
+				return makeControlCommand(cur, turtle);
+			}
 			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 		}
 		else if(hasOneParameter(current)){
@@ -80,7 +101,63 @@ public class CommandFactory {
 		}
 		return 0; // should not reach here
 	}
-
+	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to check if a StringNode is a ControlNode
+	 */
+	protected boolean ifControlCommand(StringNode current){
+		if(myControlCommands.contains(current.getCommandString())){
+			return true;
+		}
+		return false;
+	}
+	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to make a control command out of the current ControlNode in the command tree structure
+	 */
+	protected double makeControlCommand(ControlNode node, Turtle turtle){
+		try { 
+			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
+			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
+			Method[] methods = commandClass.getMethods();
+			for (Method m: methods){
+				if(m.getName().equals("setTurtle")){
+					m.invoke(command, turtle);
+				}
+				if(m.getName().equals("setExpression")){
+					m.invoke(command, node.getExpression());
+				}
+				if(m.getName().equals("setCommands")){
+					m.invoke(command, node.getCommands());
+				}
+				if(m.getName().equals("setElseCommands")){
+					m.invoke(command, node.getElseCommands());
+				}
+		    }
+			for (Method cur: methods){
+				if (cur.getName().equals("execute")){
+					double answer = (Double) cur.invoke(command);
+					SlogoView.updateInfo();
+					return answer;
+			    }	
+			}
+		} catch (ClassNotFoundException e) {
+			return -1;
+			//e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			return -1;
+			//e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return 0; // other errors
+	}
 	
 	
 	/*

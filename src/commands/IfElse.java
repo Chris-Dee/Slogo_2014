@@ -17,7 +17,6 @@ public class IfElse extends ControlCommand{
 		if( s != null ) myElseCommands = s;
 	}
 
-
 	@Override
 	public String getCommandType() {
 		return "IFELSE";

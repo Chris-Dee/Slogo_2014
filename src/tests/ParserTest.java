@@ -8,59 +8,18 @@ import org.junit.Test;
 
 import parser.AbstractParser;
 import parser.TextParser;
+import parser.tree.StringNode;
 
 public class ParserTest {
 	
 	@Test
-	public void testNumbersInText() {
+	public void testBuildTree() {
 		AbstractParser parser = new TextParser();
-		List<String> commands = parser.parse("fd 10 fd 20 fd 30");
-		
-		for (int i = 0; i < commands.size(); i++) {
-			String command = commands.get(i);
-			double parameter = 0;
-			if (parser.isParameter(command))
-				parameter = parser.convertToDouble(command);
-			if(i % 2 == 0)
-				assertEquals("FD", command);
-			else
-				assertEquals(5.0, parameter/(double)(i+1), .001);
-		}		
-	}
-
-	@Test
-	public void testListReturn() {
-		AbstractParser parser = new TextParser();
-		List<String> listString = parser.parse("hello this is a line");
-		
-		for (int i = 0; i < listString.size(); i++) {
-				assertEquals(determineWord(i), listString.get(i));
-		}
-		
-		assertEquals(parser.parse("hello\n this is \n multiple lines"), parser.parse("hello this is multiple lines"));
+		StringNode root = parser.parse("fd 50 fd 50");
+		assertEquals("FD", root.getCommandString());
+		assertEquals("50", root.getChildren().get(0).getCommandString());
+		assertEquals("FD", root.getChildren().get(0).getChildren().get(0).getCommandString());
+		assertEquals("50", root.getChildren().get(0).getChildren().get(0).getChildren().get(0).getCommandString());
 	}
 	
-	private String determineWord(int i) {
-		// TODO Auto-generated method stub
-		if (i == 0)
-			return "HELLO";
-		if (i == 1)
-			return "THIS";
-		if (i == 2)
-			return "IS";
-		if (i == 3)
-			return "A";
-		if (i == 4)
-			return "LINE";
-		return null;
-	}
-
-	@Test 
-	public void testLowerToUpperCase() {
-		AbstractParser parser = new TextParser();
-		assertEquals(parser.parse("heLLO THis wAs not UPpERcaSE"), parser.parse("hElLo thiS WaS NOT upPerCAse"));
-	}
-	
-
-
 }

@@ -127,10 +127,28 @@ public class TextParser extends AbstractParser {
 		i++;
 		falsecommands = myCommandList.get(i);
 		
-
 		node.setExpression(sb.toString());
-		node.setCommands(truecommands);
-		node.setElseCommand(falsecommands);
+
+		int startSpace = 1;
+		while(truecommands.charAt(startSpace) == ' ') {
+			startSpace ++;
+		}
+		int endSpace = truecommands.length()-2;
+		while(truecommands.charAt(endSpace) == ' ') {
+			endSpace --;
+		}
+		node.setCommands(truecommands.substring(1, truecommands.length()-1));
+		
+		startSpace = 1;
+		while(truecommands.charAt(startSpace) == ' ') {
+			startSpace ++;
+		}
+		endSpace = truecommands.length()-2;
+		while(truecommands.charAt(endSpace) == ' ') {
+			endSpace --;
+		}
+		
+		node.setElseCommand(falsecommands.substring(1, falsecommands.length()-1));
 
 		i++;
 		return i-index;
@@ -158,9 +176,16 @@ public class TextParser extends AbstractParser {
 		commands = myCommandList.get(i);
 
 		node.setExpression(sb.toString());
-		node.setCommands(commands);
-		System.out.println(sb.toString());
-		System.out.println(commands);
+		int startSpace = 1;
+		while(commands.charAt(startSpace) == ' ') {
+			startSpace ++;
+		}
+		int endSpace = commands.length()-2;
+		while(commands.charAt(endSpace) == ' ') {
+			endSpace --;
+		}
+		node.setCommands(commands.substring(startSpace, endSpace+1));
+
 		i++;
 		return i-index;
 	}

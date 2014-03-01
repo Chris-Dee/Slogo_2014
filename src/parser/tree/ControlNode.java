@@ -16,8 +16,16 @@ public class ControlNode extends StringNode{
 		return myExpression;
 	}
 	
+	public void setExpression(String s) {
+		myExpression = s;
+	}
+	
 	public String getCommands() {
 		return myCommands;
+	}
+	
+	public void setCommands(String s) {
+		myCommands = s;
 	}
 
 }

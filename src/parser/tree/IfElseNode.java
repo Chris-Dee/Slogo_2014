@@ -11,6 +11,10 @@ public class IfElseNode extends ControlNode{
 		myElseCommands = elseCommands;
 	}
 	
+	public void setElseCommand(String s) {
+		myElseCommands = s;
+	}
+	
 	public String getElseCommands() {
 		return myElseCommands;
 	}

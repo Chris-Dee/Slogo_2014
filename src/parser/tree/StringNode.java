@@ -3,9 +3,9 @@ package parser.tree;
 import java.util.*;
 
 public class StringNode {
-	private String myData;
-	private StringNode myParent;
-	private List<StringNode> myChildren;
+	protected String myData;
+	protected StringNode myParent;
+	protected List<StringNode> myChildren;
 	
 	public StringNode(String data) {
 		myData = data;
@@ -15,6 +15,20 @@ public class StringNode {
 	
 	public StringNode addChild(String data) {
 		StringNode child = new StringNode(data);
+		child.myParent = this;
+		myChildren.add(child);
+		return child;
+	}
+	
+	public ControlNode addControlChild(String data)  {
+		ControlNode child = new ControlNode(data, null, null);
+		child.myParent = this;
+		myChildren.add(child);
+		return child;
+	}
+	
+	public IfElseNode addIfElseChild(String data) {
+		IfElseNode child = new IfElseNode(data, null, null, null);
 		child.myParent = this;
 		myChildren.add(child);
 		return child;

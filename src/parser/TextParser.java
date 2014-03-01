@@ -2,6 +2,8 @@ package parser;
 
 import java.util.*;
 
+import parser.tree.ControlNode;
+import parser.tree.IfElseNode;
 import parser.tree.StringNode;
 
 
@@ -9,13 +11,16 @@ public class TextParser extends AbstractParser {
 	
 	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
 	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
+	private static final String DEFAULT_CONTROL_FILE = "ControlCommands";
 	
 	private ResourceBundle myResources;
+	private ResourceBundle myControlCommands;
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	
 	public TextParser() {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
+		myControlCommands = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_CONTROL_FILE);
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
 	}
@@ -65,6 +70,7 @@ public class TextParser extends AbstractParser {
 			return 1;
 		}
 		int numChildren = 0;
+		
 		if(parameterNumber == 2) {
 			StringNode child1 = current.addChild(myCommandList.get(index+1));
 			numChildren = buildTree(child1, index+1);
@@ -72,8 +78,25 @@ public class TextParser extends AbstractParser {
 			numChildren += buildTree(child2, index + numChildren + 1);
 		}
 		else {
-			StringNode child = current.addChild(myCommandList.get(index+1));
-			numChildren += buildTree(child, index+1);
+
+			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
+				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
+					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
+					numChildren = handleIfElseNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+					
+				}
+				else {
+					ControlNode child = current.addControlChild(myCommandList.get(index+1));
+					numChildren = handleControlNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+				}
+
+			}
+			else {
+				StringNode child = current.addChild(myCommandList.get(index+1));
+				numChildren += buildTree(child, index+1);
+			}
 		}
 		numChildren ++;
 
@@ -81,6 +104,70 @@ public class TextParser extends AbstractParser {
 		
 	}
 	
+
+	private int handleIfElseNode(IfElseNode node, int index) {
+		// TODO Auto-generated method stub
+		
+		
+		StringBuilder sb = new StringBuilder();
+		String truecommands = null;
+		String falsecommands = null;
+		int i = index+1;
+
+		if (!myControlCommands.containsKey(myCommandList.get(index+1))) {
+			while (!myCommandList.get(i).startsWith("[")) {
+				sb.append(myCommandList.get(i));
+				i++;
+			}
+		}
+		else {
+			while (!myCommandList.get(i).endsWith("]")) {
+				sb.append(myCommandList.get(i));
+				i++;
+			}
+			sb.append(myCommandList.get(i));
+			i++;		
+		}
+		truecommands = myCommandList.get(i);
+		i++;
+		falsecommands = myCommandList.get(i);
+		
+
+		node.setExpression(sb.toString());
+		node.setCommands(truecommands);
+		node.setElseCommand(falsecommands);
+
+		i++;
+		return i-index;
+	}
+
+	private int handleControlNode(ControlNode node, int index) {
+		StringBuilder sb = new StringBuilder();
+		String commands = null;
+		int i = index+1;
+
+		if (!myControlCommands.containsKey(myCommandList.get(index+1))) {
+			while (!myCommandList.get(i).startsWith("[")) {
+				sb.append(myCommandList.get(i));
+				i++;
+			}
+		}
+		else {
+			while (!myCommandList.get(i).endsWith("]")) {
+				sb.append(myCommandList.get(i));
+				i++;
+			}
+			sb.append(myCommandList.get(i));
+			i++;		
+		}
+		commands = myCommandList.get(i);
+
+		node.setExpression(sb.toString());
+		node.setCommands(commands);
+		i++;
+		return i-index;
+	}
+
 	private boolean allParentsHaveParameters(StringNode current){
 		while(current.getParent() != null){ // not a root
 			current = current.getParent();

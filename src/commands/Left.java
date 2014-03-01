@@ -15,9 +15,7 @@ public class Left extends TurtleCommand {
 	}
 	
 	public void setMagnitude(double magnitude){
-		if(magnitude >= 0){
-			myDegree = magnitude;
-		}
+		myDegree = magnitude;
 	}
 
 	@Override

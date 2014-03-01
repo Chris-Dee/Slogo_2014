@@ -32,8 +32,8 @@ public class TextParser extends AbstractParser {
 		formatStringArray(singleLineString);
 //		System.out.println("myCommandList: " + myCommandList.size());
 //		//System.out.println("myCommandList: " + myCommandList.size());
-		initializeTree(myCommandList);
-		buildTree(myRoot, 0);
+		int start = initializeTree(myCommandList);
+		buildTree(myRoot, start);
 		return myRoot;
 	}
 
@@ -58,7 +58,6 @@ public class TextParser extends AbstractParser {
 	}
 
 	@Override
-	// This method needs revision
 	protected int buildTree(StringNode current, int index) {
 		int parameterNumber = getNumberOfParameters(current.getCommandString());
 		System.out.println(parameterNumber);
@@ -161,6 +160,8 @@ public class TextParser extends AbstractParser {
 
 		node.setExpression(sb.toString());
 		node.setCommands(commands);
+		System.out.println(sb.toString());
+		System.out.println(commands);
 		i++;
 		return i-index;
 	}
@@ -189,8 +190,26 @@ public class TextParser extends AbstractParser {
 		return node.getChildren().size() == getNumberOfParameters(node.getCommandString());
 	}
 
-	private void initializeTree(List<String> commands) {
-		myRoot = new StringNode(commands.get(0));
+	private int initializeTree(List<String> commands) {
+		int index = 0;
+		if (myControlCommands.containsKey(myCommandList.get(0))) { //control statement
+			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
+				myRoot = new IfElseNode(commands.get(0), null, null, null);
+				index = handleIfElseNode((IfElseNode) myRoot, 0);
+				return index;
+				
+			}
+			else {
+				myRoot = new ControlNode(commands.get(0), null, null);
+				index = handleControlNode((ControlNode) myRoot, 0);
+				return index;
+			}
+
+		}
+		else {
+			myRoot = new StringNode(commands.get(0));
+		}
+		return index;
 	}
 
 	private int getNumberOfParameters(String commandString) {

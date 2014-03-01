@@ -41,4 +41,22 @@ public abstract class AbstractParser {
 	}
 	
 	public abstract boolean checkForErrors();
+
+	public void printTree(StringNode current) {
+		if (current == null) return;
+		System.out.println(current.getCommandString() +" ");
+		if(current.getChildren().size() > 0){
+			printTree(current.getChildren().get(0));
+		}
+		else{
+			System.out.println("X ");
+		}
+		
+		if(current.getChildren().size() > 1){
+			printTree(current.getChildren().get(1));
+		}
+		else{
+			System.out.println("X ");
+		}
+	}
 }

@@ -24,14 +24,33 @@ public class TextParser extends AbstractParser {
 	public StringNode parse(String s) {
 		myCommandList.clear();
 		String singleLineString = convertTextToSingleLine(s);
-		String[] stringArray = singleLineString.split(" ");
-		for (int i = 0; i < stringArray.length; i++) {
-			myCommandList.add(stringArray[i]);
-		}
+		formatStringArray(singleLineString);
+//		System.out.println("myCommandList: " + myCommandList.size());
+
 //		//System.out.println("myCommandList: " + myCommandList.size());
 		initializeTree(myCommandList);
 		buildTree(myRoot, 0);
 		return myRoot;
+	}
+
+	private void formatStringArray(String s) {
+		int depth = 0;
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+		    char c = s.charAt(i);
+	        if(c=='['){
+	            depth++;
+	        }else if(c==']'){
+	            depth--;
+	        }else if(c==' ' && depth==0){
+	        	myCommandList.add(sb.toString());
+	            sb = new StringBuilder();
+	            continue;
+	        }
+	        sb.append(c);
+		}
+
+		myCommandList.add(sb.toString());
 	}
 
 	@Override
@@ -45,19 +64,20 @@ public class TextParser extends AbstractParser {
 			myLeaves.add(current);
 			return 1;
 		}
-		
+		int numChildren = 0;
 		if(parameterNumber == 2) {
 			StringNode child1 = current.addChild(myCommandList.get(index+1));
-			int offset = buildTree(child1, index+1) + 1;
-			StringNode child2 = current.addChild(myCommandList.get(index + offset));
-			buildTree(child2, index + offset);
+			numChildren = buildTree(child1, index+1);
+			StringNode child2 = current.addChild(myCommandList.get(index + numChildren + 1));
+			numChildren += buildTree(child2, index + numChildren + 1);
 		}
 		else {
 			StringNode child = current.addChild(myCommandList.get(index+1));
-			buildTree(child, index+1);
+			numChildren += buildTree(child, index+1);
 		}
+		numChildren ++;
 
-		return 1;
+		return numChildren;
 		
 	}
 	
@@ -68,6 +88,7 @@ public class TextParser extends AbstractParser {
 		}
 		return true;
 	}
+	
 	
 	@Override
 	public boolean checkForErrors() {
@@ -89,7 +110,7 @@ public class TextParser extends AbstractParser {
 	}
 
 	private int getNumberOfParameters(String commandString) {
-		if (isParameter(commandString)) return 0;
+		if (isParameter(commandString) || commandString.contains(" ")) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

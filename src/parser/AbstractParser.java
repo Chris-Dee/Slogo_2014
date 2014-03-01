@@ -39,4 +39,6 @@ public abstract class AbstractParser {
 	protected boolean checkValidInput(String s) {
 		return true;
 	}
+	
+	public abstract boolean checkForErrors();
 }

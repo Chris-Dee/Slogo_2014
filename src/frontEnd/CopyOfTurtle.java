@@ -52,6 +52,7 @@ public void setEngine(JGEngine engine){
 		double xOffset=Math.cos(rot)*distance;
 		double yOffset=Math.sin(rot)*distance;
 		if(xspeed==0&&yspeed==0)
+			System.out.println("added to queue");
 		setTarget(new Position((targetx+xOffset),(targety+yOffset)));
 		return distance;
 	}
@@ -135,7 +136,7 @@ public void setEngine(JGEngine engine){
 		return rot-setRotation;
 	}
 	public Stats getStats(){
-		return new Stats(xspeed, yspeed, x,y,myRotation,xdir,ydir,drawingColor);
+		return new Stats(xspeed, yspeed, targetx,targety,myRotation,xdir,ydir,drawingColor);
 	}
 }
 

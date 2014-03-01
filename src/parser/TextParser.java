@@ -71,8 +71,8 @@ public class TextParser extends AbstractParser {
 		return true;
 	}
 	
-	public boolean checkForErrors(List<StringNode> leaves) {
-		for (StringNode leaf : leaves) {
+	public boolean checkForErrors() {
+		for (StringNode leaf : myLeaves) {
 			if(!allParentsHaveParameters(leaf))
 				return false;
 		}

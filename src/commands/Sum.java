@@ -10,6 +10,7 @@ public class Sum implements AbstractCommand {
 	
 	@Override
 	public double execute() {
+		System.out.println(myExpression1 + myExpression2);
 		return myExpression1 + myExpression2;
 	}
 	

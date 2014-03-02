@@ -1,6 +1,8 @@
 package frontEnd;
 import javax.swing.JComponent;
 
+import backEnd.SlogoModel;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -48,7 +50,7 @@ public class TurtleDrawer extends JGEngine {
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle();
 		turt.setEngine(this);
-		setPFWrap( true, true, 0, 0 );
+		//setPFWrap( true, true, 0, 0 );
 	}
 	public void doFrame(){
 		//turt.movePosition(Math.random()*100, Math.random()*100, 1);
@@ -56,9 +58,11 @@ public class TurtleDrawer extends JGEngine {
 		prevPos=new Point((int)turt.x,(int)turt.y);
 		moveObjects(null,0);
 		SlogoView.updateInfo();
-		checkWall();
+		
 		
 	}
+	
+
 	
 	public void paintFrame(){
 		turt.runPen(2,true);
@@ -87,7 +91,7 @@ public class TurtleDrawer extends JGEngine {
 			clearLastKey();
 			turt.setPen(JGColor.orange);
 		}
-		if(checkKey('n')){
+		if(checkKey('r')){
 			turt.raisePen();
 		}
 		if(checkKey('m')){
@@ -109,12 +113,13 @@ turt.reset();
 		turt.setEngine(this);
 	}
 	
-	public void checkWall(){
-		double targetx=turt.getLastX();
-		double targety=turt.getLastY();
-		System.out.print(targety );
-		System.out.print("\n");
+	public void addnewTurtle(){
+		defineImage("Turtle","Turt",0,"turtle.gif","-");
+		turt=new Turtle();
+		turt.setEngine(this);
 	}
+
+	
 	public Stats getStats(){
 		return turt.getStats();
 	}

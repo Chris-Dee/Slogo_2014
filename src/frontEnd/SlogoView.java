@@ -2,20 +2,25 @@ package frontEnd;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -225,6 +230,48 @@ public class SlogoView extends JFrame{
 		});  
 		homePanel.add(sunButton);
 	}
+	
+	public void CreateTabs(){
+	         
+	        JTabbedPane tabbedPane = new JTabbedPane();
+	        ImageIcon icon = createImageIcon("images/middle.gif");
+	       
+	        JComponent panel1 = mainPanel;
+	        tabbedPane.addTab("Tab 1", icon, panel1,
+	                "Does nothing");
+	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+	         
+	        JComponent panel2 = mainPanel;
+	        tabbedPane.addTab("Tab 2", icon, panel2,
+	                "Does twice as much nothing");
+	        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+
+	         
+	        //Add the tabbed pane to this panel.
+	        add(tabbedPane);
+	}
+	
+	  protected static ImageIcon createImageIcon(String path) {
+	        java.net.URL imgURL = SlogoView.class.getResource(path);
+	        if (imgURL != null) {
+	            return new ImageIcon(imgURL);
+	        } else {
+	            System.err.println("Couldn't find file: " + path);
+	            return null;
+	        }
+	    }
+	
+	public void makeNewTurtleButton(JPanel homePanel){
+		Button newTurtButton = new Button("New Turtle");
+		newTurtButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				updateInfo();
+				TurtleSpace.addnewTurtle();
+			}
+		});
+		homePanel.add(newTurtButton);
+	}
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
 		createSaveButton(inputTextPanel);
@@ -384,6 +431,7 @@ public class SlogoView extends JFrame{
 		makeRotatePanel(optionsPanel);
 		makeForwardPanel(optionsPanel);
 		makeSunButton(optionsPanel);
+		makeNewTurtleButton(optionsPanel);
 		return optionsPanel;
 	}
 	public void createMainPanel(){

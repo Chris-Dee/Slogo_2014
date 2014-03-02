@@ -231,25 +231,14 @@ public class SlogoView extends JFrame{
 		homePanel.add(sunButton);
 	}
 	
-	public void CreateTabs(){
-	         
-	        JTabbedPane tabbedPane = new JTabbedPane();
-	        ImageIcon icon = createImageIcon("images/middle.gif");
-	       
-	        JComponent panel1 = mainPanel;
-	        tabbedPane.addTab("Tab 1", icon, panel1,
-	                "Does nothing");
-	        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-	         
-	        JComponent panel2 = mainPanel;
-	        tabbedPane.addTab("Tab 2", icon, panel2,
-	                "Does twice as much nothing");
-	        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
-	         
-	        //Add the tabbed pane to this panel.
-	        add(tabbedPane);
-	}
+    protected JPanel makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+    }
 	
 	  protected static ImageIcon createImageIcon(String path) {
 	        java.net.URL imgURL = SlogoView.class.getResource(path);
@@ -434,10 +423,56 @@ public class SlogoView extends JFrame{
 		makeNewTurtleButton(optionsPanel);
 		return optionsPanel;
 	}
+	
+	public void CreateTabs(){
+        //createMainPanel();
+        JTabbedPane tabbedPane = new JTabbedPane();
+        setMinimumSize(new Dimension(1000,800));
+        ImageIcon icon = createImageIcon("turtle.gif");
+       
+        JPanel panel1 = makeTab();
+        tabbedPane.addTab("Tab 1", icon, panel1,
+                "Does nothing");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+         
+        JPanel panel2 = makeTextPanel("Panel #2");
+        tabbedPane.addTab("Tab 2", icon, panel2,
+                "Does twice as much nothing");
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+        
+        JPanel panel3 = makeTextPanel("Panel #3");
+        tabbedPane.addTab("Tab 3", icon, panel3,
+                "Does twice as much nothing");
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_3);
+        
+        setTitle("Slow Go Team 16");
+         
+        //Add the tabbed pane to this panel.
+        add(tabbedPane);
+}
+	public JPanel makeTab(){
+		JPanel mainPanel= new JPanel();
+		mainPanel.add(makeOptionsPanel());
+		JPanel rightPanel=new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
+		rightPanel.add(makeSavedTextBoxes());
+		rightPanel.add(makeInputPanel());
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
+		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
+		//mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
+		mainPanel.add(rightPanel,BorderLayout.EAST);
+		setResizable(false);
+		pack();
+		return mainPanel;
+	}
 	public void createMainPanel(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(400,600));
 		setVisible(true);
+		 JTabbedPane tabbedPane = new JTabbedPane();
+		 
+	    ImageIcon icon = createImageIcon("turtle.gif");
 		mainPanel=(JPanel) getContentPane();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
@@ -446,19 +481,29 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
-		//	mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
+		//mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		setResizable(false);
 		pack();
 		setTitle("Slow Go Team 16");
+		
+		 //JPanel panel1 = makeTextPanel("Panel #1");
+	    // tabbedPane.addTab("Tab 1", icon, panel1,
+	     //        "Does nothing");
+	     //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+	       //  
+	       // JPanel panel2 = makeTextPanel("Panel #2");
+	       // tabbedPane.addTab("Tab 2", icon, panel2,
+	       //         "Does twice as much nothing");
+	       // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
 		//mainPanel.add()
 	}
 
 
 	public void  initiate() {
-
-		createMainPanel();
+		//createMainPanel();
+		CreateTabs();
 		setVisible(true);
 		// TODO Auto-generated method stub
 

@@ -20,6 +20,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import frontEnd.HelpPage;
+import frontEnd.Stats;
+import frontEnd.Turtle;
+import frontEnd.TurtleDrawer;
 //to-do
 //need to put in different preferences
 //need to put in panel of previous scripts
@@ -312,9 +317,9 @@ public class SlogoView extends JFrame{
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
 		TurtleSpace=new TurtleDrawer(30,30);
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
-		drawingPanel.setSize(200,200);
-		drawingPanel.setMinimumSize(new Dimension(200,200));
-		TurtleSpace.setMinimumSize(new Dimension(200,200));
+		drawingPanel.setSize(300,300);
+		drawingPanel.setMinimumSize(new Dimension(300,300));
+		TurtleSpace.setMinimumSize(new Dimension(300,300));
 		TurtleSpace.setSize(200,200);
 		drawingPanel.add(TurtleSpace);
 		return scroller;

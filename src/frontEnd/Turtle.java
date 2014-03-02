@@ -38,8 +38,16 @@ public class Turtle extends JGObject {
 		if(dist>2){
 			xdir=setDir(x,targetx);
 			ydir=setDir(y,targety);
-			xspeed=velocity;
-			yspeed=velocity;
+			if(getLastX() >= 270 || getLastX()<=0){
+				xspeed=0;
+			} else{
+				xspeed=velocity;
+			}
+			if(getLastY()<=0 || getLastY()>=270){
+				yspeed=0;
+			} else{
+				yspeed=velocity;
+			}
 		}
 		else{
 			if(targetCount==targetQueue.size()){

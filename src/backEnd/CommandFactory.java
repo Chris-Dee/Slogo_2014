@@ -15,12 +15,11 @@ import frontEnd.SlogoView;
 import frontEnd.Turtle;
 
 public class CommandFactory {
-    public static final String DEFAULT_COMMANDPATH_PACKAGE = "backEnd/";
-    public static final String DEFAULT_COMMANDPARAMETER_PACKAGE = "backEnd/";
+    public static final String DEFAULT_BACKEND_PACKAGE = "backEnd/";
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
     public static final String DEFAULT_CONTROLS = "ControlCommands";
-    public static final double DEFAULT_MAGNITUDE = 0;
+    private static final double DEFAULT_MAGNITUDE = 0;
     
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
@@ -29,9 +28,9 @@ public class CommandFactory {
     protected List<String> myControlCommands;
 	
 	public CommandFactory(){
-		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
-		myParameters = ResourceBundle.getBundle(DEFAULT_COMMANDPARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
-		myPossibleControls = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_CONTROLS);
+		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
+		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
+		myPossibleControls = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_CONTROLS);
 		myParser = new TextParser(); // create a new TextParser() to use some convenient methods in AbstarctParser class
 		initControlCommands();
 	}
@@ -138,13 +137,8 @@ public class CommandFactory {
 					m.invoke(command, node.getElseCommands());
 				}
 		    }
-			for (Method cur: methods){
-				if (cur.getName().equals("execute")){
-					double answer = (Double) cur.invoke(command);
-					SlogoView.updateInfo();
-					return answer;
-			    }	
-			}
+			return executeTurtle(command, methods);
+			
 		} catch (ClassNotFoundException e) {
 			return -1;
 			//e.printStackTrace();
@@ -159,6 +153,20 @@ public class CommandFactory {
 			e.printStackTrace();
 		}
 		return 0; // other errors
+	}
+
+
+
+	protected double executeTurtle(AbstractCommand command, Method[] methods) 
+			throws IllegalAccessException, InvocationTargetException {
+		double answer = 0;
+		for (Method cur: methods){
+			if (cur.getName().equals("execute")){
+				answer = (Double) cur.invoke(command);
+				SlogoView.updateInfo();
+		    }	
+		}
+		return answer;
 	}
 	
 	
@@ -184,13 +192,7 @@ public class CommandFactory {
 					m.invoke(command, magnitude1, magnitude2);
 				}
 		    }
-			for (Method cur: methods){
-				if (cur.getName().equals("execute")){
-					double answer = (Double) cur.invoke(command);
-					SlogoView.updateInfo();
-					return answer;
-			    }	
-			}
+			return executeTurtle(command, methods);
 		} catch (ClassNotFoundException e) {
 			return -1;
 			//e.printStackTrace();

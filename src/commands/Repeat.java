@@ -9,7 +9,7 @@ public class Repeat extends ControlCommand{
 	
 	public Repeat(){
 		super();
-		System.out.println("Repeat Command");
+//		System.out.println("Repeat Command Executed");
 		myFactory = new RepeatFactory();
 	}
 

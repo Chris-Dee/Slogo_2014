@@ -6,7 +6,7 @@ public class HideTurtle extends TurtleCommand{
 
 	@Override
 	public double execute() {
-		System.out.println("Hide Turtle");
+		System.out.println("Hide Turtle Executed");
 		myTurtle.suspend();
 		return 0;
 	}

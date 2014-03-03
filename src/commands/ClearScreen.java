@@ -1,8 +1,5 @@
 package commands;
 
-import frontEnd.Position;
-import frontEnd.Turtle;
-
 /*
  * This command erases turtle's trails and sends it to the home position.
  */
@@ -16,9 +13,7 @@ public class ClearScreen extends TurtleCommand{
 	 * return the distance turtle moved from sending it to the home position
 	 */
 	public double execute() {
-
 		double distance=myTurtle.reset();
-
 		return distance;
 	}
 

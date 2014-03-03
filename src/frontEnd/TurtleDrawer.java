@@ -21,7 +21,11 @@ public class TurtleDrawer extends JGEngine {
 	private String chosenImage;
 	private int turtFilter=0;
 	private List<Turtle> turtList=new ArrayList<Turtle>();
+	//tempList
+/*
+List<turtles> get turtswithFilter()
 
+ */
 	public TurtleDrawer(){
 		int height = 900;
 		double aspect = 0.5;

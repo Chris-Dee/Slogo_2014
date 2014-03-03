@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -40,7 +41,7 @@ import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
 public class SlogoView extends JFrame{
-	private Stats TurtleStats;
+	private ResourceBundle myResources;
 	private JPanel mainPanel;
 	private SlogoModel model;
 	private static JTextField xPos;
@@ -49,29 +50,33 @@ public class SlogoView extends JFrame{
 	private static JTextField headingx;
 	private static JTextField headingy;
 	private static JTextField angle;
-	private static double velocity;
-	private double result=0;
 	private static TurtleDrawer TurtleSpace;
 	private String imageString;
-	private static final String numberError="Number entered not valid!";
-	public static final String ILLEGAL_COMMAND_MESSAGE = "Not a legal command";
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
 	private JTextArea textInput;
+	private static final String DEFAULT_RESOURCE_PATH="frontEnd/";
+	private static final String DEFAULT_BUTTON_TEXT="Buttons";
 	public SlogoView(){
 		super();
 		initiate();
+		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
+		
 	}
 	public SlogoView(SlogoModel modelSlog){
 		super();
-		initiate();
 		model=modelSlog;
+		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
+		initiate();
+		
 	}
+	//Refactor code--especially text boxes with buttons on top. Can make one method that passes in Strings and action Listener objects
 	private void makeForwardPanel(JPanel forwardPanel){
 		JPanel forPanel=new JPanel();
 		forPanel.setLayout(new BoxLayout(forPanel,BoxLayout.Y_AXIS));
-		Button forwardButton=new Button("Move Forward");
+		
+		Button forwardButton=new Button(myResources.getString("MoveForward"));
 		final JTextField forwardInput=new JTextField(5);
 		forwardButton.addActionListener(new ActionListener() {
 
@@ -80,10 +85,10 @@ public class SlogoView extends JFrame{
 
 
 				try{
-					TurtleSpace.getTurtle().goForward(Integer.parseInt(forwardInput.getText()));
+					TurtleSpace.moveForward(Integer.parseInt(forwardInput.getText()));
 					updateInfo();
 				}catch(Exception e1){
-					showError("Input number is not valid");}
+					showError(myResources.getString("NumberFormat"));}
 			}
 		});   
 
@@ -93,7 +98,7 @@ public class SlogoView extends JFrame{
 	}
 	public static void updateInfo(){
 		DecimalFormat decFor=new DecimalFormat("0.000");
-		Stats s=TurtleSpace.getStats();
+		Stats s=TurtleSpace.displayStats();
 		xPos.setText(decFor.format(s.getPos().xPos()-Turtle.TURTLE_INIT_X)+"");
 		yPos.setText(decFor.format(s.getPos().yPos()-Turtle.TURTLE_INIT_Y)+"");
 		headingy.setText(s.getTarget().y+"");
@@ -110,10 +115,10 @@ public class SlogoView extends JFrame{
 		xPos.setEditable(false);
 		yPos=new JTextField(4);
 		yPos.setEditable(false);
-		JLabel xLabel=new JLabel("x position");
+		JLabel xLabel=new JLabel(myResources.getString("Xposition"));
 		xPanel.add(xLabel);
 		xPanel.add(xPos);
-		yPanel.add(new JLabel("y position"));
+		yPanel.add(new JLabel(myResources.getString("Yposition")));
 		yPanel.add(yPos);
 		posPanel.add(xPanel);
 		posPanel.add(yPanel);
@@ -126,7 +131,7 @@ public class SlogoView extends JFrame{
 	private void makeResultsPanel(JPanel homePanel){
 		JPanel resultsPanel=new JPanel();
 		resultsPanel.setLayout(new BoxLayout(resultsPanel,BoxLayout.Y_AXIS ));
-		resultsPanel.add(new JLabel("Equation Results"));
+		resultsPanel.add(new JLabel(myResources.getString("EquationResults")));
 		results=new JTextField();
 		results.setEditable(false);
 		resultsPanel.add(results);
@@ -140,13 +145,13 @@ public class SlogoView extends JFrame{
 		y.setLayout(new BoxLayout(y,BoxLayout.Y_AXIS));
 		headingx=new JTextField(4);
 		headingx.setEditable(false);
-		JLabel xLabel=new JLabel("x Target");
+		JLabel xLabel=new JLabel(myResources.getString("XTarget"));
 		//xLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		x.add(xLabel);
 		x.add(headingx);
 		headingy=new JTextField(4);
 		headingy.setEditable(false);
-		JLabel yLabel= new JLabel("y Target");
+		JLabel yLabel= new JLabel(myResources.getString("YTarget"));
 		//yLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		y.add(yLabel);
 		y.add(headingy);
@@ -159,7 +164,7 @@ public class SlogoView extends JFrame{
 		anglePanel.setLayout(new BoxLayout(anglePanel,BoxLayout.Y_AXIS));
 		angle=new JTextField();
 		angle.setEditable(false);
-		JLabel label=new JLabel("Rotation");
+		JLabel label=new JLabel(myResources.getString("Rotation"));
 		//label.setHorizontalAlignment(SwingConstants.CENTER);
 		anglePanel.add(label);
 		anglePanel.add(angle);
@@ -179,18 +184,18 @@ public class SlogoView extends JFrame{
 	private void makeRotatePanel(JPanel rotationPanel){
 		JPanel rotatePanel=new JPanel();
 		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.Y_AXIS));
-		Button rotationButton=new Button("Rotate Turtle");
+		Button rotationButton=new Button(myResources.getString("RotateTurtle"));
 		//rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
 		final JTextField rotationInput=new JTextField(4);
 		rotationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
 				try{
-					TurtleSpace.getTurtle().addRotation(Double.parseDouble(rotationInput.getText()));
+					TurtleSpace.addRotations(Double.parseDouble(rotationInput.getText()));
 				}catch(Exception e1){
-					showError("Input number is not valid");
+					showError(myResources.getString("NumberFormat"));
 				}
-				rotateImage();
+				TurtleSpace.rotateImage();
 				updateInfo();
 			}
 		});   
@@ -198,33 +203,51 @@ public class SlogoView extends JFrame{
 		rotatePanel.add(rotationInput);
 		rotationPanel.add(rotatePanel);
 	}
+	private void makeFilterPanel(JPanel homePanel){
+		JPanel filterPanel=new JPanel();
+		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+		Button filterButton=new Button(myResources.getString("FilterTurtle"));
+		//rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
+		final JTextField filterInput=new JTextField(3);
+		filterInput.setText("0");
+		filterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{             
+
+				TurtleSpace.setFilter(Integer.parseInt(filterInput.getText()));
+			}
+		});   
+		filterPanel.add(filterButton);
+		filterPanel.add(filterInput);
+		homePanel.add(filterPanel);
+	}
 	public void makeScroller(JPanel homePanel){
 		JPanel scrollPanel=new JPanel();
 		scrollPanel.setLayout(new BoxLayout(scrollPanel,BoxLayout.Y_AXIS));
-		scrollPanel.add(new JLabel("Velocity SLider"));
+		scrollPanel.add(new JLabel(myResources.getString("VelocitySlider")));
 		JSlider veloSlider=new JSlider(JSlider.HORIZONTAL, 1,10,5);
 		veloSlider.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				TurtleSpace.getTurtle().setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
+				TurtleSpace.setVelocities(((JSlider)arg0.getSource()).getValue()*0.01);
 			}
 		});
 		scrollPanel.add(veloSlider);
 		homePanel.add(scrollPanel);
 	}
 	public void makeSunButton(JPanel homePanel){
-		Button sunButton=new Button("press 8x");
+		Button sunButton=new Button(myResources.getString("FillDrawer"));
 		sunButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{      
 				updateInfo();
 				
-				TurtleSpace.getTurtle().addRotation(45);
+				TurtleSpace.addRotations(45);
 				for(int k=0;k<3;k++){
-					TurtleSpace.getTurtle().addRotation(90);
-					TurtleSpace.getTurtle().goForward(30);
+					TurtleSpace.addRotations(90);
+					TurtleSpace.moveForward(30);
 				}
-				rotateImage();
+				TurtleSpace.rotateImage();
 				}
 			
 		});  
@@ -240,27 +263,33 @@ public class SlogoView extends JFrame{
         return panel;
     }
 	
-	  protected static ImageIcon createImageIcon(String path) {
-	        java.net.URL imgURL = SlogoView.class.getResource(path);
-	        if (imgURL != null) {
-	            return new ImageIcon(imgURL);
-	        } else {
-	            System.err.println("Couldn't find file: " + path);
-	            return null;
-	        }
-	    }
-	
+
 	public void makeNewTurtleButton(JPanel homePanel){
-		Button newTurtButton = new Button("New Turtle");
+		Button newTurtButton = new Button(myResources.getString("NewTurtle"));
+		JPanel newPanel=new JPanel();
+		newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
+		JPanel labelPanel=new JPanel();
+		JLabel idToAdd=new JLabel("Id of turtle");
+		final JTextField turtId=new JTextField(2);
+		turtId.setText("0");
+		labelPanel.add(idToAdd);
+		labelPanel.add(turtId);
 		newTurtButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				updateInfo();
-				TurtleSpace.addnewTurtle();
+				try{
+				TurtleSpace.addnewTurtle(Integer.parseInt(turtId.getText()));
+				}catch(Exception e1){
+					showError(myResources.getString("MustBeInt"));
+				}
 			}
 		});
-		homePanel.add(newTurtButton);
+		newPanel.add(newTurtButton);
+		newPanel.add(labelPanel);
+		homePanel.add(newPanel);
 	}
+	
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
 		createSaveButton(inputTextPanel);
@@ -270,17 +299,17 @@ public class SlogoView extends JFrame{
 		textInput.setText("");
 		//"Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing Turtle image(?)");
 		textInput.setSize(100,300);
-		Button submit=new Button("Submit Text");
+		Button submit=new Button(myResources.getString("SubmitText"));
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
 					results.setText(model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle())+"");
-					rotateImage();
+					TurtleSpace.rotateImage();
 					savePanel(textInput);
 				}
 				catch(MissingResourceException e1){
-					showError(ILLEGAL_COMMAND_MESSAGE);
+					showError(myResources.getString("IllegalCommand"));
 				}
 
 				updateInfo();
@@ -307,7 +336,7 @@ public class SlogoView extends JFrame{
 		JScrollPane scrollSave=new JScrollPane(savedText);
 		savedBoxes.add(savedText);
 		savedText.setEditable(false);
-		Button loader=new Button("Run Script"+" "+(i+1));
+		Button loader=new Button(myResources.getString("RunScript")+" "+(i+1));
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
@@ -320,7 +349,7 @@ public class SlogoView extends JFrame{
 		oneBox.add(scrollSave);
 	}
 	private void createSaveButton(JPanel savePanel){
-		Button saveButton=new Button("save");
+		Button saveButton=new Button(myResources.getString("Save"));
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{  
@@ -351,7 +380,7 @@ public class SlogoView extends JFrame{
 		JPanel drawingPanel=new JPanel();
 		JScrollPane scroller=new JScrollPane(drawingPanel);
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-		TurtleSpace=new TurtleDrawer(30,30);
+		TurtleSpace=new TurtleDrawer();
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
 		drawingPanel.setSize(300,300);
 		drawingPanel.setMinimumSize(new Dimension(300,300));
@@ -361,7 +390,7 @@ public class SlogoView extends JFrame{
 		return scroller;
 	}
 	public Button makeHelpButton(){
-		Button helpButton=new Button("Help Button");
+		Button helpButton=new Button(myResources.getString("HelpButton"));
 		//final HelpPage helpPage=new HelpPage();
 		boolean page=true;
 		if(helpPage!=null)
@@ -378,7 +407,7 @@ public class SlogoView extends JFrame{
 		return helpButton;
 	}
 	public Button makeRefreshButton(){
-		Button refresh=new Button("Refresh");
+		Button refresh=new Button(myResources.getString("Refresh"));
 		refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
@@ -392,10 +421,11 @@ public class SlogoView extends JFrame{
 		});   
 		return refresh;
 	}
-	private void makeImageChooserButton(JPanel panel){
+	private void makeImageChooserButton(JPanel homePanel){
+		JPanel panel=new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		final JTextField imageChooser = new JTextField(10);
-		panel.add(imageChooser);
-		Button selectImage= new Button("Select Image");
+		Button selectImage= new Button(myResources.getString("SelectImage"));
 		selectImage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -409,6 +439,8 @@ public class SlogoView extends JFrame{
 			}
 		});
 		panel.add(selectImage);
+		panel.add(imageChooser);
+		homePanel.add(panel);
 	}
 	public JPanel makeOptionsPanel(){
 		JPanel optionsPanel=new JPanel();
@@ -419,10 +451,21 @@ public class SlogoView extends JFrame{
 		optionsPanel.add(makeRefreshButton());
 		makeRotatePanel(optionsPanel);
 		makeForwardPanel(optionsPanel);
+		makeFilterPanel(optionsPanel);
 		makeSunButton(optionsPanel);
 		makeNewTurtleButton(optionsPanel);
 		return optionsPanel;
 	}
+	//Needs refactoring. Look nicer
+	  private  ImageIcon createImageIcon(String path) {
+	        java.net.URL imgURL = SlogoView.class.getResource(path);
+	        if (imgURL != null) {
+	            return new ImageIcon(imgURL);
+	        } else {
+	            System.err.println(myResources.getString("FileNotFoundError")+": " + path);
+	            return null;
+	        }
+	    }
 	
 	public void CreateTabs(){
         //createMainPanel();
@@ -471,7 +514,6 @@ public class SlogoView extends JFrame{
 		setMinimumSize(new Dimension(400,600));
 		setVisible(true);
 		 JTabbedPane tabbedPane = new JTabbedPane();
-		 
 	    ImageIcon icon = createImageIcon("turtle.gif");
 		mainPanel=(JPanel) getContentPane();
 		JPanel rightPanel=new JPanel();
@@ -487,17 +529,17 @@ public class SlogoView extends JFrame{
 		pack();
 		setTitle("Slow Go Team 16");
 		
-		 //JPanel panel1 = makeTextPanel("Panel #1");
-	    // tabbedPane.addTab("Tab 1", icon, panel1,
-	     //        "Does nothing");
-	     //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-	       //  
-	       // JPanel panel2 = makeTextPanel("Panel #2");
-	       // tabbedPane.addTab("Tab 2", icon, panel2,
-	       //         "Does twice as much nothing");
-	       // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
-		//mainPanel.add()
+//		 //JPanel panel1 = makeTextPanel("Panel #1");
+//	    // tabbedPane.addTab("Tab 1", icon, panel1,
+//	     //        "Does nothing");
+//	     //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+//	       //  
+//	       // JPanel panel2 = makeTextPanel("Panel #2");
+//	       // tabbedPane.addTab("Tab 2", icon, panel2,
+//	       //         "Does twice as much nothing");
+//	       // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+//
+//		//mainPanel.add()
 	}
 
 
@@ -508,12 +550,7 @@ public class SlogoView extends JFrame{
 		// TODO Auto-generated method stub
 
 	}
-	private void rotateImage() {
-		imageString= "Turtle" + Math.random();
-		Stats s = TurtleSpace.getStats();
-		TurtleSpace.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-		TurtleSpace.getTurtle().setImage(imageString);
-	}
+
 
 
 }

@@ -6,36 +6,35 @@ import backEnd.SlogoModel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import jgame.JGColor;
+import jgame.JGPoint;
 import jgame.platform.JGEngine;
 //Still ne
 @SuppressWarnings("serial")
 
 public class TurtleDrawer extends JGEngine {
 	private Turtle turt;
-	private int xPos;
-	private int yPos;
-	private Point prevPos;
 	private String chosenImage;
-	
-	public TurtleDrawer(int x, int y){
+	private int turtFilter=0;
+	private List<Turtle> turtList=new ArrayList<Turtle>();
+
+	public TurtleDrawer(){
 		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
 
 		//setMinimumSize(new Dimension(200,200));
 		setBackground(new java.awt.Color(255,255,255));
-		xPos=x;
-		yPos=y;
 
 	}
 	public Turtle getTurtle(){
 		return turt;
 	}
 	public void setPositionAndPaintTurtle(int x, int y){
-		xPos=x;
-		yPos=y;
 		repaint();
 	}
 	@Override
@@ -48,60 +47,61 @@ public class TurtleDrawer extends JGEngine {
 		setFrameRate(250, 3);
 		setPFSize(30,30);
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
-		turt=new Turtle();
+		turt=new Turtle(0);
+		turtList.add(turt);
 		turt.setEngine(this);
 		//setPFWrap( true, true, 0, 0 );
 	}
 	public void doFrame(){
-		//turt.movePosition(Math.random()*100, Math.random()*100, 1);
-		//System.out.println(turt.getStats().getPos().xPos()+"  "+turt.getStats().getPos().yPos()+" "+turt.targetx+"  "+turt.targety);
-		prevPos=new Point((int)turt.x,(int)turt.y);
-		moveObjects(null,0);
+		moveObjects();
+		checkClicked();
 		SlogoView.updateInfo();
-		
-		
-	}
-	
 
-	
+
+	}
 	public void paintFrame(){
-		turt.runPen(2,true);
+		for(Turtle t:turtList){
+			//System.out.println(turtFilter+"  "+t.turtId);
+			if(t.matchFilter(turtFilter))
+				t.runPen(2,true);
+		}
 		checkColorKeys();
 	}
 	public boolean checkKey(char ch){
 		if(getLastKey()+32==(int)ch||(getLastKey()<60&&getLastKey()==ch)){
-			clearLastKey();
 			return true;}
 		return false;
 	}
 	public void checkColorKeys(){
-		if(checkKey('r')){
-			clearLastKey();
-			turt.setPen(JGColor.red);
-		}
-		if(checkKey('g')){
-			clearLastKey();
-			turt.setPen(JGColor.green);
-		}
-		if(checkKey('b')){
-			clearLastKey();
-			turt.setPen(JGColor.blue);
-		}
-		if(checkKey('o')){
-			clearLastKey();
-			turt.setPen(JGColor.orange);
-		}
-		if(checkKey('r')){
-			turt.raisePen();
-		}
-		if(checkKey('m')){
-			turt.lowerPen();
-		}
+		for(Turtle t:turtList)
+			if(t.matchFilter(turtFilter)){
+				if(checkKey('r')){
+					t.setPen(JGColor.red);
+				}
+				if(checkKey('g')){
+					t.setPen(JGColor.green);
+				}
+				if(checkKey('b')){
+					t.setPen(JGColor.blue);
+				}
+				if(checkKey('o')){
+					t.setPen(JGColor.orange);
+				}
+				if(checkKey('r')){
+					t.raisePen();
+				}
+				if(checkKey('m')){
+					t.lowerPen();
+				}
+			}
+		clearLastKey();
+
 	}
 	public void refresh(){
-turt.reset();
+		for(Turtle t:turtList)
+		t.reset();
 	}
-	
+
 	public void newTurtle(String imageFile) {
 		Position newPos=turt.getStats().getPos();
 		double targetx = newPos.xPos();
@@ -111,21 +111,77 @@ turt.reset();
 		turt.setImage(chosenImage);
 		turt.setPos(targetx, targety);
 		turt.setEngine(this);
+
 	}
-	
-	public void addnewTurtle(){
+
+	public void addnewTurtle(int id){
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
-		turt=new Turtle();
+		turt=new Turtle(id);
+		turtList.add(turt);
+		//System.out.println(turtList.size());
 		turt.setEngine(this);
 	}
 
-	
-	public Stats getStats(){
-		return turt.getStats();
+public void moveForward(int mag){
+	for(Turtle t:turtList)
+		if(t.matchFilter(turtFilter)){
+			t.goForward(mag);
+		}
+}
+private void checkClicked(){
+	if(getMouseButton(1)){
+		clearMouseButton(1);
+		JGPoint p=getMousePos();
+		selectClicked(new Position(p.x,p.y));
 	}
+}
+public void selectClicked(Position p){
+	for(Turtle t:turtList){
+		
+		if(isClicked(p,t.getStats())){
+			turt=t;
+			System.out.println(turt.getStats().getPos().xPos());
+		}
+	}
+}
+private boolean isClicked(Position p,Stats s){
+	return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<10;
 	
+}
+public void addRotations(double mag){
+	for(Turtle t:turtList)
+		if(t.matchFilter(turtFilter)){
+			t.addRotation(mag);
+		}
+}
+public Stats displayStats(){
+	return getStats(turt);
+}
+	public Stats getStats(Turtle t){
+		return t.getStats();
+	}
+
 	public String getImage(){
 		return chosenImage;
 	}
-	
+
+	public void setFilter(int filter){
+		//System.out.println(filter+ " filter");
+		turtFilter=filter;
+	}
+	public void rotateImage() {
+for(Turtle t:turtList)
+	if(t.matchFilter(turtFilter)){
+		String imageString= "Turtle" + Math.random();
+		Stats s = getStats(t);
+		defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+		t.setImage(imageString);
+	}
+}
+	public void setVelocities(double velocity) {
+		for(Turtle t:turtList)
+			if(t.matchFilter(turtFilter))
+				t.setVelocity(velocity);
+		
+	}
 }

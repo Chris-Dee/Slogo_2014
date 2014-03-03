@@ -14,7 +14,11 @@ import jgame.platform.JGEngine;
 
 
 public class Turtle extends JGObject {
+	private static final double THRESHOLD_VOLTAGE = 0.01;
+	private static final int EDGE_OFFSET = 5;
+	private static final int SCREEN_EDGE = 270;
 	private boolean penActive=true;
+	public int turtId;
 	private int targetCount=0;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
@@ -28,22 +32,24 @@ public class Turtle extends JGObject {
 	private JGEngine myEngine;
 	private LinkedList<Position> targetQueue=new LinkedList<Position>(); 
 	private double velocity=0.02;
-	public Turtle() {
+	public Turtle(int id) {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
 		targetQueue.add(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
-		System.out.println(targetQueue);
+		turtId=id;
 	}
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);
 		if(dist>2){
 			xdir=setDir(x,targetx);
 			ydir=setDir(y,targety);
-			if(getLastX() >= 270 || getLastX()<=0){
+			if(getLastX() >= SCREEN_EDGE || getLastX()<=0){
+				x=SCREEN_EDGE-EDGE_OFFSET;
 				xspeed=0;
 			} else{
 				xspeed=velocity;
 			}
-			if(getLastY()<=0 || getLastY()>=270){
+			if(getLastY()<=0 || getLastY()>=SCREEN_EDGE){
+				y=SCREEN_EDGE-EDGE_OFFSET;
 				yspeed=0;
 			} else{
 				yspeed=velocity;
@@ -72,7 +78,7 @@ public class Turtle extends JGObject {
 			double rot=Math.toRadians(myRotation);
 			double xOffset=Math.cos(rot)*distance;
 			double yOffset=Math.sin(rot)*distance;
-			if(xspeed<=0.01&&yspeed<=0.01)
+			if(xspeed<=THRESHOLD_VOLTAGE&&yspeed<=THRESHOLD_VOLTAGE)
 				setTarget(new Position((targetQueue.get(targetQueue.size()-1).xPos()+xOffset),(targetQueue.get(targetQueue.size()-1).yPos()+yOffset)));
 			return distance;
 		}
@@ -86,11 +92,26 @@ public class Turtle extends JGObject {
 		public void move(){
 			moveToTarget();
 		}
+		private Position makeInBounds(Position target){
+			double x=target.xPos();
+			double y=target.yPos();
+			x=setBounds(x);
+			y=setBounds(y);
+			return new Position(x,y);
+		}
+		private double setBounds(double coord){
+			if(coord>=SCREEN_EDGE)
+				return SCREEN_EDGE-EDGE_OFFSET;
+			if(coord<=0)
+				return 0+EDGE_OFFSET;
+			else
+				return coord;
+		}
 		public double setTarget(Position target){
 			double dist=Point2D.distance(x,y,targetx,targety);
 			origPosition=new Position(targetx,targety);
-			targetQueue.add(new Position(target.xPos(),target.yPos()));
-			System.out.println(targetQueue.size()+"  "+targetCount);
+			targetQueue.add(makeInBounds(target));
+			//System.out.println(targetQueue.size()+"  "+targetCount);
 			return dist;
 		}
 		public void runPen(int thickness, boolean penActive){
@@ -149,15 +170,14 @@ public class Turtle extends JGObject {
 			if(xspeed==0&&yspeed==0)
 				myRotation+=addRotation;
 		}
-
-		public double getangle(){
-			return myRotation;
-		}
 		public double setRotation(double setRotation){
 			double rot=myRotation;
 			myRotation=0;
 			addRotation(setRotation);
 			return rot-setRotation;
+		}
+		public boolean matchFilter(int id){
+			return turtId==id;
 		}
 		public Stats getStats(){
 			return new Stats(xspeed,yspeed,targetx,targety,myRotation,xdir,ydir,drawingColor);

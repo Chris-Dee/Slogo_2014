@@ -26,7 +26,6 @@ public abstract class AbstractParser {
 	}
 	
 	protected String convertTextToSingleLine(String s) {
-		// TODO Auto-generated method stub
 		String singleLineString;
 		if (s.contains("\n"))
 			singleLineString = s.replaceAll("\n", " ");
@@ -36,12 +35,12 @@ public abstract class AbstractParser {
 		return singleLineString.toUpperCase();
 	}
 	
-	protected boolean checkValidInput(String s) {
-		return true;
-	}
-	
 	public abstract boolean checkForErrors();
 
+	/*
+	 * Used to print the command tree structure for test only
+	 * Should not be called or used in this project
+	 */
 	public void printTree(StringNode current) {
 		if (current == null) return;
 		System.out.println(current.getCommandString() +" ");

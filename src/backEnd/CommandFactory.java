@@ -20,7 +20,6 @@ public class CommandFactory {
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
     public static final String DEFAULT_CONTROLS = "ControlCommands";
-    public static final String COMMAND_INVALID_MESSAGE = "Please enter a valid command!";
     public static final double DEFAULT_MAGNITUDE = 0;
     
     protected ResourceBundle myCommands;
@@ -70,12 +69,12 @@ public class CommandFactory {
 		if(current == null){ return 0; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
-				System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
+				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
 				return myParser.convertToDouble(current.getCommandString());	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
-					System.out.println(current.getCommandString() + " is a control command");
+					//System.out.println(current.getCommandString() + " is a control command");
 					ControlNode cur = (ControlNode) current;
 					return makeControlCommand(cur, turtle);
 				}
@@ -113,10 +112,7 @@ public class CommandFactory {
 	 * Used to check if a StringNode is a ControlNode
 	 */
 	protected boolean ifControlCommand(StringNode current){
-		if(myControlCommands.contains(current.getCommandString())){
-			return true;
-		}
-		return false;
+		return myControlCommands.contains(current.getCommandString());
 	}
 	
 	/*
@@ -212,17 +208,14 @@ public class CommandFactory {
 	}
 	
 	protected boolean hasNoParameter(StringNode current){
-		if(myParameters.getString(current.getCommandString()).equals("0")){ return true; }
-		return false;
+		return myParameters.getString(current.getCommandString()).equals("0");
 	}
 	
 	protected boolean hasOneParameter(StringNode current){
-		if(myParameters.getString(current.getCommandString()).equals("1")){ return true; }
-		return false;
+		return myParameters.getString(current.getCommandString()).equals("1");
 	}
 	
 	protected boolean hasTwoParameters(StringNode current){
-		if(myParameters.getString(current.getCommandString()).equals("2")){ return true; }
-		return false;
+		return myParameters.getString(current.getCommandString()).equals("2");
 	}
 }

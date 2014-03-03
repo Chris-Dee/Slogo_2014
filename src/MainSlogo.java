@@ -14,8 +14,7 @@ class MainSlogo {
 	
 	public static void newWindow(){
 		SlogoModel model = new SlogoModel();
-			    SlogoView display = new SlogoView(model);
-	    
+		SlogoView display = new SlogoView(model);
 	    model.setViewer(display);
 	}
 	

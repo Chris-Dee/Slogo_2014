@@ -133,7 +133,8 @@ public class Turtle extends JGObject {
 			y=dest.yPos();
 			return dist;
 		}
-		public void reset(){
+		public double reset(){
+			double dist=Point2D.distance(x,y,TURTLE_INIT_X,TURTLE_INIT_Y);
 			setPosition(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
 			targetQueue.clear();
 			targetCount=0;
@@ -142,6 +143,7 @@ public class Turtle extends JGObject {
 			myRotation=0;
 			targetx=TURTLE_INIT_X;
 			targety=TURTLE_INIT_Y;
+			return dist;
 		}
 		public void addRotation(double addRotation){
 			if(xspeed==0&&yspeed==0)

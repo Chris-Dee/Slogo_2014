@@ -8,7 +8,7 @@ public class HideTurtle extends TurtleCommand{
 
 	@Override
 	public double execute() {
-		myTurtle.setImage(WHITE_IMAGE_FILEPATH);
+		myTurtle.setImage(null);
 		return 0;
 	}
 

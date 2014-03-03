@@ -33,9 +33,13 @@ public class CommandFactory {
 		myCommands = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_COMMANDPARAMETER_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myPossibleControls = ResourceBundle.getBundle(DEFAULT_COMMANDPATH_PACKAGE + DEFAULT_CONTROLS);
-		myParser = new TextParser(); // created to use some convenient methods in AbstarctParser class
-		// myParser is different from the real TextParser object stored in the SlogoModel class
-		
+		myParser = new TextParser(); // create a new TextParser() to use some convenient methods in AbstarctParser class
+		initControlCommands();
+	}
+
+
+
+	protected void initControlCommands() {
 		myControlCommands = new ArrayList<String>();
 		String[] controlList = myPossibleControls.getString("Control").split(",");
 		for(String s:controlList){

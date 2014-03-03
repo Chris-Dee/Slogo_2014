@@ -2,13 +2,12 @@ package commands;
 
 public class HideTurtle extends TurtleCommand{
 	
-	public static final String WHITE_IMAGE_FILEPATH = "resources.whiteImage.jpeg";
-	
 	public HideTurtle(){}
 
 	@Override
 	public double execute() {
-		myTurtle.setImage(null);
+		System.out.println("Hide Turtle");
+		myTurtle.suspend();
 		return 0;
 	}
 

@@ -56,8 +56,8 @@ public class SlogoView extends JFrame{
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
 	private JTextArea textInput;
-	private static final String DEFAULT_RESOURCE_PATH="frontEnd/";
-	private static final String DEFAULT_BUTTON_TEXT="Buttons";
+	public static final String DEFAULT_RESOURCE_PATH="frontEnd/";
+	public static final String DEFAULT_BUTTON_TEXT="Buttons";
 	public SlogoView(){
 		super();
 		initiate();

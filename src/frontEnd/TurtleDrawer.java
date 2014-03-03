@@ -39,7 +39,6 @@ public class TurtleDrawer extends JGEngine {
 	}
 	@Override
 	public void initCanvas() {
-
 		setCanvasSettings(1, 1, 300, 300, null, JGColor.white, null);
 	}
 	@Override
@@ -50,7 +49,6 @@ public class TurtleDrawer extends JGEngine {
 		turt=new Turtle(0);
 		turtList.add(turt);
 		turt.setEngine(this);
-		//setPFWrap( true, true, 0, 0 );
 	}
 	public void doFrame(){
 		moveObjects();
@@ -178,6 +176,11 @@ for(Turtle t:turtList)
 		t.setImage(imageString);
 	}
 }
+	public void suspendTurtles(){
+		for(Turtle t:turtList)
+			if(t.matchFilter(turtFilter))
+				t.suspend();
+	}
 	public void setVelocities(double velocity) {
 		for(Turtle t:turtList)
 			if(t.matchFilter(turtFilter))

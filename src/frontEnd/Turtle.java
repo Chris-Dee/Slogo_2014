@@ -20,6 +20,7 @@ public class Turtle extends JGObject {
 	private boolean penActive=true;
 	public int turtId;
 	private int targetCount=0;
+	private int lineStartTarget=0;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
 	private double targetx=TURTLE_INIT_X;
@@ -67,7 +68,6 @@ public class Turtle extends JGObject {
 				targetx=targetQueue.get(targetCount).xPos();
 				targety=targetQueue.get(targetCount).yPos();
 				targetCount++;
-				
 			}
 		}
 	}
@@ -111,25 +111,24 @@ public class Turtle extends JGObject {
 			double dist=Point2D.distance(x,y,targetx,targety);
 			origPosition=new Position(targetx,targety);
 			targetQueue.add(makeInBounds(target));
-			//System.out.println(targetQueue.size()+"  "+targetCount);
 			return dist;
 		}
 		public void runPen(int thickness, boolean penActive){
-			if(Math.abs(xdir)>0||Math.abs(ydir)>0){
+			if(Math.abs(xspeed)>0.01||Math.abs(yspeed)>0.01){
 				List<Position> loc=new ArrayList<Position>();
 
 				loc.add(new Position(x,y));
-
 				loc.add(new Position(origPosition.xPos(),origPosition.yPos()));
 				if(xspeed>velocity/2&&yspeed>velocity/2)
 					lines.put((ArrayList<Position>) loc,drawingColor);
-
 			}
 			if(origPosition!=null){
 				for(ArrayList<Position> line:lines.keySet())
 					if(lines.get(line)!=null)
 						myEngine.drawLine(line.get(0).xPos()+10, line.get(0).yPos()+10, line.get(1).xPos()+10, line.get(1).yPos()+10,thickness,lines.get(line));
 			}
+			
+				
 
 		}
 		public void clearLines(){

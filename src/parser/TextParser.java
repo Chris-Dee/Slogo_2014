@@ -31,7 +31,6 @@ public class TextParser extends AbstractParser {
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
 //		System.out.println("myCommandList: " + myCommandList.size());
-//		//System.out.println("myCommandList: " + myCommandList.size());
 		int start = initializeTree(myCommandList);
 		buildTree(myRoot, start);
 		return myRoot;
@@ -159,7 +158,7 @@ public class TextParser extends AbstractParser {
 		String commands = null;
 		int i = index+1;
 
-		if (!myControlCommands.containsKey(myCommandList.get(index+1))) {
+		if (!myControlCommands.containsKey(myCommandList.get(i))) {
 			while (!myCommandList.get(i).startsWith("[")) {
 				sb.append(myCommandList.get(i));
 				i++;

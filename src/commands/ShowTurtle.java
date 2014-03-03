@@ -6,6 +6,7 @@ public class ShowTurtle extends TurtleCommand{
 
 	@Override
 	public double execute() {
+		System.out.println("Show Turtle Executed");
 		myTurtle.resume();
 		return 1;
 	}

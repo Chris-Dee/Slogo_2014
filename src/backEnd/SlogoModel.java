@@ -33,11 +33,8 @@ public class SlogoModel {
 	 * This method should be called by the front-end "main" class to pass into the text input
 	 */
 	public double receiveTextInput(String userCommands, Turtle turtle){
-		myHistory.add(userCommands);
 //		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 //		System.out.println();
-//		System.out.println();
-//		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
 			myViewer.showError(myErrorMessages.getString("IllegalCommand"));
@@ -51,6 +48,10 @@ public class SlogoModel {
 	
 	public List<String> getHistory(){
 		return myHistory;
+	}
+	
+	public void updateHistory(List<String> history){
+		myHistory = history;
 	}
 
 }

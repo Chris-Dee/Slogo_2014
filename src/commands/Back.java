@@ -20,7 +20,7 @@ public class Back extends TurtleCommand {
 
 	@Override
 	public double execute() {
-		System.out.println("Back magnitude: " + myMagnitude);
+//		System.out.println("Back magnitude: " + myMagnitude);
 		myTurtle.goForward(-1.0*myMagnitude);
 		return myMagnitude;
 	}

@@ -37,7 +37,6 @@ public class SlogoModel {
 //		System.out.println("userCommands passed in SLogoModel: "+userCommands);
 		StringNode root = myParser.parse(userCommands);
 		if(!myParser.checkForErrors()){
-			myViewer.showError(SlogoView.ILLEGAL_COMMAND_MESSAGE);
 			return 0;
 		}
 //		System.out.println("Pass Legality Check");

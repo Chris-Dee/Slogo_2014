@@ -2,6 +2,7 @@ package frontEnd;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +44,8 @@ import backEnd.SlogoModel;
 @SuppressWarnings("serial")
 public class SlogoView extends JFrame{
 	private ResourceBundle myResources;
+	private ResourceBundle commResources;
+	public int backNumber=0;
 	private JPanel mainPanel;
 	private SlogoModel model;
 	private static JTextField xPos;
@@ -58,10 +62,13 @@ public class SlogoView extends JFrame{
 	private JTextArea textInput;
 	private static final String DEFAULT_RESOURCE_PATH="frontEnd/";
 	private static final String DEFAULT_BUTTON_TEXT="Buttons";
+	private static final String DEFAULT_COMM_PATH="backEnd/";
+	private static final String DEFAULT_COMM_TEXT="CommandPath";
 	public SlogoView(){
 		super();
 		initiate();
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
+		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
 	public SlogoView(SlogoModel modelSlog){
@@ -87,11 +94,11 @@ public class SlogoView extends JFrame{
 				try{
 					TurtleSpace.moveForward(Integer.parseInt(forwardInput.getText()));
 					updateInfo();
+					backNumber++;
 				}catch(Exception e1){
 					showError(myResources.getString("NumberFormat"));}
 			}
 		});   
-
 		forPanel.add(forwardButton);
 		forPanel.add(forwardInput);
 		forwardPanel.add(forPanel);
@@ -194,6 +201,7 @@ public class SlogoView extends JFrame{
 					TurtleSpace.addRotations(Double.parseDouble(rotationInput.getText()));
 				}catch(Exception e1){
 					showError(myResources.getString("NumberFormat"));
+					backNumber++;
 				}
 				TurtleSpace.rotateImage();
 				updateInfo();
@@ -307,6 +315,7 @@ public class SlogoView extends JFrame{
 					results.setText(model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle())+"");
 					TurtleSpace.rotateImage();
 					savePanel(textInput);
+					backNumber++;
 				}
 				catch(MissingResourceException e1){
 					showError(myResources.getString("IllegalCommand"));
@@ -332,7 +341,7 @@ public class SlogoView extends JFrame{
 	private void fillSavedBoxes(JPanel oneBox, final int i){
 
 		oneBox.setLayout(new BoxLayout(oneBox,BoxLayout.Y_AXIS));
-		final JTextArea savedText=new JTextArea(28,10);
+		final JTextArea savedText=new JTextArea(20,10);
 		JScrollPane scrollSave=new JScrollPane(savedText);
 		savedBoxes.add(savedText);
 		savedText.setEditable(false);
@@ -382,16 +391,14 @@ public class SlogoView extends JFrame{
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
 		TurtleSpace=new TurtleDrawer();
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
-		drawingPanel.setSize(300,300);
-		drawingPanel.setMinimumSize(new Dimension(300,300));
-		TurtleSpace.setMinimumSize(new Dimension(300,300));
+		drawingPanel.setSize(270,270);
+		drawingPanel.setMinimumSize(new Dimension(270,270));
 		TurtleSpace.setSize(200,200);
 		drawingPanel.add(TurtleSpace);
 		return scroller;
 	}
 	public Button makeHelpButton(){
 		Button helpButton=new Button(myResources.getString("HelpButton"));
-		//final HelpPage helpPage=new HelpPage();
 		boolean page=true;
 		if(helpPage!=null)
 			page=helpPage.isVisible();
@@ -411,7 +418,6 @@ public class SlogoView extends JFrame{
 		refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-				//need to reset Turtle and clear lines
 				TurtleSpace.refresh();
 				textInput.setText("");
 				for(JTextArea text:savedBoxes)
@@ -442,11 +448,30 @@ public class SlogoView extends JFrame{
 		panel.add(imageChooser);
 		homePanel.add(panel);
 	}
+	public void createDirectionButtons(JPanel homePanel){
+		Button backButton=new Button(myResources.getString("BackButton"));
+		backButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				String[] comms=model.getHistory().toArray(new String[model.getHistory().size()]);
+			}
+		});
+		Button forwardButton=new Button(myResources.getString("ForwardButton"));
+		forwardButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				String[] comms=model.getHistory().toArray(new String[model.getHistory().size()]);
+			}
+		});
+		homePanel.add(forwardButton);
+		homePanel.add(backButton);
+	}
 	public JPanel makeOptionsPanel(){
 		JPanel optionsPanel=new JPanel();
 		makeScroller(optionsPanel);
 		optionsPanel.add(makeHelpButton());
 		optionsPanel.setBackground(new java.awt.Color(100,100,100));
+		createDirectionButtons(optionsPanel);
 		makeImageChooserButton(optionsPanel);
 		optionsPanel.add(makeRefreshButton());
 		makeRotatePanel(optionsPanel);
@@ -493,6 +518,7 @@ public class SlogoView extends JFrame{
         //Add the tabbed pane to this panel.
         add(tabbedPane);
 }
+	
 	public JPanel makeTab(){
 		JPanel mainPanel= new JPanel();
 		mainPanel.add(makeOptionsPanel());
@@ -503,15 +529,17 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
-		//mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
-		setResizable(false);
+		setSize(1000,400);
+		setMinimumSize(new Dimension(1000,500));
+		//setSize(1000,400);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 		pack();
 		return mainPanel;
 	}
 	public void createMainPanel(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(400,600));
+		
 		setVisible(true);
 		 JTabbedPane tabbedPane = new JTabbedPane();
 	    ImageIcon icon = createImageIcon("turtle.gif");
@@ -523,10 +551,9 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
-		//mainPanel.add(makeInputPanel(),BorderLayout.SOUTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
-		setResizable(false);
-		pack();
+		setResizable(true);
+		
 		setTitle("Slow Go Team 16");
 		
 //		 //JPanel panel1 = makeTextPanel("Panel #1");

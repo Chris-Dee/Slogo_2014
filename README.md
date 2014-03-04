@@ -68,8 +68,8 @@ The view will have an instance of the ModelManager, which will serve as the brid
 <br>Both working on turtle module and rest of front end. Projects haven’t been broken up.
 <br>
 <br>Back-end Team: Justin Zhang, Dan Zhang
-<br>Justin Zhang: ICommand, ModelManager
-<br>Dan Zhang: AbstractParser, CommandFactory 
+<br>Justin Zhang: ICommand, CommandFactory, ModelManager
+<br>Dan Zhang: AbstractParser, ICommand
 
 <br>See image attached for the UML diagram and our intended view interface
 

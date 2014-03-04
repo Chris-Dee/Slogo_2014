@@ -20,6 +20,8 @@ public class SlogoModel {
 	private AbstractParser myParser;
     private List<String> myHistory;
     private SlogoView myViewer;
+    private LanguageManager myLanguageManager;
+    private String myLanguage;
     private Map<String, Double> myVariableMap;
     private Map<String, StringNode> myVariableCommandMap;
     
@@ -28,12 +30,21 @@ public class SlogoModel {
 		myParser = new TextParser();
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
+		myLanguageManager = new LanguageManager();
 		myVariableMap = new HashMap<String, Double>();
 		myVariableCommandMap = new HashMap<String, StringNode>();
 	}
 	
 	public void setViewer(SlogoView viewer){
 		myViewer = viewer;
+	}
+	
+	/*
+	 * Set the current language
+	 * The first letter of language should be capitalized while the rest should not (e.g. Chinese)
+	 */
+	public void setLanguage(String language){
+		myLanguage = language;
 	}
 	
 	/*
@@ -45,11 +56,12 @@ public class SlogoModel {
 	public double receiveTextInput(String userCommands, List<Turtle> turtles){
 		try{
 			StringNode root = myParser.parse(userCommands);
+			root = myLanguageManager.convertLanguage(root, myLanguage);
 			return myCommandFactory.runCommands(root, turtles.get(0));
 		} catch(IllegalCommandException e){
-			SlogoView.showError(myViewer.getPanel(),e.getMessage());
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
-			SlogoView.showError(myViewer.getPanel(),e.getMessage());
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!");
 		return 0; // should not be reached here

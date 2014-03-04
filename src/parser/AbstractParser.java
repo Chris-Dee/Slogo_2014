@@ -6,13 +6,12 @@ import parser.tree.StringNode;
 
 public abstract class AbstractParser {
 	
-	protected List<String> myCommandList;
-	
 	public abstract StringNode parse(String s);
 	
 	protected abstract int buildTree(StringNode node, int index);
+	protected List<String> myCommandList;
 	
-	public boolean isParameter(String s) {
+	public static boolean isParameter(String s) {
 	    try { 
 	        Double.parseDouble(s); 
 	    } catch(NumberFormatException e) { 
@@ -21,7 +20,7 @@ public abstract class AbstractParser {
 	    return true;
 	}
 	
-	public double convertToDouble(String s) {
+	public static double convertToDouble(String s) {
 		return Double.parseDouble(s);
 	}
 	
@@ -34,8 +33,6 @@ public abstract class AbstractParser {
 		
 		return singleLineString.toUpperCase();
 	}
-	
-	public abstract boolean checkForErrors();
 
 	/*
 	 * Used to print the command tree structure for test only

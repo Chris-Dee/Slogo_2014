@@ -26,14 +26,12 @@ public class CommandFactory {
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
     protected ResourceBundle myPossibleControls;
-    protected AbstractParser myParser;
     protected List<String> myControlCommands;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myPossibleControls = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_CONTROLS);
-		myParser = new TextParser(); // create a new TextParser() to use some convenient methods in AbstarctParser class
 		initControlCommands();
 	}
 
@@ -69,9 +67,9 @@ public class CommandFactory {
 	protected double processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		if(current == null){ return 0; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
-			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
+			if (AbstractParser.isParameter(current.getCommandString())){ // a number in the leaf
 				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
-				return myParser.convertToDouble(current.getCommandString());	
+				return AbstractParser.convertToDouble(current.getCommandString());	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
@@ -83,9 +81,9 @@ public class CommandFactory {
 			}
 		}
 		
-		if(myParser.isParameter(current.getCommandString())){ // the current node is a number but it has a child
+		if(AbstractParser.isParameter(current.getCommandString())){ // the current node is a number but it has a child
 			processStringNode(current.getChildren().get(0), turtle);
-			return myParser.convertToDouble(current.getCommandString());	
+			return AbstractParser.convertToDouble(current.getCommandString());	
 		}
 		else if(hasNoParameter(current)){
 			processStringNode(current.getChildren().get(0), turtle);
@@ -140,7 +138,6 @@ public class CommandFactory {
 				}
 		    }
 			return executeTurtle(command, methods);
-			
 		} catch (ClassNotFoundException e) {
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {

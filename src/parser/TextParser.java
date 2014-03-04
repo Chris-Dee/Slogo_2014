@@ -96,9 +96,7 @@ public class TextParser extends AbstractParser {
 			}
 		}
 		numChildren ++;
-
 		return numChildren;
-		
 	}
 	
 
@@ -198,16 +196,15 @@ public class TextParser extends AbstractParser {
 	}
 	
 	
-	@Override
-	public boolean checkForErrors() {
-		boolean answer = true;
-		for (StringNode leaf : myLeaves) {
-			if( (!hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf)) 
-					&& getNumberOfParameters(leaf.getCommandString()) != 0 ){ answer = false; }
-		}
-		myLeaves.clear();
-		return answer;
-	}
+//	public boolean checkForErrors() {
+//		boolean answer = true;
+//		for (StringNode leaf : myLeaves) {
+//			if( (!hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf)) 
+//					&& getNumberOfParameters(leaf.getCommandString()) != 0 ){ answer = false; }
+//		}
+//		myLeaves.clear();
+//		return answer;
+//	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
 		return node.getChildren().size() == getNumberOfParameters(node.getCommandString());

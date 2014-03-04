@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import parser.AbstractParser;
 import parser.tree.StringNode;
 
 public class LanguageManager {
@@ -47,7 +48,11 @@ public class LanguageManager {
 		}
 	}
 	
+	// need revision: check syntax (e.g. a, b, :a) for base case, variableCommmand
 	protected void processNode(StringNode current){
+		if(AbstractParser.isParameter(current.getCommandString()) 
+				|| AbstractParser.isVariable(current.getCommandString()) 
+				|| AbstractParser.isVariableCommand(current.getCommandString())) return;
 		String nonProgramLanguage = myLanguageMap.get(current.getCommandString());
 		current.setCommandString(myProgramLanguage.getString(nonProgramLanguage));
 	}

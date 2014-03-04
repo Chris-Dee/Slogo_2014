@@ -11,8 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import TurtleStuff.TurtleDrawer;
+
 import frontEnd.SlogoView;
-import frontEnd.TurtleDrawer;
 
 public class MoveAndRefresh extends JPanel {
 	ResourceBundle myResources;

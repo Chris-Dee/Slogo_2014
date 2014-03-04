@@ -1,6 +1,6 @@
 package commands;
 
-import frontEnd.Turtle;
+import TurtleStuff.Turtle;
 
 public abstract class TurtleCommand implements AbstractCommand{
 	protected Turtle myTurtle;

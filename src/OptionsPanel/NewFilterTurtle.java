@@ -10,8 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import TurtleStuff.TurtleDrawer;
+
 import frontEnd.SlogoView;
-import frontEnd.TurtleDrawer;
 
 public class NewFilterTurtle extends JPanel {
 	ResourceBundle myResources;

@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import TurtleStuff.Turtle;
+
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import frontEnd.SlogoView;
-import frontEnd.Turtle;
 import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;

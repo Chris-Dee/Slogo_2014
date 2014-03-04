@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
-import frontEnd.TurtleDrawer;
 
+import TurtleStuff.TurtleDrawer;
 import backEnd.SlogoModel;
 
 public class DirectionButtons extends JPanel {

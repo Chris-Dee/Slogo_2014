@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import frontEnd.TurtleDrawer;
 
+import TurtleStuff.TurtleDrawer;
 import backEnd.SlogoModel;
 
 public class OptionsPanel extends JPanel {

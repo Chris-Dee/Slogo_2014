@@ -1,9 +1,10 @@
 package tests;
 
 import java.util.*;
+
+import TurtleStuff.Turtle;
 import commands.AbstractCommand;
 import commands.Forward;
-import frontEnd.Turtle;
 
 public class CommandTest {
 	

@@ -9,7 +9,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import frontEnd.TurtleDrawer;
+import TurtleStuff.TurtleDrawer;
+
 
 public class VeloSlider extends JPanel {
 	ResourceBundle myResources;

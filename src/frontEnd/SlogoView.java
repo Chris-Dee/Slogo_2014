@@ -30,9 +30,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import frontEnd.HelpPage;
-import frontEnd.Stats;
-import frontEnd.Turtle;
-import frontEnd.TurtleDrawer;
 //to-do
 //need to put in different preferences
 //need to put in panel of previous scripts
@@ -40,6 +37,9 @@ import frontEnd.TurtleDrawer;
 
 
 import OptionsPanel.OptionsPanel;
+import TurtleStuff.Stats;
+import TurtleStuff.Turtle;
+import TurtleStuff.TurtleDrawer;
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")

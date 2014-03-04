@@ -7,8 +7,9 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
+import TurtleStuff.TurtleDrawer;
+
 import frontEnd.SlogoView;
-import frontEnd.TurtleDrawer;
 
 public class ShapeButton extends JPanel {
 	ResourceBundle myResources;

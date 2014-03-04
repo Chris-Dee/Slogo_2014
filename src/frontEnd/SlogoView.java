@@ -39,6 +39,7 @@ import frontEnd.TurtleDrawer;
 //need to add pen
 
 
+import OptionsPanel.OptionsPanel;
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
@@ -51,8 +52,8 @@ public class SlogoView extends JFrame{
 	private static JTextField xPos;
 	private static JTextField yPos;
 	private static JTextField results;
-	private static JTextField headingx;
-	private static JTextField headingy;
+	private static JTextField targetx;
+	private static JTextField targety;
 	private static JTextField angle;
 	private static TurtleDrawer TurtleSpace;
 	private Button forwardButton;
@@ -81,37 +82,13 @@ public class SlogoView extends JFrame{
 		
 	}
 	//Refactor code--especially text boxes with buttons on top. Can make one method that passes in Strings and action Listener objects
-	private void makeForwardPanel(JPanel forwardPanel){
-		JPanel forPanel=new JPanel();
-		forPanel.setLayout(new BoxLayout(forPanel,BoxLayout.Y_AXIS));
-		
-		Button forwardButton=new Button(myResources.getString("MoveForward"));
-		final JTextField forwardInput=new JTextField(5);
-		forwardButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e)
-			{              
-
-
-				try{
-					TurtleSpace.moveForward(Integer.parseInt(forwardInput.getText()));
-					updateInfo();
-					backNumber++;
-				}catch(Exception e1){
-					showError(myResources.getString("NumberFormat"));}
-			}
-		});   
-		forPanel.add(forwardButton);
-		forPanel.add(forwardInput);
-		forwardPanel.add(forPanel);
-	}
 	public static void updateInfo(){
 		DecimalFormat decFor=new DecimalFormat("0.000");
 		Stats s=TurtleSpace.displayStats();
 		xPos.setText(decFor.format(s.getPos().xPos()-Turtle.TURTLE_INIT_X)+"");
 		yPos.setText(decFor.format(s.getPos().yPos()-Turtle.TURTLE_INIT_Y)+"");
-		headingy.setText(s.getTarget().y+"");
-		headingx.setText(s.getTarget().x+"");
+		targety.setText(s.getTarget().yPos()-Turtle.TURTLE_INIT_X+"");
+		targetx.setText(s.getTarget().xPos()-Turtle.TURTLE_INIT_Y+"");
 		angle.setText(decFor.format(s.getRot()%360)+"");
 	}
 	private void makePosPanel(JPanel dataPanel){
@@ -134,8 +111,8 @@ public class SlogoView extends JFrame{
 		dataPanel.add(posPanel);
 
 	}
-	public void showError(String s){
-		JOptionPane.showMessageDialog(mainPanel,s);
+	public static void showError(JPanel p,String s){
+		JOptionPane.showMessageDialog(p,s);
 	}
 	private void makeResultsPanel(JPanel homePanel){
 		JPanel resultsPanel=new JPanel();
@@ -152,18 +129,18 @@ public class SlogoView extends JFrame{
 		x.setLayout(new BoxLayout(x,BoxLayout.Y_AXIS));
 		JPanel y=new JPanel();
 		y.setLayout(new BoxLayout(y,BoxLayout.Y_AXIS));
-		headingx=new JTextField(4);
-		headingx.setEditable(false);
+		targetx=new JTextField(4);
+		targetx.setEditable(false);
 		JLabel xLabel=new JLabel(myResources.getString("XTarget"));
 		//xLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		x.add(xLabel);
-		x.add(headingx);
-		headingy=new JTextField(4);
-		headingy.setEditable(false);
+		x.add(targetx);
+		targety=new JTextField(4);
+		targety.setEditable(false);
 		JLabel yLabel= new JLabel(myResources.getString("YTarget"));
 		//yLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		y.add(yLabel);
-		y.add(headingy);
+		y.add(targety);
 		headingPanel.add(x);
 		headingPanel.add(y);
 		dataPanel.add(headingPanel);
@@ -190,80 +167,6 @@ public class SlogoView extends JFrame{
 		makeAnglePanel(dataPanel);
 		homePanel.add(dataPanel);
 	}
-	private void makeRotatePanel(JPanel rotationPanel){
-		JPanel rotatePanel=new JPanel();
-		rotatePanel.setLayout(new BoxLayout(rotatePanel, BoxLayout.Y_AXIS));
-		Button rotationButton=new Button(myResources.getString("RotateTurtle"));
-		//rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
-		final JTextField rotationInput=new JTextField(4);
-		rotationButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{             
-				try{
-					TurtleSpace.addRotations(Double.parseDouble(rotationInput.getText()));
-				}catch(Exception e1){
-					showError(myResources.getString("NumberFormat"));
-					backNumber++;
-				}
-				TurtleSpace.rotateImage();
-				updateInfo();
-			}
-		});   
-		rotatePanel.add(rotationButton);
-		rotatePanel.add(rotationInput);
-		rotationPanel.add(rotatePanel);
-	}
-	private void makeFilterPanel(JPanel homePanel){
-		JPanel filterPanel=new JPanel();
-		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
-		Button filterButton=new Button(myResources.getString("FilterTurtle"));
-		//rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
-		final JTextField filterInput=new JTextField(3);
-		filterInput.setText("0");
-		filterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{             
-
-				TurtleSpace.setFilter(Integer.parseInt(filterInput.getText()));
-			}
-		});   
-		filterPanel.add(filterButton);
-		filterPanel.add(filterInput);
-		homePanel.add(filterPanel);
-	}
-	public void makeScroller(JPanel homePanel){
-		JPanel scrollPanel=new JPanel();
-		scrollPanel.setLayout(new BoxLayout(scrollPanel,BoxLayout.Y_AXIS));
-		scrollPanel.add(new JLabel(myResources.getString("VelocitySlider")));
-		JSlider veloSlider=new JSlider(JSlider.HORIZONTAL, 1,10,5);
-		veloSlider.addChangeListener(new ChangeListener(){
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				TurtleSpace.setVelocities(((JSlider)arg0.getSource()).getValue()*0.01);
-			}
-		});
-		scrollPanel.add(veloSlider);
-		homePanel.add(scrollPanel);
-	}
-	public void makeSunButton(JPanel homePanel){
-		Button sunButton=new Button(myResources.getString("FillDrawer"));
-		sunButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{      
-				updateInfo();
-				
-				TurtleSpace.addRotations(45);
-				for(int k=0;k<3;k++){
-					TurtleSpace.addRotations(90);
-					TurtleSpace.moveForward(30);
-				}
-				TurtleSpace.rotateImage();
-				}
-			
-		});  
-		homePanel.add(sunButton);
-	}
-	
     protected JPanel makeTextPanel(String text) {
         JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(text);
@@ -272,33 +175,6 @@ public class SlogoView extends JFrame{
         panel.add(filler);
         return panel;
     }
-	
-
-	public void makeNewTurtleButton(JPanel homePanel){
-		Button newTurtButton = new Button(myResources.getString("NewTurtle"));
-		JPanel newPanel=new JPanel();
-		newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
-		JPanel labelPanel=new JPanel();
-		JLabel idToAdd=new JLabel("Id of turtle");
-		final JTextField turtId=new JTextField(2);
-		turtId.setText("0");
-		labelPanel.add(idToAdd);
-		labelPanel.add(turtId);
-		newTurtButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				updateInfo();
-				try{
-				TurtleSpace.addnewTurtle(Integer.parseInt(turtId.getText()));
-				}catch(Exception e1){
-					showError(myResources.getString("MustBeInt"));
-				}
-			}
-		});
-		newPanel.add(newTurtButton);
-		newPanel.add(labelPanel);
-		homePanel.add(newPanel);
-	}
 	
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
@@ -317,11 +193,10 @@ public class SlogoView extends JFrame{
 					results.setText(model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle())+"");
 					TurtleSpace.rotateImage();
 					savePanel(textInput);
-					enableBackForward();
 
 				}
 				catch(MissingResourceException e1){
-					showError(myResources.getString("IllegalCommand"));
+					showError(mainPanel,myResources.getString("IllegalCommand"));
 				}
 
 				updateInfo();
@@ -400,122 +275,7 @@ public class SlogoView extends JFrame{
 		drawingPanel.add(TurtleSpace);
 		return scroller;
 	}
-	public Button makeHelpButton(){
-		Button helpButton=new Button(myResources.getString("HelpButton"));
-		boolean page=true;
-		if(helpPage!=null)
-			page=helpPage.isVisible();
-		final boolean finalPage=page;
-		helpButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{     
-				helpPage=new HelpPage();
-				helpPage.setVisible(finalPage);
 
-			}
-		});   
-		return helpButton;
-	}
-	public Button makeRefreshButton(){
-		Button refresh=new Button(myResources.getString("Refresh"));
-		refresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{             
-				TurtleSpace.refresh();
-				textInput.setText("");
-				for(JTextArea text:savedBoxes)
-					text.setText("");
-				TurtleSpace.refresh();
-			}
-		});   
-		return refresh;
-	}
-	private void makeImageChooserButton(JPanel homePanel){
-		JPanel panel=new JPanel();
-		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-		final JTextField imageChooser = new JTextField(10);
-		Button selectImage= new Button(myResources.getString("SelectImage"));
-		selectImage.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				String imageFile = imageChooser.getText();
-				try{
-					TurtleSpace.newTurtle(imageFile);
-				}
-				catch(Exception e1){
-					showError("File was not found");
-				}
-			}
-		});
-		panel.add(selectImage);
-		panel.add(imageChooser);
-		homePanel.add(panel);
-	}
-	private void enableBackForward(){
-	System.out.println(backNumber+"   "+model.getHistory().size());
-		if(backNumber<=0){
-			forwardButton.setEnabled(false);
-		backButton.setEnabled(true);
-		}
-		else if(backNumber>=model.getHistory().size()){
-			backButton.setEnabled(false);
-		forwardButton.setEnabled(true);
-		}
-		else{
-			backButton.setEnabled(true);
-			forwardButton.setEnabled(true);
-		}	
-	}
-	public void createDirectionButtons(JPanel homePanel){
-		backButton=new Button(myResources.getString("BackButton"));
-		backButton.setEnabled(false);
-		backButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{	
-				TurtleSpace.refresh();
-				System.out.println(model.getHistory().get(0));
-				List<String> histList=model.getHistory();
-				for(int i=0;i<(histList.size()-(backNumber+1));i++){
-					//System.out.println(i+"   "+(histList.size()-(backNumber-1)));
-				model.receiveTextInput(histList.get(i), TurtleSpace.getTurtle());
-				model.getHistory().remove(model.getHistory().size()-1);
-				System.out.println(histList.get(0));
-				}
-				backNumber++;
-				enableBackForward();
-			}
-		});
-		
-		forwardButton=new Button(myResources.getString("ForwardButton"));
-		forwardButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				backNumber--;
-				List<String> histList=model.getHistory();
-				for(int i=0;i<histList.size()-(1+backNumber);i++)
-				model.receiveTextInput(histList.get(i), TurtleSpace.getTurtle());
-			enableBackForward();
-			}
-		});
-		forwardButton.setEnabled(false);
-		homePanel.add(forwardButton);
-		homePanel.add(backButton);
-	}
-	public JPanel makeOptionsPanel(){
-		JPanel optionsPanel=new JPanel();
-		makeScroller(optionsPanel);
-		optionsPanel.add(makeHelpButton());
-		optionsPanel.setBackground(new java.awt.Color(100,100,100));
-		createDirectionButtons(optionsPanel);
-		makeImageChooserButton(optionsPanel);
-		optionsPanel.add(makeRefreshButton());
-		makeRotatePanel(optionsPanel);
-		makeForwardPanel(optionsPanel);
-		makeFilterPanel(optionsPanel);
-		makeSunButton(optionsPanel);
-		makeNewTurtleButton(optionsPanel);
-		return optionsPanel;
-	}
 	//Needs refactoring. Look nicer
 	  private  ImageIcon createImageIcon(String path) {
 	        java.net.URL imgURL = SlogoView.class.getResource(path);
@@ -553,18 +313,19 @@ public class SlogoView extends JFrame{
         //Add the tabbed pane to this panel.
         add(tabbedPane);
 }
-	
+	public JPanel getPanel(){
+		return mainPanel;
+	}
 	public JPanel makeTab(){
 		JPanel mainPanel= new JPanel();
-		mainPanel.add(makeOptionsPanel());
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		rightPanel.add(makeSavedTextBoxes());
 		rightPanel.add(makeInputPanel());
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
-		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
+		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
 		//setSize(1000,400);
@@ -585,7 +346,6 @@ public class SlogoView extends JFrame{
 		rightPanel.add(makeInputPanel());
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
-		mainPanel.add(makeOptionsPanel(),BorderLayout.NORTH);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		setResizable(true);
 		

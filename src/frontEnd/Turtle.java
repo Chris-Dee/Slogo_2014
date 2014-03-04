@@ -179,6 +179,6 @@ public class Turtle extends JGObject {
 			return turtId==id;
 		}
 		public Stats getStats(){
-			return new Stats(xspeed,yspeed,targetx,targety,myRotation,xdir,ydir,drawingColor);
+			return new Stats(xspeed,yspeed,x,y,myRotation,targetx,targety,drawingColor);
 		}
 	}

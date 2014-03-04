@@ -1,24 +1,16 @@
 package commands;
 
-public class Sin implements AbstractCommand {
+public class Sin extends OneParameterOperationCommand{
 	
-	private double myDegrees;
-
 	public Sin() {}
 
-	
 	@Override
 	public double execute() {
-		return Math.toDegrees(Math.sin(Math.toRadians(myDegrees)));
-	}
-	
-	public void setMagnitude(double degrees) {
-		myDegrees = degrees;
+		return Math.toDegrees(Math.sin(Math.toRadians(myMagnitude)));
 	}
 
 	@Override
 	public String getCommandType() {
 		return "SIN";
 	}
-
 }

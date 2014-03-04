@@ -1,10 +1,12 @@
 package commands;
 
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import frontEnd.Turtle;
 import parser.AbstractParser;
 import parser.TextParser;
 
-public abstract class ControlCommand implements AbstractCommand {
+public abstract class ControlCommand {
 
 	protected AbstractParser myParser;
 	protected String myExpression;
@@ -27,6 +29,7 @@ public abstract class ControlCommand implements AbstractCommand {
 		if(s != null) myCommands = s;
 	}
 	
-	@Override
-	public abstract double execute();
+	public abstract double execute() throws IllegalCommandException, IllegalParameterException;
+	
+	public abstract String getCommandType();
 }

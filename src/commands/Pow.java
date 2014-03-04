@@ -1,25 +1,16 @@
 package commands;
 
-public class Pow implements AbstractCommand {
+public class Pow extends TwoParameterOperationCommand {
 	
-	private double myBase;
-	private double myExponent;
 	public Pow() {}
-
 	
 	@Override
 	public double execute() {
-		return Math.pow(myBase, myExponent);
-	}
-	
-	public void setDoubleMagnitude(double base, double exponent) {
-		myBase = base;
-		myExponent = exponent;
+		return Math.pow(myExpression1, myExpression2);
 	}
 
 	@Override
 	public String getCommandType() {
 		return "POW";
 	}
-
 }

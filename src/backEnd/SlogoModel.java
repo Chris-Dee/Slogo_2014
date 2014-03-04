@@ -58,9 +58,9 @@ public class SlogoModel {
 			root = myLanguageManager.convertLanguage(root, myLanguage);
 			return myCommandFactory.runCommands(root, turtles.get(0));
 		} catch(IllegalCommandException e){
-			SlogoView.showError(myViewer.getPanel(),e.getMessage());
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
-			SlogoView.showError(myViewer.getPanel(),e.getMessage());
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!");
 		return 0; // should not be reached here

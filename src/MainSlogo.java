@@ -16,6 +16,5 @@ class MainSlogo {
 		SlogoModel model = new SlogoModel();
 		SlogoView display = new SlogoView(model);
 	    model.setViewer(display);
-	}
-	
+	}	
 }

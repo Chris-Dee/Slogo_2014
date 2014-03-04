@@ -11,6 +11,8 @@ import parser.TextParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import frontEnd.SlogoView;
 import frontEnd.Turtle;
 
@@ -53,7 +55,7 @@ public class CommandFactory {
 	 * return the returned value of the root command
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
-	public double runCommands(StringNode root, Turtle turtle){
+	public double runCommands(StringNode root, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		//myParser.printTree(root);
 		return processStringNode(root, turtle);
 	}
@@ -64,7 +66,7 @@ public class CommandFactory {
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
 	 */
-	protected double processStringNode(StringNode current, Turtle turtle){
+	protected double processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		if(current == null){ return 0; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (myParser.isParameter(current.getCommandString())){ // a number in the leaf
@@ -118,7 +120,7 @@ public class CommandFactory {
 	 * This method should not be called from the outside.
 	 * Used to make a control command out of the current ControlNode in the command tree structure
 	 */
-	protected double makeControlCommand(ControlNode node, Turtle turtle){
+	protected double makeControlCommand(ControlNode node, Turtle turtle) throws IllegalCommandException, IllegalParameterException {
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
@@ -140,19 +142,16 @@ public class CommandFactory {
 			return executeTurtle(command, methods);
 			
 		} catch (ClassNotFoundException e) {
-			return -1;
-			//e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
-			return -1;
-			//e.printStackTrace();
+			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		}
-		return 0; // other errors
 	}
 
 
@@ -175,7 +174,7 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	protected double makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle){
+	protected double makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
 			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);
@@ -194,19 +193,16 @@ public class CommandFactory {
 		    }
 			return executeTurtle(command, methods);
 		} catch (ClassNotFoundException e) {
-			return -1;
-			//e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
-			return -1;
-			//e.printStackTrace();
+			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			throw new IllegalCommandException();
 		}
-		return 0; // other errors
 	}
 	
 	protected boolean hasNoParameter(StringNode current){

@@ -1,23 +1,16 @@
 package commands;
 
-public class ATan implements AbstractCommand {
-	
-	private double myDegrees;
-	public ATan() {}
+public class ATan extends OneParameterOperationCommand {
 
+	public ATan() {}
 	
 	@Override
 	public double execute() {
-		return Math.toDegrees(Math.atan(Math.toRadians(myDegrees)));
-	}
-	
-	public void setMagnitude(double degrees) {
-		myDegrees = degrees;
+		return Math.toDegrees(Math.atan(Math.toRadians(myMagnitude)));
 	}
 
 	@Override
 	public String getCommandType() {
 		return "ATAN";
 	}
-
 }

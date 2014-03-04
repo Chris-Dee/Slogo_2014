@@ -1,23 +1,16 @@
 package commands;
 
-public class Log implements AbstractCommand {
+public class Log extends OneParameterOperationCommand {
 	
-	private double myExpression;
 	public Log() {}
-
 	
 	@Override
 	public double execute() {
-		return Math.log(myExpression);
-	}
-	
-	public void setMagnitude(double expression) {
-		myExpression = expression;
+		return Math.log(myMagnitude);
 	}
 
 	@Override
 	public String getCommandType() {
 		return "LOG";
 	}
-
 }

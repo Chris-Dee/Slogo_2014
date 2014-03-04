@@ -1,5 +1,7 @@
 package commands;
 
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import parser.tree.StringNode;
 import backEnd.RepeatFactory;
 
@@ -9,7 +11,6 @@ public class Repeat extends ControlCommand{
 	
 	public Repeat(){
 		super();
-//		System.out.println("Repeat Command Executed");
 		myFactory = new RepeatFactory();
 	}
 
@@ -19,7 +20,7 @@ public class Repeat extends ControlCommand{
 	}
 
 	@Override
-	public double execute() {
+	public double execute() throws IllegalCommandException, IllegalParameterException {
 		StringNode expr = myParser.parse(myExpression);
 		double loop = myFactory.runCommands(expr, myTurtle);
 		if(loop <= 0) return 0;

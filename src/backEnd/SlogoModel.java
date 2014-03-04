@@ -1,9 +1,12 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Map;
 
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import frontEnd.SlogoView;
 import frontEnd.Turtle;
 import parser.AbstractParser;
@@ -16,13 +19,16 @@ public class SlogoModel {
 	private AbstractParser myParser;
     private List<String> myHistory;
     private SlogoView myViewer;
-    private ResourceBundle myErrorMessages;
+    private Map<String, Double> myVariableMap;
+    private Map<String, StringNode> myVariableCommandMap;
+    
 	
 	public SlogoModel(){
 		myParser = new TextParser();
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
-		myErrorMessages = ResourceBundle.getBundle(SlogoView.DEFAULT_RESOURCE_PATH + SlogoView.DEFAULT_BUTTON_TEXT);
+		myVariableMap = new HashMap<String, Double>();
+		myVariableCommandMap = new HashMap<String, StringNode>();
 	}
 	
 	public void setViewer(SlogoView viewer){
@@ -31,28 +37,34 @@ public class SlogoModel {
 	
 	/*
 	 * This method should be called by the front-end "main" class to pass into the text input
+	 * Receive the list of all turtles on the grid
+	 * @return a list of all turtles on the grid
 	 */
-	public double receiveTextInput(String userCommands, Turtle turtle){
-//		System.out.println("userCommands passed in SLogoModel: "+userCommands);
-//		System.out.println();
-		StringNode root = myParser.parse(userCommands);
-		if(!myParser.checkForErrors()){
-
-			myViewer.showError(myErrorMessages.getString("IllegalCommand"));
-			return 0;
+	public double receiveTextInput(String userCommands, List<Turtle> turtles){
+		try{
+			StringNode root = myParser.parse(userCommands);
+			return myCommandFactory.runCommands(root, turtles.get(0));
+		} catch(IllegalCommandException e){
+			myViewer.showError(e.getMessage());
+		} catch (IllegalParameterException e) {
+			myViewer.showError(e.getMessage());
 		}
-//		System.out.println("Pass Legality Check");
-//		//System.out.println("root data: "+root.getCommandString());
-//		//System.out.println("root child data: "+root.getChildren().get(0).getCommandString());
-		return myCommandFactory.runCommands(root, turtle);
+		System.out.println("!!!!!!!!!!!!!!!!!!!");
+		return 0; // should not be reached here
 	}
+//	if(!myParser.checkForErrors()){
+//	myViewer.showError(myErrorMessages.getString("IllegalCommand"));
+//	return 0;
+//}
 	
 	public List<String> getHistory(){
 		return myHistory;
 	}
 	
-	public void updateHistory(List<String> history){
-		myHistory = history;
+	/*
+	 * Append the String userCommands to the end of the String list myHistory
+	 */
+	public void updateHistory(String userCommands){
+		myHistory.add(userCommands);
 	}
-
 }

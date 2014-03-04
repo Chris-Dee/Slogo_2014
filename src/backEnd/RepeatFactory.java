@@ -1,6 +1,8 @@
 package backEnd;
 
 import parser.tree.StringNode;
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import frontEnd.Turtle;
 
 public class RepeatFactory extends CommandFactory{
@@ -12,7 +14,7 @@ public class RepeatFactory extends CommandFactory{
 	/*
 	 * Should be called by Repeat Command to process its own list of commands
 	 */
-	public double runCommands(StringNode root, double repCount, Turtle turtle){
+	public double runCommands(StringNode root, double repCount, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		updateCountInfo(root, repCount);
 		return processStringNode(root, turtle);
 	}
@@ -27,7 +29,5 @@ public class RepeatFactory extends CommandFactory{
 				updateCountInfo(child, repCount);	
 			}			
 		}
-		return;
 	}
-
 }

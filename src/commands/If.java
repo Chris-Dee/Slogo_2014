@@ -1,5 +1,7 @@
 package commands;
 
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
 import parser.tree.StringNode;
 import backEnd.CommandFactory;
 
@@ -18,7 +20,7 @@ public class If extends ControlCommand{
 	}
 
 	@Override
-	public double execute() {
+	public double execute() throws IllegalCommandException, IllegalParameterException {
 		StringNode expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtle);
 		if (magnitude == 0)

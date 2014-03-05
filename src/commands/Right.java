@@ -3,9 +3,7 @@ package commands;
 /*
  * This command makes the turtle move forward by certain pixels
  */
-public class Right extends TurtleCommand {
-	
-	private double myDegree;
+public class Right extends OneParameterTurtleCommand {
 	
 	public Right() {}
 
@@ -13,14 +11,10 @@ public class Right extends TurtleCommand {
 	public String getCommandType() {
 		return "RT";
 	}
-	
-	public void setMagnitude(double magnitude){
-		myDegree = magnitude;
-	}
 
 	@Override
 	public double execute() {
-		myTurtle.addRotation(-1.0*myDegree);
-		return myDegree;
+		myTurtle.addRotation(-1.0*myMagnitude);
+		return myMagnitude;
 	}
 }

@@ -16,6 +16,7 @@ import jgame.platform.JGEngine;
 
 
 public class Turtle extends JGObject {
+	public static final int IMG_OFFSET = 12;
 	private static final double THRESHOLD_VOLTAGE = 0.01;
 	private static final int EDGE_OFFSET = 5;
 	private static final int SCREEN_EDGE = 270;
@@ -39,7 +40,7 @@ public class Turtle extends JGObject {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
 		targetQueue.add(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
 		turtId=id;
-		setBBox((int)x, (int)y, 10, 5);
+		setBBox((int)x, (int)y, IMG_OFFSET, 5);
 	}
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);
@@ -128,7 +129,7 @@ public class Turtle extends JGObject {
 			if(origPosition!=null){
 				for(ArrayList<Position> line:lines.keySet())
 					if(lines.get(line)!=null)
-						myEngine.drawLine(line.get(0).xPos()+10, line.get(0).yPos()+10, line.get(1).xPos()+10, line.get(1).yPos()+10,thickness,lines.get(line));
+						myEngine.drawLine(line.get(0).xPos()+IMG_OFFSET, line.get(0).yPos()+IMG_OFFSET, line.get(1).xPos()+IMG_OFFSET, line.get(1).yPos()+IMG_OFFSET,thickness,lines.get(line));
 			}
 			
 				

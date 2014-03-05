@@ -68,9 +68,10 @@ List<turtles> get turtswithFilter()
 	}
 	public void paintFrame(){
 		for(Turtle t: manager.getTurtlesByID()){
-			if(t.matchFilter(manager.getFilter()))
 				t.runPen(2,true);
+				manager.highlightTurtle();
 		}
+		
 		checkColorKeys();
 	}
 	public boolean checkKey(char ch){

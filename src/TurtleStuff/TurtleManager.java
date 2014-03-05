@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import jgame.JGColor;
 import jgame.JGPoint;
 import jgame.platform.JGEngine;
 
@@ -43,22 +44,24 @@ public void refresh(){
 }
 
 public void selectClicked(Position p){
-	for(Turtle t:getTurtlesByID()){
+	for(Turtle t:turtList){
 		if(isClicked(p,t.getStats())){
-			System.out.println("lll");
 			turt=t;
 			SlogoView.viewStats().updateInfo();
 		}
 	}
 }
+public void highlightTurtle(){
+	myEngine.setColor(JGColor.red);
+	myEngine.drawRect(turt.x+Turtle.IMG_OFFSET, turt.y+Turtle.IMG_OFFSET, 30.0, 30.0, false, true);
+}
 private boolean isClicked(Position p,Stats s){
-	return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<10;
+	return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<30;
 	
 }
 public int getFilter(){
 	return turtFilter;
 }
-
 public Stats displayStats(){
 	return getStats(turt);
 }

@@ -23,7 +23,6 @@ public class SlogoModel {
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
     private String myLanguage;
-    private Map<String, Double> myVariableMap;
     private Map<String, StringNode> myVariableCommandMap;
     private TurtleManager myManager;
 

@@ -7,44 +7,41 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import TurtleStuff.Turtle;
-
 import parser.AbstractParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
-import frontEnd.SlogoView;
 
 public class CommandFactory {
     public static final String DEFAULT_BACKEND_PACKAGE = "backEnd/";
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
-    public static final String DEFAULT_CONTROLS = "ControlCommands";
-    public static final String DEFAULT_MODIFYVARIABLECOMMANDS = "ModifyVariableCommands";
+    public static final String DEFAULT_COMMANDTYPES = "CommandTypes";
     private static final double DEFAULT_MAGNITUDE = 0;
     
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
-    protected ResourceBundle myPossibleControls;
-    protected ResourceBundle myModifyVariableCommands;
+    protected ResourceBundle myCommandTypes;
     protected List<String> myControlCommands;
+    protected List<String> myModifyVariableCommands;
     protected VariableManager myVariableManager;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
-		myPossibleControls = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_CONTROLS);
-		myModifyVariableCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_MODIFYVARIABLECOMMANDS);
-		initControlCommands();
+		myCommandTypes = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDTYPES);
+		initCommandTypes(myControlCommands, "Control");
+		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
 		myVariableManager = new VariableManager();
 	}
 
-	protected void initControlCommands() {
-		myControlCommands = new ArrayList<String>();
-		String[] controlList = myPossibleControls.getString("Control").split(",");
+	protected void initCommandTypes(List<String> myCmdList, String type) {
+		myCmdList = new ArrayList<String>();
+		String[] controlList = myCommandTypes.getString(type).split(",");
 		for(String s:controlList){
-			myControlCommands.add(s);
+			myCmdList.add(s);
 		}
 	}
 	
@@ -63,12 +60,12 @@ public class CommandFactory {
 		return answer; // return the value of the last command tree
 	}
 	
-//	private double processVariableNode(StringNode current){
-//		double answer = myVariableManager.getValueOfVariable(current.getCommandString());
-//		current.setCommandString( Double.toString(answer) );
-//		return answer;
-//	}
-//	
+	private double processVariableNode(StringNode current){
+		double answer = myVariableManager.getValueOfVariable(current.getCommandString());
+		current.setCommandString( Double.toString(answer) );
+		return answer;
+	}
+	
 	/*
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
@@ -80,14 +77,13 @@ public class CommandFactory {
 				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
 				return AbstractParser.convertToDouble(current.getCommandString());	
 			}
-//			else if(myVariableManager.isVariable(current)){ // a variable in the leaf
-//				if(!ifParentModifyVariable(current)){
-//					return processVariableNode(current);
-//				}
-//			}
+			else if(myVariableManager.isVariable(current)){ // a variable in the leaf
+				if(!ifParentModifyVariable(current)){
+					return processVariableNode(current);
+				}
+			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
-					//System.out.println(current.getCommandString() + " is a control command");
 					ControlNode cur = (ControlNode) current;
 					return makeControlCommand(cur, turtle);
 				}
@@ -95,49 +91,37 @@ public class CommandFactory {
 			}
 		}
 		
-		if(AbstractParser.isParameter(current.getCommandString())){ // the current node is a number but it has a child
-			processStringNode(current.getChildren().get(0), turtle);
-			return AbstractParser.convertToDouble(current.getCommandString());	
-		}
-//		else if(myVariableManager.isVariable(current)){ // the current node is a variable but it has a child
-//			if(!ifParentModifyVariable(current)){
-//				return processVariableNode(current);
+//		if(hasNoParameter(current)){
+//			processStringNode(current.getChildren().get(0), turtle);
+//			if(ifControlCommand(current)){
+//				ControlNode cur = (ControlNode) current;
+//				return makeControlCommand(cur, turtle);
 //			}
+//			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 //		}
-		else if(hasNoParameter(current)){
-			processStringNode(current.getChildren().get(0), turtle);
-			if(ifControlCommand(current)){
-				ControlNode cur = (ControlNode) current;
-				return makeControlCommand(cur, turtle);
-			}
-			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
-		}
-		else if(hasOneParameter(current)){
+		if(hasOneParameter(current)){
 			double answer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
 		}
 		else if(hasTwoParameters(current)){
-			double leftAnswer = processStringNode(current.getChildren().get(0), turtle);
 			double rightAnswer = processStringNode(current.getChildren().get(1), turtle);
+			if(myModifyVariableCommands.contains(current.getCommandString())){ // the current node is Make or Set
+				return makeModifyVariableCommand(current, rightAnswer);
+			}
+			double leftAnswer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtle);
 		}
 		return 0; // should not reach here
 	}
 	
-//	/*
-//	 * Return true if current's direct parent modifies a variable (e.g. MAKE, SET) 
-//	 */
-//	protected boolean ifParentModifyVariable(StringNode current){
-//		if(current == null || current.getParent() == null) return false;
-//		String modifyVariables = myModifyVariableCommands.getString("VariableCommands");
-//		String[] modifyList = modifyVariables.split(",");
-//		for(String s: modifyList){
-//			if(s.equals(current.getParent().getCommandString())){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	/*
+	 * Return true if current's direct parent modifies a variable (e.g. MAKE, SET) 
+	 */
+	protected boolean ifParentModifyVariable(StringNode current){
+		if(current == null || current.getParent() == null) return false;
+		if(myModifyVariableCommands.contains(current.getParent().getCommandString())) return true;
+		return false;
+	}
 	
 	/*
 	 * This method should not be called from the outside.
@@ -145,6 +129,40 @@ public class CommandFactory {
 	 */
 	protected boolean ifControlCommand(StringNode current){
 		return myControlCommands.contains(current.getCommandString());
+	}
+	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to make a command that modifies a variable (e.g make, set)
+	 */
+	protected double makeModifyVariableCommand(StringNode node, double magnitude2) throws IllegalCommandException, IllegalParameterException {
+		try { 
+			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
+			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
+			Method[] methods = commandClass.getMethods();
+			for (Method m: methods){
+				if(m.getName().equals("setVariable")){
+					m.invoke(command, node.getChildren().get(0));
+				}
+				if(m.getName().equals("setVariableManager")){
+					m.invoke(command, myVariableManager);
+				}
+				if(m.getName().equals("setExpression")){
+					m.invoke(command, magnitude2);
+				}
+		    }
+			return executeCommand(command, methods);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalCommandException();
+		} catch (InstantiationException e) {
+			throw new IllegalCommandException();
+		} catch (IllegalAccessException e) {
+			throw new IllegalCommandException();
+		} catch (IllegalArgumentException e) {
+			throw new IllegalParameterException();
+		} catch (InvocationTargetException e) {
+			throw new IllegalCommandException();
+		}
 	}
 	
 	/*
@@ -170,7 +188,7 @@ public class CommandFactory {
 					m.invoke(command, node.getElseCommands());
 				}
 		    }
-			return executeTurtle(command, methods);
+			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
@@ -186,13 +204,12 @@ public class CommandFactory {
 
 
 
-	protected double executeTurtle(AbstractCommand command, Method[] methods) 
+	protected double executeCommand(AbstractCommand command, Method[] methods) 
 			throws IllegalAccessException, InvocationTargetException {
 		double answer = 0;
 		for (Method cur: methods){
 			if (cur.getName().equals("execute")){
 				answer = (Double) cur.invoke(command);
-				SlogoView.updateInfo();
 		    }	
 		}
 		return answer;
@@ -221,7 +238,7 @@ public class CommandFactory {
 					m.invoke(command, magnitude1, magnitude2);
 				}
 		    }
-			return executeTurtle(command, methods);
+			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {

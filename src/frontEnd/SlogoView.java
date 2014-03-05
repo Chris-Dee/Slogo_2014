@@ -37,6 +37,7 @@ import frontEnd.HelpPage;
 
 
 import OptionsPanel.OptionsPanel;
+import StatsPanel.StatsPanel;
 import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
@@ -50,19 +51,12 @@ public class SlogoView extends JFrame{
 	public int backNumber=0;
 	private JPanel mainPanel;
 	private SlogoModel model;
-	private static JTextField xPos;
-	private static JTextField yPos;
 	private static JTextField results;
-	private static JTextField targetx;
-	private static JTextField targety;
-	private static JTextField angle;
 	private static TurtleDrawer TurtleSpace;
-	private Button forwardButton;
-	private Button backButton;
-	private String imageString;
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
+	private static StatsPanel statPage;
 	private JTextArea textInput;
 	public static final String DEFAULT_RESOURCE_PATH="frontEnd/";
 	public static final String DEFAULT_BUTTON_TEXT="Buttons";
@@ -85,89 +79,13 @@ public class SlogoView extends JFrame{
 		
 	}
 	//Refactor code--especially text boxes with buttons on top. Can make one method that passes in Strings and action Listener objects
-	public static void updateInfo(){
-		DecimalFormat decFor=new DecimalFormat("0.000");
-		Stats s=TurtleSpace.displayStats();
-		xPos.setText(decFor.format(s.getPos().xPos()-Turtle.TURTLE_INIT_X)+"");
-		yPos.setText(decFor.format(s.getPos().yPos()-Turtle.TURTLE_INIT_Y)+"");
-		targety.setText(s.getTarget().yPos()-Turtle.TURTLE_INIT_X+"");
-		targetx.setText(s.getTarget().xPos()-Turtle.TURTLE_INIT_Y+"");
-		angle.setText(decFor.format(s.getRot()%360)+"");
-	}
-	private void makePosPanel(JPanel dataPanel){
-		JPanel posPanel=new JPanel();
-		JPanel xPanel=new JPanel();
-		xPanel.setLayout(new BoxLayout(xPanel,BoxLayout.Y_AXIS));
-		JPanel yPanel=new JPanel();
-		yPanel.setLayout(new BoxLayout(yPanel,BoxLayout.Y_AXIS));
-		xPos=new JTextField(4);
-		xPos.setEditable(false);
-		yPos=new JTextField(4);
-		yPos.setEditable(false);
-		JLabel xLabel=new JLabel(myResources.getString("Xposition"));
-		xPanel.add(xLabel);
-		xPanel.add(xPos);
-		yPanel.add(new JLabel(myResources.getString("Yposition")));
-		yPanel.add(yPos);
-		posPanel.add(xPanel);
-		posPanel.add(yPanel);
-		dataPanel.add(posPanel);
-
-	}
 	public static void showError(JPanel p,String s){
 		JOptionPane.showMessageDialog(p,s);
 	}
-	private void makeResultsPanel(JPanel homePanel){
-		JPanel resultsPanel=new JPanel();
-		resultsPanel.setLayout(new BoxLayout(resultsPanel,BoxLayout.Y_AXIS ));
-		resultsPanel.add(new JLabel(myResources.getString("EquationResults")));
-		results=new JTextField();
-		results.setEditable(false);
-		resultsPanel.add(results);
-		homePanel.add(resultsPanel);
-	}
-	private void makeTargetPanel(JPanel dataPanel){
-		JPanel headingPanel=new JPanel();
-		JPanel x=new JPanel();
-		x.setLayout(new BoxLayout(x,BoxLayout.Y_AXIS));
-		JPanel y=new JPanel();
-		y.setLayout(new BoxLayout(y,BoxLayout.Y_AXIS));
-		targetx=new JTextField(4);
-		targetx.setEditable(false);
-		JLabel xLabel=new JLabel(myResources.getString("XTarget"));
-		//xLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		x.add(xLabel);
-		x.add(targetx);
-		targety=new JTextField(4);
-		targety.setEditable(false);
-		JLabel yLabel= new JLabel(myResources.getString("YTarget"));
-		//yLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		y.add(yLabel);
-		y.add(targety);
-		headingPanel.add(x);
-		headingPanel.add(y);
-		dataPanel.add(headingPanel);
-	}
-	private void makeAnglePanel(JPanel dataPanel){
-		JPanel anglePanel=new JPanel();
-		anglePanel.setLayout(new BoxLayout(anglePanel,BoxLayout.Y_AXIS));
-		angle=new JTextField();
-		angle.setEditable(false);
-		JLabel label=new JLabel(myResources.getString("Rotation"));
-		//label.setHorizontalAlignment(SwingConstants.CENTER);
-		anglePanel.add(label);
-		anglePanel.add(angle);
-		angle.setHorizontalAlignment(JTextField.CENTER);
-		dataPanel.add(anglePanel);
-	}
 	private void makeDataPanel(JPanel homePanel){
 		JPanel dataPanel=new JPanel();
-		dataPanel.setLayout(new BoxLayout(dataPanel,BoxLayout.Y_AXIS));
-		dataPanel.setBackground(new java.awt.Color(100,100,100));
-		makeResultsPanel(dataPanel);
-		makePosPanel(dataPanel);
-		makeTargetPanel(dataPanel);
-		makeAnglePanel(dataPanel);
+		statPage=new StatsPanel(myResources,TurtleSpace);
+		dataPanel.add(statPage);
 		homePanel.add(dataPanel);
 	}
     protected JPanel makeTextPanel(String text) {
@@ -201,7 +119,7 @@ public class SlogoView extends JFrame{
 				catch(MissingResourceException e1){
 					showError(mainPanel,myResources.getString("IllegalCommand"));
 				}
-				updateInfo();
+				statPage.updateInfo();
 			}
 		});   
 		inputTextPanel.add(inputPane);
@@ -230,12 +148,15 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{       
 				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), manager.getTurtlesByID())+"");
-				updateInfo();    
+				statPage.updateInfo();    
 
 			}
 		});   
 		oneBox.add(loader);
 		oneBox.add(scrollSave);
+	}
+	public static StatsPanel viewStats(){
+		return statPage;
 	}
 	private void createSaveButton(JPanel savePanel){
 		Button saveButton=new Button(myResources.getString("Save"));
@@ -323,11 +244,13 @@ public class SlogoView extends JFrame{
 		JPanel mainPanel= new JPanel();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
-		rightPanel.add(makeSavedTextBoxes());
-		rightPanel.add(makeInputPanel());
+		
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
+		rightPanel.add(makeSavedTextBoxes());
+		rightPanel.add(makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
+
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
@@ -336,23 +259,23 @@ public class SlogoView extends JFrame{
 		pack();
 		return mainPanel;
 	}
-	public void createMainPanel(){
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		setVisible(true);
-		 JTabbedPane tabbedPane = new JTabbedPane();
-	    ImageIcon icon = createImageIcon("turtle.gif");
-		mainPanel=(JPanel) getContentPane();
-		JPanel rightPanel=new JPanel();
-		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
-		rightPanel.add(makeSavedTextBoxes());
-		rightPanel.add(makeInputPanel());
-		mainPanel.setLayout(new BorderLayout());
-		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
-		mainPanel.add(rightPanel,BorderLayout.EAST);
-		setResizable(true);
-		
-		setTitle("Slow Go Team 16");
+//	public void createMainPanel(){
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		
+//		setVisible(true);
+//		 JTabbedPane tabbedPane = new JTabbedPane();
+//	    ImageIcon icon = createImageIcon("turtle.gif");
+//		mainPanel=(JPanel) getContentPane();
+//		JPanel rightPanel=new JPanel();
+//		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
+//		rightPanel.add(makeSavedTextBoxes());
+//		rightPanel.add(makeInputPanel());
+//		mainPanel.setLayout(new BorderLayout());
+//		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
+//		mainPanel.add(rightPanel,BorderLayout.EAST);
+//		setResizable(true);
+//		
+//		setTitle("Slow Go Team 16");
 		
 //		 //JPanel panel1 = makeTextPanel("Panel #1");
 //	    // tabbedPane.addTab("Tab 1", icon, panel1,
@@ -365,7 +288,8 @@ public class SlogoView extends JFrame{
 //	       // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 //
 //		//mainPanel.add()
-	}
+	//
+//	}
 
 
 	public void  initiate() {

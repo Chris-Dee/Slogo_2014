@@ -16,9 +16,7 @@ import java.util.List;
 import jgame.JGColor;
 import jgame.JGPoint;
 import jgame.platform.JGEngine;
-//Still ne
 @SuppressWarnings("serial")
-
 public class TurtleDrawer extends JGEngine {
 	private Turtle turt;
 	private String chosenImage;
@@ -31,6 +29,7 @@ List<turtles> get turtswithFilter()
 
  */
 	public TurtleDrawer(TurtleManager manage){
+		dbgShowBoundingBox(true);
 		manager=manage;
 		int height = 900;
 		double aspect = 0.5;
@@ -62,7 +61,8 @@ List<turtles> get turtswithFilter()
 	public void doFrame(){
 		moveObjects();
 		checkClicked();
-		SlogoView.updateInfo();
+		if(SlogoView.viewStats()!=null)
+		SlogoView.viewStats().updateInfo();
 
 
 	}
@@ -131,7 +131,7 @@ private void checkClicked(){
 	}
 }
 public Stats displayStats(){
-	return getStats(turt);
+	return manager.displayStats();
 }
 	public Stats getStats(Turtle t){
 		return t.getStats();

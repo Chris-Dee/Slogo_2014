@@ -59,7 +59,7 @@ public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManage
 		newTurtButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				SlogoView.updateInfo();
+				SlogoView.viewStats().updateInfo();
 				try{
 				TurtleSpace.addnewTurtle(Integer.parseInt(turtId.getText()));
 				}catch(Exception e1){

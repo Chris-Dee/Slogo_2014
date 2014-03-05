@@ -27,7 +27,7 @@ public class ShapeButton extends JPanel {
 		sunButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{      
-				SlogoView.updateInfo();
+				SlogoView.viewStats().updateInfo();
 				
 				manager.addRotations(45);
 				for(int k=0;k<3;k++){

@@ -8,11 +8,11 @@ import jgame.JGPoint;
 import jgame.platform.JGEngine;
 
 import frontEnd.Position;
+import frontEnd.SlogoView;
 
 public class TurtleManager {
 	private int turtFilter=0;
 	private List<Turtle> turtList=new ArrayList<Turtle>();
-	private List<Turtle> filterList=new ArrayList<Turtle>();
 	private Turtle turt;
 	private String chosenImage;
 	TurtleDrawer myEngine;
@@ -44,10 +44,10 @@ public void refresh(){
 
 public void selectClicked(Position p){
 	for(Turtle t:getTurtlesByID()){
-		
 		if(isClicked(p,t.getStats())){
+			System.out.println("lll");
 			turt=t;
-			System.out.println(turt.getStats().getPos().xPos());
+			SlogoView.viewStats().updateInfo();
 		}
 	}
 }
@@ -69,7 +69,6 @@ for(Turtle t:getTurtlesByID()){
 	myEngine.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
 	t.setImage(imageString);
 }
-
 }
 public Stats getStats(Turtle t){
 	return t.getStats();
@@ -91,6 +90,8 @@ public void setVelocities(double velocity) {
 	
 }
 public void addTurtle(Turtle t){
+	if(turt==null)
+		turt=t;
 	turtList.add(t);
 }
 }

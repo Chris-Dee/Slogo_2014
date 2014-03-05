@@ -62,7 +62,7 @@ private void makeForwardPanel(JPanel forwardPanel){
 		{              
 			try{
 				manager.moveForward(Integer.parseInt(forwardInput.getText()));
-				SlogoView.updateInfo();
+				SlogoView.viewStats().updateInfo();
 				backNumber++;
 			}catch(Exception e1){
 				SlogoView.showError(forPanel,myResources.getString("NumberFormat"));}
@@ -88,7 +88,8 @@ private void makeRotatePanel(JPanel rotationPanel){
 				backNumber++;
 			}
 			manager.rotateImage();
-			SlogoView.updateInfo();
+			//System.out.println(SlogoView.viewStats()==null);
+			SlogoView.viewStats().updateInfo();
 		}
 	});   
 	rotatePanel.add(rotationButton);

@@ -21,7 +21,7 @@ public class RepeatFactory extends CommandFactory{
 	
 	protected void updateCountInfo(StringNode node, double repCount){
 		if(node == null){ return; }
-		if(node.getCommandString().equals(":repcount")){
+		if(node.getCommandString().equals(":repcount")){ // need revision
 			node.setCommandString(""+repCount);
 		}
 		if(node.getChildren() != null){

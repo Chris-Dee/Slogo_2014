@@ -2,9 +2,11 @@ package parser;
 
 import java.util.*;
 
+import backEnd.LanguageManager;
 import parser.tree.StringNode;
 
 public abstract class AbstractParser {
+	protected LanguageManager myLanguageManager;
 	
 	public abstract StringNode parse(String s);
 	
@@ -32,6 +34,10 @@ public abstract class AbstractParser {
 			singleLineString = s;
 		
 		return singleLineString.toUpperCase();
+	}
+	
+	public void setLanguageManager(LanguageManager manager){
+		myLanguageManager = manager;
 	}
 
 	/*

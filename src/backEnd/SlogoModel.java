@@ -1,8 +1,8 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 import java.util.Map;
 
 import TurtleStuff.Turtle;
@@ -26,6 +26,7 @@ public class SlogoModel {
     private Map<String, Double> myVariableMap;
     private Map<String, StringNode> myVariableCommandMap;
     private TurtleManager myManager;
+
     
 	
 	public SlogoModel(){
@@ -33,8 +34,8 @@ public class SlogoModel {
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
 		myLanguageManager = new LanguageManager();
-		myVariableMap = new HashMap<String, Double>();
-		myVariableCommandMap = new HashMap<String, StringNode>();
+//		myVariableCommandMap = new HashMap<String, StringNode>();
+		myParser.setLanguageManager(myLanguageManager);
 	}
 	
 	public void setParameters(SlogoView viewer, TurtleManager manager){
@@ -47,7 +48,8 @@ public class SlogoModel {
 	 * The first letter of language should be capitalized while the rest should not (e.g. Chinese)
 	 */
 	public void setLanguage(String language){
-		myLanguage = language;
+		myLanguageManager.setLanguage(language);
+		myParser.setLanguageManager(myLanguageManager);
 	}
 	
 	/*
@@ -59,20 +61,15 @@ public class SlogoModel {
 	public double receiveTextInput(String userCommands, List<Turtle> turtles){
 		try{
 			StringNode root = myParser.parse(userCommands);
-			root = myLanguageManager.convertLanguage(root, myLanguage);
 			return myCommandFactory.runCommands(root, turtles.get(0));
 		} catch(IllegalCommandException e){
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
-		System.out.println("!!!!!!!!!!!!!!!!!!!");
+		System.out.println("There is something wrong!!!!!!!!!!");
 		return 0; // should not be reached here
 	}
-//	if(!myParser.checkForErrors()){
-//	myViewer.showError(myErrorMessages.getString("IllegalCommand"));
-//	return 0;
-//}
 	
 	public List<String> getHistory(){
 		return myHistory;

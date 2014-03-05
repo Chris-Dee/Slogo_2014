@@ -30,9 +30,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import frontEnd.HelpPage;
-import frontEnd.Stats;
-import frontEnd.Turtle;
-import frontEnd.TurtleDrawer;
 //to-do
 //need to put in different preferences
 //need to put in panel of previous scripts
@@ -40,6 +37,10 @@ import frontEnd.TurtleDrawer;
 
 
 import OptionsPanel.OptionsPanel;
+import TurtleStuff.Stats;
+import TurtleStuff.Turtle;
+import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 
 @SuppressWarnings("serial")
@@ -67,6 +68,7 @@ public class SlogoView extends JFrame{
 	public static final String DEFAULT_BUTTON_TEXT="Buttons";
 	public static final String DEFAULT_COMM_PATH="backEnd/";
 	public static final String DEFAULT_COMM_TEXT="CommandPath";
+	TurtleManager manager;
 	public SlogoView(){
 		super();
 		initiate();
@@ -74,9 +76,10 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage){
 		super();
 		model=modelSlog;
+		manager=manage;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		initiate();
 		
@@ -190,15 +193,14 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
-					results.setText(model.receiveTextInput(textInput.getText(), TurtleSpace.getTurtle())+"");
-					TurtleSpace.rotateImage();
+					results.setText(model.receiveTextInput(textInput.getText(), manager.getTurtlesByID())+"");
+					manager.rotateImage();
 					savePanel(textInput);
 
 				}
 				catch(MissingResourceException e1){
 					showError(mainPanel,myResources.getString("IllegalCommand"));
 				}
-
 				updateInfo();
 			}
 		});   
@@ -227,7 +229,7 @@ public class SlogoView extends JFrame{
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
-				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), TurtleSpace.getTurtle())+"");
+				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), manager.getTurtlesByID())+"");
 				updateInfo();    
 
 			}
@@ -267,7 +269,8 @@ public class SlogoView extends JFrame{
 		JPanel drawingPanel=new JPanel();
 		JScrollPane scroller=new JScrollPane(drawingPanel);
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-		TurtleSpace=new TurtleDrawer();
+		TurtleSpace=new TurtleDrawer(manager);
+		manager.findEngine(TurtleSpace);
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
 		drawingPanel.setSize(270,270);
 		drawingPanel.setMinimumSize(new Dimension(270,270));
@@ -325,7 +328,7 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
-		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes),BorderLayout.NORTH);
+		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
 		//setSize(1000,400);

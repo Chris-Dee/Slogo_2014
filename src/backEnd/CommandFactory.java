@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import TurtleStuff.Turtle;
+
 import parser.AbstractParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
@@ -13,7 +15,6 @@ import commands.AbstractCommand;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import frontEnd.SlogoView;
-import frontEnd.Turtle;
 
 public class CommandFactory {
     public static final String DEFAULT_BACKEND_PACKAGE = "backEnd/";

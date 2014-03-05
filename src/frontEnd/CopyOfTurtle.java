@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import TurtleStuff.Stats;
+
 import jgame.JGColor;
 import jgame.JGObject;
 import jgame.platform.JGEngine;

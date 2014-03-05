@@ -8,8 +8,9 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
-import frontEnd.TurtleDrawer;
 
+import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 
 public class DirectionButtons extends JPanel {
@@ -19,8 +20,10 @@ public class DirectionButtons extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;
 	SlogoModel model;
-public DirectionButtons(ResourceBundle myRes,SlogoModel slogoMod, TurtleDrawer TurtSpace){
+	TurtleManager manager;
+public DirectionButtons(ResourceBundle myRes,SlogoModel slogoMod, TurtleDrawer TurtSpace, TurtleManager manage){
 	super();
+	manager=manage;
 	myResources=myRes;
 	TurtleSpace=TurtSpace;
 	model=slogoMod;
@@ -40,7 +43,7 @@ public void createDirectionButtons(JPanel homePanel){
 			List<String> histList=model.getHistory();
 			for(int i=0;i<(histList.size()-(backNumber+1));i++){
 				//System.out.println(i+"   "+(histList.size()-(backNumber-1)));
-			model.receiveTextInput(histList.get(i), TurtleSpace.getTurtle());
+			model.receiveTextInput(histList.get(i), manager.getTurtlesByID());
 			model.getHistory().remove(model.getHistory().size()-1);
 			System.out.println(histList.get(0));
 			}
@@ -56,7 +59,7 @@ public void createDirectionButtons(JPanel homePanel){
 			backNumber--;
 			List<String> histList=model.getHistory();
 			for(int i=0;i<histList.size()-(1+backNumber);i++)
-			model.receiveTextInput(histList.get(i), TurtleSpace.getTurtle());
+			model.receiveTextInput(histList.get(i),  manager.getTurtlesByID());
 		enableBackForward();
 		}
 	});

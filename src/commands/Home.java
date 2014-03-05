@@ -1,7 +1,7 @@
 package commands;
 
+import TurtleStuff.Turtle;
 import frontEnd.Position;
-import frontEnd.Turtle;
 
 public class Home extends TurtleCommand {
 	

@@ -9,8 +9,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import TurtleStuff.TurtleDrawer;
+
 import frontEnd.SlogoView;
-import frontEnd.TurtleDrawer;
 
 public class ImageChooser extends JPanel {
 	ResourceBundle myResources;

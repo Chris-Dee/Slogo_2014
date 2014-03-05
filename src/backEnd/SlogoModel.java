@@ -2,10 +2,15 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Map;
+
+import TurtleStuff.Turtle;
+import TurtleStuff.TurtleManager;
+
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import frontEnd.SlogoView;
-import frontEnd.Turtle;
 import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
@@ -17,7 +22,11 @@ public class SlogoModel {
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
-//    private Map<String, StringNode> myVariableCommandMap;
+    private String myLanguage;
+    private Map<String, Double> myVariableMap;
+    private Map<String, StringNode> myVariableCommandMap;
+    private TurtleManager myManager;
+
     
 	
 	public SlogoModel(){
@@ -29,8 +38,9 @@ public class SlogoModel {
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	
-	public void setViewer(SlogoView viewer){
+	public void setParameters(SlogoView viewer, TurtleManager manager){
 		myViewer = viewer;
+		myManager=manager;
 	}
 	
 	/*

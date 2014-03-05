@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
+
 import frontEnd.SlogoView;
-import frontEnd.TurtleDrawer;
 
 public class MoveAndRefresh extends JPanel {
 	ResourceBundle myResources;
@@ -20,27 +22,30 @@ public class MoveAndRefresh extends JPanel {
 	JTextArea textInput;
 	int backNumber;
 	List<JTextArea> savedBoxes;
+	private TurtleManager manager;
 public MoveAndRefresh(ResourceBundle myRes,TurtleDrawer TurtSpace, int backNum,
-		JTextArea input,List<JTextArea> savedBox){
+		JTextArea input,List<JTextArea> savedBox, TurtleManager manage){
 	super();
 	myResources=myRes;
 	TurtleSpace=TurtSpace;
 	backNumber=backNum;
 	textInput=input;
 	savedBoxes=savedBox;
+	manager=manage;
 	makePanel();
 }
 public void makeRefreshButton(JPanel homePanel){
 	Button refresh=new Button(myResources.getString("Refresh"));
 	refresh.addActionListener(new ActionListener() {
+
 		public void actionPerformed(ActionEvent e)
 		{             
 			//write a static method 'clear'?
-			TurtleSpace.refresh();
+			manager.refresh();
 			textInput.setText("");
 			for(JTextArea text:savedBoxes)
 				text.setText("");
-			TurtleSpace.refresh();
+			manager.refresh();
 		}
 	});   
 	homePanel.add(refresh);
@@ -56,7 +61,7 @@ private void makeForwardPanel(JPanel forwardPanel){
 		public void actionPerformed(ActionEvent e)
 		{              
 			try{
-				TurtleSpace.moveForward(Integer.parseInt(forwardInput.getText()));
+				manager.moveForward(Integer.parseInt(forwardInput.getText()));
 				SlogoView.updateInfo();
 				backNumber++;
 			}catch(Exception e1){
@@ -77,12 +82,12 @@ private void makeRotatePanel(JPanel rotationPanel){
 		public void actionPerformed(ActionEvent e)
 		{             
 			try{
-				TurtleSpace.addRotations(Double.parseDouble(rotationInput.getText()));
+				manager.addRotations(Double.parseDouble(rotationInput.getText()));
 			}catch(Exception e1){
 				SlogoView.showError(rotatePanel,myResources.getString("NumberFormat"));
 				backNumber++;
 			}
-			TurtleSpace.rotateImage();
+			manager.rotateImage();
 			SlogoView.updateInfo();
 		}
 	});   

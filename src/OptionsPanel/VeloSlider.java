@@ -10,15 +10,18 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 
 
 public class VeloSlider extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;
-	public VeloSlider (ResourceBundle myRes,TurtleDrawer TurtSpace){
+	TurtleManager manager;
+	public VeloSlider (ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManager manage){
 		super();
 		myResources=myRes;
 		TurtleSpace=TurtSpace;
+		manager=manage;
 		makePanel();
 	}
 	public void makeScroller(JPanel homePanel){
@@ -30,7 +33,7 @@ public class VeloSlider extends JPanel {
 		veloSlider.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				TurtleSpace.setVelocities(((JSlider)arg0.getSource()).getValue()*0.01);
+				manager.setVelocities(((JSlider)arg0.getSource()).getValue()*0.01);
 			}
 		});
 		scrollPanel.add(veloSlider);

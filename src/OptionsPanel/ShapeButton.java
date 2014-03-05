@@ -8,13 +8,15 @@ import java.util.ResourceBundle;
 import javax.swing.JPanel;
 
 import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
 public class ShapeButton extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;
-	public ShapeButton(ResourceBundle myRes, TurtleDrawer TurtSpace){
+	TurtleManager manager;
+	public ShapeButton(ResourceBundle myRes, TurtleDrawer TurtSpace, TurtleManager manage){
 		super();
 		myResources=myRes;
 		TurtleSpace=TurtSpace;
@@ -27,12 +29,12 @@ public class ShapeButton extends JPanel {
 			{      
 				SlogoView.updateInfo();
 				
-				TurtleSpace.addRotations(45);
+				manager.addRotations(45);
 				for(int k=0;k<3;k++){
-					TurtleSpace.addRotations(90);
-					TurtleSpace.moveForward(30);
+					manager.addRotations(90);
+					manager.moveForward(30);
 				}
-				TurtleSpace.rotateImage();
+				manager.rotateImage();
 				}
 			
 		});  

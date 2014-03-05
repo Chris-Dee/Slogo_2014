@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import TurtleStuff.Turtle;
+import TurtleStuff.TurtleManager;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -24,6 +25,7 @@ public class SlogoModel {
     private String myLanguage;
     private Map<String, Double> myVariableMap;
     private Map<String, StringNode> myVariableCommandMap;
+    private TurtleManager myManager;
     
 	
 	public SlogoModel(){
@@ -35,8 +37,9 @@ public class SlogoModel {
 		myVariableCommandMap = new HashMap<String, StringNode>();
 	}
 	
-	public void setViewer(SlogoView viewer){
+	public void setParameters(SlogoView viewer, TurtleManager manager){
 		myViewer = viewer;
+		myManager=manager;
 	}
 	
 	/*

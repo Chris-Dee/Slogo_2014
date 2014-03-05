@@ -11,14 +11,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
 public class NewFilterTurtle extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;
-public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace){
+	TurtleManager manager;
+public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManager manage){
 	super();
+	manager=manage;
 	myResources=myRes;
 	TurtleSpace=TurtSpace;
 	makePanel();
@@ -35,7 +38,7 @@ public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace){
 			public void actionPerformed(ActionEvent e)
 			{             
 
-				TurtleSpace.setFilter(Integer.parseInt(filterInput.getText()));
+				manager.setFilter(Integer.parseInt(filterInput.getText()));
 			}
 		});   
 		filterPanel.add(filterButton);

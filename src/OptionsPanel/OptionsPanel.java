@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 
 
 import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 
 public class OptionsPanel extends JPanel {
@@ -17,9 +18,10 @@ public class OptionsPanel extends JPanel {
 	SlogoModel model;
 	int backNumber;
 	JTextArea textInput;
+	TurtleManager myManager;
 	List<JTextArea> savedBoxes;
 public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogModel,
-		int backNum,JTextArea input, List<JTextArea> savedBox){
+		int backNum,JTextArea input, List<JTextArea> savedBox, TurtleManager manage){
 	super();
 	myResources=myRes;
 	turtleSpace=turtSpace;
@@ -27,19 +29,20 @@ public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogM
 	backNumber=backNum;
 	textInput=input;
 	savedBoxes=savedBox;
+	myManager=manage;
 	makeOptionsPanel();
 }
 
 public void makeOptionsPanel(){
 	
-	this.add(new VeloSlider(myResources, turtleSpace));
-	this.add(new DirectionButtons(myResources, model, turtleSpace));
+	this.add(new VeloSlider(myResources, turtleSpace, myManager));
+	this.add(new DirectionButtons(myResources, model, turtleSpace, myManager));
 	this.add(new HelpButton(myResources));
 	this.add(new MoveAndRefresh(myResources,turtleSpace, backNumber,
-			textInput, savedBoxes));
+			textInput, savedBoxes, myManager));
 	this.add(new ImageChooser(myResources,turtleSpace));
-	this.add(new ShapeButton(myResources,turtleSpace));
-	this.add(new NewFilterTurtle(myResources,turtleSpace));
+	this.add(new ShapeButton(myResources,turtleSpace, myManager));
+	this.add(new NewFilterTurtle(myResources,turtleSpace, myManager));
 	setVisible(true);
 	setSize(600,600);
 	setMinimumSize(new Dimension(200,200));

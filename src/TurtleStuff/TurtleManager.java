@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import jgame.JGPoint;
 import jgame.platform.JGEngine;
 
 import frontEnd.Position;
@@ -15,24 +16,34 @@ public class TurtleManager {
 	private Turtle turt;
 	private String chosenImage;
 	TurtleDrawer myEngine;
-public TurtleManager(){}
-
+public TurtleManager(){
+	
+}
+public void findEngine(TurtleDrawer t){
+	myEngine=t;
+}
 public void setFilter(int filter){
 	//System.out.println(filter+ " filter");
 	turtFilter=filter;
 }
 public void addRotations(double mag){
-	for(Turtle t:getTurtlesByID(turtFilter)){
+	for(Turtle t:getTurtlesByID()){
 			t.addRotation(mag);
 		}
 }
 public void moveForward(int mag){
-	for(Turtle t:getTurtlesByID(turtFilter)){
+	System.out.println(getTurtlesByID().size());
+	for(Turtle t:getTurtlesByID()){
 			t.goForward(mag);
 		}
 }
+public void refresh(){
+	for(Turtle t:turtList)
+	t.reset();
+}
+
 public void selectClicked(Position p){
-	for(Turtle t:getTurtlesByID(turtFilter)){
+	for(Turtle t:getTurtlesByID()){
 		
 		if(isClicked(p,t.getStats())){
 			turt=t;
@@ -44,11 +55,15 @@ private boolean isClicked(Position p,Stats s){
 	return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<10;
 	
 }
+public int getFilter(){
+	return turtFilter;
+}
+
 public Stats displayStats(){
 	return getStats(turt);
 }
 public void rotateImage() {
-for(Turtle t:getTurtlesByID(turtFilter)){
+for(Turtle t:getTurtlesByID()){
 	String imageString= "Turtle" + Math.random();
 	Stats s = getStats(t);
 	myEngine.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
@@ -59,20 +74,23 @@ for(Turtle t:getTurtlesByID(turtFilter)){
 public Stats getStats(Turtle t){
 	return t.getStats();
 }
-public List<Turtle> getTurtlesByID(int id){
+public List<Turtle> getTurtlesByID(){
 	List<Turtle> filtTurts=new ArrayList<Turtle>();
 	for(Turtle t:turtList)
-		if(t.matchFilter(id))
+		if(t.matchFilter(turtFilter))
 			filtTurts.add(t);
 	return filtTurts;
 }
 public void suspendTurtles(){
-	for(Turtle t:getTurtlesByID(turtFilter))
+	for(Turtle t:getTurtlesByID())
 			t.suspend();
 }
 public void setVelocities(double velocity) {
-	for(Turtle t:getTurtlesByID(turtFilter))
+	for(Turtle t:getTurtlesByID())
 			t.setVelocity(velocity);
 	
+}
+public void addTurtle(Turtle t){
+	turtList.add(t);
 }
 }

@@ -23,13 +23,15 @@ public class TurtleDrawer extends JGEngine {
 	private Turtle turt;
 	private String chosenImage;
 	private int turtFilter=0;
-	private List<Turtle> turtList=new ArrayList<Turtle>();
+	private TurtleManager manager; 
+	
 	//tempList
 /*
 List<turtles> get turtswithFilter()
 
  */
-	public TurtleDrawer(){
+	public TurtleDrawer(TurtleManager manage){
+		manager=manage;
 		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
@@ -54,7 +56,7 @@ List<turtles> get turtswithFilter()
 		setPFSize(30,30);
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle(0);
-		turtList.add(turt);
+		manager.addTurtle(turt);
 		turt.setEngine(this);
 	}
 	public void doFrame(){
@@ -65,9 +67,8 @@ List<turtles> get turtswithFilter()
 
 	}
 	public void paintFrame(){
-		for(Turtle t:turtList){
-			//System.out.println(turtFilter+"  "+t.turtId);
-			if(t.matchFilter(turtFilter))
+		for(Turtle t: manager.getTurtlesByID()){
+			if(t.matchFilter(manager.getFilter()))
 				t.runPen(2,true);
 		}
 		checkColorKeys();
@@ -78,7 +79,7 @@ List<turtles> get turtswithFilter()
 		return false;
 	}
 	public void checkColorKeys(){
-		Turtle t=null;
+		for(Turtle t: manager.getTurtlesByID()){
 		//make these call methods from the TurtleManager class
 				if(checkKey('r')){
 					t.setPen(JGColor.red);
@@ -97,13 +98,9 @@ List<turtles> get turtswithFilter()
 				}
 				if(checkKey('m')){
 					t.lowerPen();
-				}
+				}}
 		clearLastKey();
 
-	}
-	public void refresh(){
-		for(Turtle t:turtList)
-		t.reset();
 	}
 
 	public void newTurtle(String imageFile) {
@@ -121,42 +118,17 @@ List<turtles> get turtswithFilter()
 	public void addnewTurtle(int id){
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle(id);
-		turtList.add(turt);
+		manager.addTurtle(turt);
 		//System.out.println(turtList.size());
 		turt.setEngine(this);
 	}
 
-public void moveForward(int mag){
-	for(Turtle t:turtList)
-		if(t.matchFilter(turtFilter)){
-			t.goForward(mag);
-		}
-}
 private void checkClicked(){
 	if(getMouseButton(1)){
 		clearMouseButton(1);
 		JGPoint p=getMousePos();
-		selectClicked(new Position(p.x,p.y));
+		manager.selectClicked(new Position(p.x,p.y));
 	}
-}
-public void selectClicked(Position p){
-	for(Turtle t:turtList){
-		
-		if(isClicked(p,t.getStats())){
-			turt=t;
-			System.out.println(turt.getStats().getPos().xPos());
-		}
-	}
-}
-private boolean isClicked(Position p,Stats s){
-	return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<10;
-	
-}
-public void addRotations(double mag){
-	for(Turtle t:turtList)
-		if(t.matchFilter(turtFilter)){
-			t.addRotation(mag);
-		}
 }
 public Stats displayStats(){
 	return getStats(turt);
@@ -169,28 +141,4 @@ public Stats displayStats(){
 		return chosenImage;
 	}
 
-	public void setFilter(int filter){
-		//System.out.println(filter+ " filter");
-		turtFilter=filter;
-	}
-	public void rotateImage() {
-for(Turtle t:turtList)
-	if(t.matchFilter(turtFilter)){
-		String imageString= "Turtle" + Math.random();
-		Stats s = getStats(t);
-		defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
-		t.setImage(imageString);
-	}
-}
-	public void suspendTurtles(){
-		for(Turtle t:turtList)
-			if(t.matchFilter(turtFilter))
-				t.suspend();
-	}
-	public void setVelocities(double velocity) {
-		for(Turtle t:turtList)
-			if(t.matchFilter(turtFilter))
-				t.setVelocity(velocity);
-		
-	}
 }

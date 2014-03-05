@@ -1,4 +1,5 @@
 
+import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 import frontEnd.SlogoView;
 /*
@@ -14,8 +15,10 @@ class MainSlogo {
 	
 	public static void newWindow(){
 		SlogoModel model = new SlogoModel();
-		SlogoView display = new SlogoView(model);
-	    model.setViewer(display);
+		TurtleManager slogoManager=new TurtleManager();
+		SlogoView display = new SlogoView(model,slogoManager);
+	    model.setParameters(display, slogoManager);
+	    
 	}	
 }
 	

@@ -113,6 +113,7 @@ public class Turtle extends JGObject {
 			double dist=Point2D.distance(x,y,targetx,targety);
 			origPosition=new Position(targetx,targety);
 			targetQueue.add(makeInBounds(target));
+			System.out.println(targetQueue);
 			return dist;
 		}
 		public void runPen(int thickness, boolean penActive){
@@ -124,6 +125,7 @@ public class Turtle extends JGObject {
 				if(xspeed>velocity/2&&yspeed>velocity/2)
 					lines.put((ArrayList<Position>) loc,drawingColor);
 			}
+			System.out.println(lines.size());
 			if(origPosition!=null){
 				for(ArrayList<Position> line:lines.keySet())
 					if(lines.get(line)!=null)

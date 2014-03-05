@@ -1,10 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import frontEnd.SlogoView;
@@ -20,8 +17,7 @@ public class SlogoModel {
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
-    private Map<String, Double> myVariableMap;
-    private Map<String, StringNode> myVariableCommandMap;
+//    private Map<String, StringNode> myVariableCommandMap;
     
 	
 	public SlogoModel(){
@@ -29,8 +25,7 @@ public class SlogoModel {
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
 		myLanguageManager = new LanguageManager();
-		myVariableMap = new HashMap<String, Double>();
-		myVariableCommandMap = new HashMap<String, StringNode>();
+//		myVariableCommandMap = new HashMap<String, StringNode>();
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	

@@ -25,12 +25,9 @@ public class LanguageManager {
 	}
 	
 	public StringNode convertLanguage(StringNode root) {
-		//myParser.printTree(root);
 		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
 		makeLanguageMap();
-		loopTree(root);
-		//myParser.printTree(root);
-		return root;
+		return loopTree(root);
 	}
 	
 	public void setLanguage(String language){
@@ -47,22 +44,35 @@ public class LanguageManager {
 		}
 	}
 	
-	protected void loopTree(StringNode current){
-		if(current == null) return;
-		processNode(current);
+	protected StringNode loopTree(StringNode current){
+		if(current == null) return current;
+		current = processNode(current);
 		for(StringNode child: current.getChildren()){
 			loopTree(child);
 		}
+		return current;
 	}
 	
 	// need revision: check syntax (e.g. a, b, :a) for base case, variableCommmand
-	// need to be called in control node's factory
-	protected void processNode(StringNode current){
-		if(AbstractParser.isParameter(current.getCommandString()) 
-				|| AbstractParser.isVariable(current.getCommandString()) 
-				|| AbstractParser.isVariableCommand(current.getCommandString())) return;
+	protected StringNode processNode(StringNode current){
+		if(AbstractParser.isParameter(current.getCommandString())) return current;
+		if(current.getCommandString().startsWith(myUserLanguage.getString("Variable"))){
+			current.setCommandString(processVariableNode(current));
+			return current;
+		}
 		String nonProgramLanguage = myLanguageMap.get(current.getCommandString());
 		current.setCommandString(myProgramLanguage.getString(nonProgramLanguage));
+		return current;
 	}
-
+	
+	/*
+	 * Make sure that the variable notation is converted to the program language standard as well
+	 */
+	protected String processVariableNode(StringNode current){
+		StringBuilder builder = new StringBuilder();
+		builder.append(myProgramLanguage.getString("Variable"));
+		String next = current.getCommandString().substring(myUserLanguage.getString("Variable").length());
+		builder.append(next);
+		return builder.toString();
+	}
 }

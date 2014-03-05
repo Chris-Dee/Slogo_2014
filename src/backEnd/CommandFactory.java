@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import parser.AbstractParser;
-import parser.TextParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
@@ -27,12 +26,14 @@ public class CommandFactory {
     protected ResourceBundle myParameters;
     protected ResourceBundle myPossibleControls;
     protected List<String> myControlCommands;
+    protected VariableManager myVariableManager;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myPossibleControls = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_CONTROLS);
 		initControlCommands();
+		myVariableManager = new VariableManager();
 	}
 
 

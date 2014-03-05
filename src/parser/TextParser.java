@@ -1,7 +1,6 @@
 package parser;
 
 import java.util.*;
-
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
 import parser.tree.StringNode;
@@ -33,6 +32,7 @@ public class TextParser extends AbstractParser {
 //		System.out.println("myCommandList: " + myCommandList.size());
 		int start = initializeTree(myCommandList);
 		buildTree(myRoot, start);
+		myRoot = myLanguageManager.convertLanguage(myRoot);
 		return myRoot;
 	}
 

@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import parser.tree.StringNode;
@@ -26,16 +28,16 @@ public class IfElse extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		StringNode expr = myParser.parse(myExpression);
+		List<StringNode> expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtle);
-		StringNode root;
+		List<StringNode> roots;
 		if (magnitude == 0){
-			root = myParser.parse(myElseCommands);
+			roots = myParser.parse(myElseCommands);
 		}
 		else{
-			root = myParser.parse(myCommands);
+			roots = myParser.parse(myCommands);
 		}
-		double answer = myFactory.runCommands(root, myTurtle);
+		double answer = myFactory.runCommands(roots, myTurtle);
 		return answer;
 	}
 

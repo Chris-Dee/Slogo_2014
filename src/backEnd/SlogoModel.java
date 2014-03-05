@@ -60,8 +60,8 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands, List<Turtle> turtles){
 		try{
-			StringNode root = myParser.parse(userCommands);
-			return myCommandFactory.runCommands(root, turtles.get(0));
+			List<StringNode> roots = myParser.parse(userCommands);
+			return myCommandFactory.runCommands(roots, turtles.get(0));
 		} catch(IllegalCommandException e){
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {

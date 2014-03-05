@@ -3,19 +3,13 @@ package commands;
 /*
  * This command makes the turtle move forward by certain pixels
  */
-public class Forward extends TurtleCommand {
-	
-	private double myMagnitude;
+public class Forward extends OneParameterTurtleCommand {
 	
 	public Forward() {}
 
 	@Override
 	public String getCommandType() {
 		return "FD";
-	}
-	
-	public void setMagnitude(double magnitude){
-		myMagnitude = magnitude;
 	}
 
 	@Override

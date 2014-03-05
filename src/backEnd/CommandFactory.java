@@ -21,11 +21,13 @@ public class CommandFactory {
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
     public static final String DEFAULT_CONTROLS = "ControlCommands";
+    public static final String DEFAULT_MODIFYVARIABLECOMMANDS = "ModifyVariableCommands";
     private static final double DEFAULT_MAGNITUDE = 0;
     
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
     protected ResourceBundle myPossibleControls;
+    protected ResourceBundle myModifyVariableCommands;
     protected List<String> myControlCommands;
     protected VariableManager myVariableManager;
 	
@@ -33,11 +35,10 @@ public class CommandFactory {
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myPossibleControls = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_CONTROLS);
+		myModifyVariableCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_MODIFYVARIABLECOMMANDS);
 		initControlCommands();
 		myVariableManager = new VariableManager();
 	}
-
-
 
 	protected void initControlCommands() {
 		myControlCommands = new ArrayList<String>();
@@ -47,21 +48,27 @@ public class CommandFactory {
 		}
 	}
 	
-	
-	
 	/*
 	 * Called by TextParser to process a tree of Strings of commands
 	 * Passed in the root of the tree
 	 * return the returned value of the root command
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
-	public double runCommands(StringNode root, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	public double runCommands(List<StringNode> roots, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		//myParser.printTree(root);
-		return processStringNode(root, turtle);
+		double answer = 0;
+		for(StringNode root: roots){
+			answer = processStringNode(root, turtle);	
+		}
+		return answer; // return the value of the last command tree
 	}
 	
-	
-	
+//	private double processVariableNode(StringNode current){
+//		double answer = myVariableManager.getValueOfVariable(current.getCommandString());
+//		current.setCommandString( Double.toString(answer) );
+//		return answer;
+//	}
+//	
 	/*
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
@@ -73,6 +80,11 @@ public class CommandFactory {
 				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
 				return AbstractParser.convertToDouble(current.getCommandString());	
 			}
+//			else if(myVariableManager.isVariable(current)){ // a variable in the leaf
+//				if(!ifParentModifyVariable(current)){
+//					return processVariableNode(current);
+//				}
+//			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
 					//System.out.println(current.getCommandString() + " is a control command");
@@ -87,6 +99,11 @@ public class CommandFactory {
 			processStringNode(current.getChildren().get(0), turtle);
 			return AbstractParser.convertToDouble(current.getCommandString());	
 		}
+//		else if(myVariableManager.isVariable(current)){ // the current node is a variable but it has a child
+//			if(!ifParentModifyVariable(current)){
+//				return processVariableNode(current);
+//			}
+//		}
 		else if(hasNoParameter(current)){
 			processStringNode(current.getChildren().get(0), turtle);
 			if(ifControlCommand(current)){
@@ -96,7 +113,6 @@ public class CommandFactory {
 			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 		}
 		else if(hasOneParameter(current)){
-//			System.out.println(current.getCommandString() + " has only one parameter");
 			double answer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
 		}
@@ -107,6 +123,21 @@ public class CommandFactory {
 		}
 		return 0; // should not reach here
 	}
+	
+//	/*
+//	 * Return true if current's direct parent modifies a variable (e.g. MAKE, SET) 
+//	 */
+//	protected boolean ifParentModifyVariable(StringNode current){
+//		if(current == null || current.getParent() == null) return false;
+//		String modifyVariables = myModifyVariableCommands.getString("VariableCommands");
+//		String[] modifyList = modifyVariables.split(",");
+//		for(String s: modifyList){
+//			if(s.equals(current.getParent().getCommandString())){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	/*
 	 * This method should not be called from the outside.

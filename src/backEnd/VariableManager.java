@@ -8,8 +8,8 @@ import parser.tree.StringNode;
 
 public class VariableManager {
 	
-    protected Map<String, Double> myVariableMap;
-    protected ResourceBundle myProgramLanguage;
+    private Map<String, Double> myVariableMap;
+    private ResourceBundle myProgramLanguage;
     
     public VariableManager(){
 		myVariableMap = new HashMap<String, Double>();
@@ -25,7 +25,7 @@ public class VariableManager {
     	return root;
     }
     
-    protected void loopTree(StringNode current){
+    private void loopTree(StringNode current){
 		if(current == null) return;
 		if(isVariable(current)){
 			processNode(current);	
@@ -35,11 +35,21 @@ public class VariableManager {
 		}
     }
 
-    public void setValueToVariable(String variable, double value){
+    public void setValueToVariable(String v, double value){
+    	String variable = deleteVariableSyntax(v);
     	myVariableMap.put(variable, value);
     }
     
-    protected void processNode(StringNode current){
+    private String deleteVariableSyntax(String v){
+    	return v.substring(myProgramLanguage.getString("Variable").length());
+    }
+    
+    public double getValueOfVariable(String v){
+    	String variable = deleteVariableSyntax(v);
+    	return myVariableMap.get(variable);
+    }
+    
+    private void processNode(StringNode current){
     	
     }
 }

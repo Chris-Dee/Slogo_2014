@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import parser.tree.StringNode;
@@ -21,11 +23,11 @@ public class Repeat extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		StringNode expr = myParser.parse(myExpression);
+		List<StringNode> expr = myParser.parse(myExpression);
 		double loop = myFactory.runCommands(expr, myTurtle);
 		if(loop <= 0) return 0;
 		
-		StringNode commands = myParser.parse(myCommands);
+		List<StringNode> commands = myParser.parse(myCommands);
 		double answer = 0;
 		for(int i = 1; i <= loop; i ++){
 			answer = myFactory.runCommands(commands, loop, myTurtle);

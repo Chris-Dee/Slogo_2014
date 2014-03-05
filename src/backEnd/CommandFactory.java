@@ -54,9 +54,13 @@ public class CommandFactory {
 	 * return the returned value of the root command
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
-	public double runCommands(StringNode root, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	public double runCommands(List<StringNode> roots, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		//myParser.printTree(root);
-		return processStringNode(root, turtle);
+		double answer = 0;
+		for(StringNode root: roots){
+			answer = processStringNode(root, turtle);	
+		}
+		return answer; // return the value of the last command tree
 	}
 	
 //	private double processVariableNode(StringNode current){

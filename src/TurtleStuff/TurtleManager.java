@@ -32,6 +32,14 @@ public void addRotations(double mag){
 			t.addRotation(mag);
 		}
 }
+public List<Turtle> getFilteredTurtles(int id){
+	List<Turtle> filtTurtles=new ArrayList<Turtle>();
+	for(Turtle t :turtList){
+		if(t.matchFilter(id))
+			filtTurtles.add(t);
+	}
+	return filtTurtles;
+}
 public void moveForward(int mag){
 	System.out.println(getTurtlesByID().size());
 	for(Turtle t:getTurtlesByID()){

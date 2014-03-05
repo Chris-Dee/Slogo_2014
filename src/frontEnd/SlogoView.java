@@ -299,7 +299,4 @@ public class SlogoView extends JFrame{
 		// TODO Auto-generated method stub
 
 	}
-
-
-
 }

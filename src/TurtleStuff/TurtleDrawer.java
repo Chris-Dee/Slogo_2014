@@ -67,11 +67,12 @@ List<turtles> get turtswithFilter()
 
 	}
 	public void paintFrame(){
-		for(Turtle t: manager.getTurtlesByID()){
+		for(Turtle t: manager.getFilteredTurtles()){
 				t.runPen(2,true);
-				manager.highlightTurtle();
+				
 		}
-		
+		manager.highlightSelectedTurtles();
+		manager.highlightTurtle();
 		checkColorKeys();
 	}
 	public boolean checkKey(char ch){
@@ -80,7 +81,7 @@ List<turtles> get turtswithFilter()
 		return false;
 	}
 	public void checkColorKeys(){
-		for(Turtle t: manager.getTurtlesByID()){
+		for(Turtle t: manager.getFilteredTurtles()){
 		//make these call methods from the TurtleManager class
 				if(checkKey('r')){
 					t.setPen(JGColor.red);

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
@@ -61,7 +62,9 @@ private void makeForwardPanel(JPanel forwardPanel){
 		public void actionPerformed(ActionEvent e)
 		{              
 			try{
-				manager.moveForward(Integer.parseInt(forwardInput.getText()));
+				for(Turtle t:manager.getFilteredTurtles())
+					t.goForward(Double.parseDouble(forwardInput.getText()));
+			
 				SlogoView.viewStats().updateInfo();
 				backNumber++;
 			}catch(Exception e1){
@@ -82,7 +85,9 @@ private void makeRotatePanel(JPanel rotationPanel){
 		public void actionPerformed(ActionEvent e)
 		{             
 			try{
-				manager.addRotations(Double.parseDouble(rotationInput.getText()));
+				for(Turtle t:manager.getFilteredTurtles())
+					t.addRotation(Double.parseDouble(rotationInput.getText()));
+				//manager.addRotations(Double.parseDouble(rotationInput.getText()));
 			}catch(Exception e1){
 				SlogoView.showError(rotatePanel,myResources.getString("NumberFormat"));
 				backNumber++;

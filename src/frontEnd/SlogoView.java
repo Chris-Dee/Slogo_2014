@@ -111,7 +111,7 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
-					results.setText(model.receiveTextInput(textInput.getText(), manager.getTurtlesByID())+"");
+					results.setText(model.receiveTextInput(textInput.getText(), manager.getFilteredTurtles())+"");
 					manager.rotateImage();
 					savePanel(textInput);
 
@@ -147,7 +147,7 @@ public class SlogoView extends JFrame{
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
-				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), manager.getTurtlesByID())+"");
+				results.setText(model.receiveTextInput(savedBoxes.get(i).getText(), manager.getFilteredTurtles())+"");
 				statPage.updateInfo();    
 
 			}

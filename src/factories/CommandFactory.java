@@ -126,19 +126,14 @@ public class CommandFactory {
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		}
 	}
@@ -181,6 +176,7 @@ public class CommandFactory {
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
+					System.out.println("Magnitude1: "+magnitude1);
 					m.invoke(command, magnitude1);
 				}
 				if(m.getName().equals("setDoubleMagnitude")){
@@ -189,19 +185,14 @@ public class CommandFactory {
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 			throw new IllegalCommandException();
 		}
 	}

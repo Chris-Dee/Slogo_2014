@@ -126,14 +126,19 @@ public class CommandFactory {
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		}
 	}
@@ -184,14 +189,19 @@ public class CommandFactory {
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (InstantiationException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		}
 	}

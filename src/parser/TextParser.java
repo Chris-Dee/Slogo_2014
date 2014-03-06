@@ -33,6 +33,9 @@ public class TextParser extends AbstractParser {
 		formatStringArray(singleLineString);
 		int start = initializeTree(myCommandList);
 		buildTree(myRoot, start);
+		for (StringNode s1 : myCommands) {
+			System.out.println(s1.getCommandString());
+		}
 //		while (!myCommandList.isEmpty()) {
 //			buildCommandList(myCommandList);
 //		}
@@ -93,23 +96,12 @@ public class TextParser extends AbstractParser {
 		int numChildren = 0;
 		
 		if(parameterNumber == 2) {
-			StringNode child1 = current.addChild(myCommandList.get(index+1));
-			numChildren = buildTree(child1, index+1);
-			StringNode child2 = current.addChild(myCommandList.get(index + numChildren + 1));
-			numChildren += buildTree(child2, index + numChildren + 1);
-		}
-		else if (parameterNumber == 1) {
-			StringNode child = current.addChild(myCommandList.get(index+1));
-			numChildren += buildTree(child, index+1);
-		}
-		else {
-
 			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
 				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
 					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
 					numChildren = handleIfElseNode(child, index+1);
 					numChildren += buildTree(child, index+numChildren+1);
-					
+
 				}
 				else {
 					ControlNode child = current.addControlChild(myCommandList.get(index+1));
@@ -119,13 +111,53 @@ public class TextParser extends AbstractParser {
 
 			}
 			else {
-				if (allParentsHaveParameters(current)) {
-					StringNode nextRoot = current.addChild(myCommandList.get(index+1));
-					myCommands.add(nextRoot);
-					buildTree(nextRoot, index+1);
+				StringNode child1 = current.addChild(myCommandList.get(index+1));
+				numChildren = buildTree(child1, index+1);
+			}
+			if (myControlCommands.containsKey(myCommandList.get(index+numChildren+1))) { //control statement
+				if (myControlCommands.getString(myCommandList.get(index + numChildren+1)).equals("3")) {
+					IfElseNode child = current.addIfElseChild(myCommandList.get(index+numChildren+1));
+					numChildren = handleIfElseNode(child, index+numChildren+1);
+					numChildren += buildTree(child, index+numChildren+1);
+
+				}
+				else {
+					ControlNode child = current.addControlChild(myCommandList.get(index+numChildren+1));
+					numChildren = handleControlNode(child, index+numChildren+1);
+					numChildren += buildTree(child, index+numChildren+1);
+				}
+			}
+			else {
+				StringNode child2 = current.addChild(myCommandList.get(index + numChildren + 1));
+				numChildren += buildTree(child2, index + numChildren + 1);
+			}
+
+		}
+		else if (parameterNumber == 1) {
+			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
+				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
+					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
+					numChildren = handleIfElseNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+
+				}
+				else {
+					ControlNode child = current.addControlChild(myCommandList.get(index+1));
+					numChildren = handleControlNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
 				}
 
 			}
+			else {
+				StringNode child = current.addChild(myCommandList.get(index+1));
+				numChildren += buildTree(child, index+1);
+			}
+		}
+		else {
+			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
+			myCommands.add(nextRoot);
+			buildTree(nextRoot, index+1);
+			
 		}
 		numChildren ++;
 		return numChildren;

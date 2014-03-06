@@ -117,7 +117,8 @@ public class SlogoView extends JFrame{
 					savePanel(textInput);
 
 				}
-				catch(MissingResourceException e1){
+				catch(Exception e1){
+					e1.printStackTrace();
 					showError(mainPanel,myResources.getString("IllegalCommand"));
 				}
 				statPage.updateInfo();

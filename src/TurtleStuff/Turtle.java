@@ -21,7 +21,8 @@ public class Turtle extends JGObject {
 	private static final int EDGE_OFFSET = 5;
 	private static final int SCREEN_EDGE = 270;
 	private boolean penActive=true;
-	public int turtId;
+	private int turtId;
+	private int turtImage=0;
 	private int targetCount=0;
 	private int penColorIndex=0;
 	private int lineStartTarget=0;
@@ -46,9 +47,17 @@ public class Turtle extends JGObject {
 	public int getPenIndex(){
 		return penColorIndex;
 	}
+	public int getImageID(){
+		return turtImage;
+	}
+	public void setImageID(int ID){
+		turtImage=ID;
+		System.out.println(turtImage);
+	}
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);
 		if(dist>2){
+			
 			xdir=setDir(x,targetx);
 			ydir=setDir(y,targety);
 			if(getLastX() >= SCREEN_EDGE || getLastX()<=0){

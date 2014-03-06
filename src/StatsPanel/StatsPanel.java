@@ -26,6 +26,9 @@ public class StatsPanel extends JPanel {
 		TurtleSpace=turtSpace;
 		makeStatsPanel();
 	}
+	public void setResultsBox(String s){
+		results.setText(s);
+	}
 	public void makeStatsPanel(){
 		JPanel dataPanel=new JPanel();
 		dataPanel.setLayout(new BoxLayout(dataPanel,BoxLayout.Y_AXIS));

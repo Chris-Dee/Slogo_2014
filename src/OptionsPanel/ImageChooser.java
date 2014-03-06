@@ -6,20 +6,30 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jgame.platform.JGEngine;
+
+import PreferenceManagers.ImageManager;
+import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
+import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
 public class ImageChooser extends JPanel {
 	ResourceBundle myResources;
+	TurtleManager manager;
 	TurtleDrawer TurtleSpace;
-public ImageChooser(ResourceBundle myRes,TurtleDrawer TurtSpace){
+	ImageManager images;
+public ImageChooser(ResourceBundle myRes,TurtleManager manage,TurtleDrawer turtleSpace, ImageManager image){
 	super();
 	myResources=myRes;
-	TurtleSpace=TurtSpace;
+	TurtleSpace=turtleSpace;
+	manager=manage;
+	images=image;
 	makePanel();
 }
 
@@ -27,22 +37,26 @@ public ImageChooser(ResourceBundle myRes,TurtleDrawer TurtSpace){
 private void makeImageChooserButton(JPanel homePanel){
 	final JPanel panel=new JPanel();
 	panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-	final JTextField imageChooser = new JTextField(10);
-	Button selectImage= new Button(myResources.getString("SelectImage"));
+	JPanel smallerPanel=new JPanel();
+	JLabel label=new JLabel(myResources.getString("ImageChooserLabel"));
+	final JTextField imageChooser = new JTextField(3);
+	smallerPanel.add(label);
+	smallerPanel.add(imageChooser);
+	
+	Button selectImage= new Button(myResources.getString("ImageChooser"));
 	selectImage.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
-			String imageFile = imageChooser.getText();
-			try{
-				TurtleSpace.newTurtle(imageFile);
-			}
-			catch(Exception e1){
-				SlogoView.showError(panel,"File was not found");
+			String s=imageChooser.getText();
+			TurtleSpace.defineImage(imageChooser.getText()+"", "null",0,images.getPathByIndex(Integer.parseInt(s)), "-");
+			for(Turtle t:manager.getFilteredTurtles()){
+				t.setImage(imageChooser.getText()+"");
+				t.setImageID(Integer.parseInt(s));
 			}
 		}
 	});
 	panel.add(selectImage);
-	panel.add(imageChooser);
+	panel.add(smallerPanel);
 	homePanel.add(panel);
 }
 public void makePanel(){

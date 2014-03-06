@@ -38,6 +38,7 @@ import frontEnd.HelpPage;
 
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
+import PreferenceManagers.ImageManager;
 import StatsPanel.StatsPanel;
 import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
@@ -65,6 +66,7 @@ public class SlogoView extends JFrame{
 	public static final String DEFAULT_COMM_TEXT="CommandPath";
 	TurtleManager manager;
 	ColorManager myColors;
+	ImageManager images;
 	public SlogoView(){
 		super();
 		initiate();
@@ -72,9 +74,10 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image){
 		super();
 		model=modelSlog;
+		images=image;
 		manager=manage;
 		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
@@ -98,6 +101,8 @@ public class SlogoView extends JFrame{
         panel.setLayout(new GridLayout(1, 1));
         panel.add(filler);
         return panel;
+        
+        
     }
 	
 	private void makeCommandPanel(JPanel inputTextPanel){
@@ -114,7 +119,7 @@ public class SlogoView extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{ 
 				try{
-					results.setText(model.receiveTextInput(textInput.getText())+"");
+					viewStats().setResultsBox(model.receiveTextInput(textInput.getText())+"");
 					model.updateHistory(textInput.getText());
 					manager.rotateImage();
 					savePanel(textInput);
@@ -255,7 +260,7 @@ public class SlogoView extends JFrame{
 		rightPanel.add(makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 
-		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors),BorderLayout.NORTH);
+		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
 		//setSize(1000,400);

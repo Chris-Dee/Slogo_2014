@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
+import PreferenceManagers.ColorManager;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
@@ -20,9 +21,11 @@ public class OptionsPanel extends JPanel {
 	JTextArea textInput;
 	TurtleManager myManager;
 	List<JTextArea> savedBoxes;
+	ColorManager color;
 public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogModel,
-		int backNum,JTextArea input, List<JTextArea> savedBox, TurtleManager manage){
+		int backNum,JTextArea input, List<JTextArea> savedBox, TurtleManager manage, ColorManager colors){
 	super();
+	color=colors;
 	myResources=myRes;
 	turtleSpace=turtSpace;
 	model=slogModel;
@@ -36,6 +39,7 @@ public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogM
 public void makeOptionsPanel(){
 	
 	this.add(new VeloSlider(myResources, turtleSpace, myManager));
+	this.add(new ColorPanels(myResources, myManager, color));
 	this.add(new DirectionButtons(myResources, model, turtleSpace, myManager));
 	this.add(new HelpButton(myResources));
 	this.add(new MoveAndRefresh(myResources,turtleSpace, backNumber,

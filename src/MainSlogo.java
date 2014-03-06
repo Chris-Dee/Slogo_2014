@@ -1,4 +1,5 @@
 
+import PreferenceManagers.ColorManager;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 import frontEnd.SlogoView;
@@ -16,7 +17,8 @@ class MainSlogo {
 	public static void newWindow(){
 		SlogoModel model = new SlogoModel();
 		TurtleManager myTurtleManager=new TurtleManager();
-		SlogoView display = new SlogoView(model, myTurtleManager);
+		ColorManager myColorManager=new ColorManager();
+		SlogoView display = new SlogoView(model, myTurtleManager,myColorManager);
 	    model.setViewer(display);
 	    model.setTurtleManager(myTurtleManager);
 	}	

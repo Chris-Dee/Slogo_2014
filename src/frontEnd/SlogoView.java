@@ -112,6 +112,7 @@ public class SlogoView extends JFrame{
 			{ 
 				try{
 					results.setText(model.receiveTextInput(textInput.getText(), manager.getFilteredTurtles())+"");
+					model.updateHistory(textInput.getText());
 					manager.rotateImage();
 					savePanel(textInput);
 

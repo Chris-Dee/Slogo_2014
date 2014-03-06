@@ -58,8 +58,6 @@ List<turtles> get turtswithFilter()
 		moveObjects();
 		checkClicked();
 		SlogoView.updateInfo();
-
-
 	}
 	public void paintFrame(){
 		for(Turtle t:turtList){

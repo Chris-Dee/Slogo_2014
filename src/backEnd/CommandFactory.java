@@ -60,14 +60,6 @@ public class CommandFactory {
 		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
 	}
 	
-//	need revision
-//	protected String processVariableNode(StringNode current){
-//		double value = myVariableManager.getValueOfVariable(current.getCommandString());
-//		String answer = Double.toString(value);
-//		current.setCommandString(answer);
-//		return answer;
-//	}
-	
 	/*
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
@@ -75,14 +67,9 @@ public class CommandFactory {
 	protected String processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		if(current == null){ return null; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
-			if (AbstractParser.isParameter(current.getCommandString())){ // a number in the leaf
-				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
+			if (AbstractParser.isParameter(current.getCommandString()) // a number in the leaf
+					|| myVariableManager.isVariable(current.getCommandString())){ // or a variable in the leaf
 				return current.getCommandString();	
-			}
-			else if(myVariableManager.isVariable(current.getCommandString())){ // a variable in the leaf
-				if(!ifParentModifyVariable(current)){
-					return current.getCommandString();	
-				}
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
@@ -93,33 +80,16 @@ public class CommandFactory {
 			}
 		}
 		
-//		if(hasNoParameter(current)){
-//			processStringNode(current.getChildren().get(0), turtle);
-//			if(ifControlCommand(current)){
-//				ControlNode cur = (ControlNode) current;
-//				return makeControlCommand(cur, turtle);
-//			}
-//			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
-//		}
 		if(hasOneParameter(current)){
 			String answer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
 		}
-		else if(hasTwoParameters(current)){
+		else if(hasTwoParameters(current)){ // need revision for modifying variables
 			String leftAnswer = processStringNode(current.getChildren().get(0), turtle);
 			String rightAnswer = processStringNode(current.getChildren().get(1), turtle);
 			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtle);
 		}
 		return "0"; // should not reach here
-	}
-	
-	/*
-	 * Return true if current's direct parent modifies a variable (e.g. MAKE, SET) 
-	 */
-	protected boolean ifParentModifyVariable(StringNode current){
-		if(current == null || current.getParent() == null) return false;
-		if(myModifyVariableCommands.contains(current.getParent().getCommandString())) return true;
-		return false;
 	}
 	
 	/*
@@ -129,40 +99,6 @@ public class CommandFactory {
 	protected boolean ifControlCommand(StringNode current){
 		return myControlCommands.contains(current.getCommandString());
 	}
-	
-//	/*
-//	 * This method should not be called from the outside.
-//	 * Used to make a command that modifies a variable (e.g make, set)
-//	 */
-//	protected double makeModifyVariableCommand(StringNode node, double magnitude2) throws IllegalCommandException, IllegalParameterException {
-//		try { 
-//			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
-//			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
-//			Method[] methods = commandClass.getMethods();
-//			for (Method m: methods){
-//				if(m.getName().equals("setVariable")){
-//					m.invoke(command, node.getChildren().get(0));
-//				}
-//				if(m.getName().equals("setVariableManager")){
-//					m.invoke(command, myVariableManager);
-//				}
-//				if(m.getName().equals("setExpression")){
-//					m.invoke(command, magnitude2);
-//				}
-//		    }
-//			return executeCommand(command, methods);
-//		} catch (ClassNotFoundException e) {
-//			throw new IllegalCommandException();
-//		} catch (InstantiationException e) {
-//			throw new IllegalCommandException();
-//		} catch (IllegalAccessException e) {
-//			throw new IllegalCommandException();
-//		} catch (IllegalArgumentException e) {
-//			throw new IllegalParameterException();
-//		} catch (InvocationTargetException e) {
-//			throw new IllegalCommandException();
-//		}
-//	}
 	
 	/*
 	 * This method should not be called from the outside.
@@ -210,8 +146,6 @@ public class CommandFactory {
 			}
 		}
 	}
-
-
 
 	protected String executeCommand(AbstractCommand command, Method[] methods) 
 			throws IllegalAccessException, InvocationTargetException {

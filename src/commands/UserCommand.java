@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import backEnd.LanguageManager;
-import backEnd.VariableManager;
+import backEnd.Managers.LanguageManager;
+import backEnd.Managers.VariableManager;
 import parser.AbstractParser;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;

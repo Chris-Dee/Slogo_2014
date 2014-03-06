@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-import backEnd.VariableManager;
+import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;

@@ -1,7 +1,7 @@
 package commands;
 
+import backEnd.Managers.VariableManager;
 import parser.AbstractParser;
-import backEnd.VariableManager;
 
 public abstract class TwoParameterOperationCommand implements AbstractCommand{
 

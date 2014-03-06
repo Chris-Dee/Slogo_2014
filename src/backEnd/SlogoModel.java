@@ -3,6 +3,8 @@ package backEnd;
 import java.util.ArrayList;
 import java.util.List;
 
+import backEnd.Managers.LanguageManager;
+import backEnd.Managers.VariableManager;
 import TurtleStuff.TurtleManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;

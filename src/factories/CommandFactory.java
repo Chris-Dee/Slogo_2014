@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import backEnd.UserCommandManager;
-import backEnd.VariableManager;
+import backEnd.Managers.UserCommandManager;
+import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import parser.AbstractParser;
 import parser.tree.ControlNode;

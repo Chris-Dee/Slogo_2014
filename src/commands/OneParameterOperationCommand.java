@@ -1,6 +1,6 @@
 package commands;
 
-import backEnd.VariableManager;
+import backEnd.Managers.VariableManager;
 import parser.AbstractParser;
 
 public abstract class OneParameterOperationCommand implements AbstractCommand{

@@ -2,7 +2,7 @@ package parser;
 
 import java.util.*;
 
-import backEnd.LanguageManager;
+import backEnd.Managers.LanguageManager;
 import parser.tree.StringNode;
 
 public abstract class AbstractParser {

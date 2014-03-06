@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
-import backEnd.LanguageManager;
+import backEnd.Managers.LanguageManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import factories.ForFactory;

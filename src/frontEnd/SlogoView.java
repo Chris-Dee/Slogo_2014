@@ -36,9 +36,11 @@ import frontEnd.HelpPage;
 //need to add pen
 
 
+import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
 import PreferenceManagers.ImageManager;
+import PreferenceManagers.VariableManager;
 import StatsPanel.StatsPanel;
 import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
@@ -64,9 +66,10 @@ public class SlogoView extends JFrame{
 	public static final String DEFAULT_BUTTON_TEXT="Buttons";
 	public static final String DEFAULT_COMM_PATH="backEnd/";
 	public static final String DEFAULT_COMM_TEXT="CommandPath";
-	TurtleManager manager;
-	ColorManager myColors;
-	ImageManager images;
+	private TurtleManager manager;
+	private ColorManager myColors;
+	private VariableManager variables;
+	private ImageManager images;
 	public SlogoView(){
 		super();
 		initiate();
@@ -74,13 +77,14 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, VariableManager vars){
 		super();
 		model=modelSlog;
 		images=image;
 		manager=manage;
 		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
+		variables=vars;
 		initiate();
 		
 	}
@@ -196,20 +200,6 @@ public class SlogoView extends JFrame{
 			savedBoxes.get(i).setText(savedBoxes.get(i-1).getText());
 		savedBoxes.get(0).setText(textInput.getText());
 	}
-	public JScrollPane makeDrawingPanel(){
-		JPanel drawingPanel=new JPanel();
-		JScrollPane scroller=new JScrollPane(drawingPanel);
-		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-		TurtleSpace=new TurtleDrawer(manager);
-		manager.findEngine(TurtleSpace);
-		drawingPanel.setBackground(new java.awt.Color(100,100,100));
-		drawingPanel.setSize(270,270);
-		drawingPanel.setMinimumSize(new Dimension(270,270));
-		TurtleSpace.setSize(200,200);
-		drawingPanel.add(TurtleSpace);
-		return scroller;
-	}
-
 	//Needs refactoring. Look nicer
 	  private  ImageIcon createImageIcon(String path) {
 	        java.net.URL imgURL = SlogoView.class.getResource(path);
@@ -256,11 +246,11 @@ public class SlogoView extends JFrame{
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
+		TurtleSpace=new TurtleDrawer(manager);
+		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
 		rightPanel.add(makeSavedTextBoxes());
 		rightPanel.add(makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
-
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
@@ -269,39 +259,6 @@ public class SlogoView extends JFrame{
 		pack();
 		return mainPanel;
 	}
-//	public void createMainPanel(){
-//		setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		
-//		setVisible(true);
-//		 JTabbedPane tabbedPane = new JTabbedPane();
-//	    ImageIcon icon = createImageIcon("turtle.gif");
-//		mainPanel=(JPanel) getContentPane();
-//		JPanel rightPanel=new JPanel();
-//		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
-//		rightPanel.add(makeSavedTextBoxes());
-//		rightPanel.add(makeInputPanel());
-//		mainPanel.setLayout(new BorderLayout());
-//		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
-//		mainPanel.add(rightPanel,BorderLayout.EAST);
-//		setResizable(true);
-//		
-//		setTitle("Slow Go Team 16");
-		
-//		 //JPanel panel1 = makeTextPanel("Panel #1");
-//	    // tabbedPane.addTab("Tab 1", icon, panel1,
-//	     //        "Does nothing");
-//	     //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-//	       //  
-//	       // JPanel panel2 = makeTextPanel("Panel #2");
-//	       // tabbedPane.addTab("Tab 2", icon, panel2,
-//	       //         "Does twice as much nothing");
-//	       // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-//
-//		//mainPanel.add()
-	//
-//	}
-
-
 	public void  initiate() {
 		//createMainPanel();
 		CreateTabs();

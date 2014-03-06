@@ -57,7 +57,7 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands){
 		try{
-			System.out.println(userCommands);
+			//System.out.println(userCommands);
 			List<StringNode> roots = myParser.parse(userCommands);
 
 			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());

@@ -12,25 +12,52 @@ import parser.tree.StringNode;
 
 public class ParserTest {
 	
+
+	
 	@Test
 	public void testBuildTree() {
 		AbstractParser parser = new TextParser();
-		List<StringNode> root = parser.parse("fd 50 fd 50");
+		List<StringNode> root = parser.parse("fd :hello");
 		assertEquals("FD", root.get(0).getCommandString());
-		System.out.println("Start: ");
-		parser.printTree(root.get(0));
-		System.out.println("F:SDKLJFS:DLFK");
-		for (StringNode s : root.get(0).getChildren()) {
-			System.out.println(s.getCommandString() + " ");
-		}
-		System.out.println("F:SDKLJFS:DLFK");
+		assertEquals(":HELLO", root.get(0).getChildren().get(0).getCommandString());
+	}
+	
+	@Test
+	public void testRepeat() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse("Repeat 9 [FD 50]");
+		assertEquals("REPEAT", root.get(0).getCommandString());
+		assertEquals(1, root.size());
+	}
+	
+	@Test
+	public void testIf() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse("If less? 1 2 [fd 50]");
+		assertEquals("IF", root.get(0).getCommandString());
+		assertEquals(1, root.size());
 
-		for (StringNode s : root.get(1).getChildren()) {
-			System.out.println(s.getCommandString() + " ");
-		}
-//		assertEquals("FD", root.get(1).getCommandString());
-//		System.out.println("F:SDKLJFS:DLFK");
-//		parser.printTree(root.get(1));
+	}
+	@Test
+	public void testIfElse() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse("ifelse less? 1 2 [fd 50] [bk 50]");
+		assertEquals("IFELSE", root.get(0).getCommandString());
+		assertEquals(1, root.size());
+	}
+	@Test
+	public void testDoTimes() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse("Dotimes [:a 10]");
+		assertEquals("DOTIMES", root.get(0).getCommandString());
+		assertEquals(1, root.size());
+	}
+	@Test
+	public void testFor() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse("for [:a 0 10 2] [fd 50]");
+		assertEquals("FOR", root.get(0).getCommandString());
+		assertEquals(1, root.size());
 	}
 	
 }

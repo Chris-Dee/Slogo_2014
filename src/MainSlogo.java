@@ -3,6 +3,7 @@ import PreferenceManagers.ColorManager;
 import PreferenceManagers.ImageManager;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
+import backEnd.VariableManager;
 import frontEnd.SlogoView;
 /*
  * @Author Slogo_team16
@@ -20,8 +21,10 @@ class MainSlogo {
 		TurtleManager myTurtleManager=new TurtleManager();
 		ColorManager myColorManager=new ColorManager();
 		ImageManager myImages=new ImageManager();
+		VariableManager myVariableManager = new VariableManager();
 		SlogoView display = new SlogoView(model, myTurtleManager,myColorManager, myImages);
 	    model.setViewer(display);
+	    model.setVariableManager(myVariableManager);
 	    model.setTurtleManager(myTurtleManager);
 	}	
 }

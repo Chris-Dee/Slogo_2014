@@ -20,6 +20,7 @@ public class SlogoModel {
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
     private TurtleManager myTurtleManager;
+    private VariableManager myVariableManager;
 
     
 	
@@ -46,6 +47,11 @@ public class SlogoModel {
 	public void setLanguage(String language){
 		myLanguageManager.setLanguage(language);
 		myParser.setLanguageManager(myLanguageManager);
+	}
+	
+	public void setVariableManager(VariableManager manager){
+		myVariableManager = manager;
+		myCommandFactory.setVariableManager(myVariableManager);
 	}
 	
 	/*

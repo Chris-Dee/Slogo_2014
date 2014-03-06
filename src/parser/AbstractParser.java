@@ -64,4 +64,12 @@ public abstract class AbstractParser {
 			System.out.println("X ");
 		}
 	}
+	
+	public static void printListNodes(List<StringNode> current){
+		System.out.println("List of StringNodes: ");
+		for(StringNode cur: current){
+			System.out.print(cur.getCommandString());
+		}
+		System.out.println("Print Ends");
+	}
 }

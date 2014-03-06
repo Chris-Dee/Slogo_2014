@@ -9,9 +9,4 @@ public class Or extends TwoParameterOperationCommand {
 		if (myExpression1 != 0 || myExpression2 != 0) return 1;
 		return 0;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "OR";
-	}
 }

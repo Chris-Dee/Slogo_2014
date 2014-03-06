@@ -8,9 +8,4 @@ public class Random extends OneParameterOperationCommand{
 	public double execute() {
 		return Math.random()*myMagnitude;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "RANDOM";
-	}
 }

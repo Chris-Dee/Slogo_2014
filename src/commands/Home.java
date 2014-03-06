@@ -14,9 +14,4 @@ public class Home extends NonParameterTurtleCommand {
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "HOME";
-	}
 }

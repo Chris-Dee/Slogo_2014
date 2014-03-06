@@ -13,9 +13,4 @@ public class ClearScreen extends NonParameterTurtleCommand{
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.reset();
 	}
-
-	@Override
-	public String getCommandType() {
-		return "CS";
-	}
 }

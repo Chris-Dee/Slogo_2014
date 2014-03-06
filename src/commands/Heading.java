@@ -10,9 +10,4 @@ public class Heading extends NonParameterTurtleCommand {
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.getStats().getRot();
 	}
-
-	@Override
-	public String getCommandType() {
-		return "HEADING";
-	}
 }

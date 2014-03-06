@@ -8,9 +8,4 @@ public class Tan extends OneParameterOperationCommand {
 	public double execute() {
 		return Math.toDegrees(Math.tan(Math.toRadians(myMagnitude)));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "TAN";
-	}
 }

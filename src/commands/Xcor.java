@@ -13,9 +13,4 @@ public class Xcor extends NonParameterTurtleCommand {
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.getStats().getPos().xPos();
 	}
-
-	@Override
-	public String getCommandType() {
-		return "XCOR";
-	}
 }

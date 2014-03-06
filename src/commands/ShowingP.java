@@ -11,10 +11,4 @@ public class ShowingP extends NonParameterTurtleCommand {
 		if( turtle.isSuspended() ) return 0;
 		return 1;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "SHOWINGP";
-	}
-
 }

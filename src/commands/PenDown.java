@@ -11,9 +11,4 @@ public class PenDown extends NonParameterTurtleCommand{
 		turtle.lowerPen();
 		return 1;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "PD";
-	}	
 }

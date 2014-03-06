@@ -14,11 +14,14 @@ public abstract class AbstractParser {
 	protected List<String> myCommandList;
 	
 	public static boolean isParameter(String s) {
+	    if (s.startsWith(":"))
+	    	return true;
 	    try { 
 	        Double.parseDouble(s); 
 	    } catch(NumberFormatException e) { 
 	        return false; 
 	    }
+
 	    return true;
 	}
 	

@@ -57,7 +57,7 @@ List<turtles> get turtswithFilter()
 	public void doFrame(){
 		moveObjects();
 		checkClicked();
-		SlogoView.updateInfo();
+		SlogoView.viewStats().updateInfo();
 	}
 	public void paintFrame(){
 		for(Turtle t:turtList){

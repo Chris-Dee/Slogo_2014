@@ -30,7 +30,7 @@ public void setFilterList(List<Integer> filters){
 	
 	
 }
-public List<Turtle> getFilteredTurtles(int id){
+public List<Turtle> getFilteredTurtles(){
 	return filterList;
 }
 public void findEngine(TurtleDrawer t){
@@ -41,12 +41,12 @@ public void setFilter(int filter){
 	turtFilter=filter;
 }
 public void addRotations(double mag){
-	for(Turtle t:getTurtlesByID()){
+	for(Turtle t:filterList){
 			t.addRotation(mag);
 		}
 }
 public void moveForward(int mag){
-	for(Turtle t:getTurtlesByID()){
+	for(Turtle t:filterList){
 			t.goForward(mag);
 		}
 }
@@ -78,7 +78,7 @@ public Stats displayStats(){
 	return getStats(turt);
 }
 public void rotateImage() {
-for(Turtle t:getTurtlesByID()){
+for(Turtle t:filterList){
 	String imageString= "Turtle" + Math.random();
 	Stats s = getStats(t);
 	myEngine.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
@@ -88,19 +88,12 @@ for(Turtle t:getTurtlesByID()){
 public Stats getStats(Turtle t){
 	return t.getStats();
 }
-public List<Turtle> getTurtlesByID(){
-	List<Turtle> filtTurts=new ArrayList<Turtle>();
-	for(Turtle t:turtList)
-		if(t.matchFilter(turtFilter))
-			filtTurts.add(t);
-	return filtTurts;
-}
 public void suspendTurtles(){
-	for(Turtle t:getTurtlesByID())
+	for(Turtle t:filterList)
 			t.suspend();
 }
 public void setVelocities(double velocity) {
-	for(Turtle t:getTurtlesByID())
+	for(Turtle t:filterList)
 			t.setVelocity(velocity);
 	
 }

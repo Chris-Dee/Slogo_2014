@@ -15,9 +15,4 @@ public class Make extends TwoParameterOperationCommand{
 		if(expression1 != null) myVariable = expression1;
 		myExpression2 = convertMagnitudeToValue(expression2);
 	}
-
-	@Override
-	public String getCommandType() {
-		return "MAKE";
-	}
 }

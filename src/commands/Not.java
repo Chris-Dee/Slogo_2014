@@ -9,9 +9,4 @@ public class Not extends OneParameterOperationCommand{
 		if (myMagnitude == 0) return 1;
 		return 0;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "NOT";
-	}
 }

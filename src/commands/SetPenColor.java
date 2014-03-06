@@ -2,13 +2,11 @@ package commands;
 
 import TurtleStuff.Turtle;
 
-public class PenUp extends NonParameterTurtleCommand{
-	
-	public PenUp(){}
-	
+public class SetPenColor extends OneParameterTurtleCommand{
+
 	@Override
 	protected double executeTurtle(Turtle turtle) {
-		turtle.raisePen();
-		return 0;
+		turtle.setPen
 	}
+
 }

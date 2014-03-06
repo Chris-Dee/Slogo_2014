@@ -8,9 +8,4 @@ public class Log extends OneParameterOperationCommand {
 	public double execute() {
 		return Math.log(myMagnitude);
 	}
-
-	@Override
-	public String getCommandType() {
-		return "LOG";
-	}
 }

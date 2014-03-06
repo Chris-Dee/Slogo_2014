@@ -8,9 +8,4 @@ public class Sin extends OneParameterOperationCommand{
 	public double execute() {
 		return Math.toDegrees(Math.sin(Math.toRadians(myMagnitude)));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "SIN";
-	}
 }

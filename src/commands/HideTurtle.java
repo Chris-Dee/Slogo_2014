@@ -11,9 +11,4 @@ public class HideTurtle extends NonParameterTurtleCommand{
 		turtle.suspend();
 		return 0;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "HT";
-	}	
 }

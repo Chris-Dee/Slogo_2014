@@ -8,9 +8,4 @@ public class ATan extends OneParameterOperationCommand {
 	public double execute() {
 		return Math.toDegrees(Math.atan(Math.toRadians(myMagnitude)));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "ATAN";
-	}
 }

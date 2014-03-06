@@ -8,9 +8,4 @@ public class Cos extends OneParameterOperationCommand {
 	public double execute() {
 		return Math.toDegrees(Math.cos(Math.toRadians(myMagnitude)));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "COS";
-	}
 }

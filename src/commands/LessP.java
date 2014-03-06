@@ -9,9 +9,4 @@ public class LessP extends TwoParameterOperationCommand {
 		if (myExpression1 < myExpression2) return 1;
 		return 0;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "LESSP";
-	}
 }

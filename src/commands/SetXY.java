@@ -11,9 +11,4 @@ public class SetXY extends TwoParameterTurtleCommand{
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.setTarget(new Position(myExpression1, myExpression2));
 	}
-
-	@Override
-	public String getCommandType() {
-		return "GOTO";
-	}
 }

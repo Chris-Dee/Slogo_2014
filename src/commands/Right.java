@@ -8,11 +8,6 @@ import TurtleStuff.Turtle;
 public class Right extends OneParameterTurtleCommand {
 	
 	public Right() {}
-
-	@Override
-	public String getCommandType() {
-		return "RT";
-	}
 	
 	@Override
 	protected double executeTurtle(Turtle turtle) {

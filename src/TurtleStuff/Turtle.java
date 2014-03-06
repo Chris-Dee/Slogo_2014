@@ -23,6 +23,7 @@ public class Turtle extends JGObject {
 	private boolean penActive=true;
 	public int turtId;
 	private int targetCount=0;
+	private int penColorIndex=0;
 	private int lineStartTarget=0;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
@@ -41,6 +42,9 @@ public class Turtle extends JGObject {
 		targetQueue.add(new Position(TURTLE_INIT_X,TURTLE_INIT_Y));
 		turtId=id;
 		setBBox((int)x, (int)y, IMG_OFFSET, 5);
+	}
+	public int getPenIndex(){
+		return penColorIndex;
 	}
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);
@@ -138,7 +142,8 @@ public class Turtle extends JGObject {
 		public void clearLines(){
 			lines.clear();
 		}
-		public void setPen(JGColor color){
+		public void setPen(int id, JGColor color){
+			penColorIndex=id;
 			penColor=color;
 			drawingColor=color;
 		}

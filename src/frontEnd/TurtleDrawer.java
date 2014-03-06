@@ -1,6 +1,8 @@
 package frontEnd;
 import javax.swing.JComponent;
 
+import TurtleStuff.Stats;
+import TurtleStuff.Turtle;
 import backEnd.SlogoModel;
 
 import java.awt.Dimension;
@@ -76,16 +78,16 @@ List<turtles> get turtswithFilter()
 		for(Turtle t:turtList)
 			if(t.matchFilter(turtFilter)){
 				if(checkKey('r')){
-					t.setPen(JGColor.red);
+					t.setPen(10,JGColor.red);
 				}
 				if(checkKey('g')){
-					t.setPen(JGColor.green);
+					t.setPen(10,JGColor.green);
 				}
 				if(checkKey('b')){
-					t.setPen(JGColor.blue);
+					t.setPen(10,JGColor.blue);
 				}
 				if(checkKey('o')){
-					t.setPen(JGColor.orange);
+					t.setPen(10,JGColor.orange);
 				}
 				if(checkKey('r')){
 					t.raisePen();

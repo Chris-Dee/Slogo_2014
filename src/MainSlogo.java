@@ -15,10 +15,10 @@ class MainSlogo {
 	
 	public static void newWindow(){
 		SlogoModel model = new SlogoModel();
-		TurtleManager slogoManager=new TurtleManager();
-		SlogoView display = new SlogoView(model,slogoManager);
-	    model.setParameters(display, slogoManager);
-	    
+		TurtleManager myTurtleManager=new TurtleManager();
+		SlogoView display = new SlogoView(model, myTurtleManager);
+	    model.setViewer(display);
+	    model.setTurtleManager(myTurtleManager);
 	}	
 }
 	

@@ -1,19 +1,17 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command is used to get a turtle's Y from the center of the screen
  */
 public class Ycor extends NonParameterTurtleCommand {
 
 	public Ycor() { }
-
+	
 	@Override
-	/*
-	 * @see commands.AbstractCommand#execute()
-	 * Return the turtle's Y coordinate from the center of the screen
-	 */
-	public double execute() {
-		return myTurtle.getStats().getPos().yPos();
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.getStats().getPos().yPos();
 	}
 
 	@Override

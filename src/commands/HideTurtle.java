@@ -1,13 +1,14 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 public class HideTurtle extends NonParameterTurtleCommand{
 	
-	public HideTurtle(){}
-
+	public HideTurtle(){} 
+	
 	@Override
-	public double execute() {
-		System.out.println("Hide Turtle Executed");
-		myTurtle.suspend();
+	protected double executeTurtle(Turtle turtle) {
+		turtle.suspend();
 		return 0;
 	}
 

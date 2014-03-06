@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.*;
+
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
 import parser.tree.StringNode;
@@ -15,23 +16,51 @@ public class TextParser extends AbstractParser {
 	private ResourceBundle myControlCommands;
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
+	private List<StringNode> myCommands;
 	
 	public TextParser() {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
 		myControlCommands = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_CONTROL_FILE);
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
+		myCommands = new ArrayList<StringNode>();
 	}
 	
 	@Override
-	public StringNode parse(String s) {
+	public List<StringNode> parse(String s) {
 		myCommandList.clear();
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
-		int start = initializeTree(myCommandList);
-		buildTree(myRoot, start);
-		myRoot = myLanguageManager.convertLanguage(myRoot);
-		return myRoot;
+		//int start = initializeTree(myCommandList);
+		//buildTree(myRoot, start);
+		while (!myCommandList.isEmpty()) {
+			buildCommandList(myCommandList);
+		}
+		//myRoot = myLanguageManager.convertLanguage(myRoot);
+		return myCommands;
+	}
+
+	private void buildCommandList(List<String> commands) {
+		// TODO Auto-generated method stub
+		StringNode newCommand;
+		if (myControlCommands.containsKey(commands.get(0))) { //control statement
+			if (myControlCommands.getString(commands.get(0)).equals("3")) {
+				newCommand = new IfElseNode(commands.get(0), null, null, null);
+				handleIfElseNode((IfElseNode) newCommand, 0);
+				myCommands.add(newCommand);
+				
+			}
+			else {
+				newCommand = new ControlNode(commands.get(0), null, null);
+				handleControlNode((ControlNode) newCommand, 0);
+				myCommands.add(newCommand);
+			}
+
+		}
+		else {
+			newCommand = new StringNode(commands.get(0));
+		}
+		myCommands.add(newCommand);
 	}
 
 	private void formatStringArray(String s) {
@@ -182,6 +211,7 @@ public class TextParser extends AbstractParser {
 		node.setCommands(commands.substring(startSpace, endSpace+1));
 
 		i++;
+		myCommandList.clear(); //REMOVE THIS LATER
 		return i-index;
 	}
 
@@ -212,23 +242,27 @@ public class TextParser extends AbstractParser {
 
 	private int initializeTree(List<String> commands) {
 		int index = 0;
+		StringNode newCommand;
 		if (myControlCommands.containsKey(myCommandList.get(0))) { //control statement
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
-				myRoot = new IfElseNode(commands.get(0), null, null, null);
-				index = handleIfElseNode((IfElseNode) myRoot, 0);
+				newCommand = new IfElseNode(commands.get(0), null, null, null);
+				index = handleIfElseNode((IfElseNode) newCommand, 0);
+				myCommands.add(newCommand);
 				return index;
 				
 			}
 			else {
-				myRoot = new ControlNode(commands.get(0), null, null);
-				index = handleControlNode((ControlNode) myRoot, 0);
+				newCommand = new ControlNode(commands.get(0), null, null);
+				index = handleControlNode((ControlNode) newCommand, 0);
+				myCommands.add(newCommand);
 				return index;
 			}
 
 		}
 		else {
-			myRoot = new StringNode(commands.get(0));
+			newCommand = new StringNode(commands.get(0));
 		}
+		myCommands.add(newCommand);
 		return index;
 	}
 

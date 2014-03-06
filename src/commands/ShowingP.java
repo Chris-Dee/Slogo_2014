@@ -1,13 +1,15 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 public class ShowingP extends NonParameterTurtleCommand {
 
 	public ShowingP() { }
 
 	@Override
-	public double execute() {
-		//
-		return 0;
+	protected double executeTurtle(Turtle turtle) {
+		if( turtle.isSuspended() ) return 0;
+		return 1;
 	}
 
 	@Override

@@ -25,12 +25,12 @@ public class If extends ControlCommand{
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
-		double magnitude = myFactory.runCommands(expr, myTurtle);
+		double magnitude = myFactory.runCommands(expr, myTurtles);
 		if (magnitude == 0)
 			return 0;
 		
 		List<StringNode> roots = myParser.parse(myCommands);
-		double answer = myFactory.runCommands(roots, myTurtle);
+		double answer = myFactory.runCommands(roots, myTurtles);
 		return answer;
 	}
 

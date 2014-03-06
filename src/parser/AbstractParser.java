@@ -8,7 +8,7 @@ import parser.tree.StringNode;
 public abstract class AbstractParser {
 	protected LanguageManager myLanguageManager;
 	
-	public abstract StringNode parse(String s);
+	public abstract List<StringNode> parse(String s);
 	
 	protected abstract int buildTree(StringNode node, int index);
 	protected List<String> myCommandList;

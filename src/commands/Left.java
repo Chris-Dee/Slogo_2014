@@ -1,5 +1,7 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command makes the turtle move forward by certain pixels
  */
@@ -11,10 +13,10 @@ public class Left extends OneParameterTurtleCommand {
 	public String getCommandType() {
 		return "LT";
 	}
-
+	
 	@Override
-	public double execute() {
-		myTurtle.addRotation(myMagnitude);
+	protected double executeTurtle(Turtle turtle) {
+		turtle.addRotation(myMagnitude);
 		return myMagnitude;
 	}
 }

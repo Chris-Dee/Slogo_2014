@@ -1,5 +1,7 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command makes the turtle move forward by certain pixels
  */
@@ -11,10 +13,9 @@ public class Forward extends OneParameterTurtleCommand {
 	public String getCommandType() {
 		return "FD";
 	}
-
+	
 	@Override
-	public double execute() {
-		myTurtle.goForward(myMagnitude);
-		return myMagnitude;
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.goForward(myMagnitude);
 	}
 }

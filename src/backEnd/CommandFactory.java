@@ -52,11 +52,11 @@ public class CommandFactory {
 	 * return the returned value of the root command
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
-	public double runCommands(List<StringNode> roots, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		String answer = "";
 		for(StringNode root: roots){
 			//myParser.printTree(root);
-			answer = processStringNode(root, turtle);	
+			answer = processStringNode(root, turtles);	
 		}
 		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
 	}
@@ -65,7 +65,7 @@ public class CommandFactory {
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
 	 */
-	protected String processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	protected String processStringNode(StringNode current, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		if(current == null){ return null; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (AbstractParser.isParameter(current.getCommandString()) // a number in the leaf
@@ -75,20 +75,20 @@ public class CommandFactory {
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
 					ControlNode cur = (ControlNode) current;
-					return makeControlCommand(cur, turtle);
+					return makeControlCommand(cur, turtles);
 				}
-				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
+				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}
 		
 		if(hasOneParameter(current)){
-			String answer = processStringNode(current.getChildren().get(0), turtle);
-			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
+			String answer = processStringNode(current.getChildren().get(0), turtles);
+			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtles);
 		}
 		else if(hasTwoParameters(current)){ // need revision for modifying variables
-			String leftAnswer = processStringNode(current.getChildren().get(0), turtle);
-			String rightAnswer = processStringNode(current.getChildren().get(1), turtle);
-			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtle);
+			String leftAnswer = processStringNode(current.getChildren().get(0), turtles);
+			String rightAnswer = processStringNode(current.getChildren().get(1), turtles);
+			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtles);
 		}
 		return "0"; // should not reach here
 	}
@@ -106,12 +106,12 @@ public class CommandFactory {
 	 * This method should not be called from the outside.
 	 * Used to make a control command out of the current ControlNode in the command tree structure
 	 */
-	protected String makeControlCommand(ControlNode node, Turtle turtle) throws IllegalCommandException, IllegalParameterException {
+	protected String makeControlCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException {
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
-			firstMethodsExecuted(turtle, command, methods);
+			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getExpression());
@@ -137,11 +137,11 @@ public class CommandFactory {
 		}
 	}
 
-	protected void firstMethodsExecuted(Turtle turtle, AbstractCommand command,
+	protected void firstMethodsExecuted(List<Turtle> turtles, AbstractCommand command,
 			Method[] methods) throws IllegalAccessException, InvocationTargetException {
 		for(Method m: methods){
-			if(m.getName().equals("setTurtle")){
-				m.invoke(command, turtle);
+			if(m.getName().equals("setTurtles")){
+				m.invoke(command, turtles);
 			}
 			if(m.getName().equals("receiveVariableManager")){
 				m.invoke(command, myVariableManager);
@@ -166,13 +166,13 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	protected String makeCommand(String cmd, String magnitude1, String magnitude2, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	protected String makeCommand(String cmd, String magnitude1, String magnitude2, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
 			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
-			firstMethodsExecuted(turtle, command, methods);
+			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
 					m.invoke(command, magnitude1);

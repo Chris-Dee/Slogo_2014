@@ -14,11 +14,24 @@ import frontEnd.SlogoView;
 public class TurtleManager {
 	private int turtFilter=0;
 	private List<Turtle> turtList=new ArrayList<Turtle>();
+	private List<Turtle> filterList=new ArrayList<Turtle>();
 	private Turtle turt;
 	private String chosenImage;
 	TurtleDrawer myEngine;
 public TurtleManager(){
 	
+}
+public void setFilterList(List<Integer> filters){
+	filterList.clear();
+	for(Integer i:filters)
+		for(Turtle t: turtList)
+			if(t.matchFilter(i))
+				filterList.add(t);
+	
+	
+}
+public List<Turtle> getFilteredTurtles(){
+	return filterList;
 }
 public void findEngine(TurtleDrawer t){
 	myEngine=t;
@@ -28,21 +41,12 @@ public void setFilter(int filter){
 	turtFilter=filter;
 }
 public void addRotations(double mag){
-	for(Turtle t:getTurtlesByID()){
+	for(Turtle t:filterList){
 			t.addRotation(mag);
 		}
 }
-public List<Turtle> getFilteredTurtles(int id){
-	List<Turtle> filtTurtles=new ArrayList<Turtle>();
-	for(Turtle t :turtList){
-		if(t.matchFilter(id))
-			filtTurtles.add(t);
-	}
-	return filtTurtles;
-}
 public void moveForward(int mag){
-	System.out.println(getTurtlesByID().size());
-	for(Turtle t:getTurtlesByID()){
+	for(Turtle t:filterList){
 			t.goForward(mag);
 		}
 }
@@ -74,7 +78,7 @@ public Stats displayStats(){
 	return getStats(turt);
 }
 public void rotateImage() {
-for(Turtle t:getTurtlesByID()){
+for(Turtle t:filterList){
 	String imageString= "Turtle" + Math.random();
 	Stats s = getStats(t);
 	myEngine.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
@@ -84,19 +88,12 @@ for(Turtle t:getTurtlesByID()){
 public Stats getStats(Turtle t){
 	return t.getStats();
 }
-public List<Turtle> getTurtlesByID(){
-	List<Turtle> filtTurts=new ArrayList<Turtle>();
-	for(Turtle t:turtList)
-		if(t.matchFilter(turtFilter))
-			filtTurts.add(t);
-	return filtTurts;
-}
 public void suspendTurtles(){
-	for(Turtle t:getTurtlesByID())
+	for(Turtle t:filterList)
 			t.suspend();
 }
 public void setVelocities(double velocity) {
-	for(Turtle t:getTurtlesByID())
+	for(Turtle t:filterList)
 			t.setVelocity(velocity);
 	
 }

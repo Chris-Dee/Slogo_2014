@@ -9,13 +9,10 @@ public class Home extends NonParameterTurtleCommand {
 	public static final int HOME_Y = 0;
 	
 	public Home(){}
-
+	
 	@Override
-	public double execute() {
-		// need revision
-		double distance = 0;
-		myTurtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
-		return distance;
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.setTarget(new Position(Turtle.TURTLE_INIT_X, Turtle.TURTLE_INIT_Y));
 	}
 
 	@Override

@@ -1,12 +1,14 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 public class SetHeading extends OneParameterTurtleCommand{
 	
 	public SetHeading(){}
-
+	
 	@Override
-	public double execute() {
-		return myTurtle.setRotation(myMagnitude);
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.setRotation(myMagnitude);
 	}
 
 	@Override

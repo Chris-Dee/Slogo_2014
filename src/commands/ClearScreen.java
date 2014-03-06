@@ -1,5 +1,7 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command erases turtle's trails and sends it to the home position.
  */
@@ -8,13 +10,8 @@ public class ClearScreen extends NonParameterTurtleCommand{
 	public ClearScreen(){ }
 
 	@Override
-	/*
-	 * @see commands.AbstractCommand#execute()
-	 * return the distance turtle moved from sending it to the home position
-	 */
-	public double execute() {
-		double distance=myTurtle.reset();
-		return distance;
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.reset();
 	}
 
 	@Override

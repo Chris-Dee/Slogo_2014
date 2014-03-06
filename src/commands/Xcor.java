@@ -1,19 +1,17 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command is used to get a turtle's X from the center of the screen
  */
 public class Xcor extends NonParameterTurtleCommand {
 
 	public Xcor() { }
-
+	
 	@Override
-	/*
-	 * @see commands.AbstractCommand#execute()
-	 * Return the turtle's X coordinate from the center of the screen
-	 */
-	public double execute() {
-		return myTurtle.getStats().getPos().xPos();
+	protected double executeTurtle(Turtle turtle) {
+		return turtle.getStats().getPos().xPos();
 	}
 
 	@Override

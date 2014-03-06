@@ -30,7 +30,7 @@ public class IfElse extends ControlCommand{
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
-		double magnitude = myFactory.runCommands(expr, myTurtle);
+		double magnitude = myFactory.runCommands(expr, myTurtles);
 		List<StringNode> roots;
 		if (magnitude == 0){
 			roots = myParser.parse(myElseCommands);
@@ -38,7 +38,7 @@ public class IfElse extends ControlCommand{
 		else{
 			roots = myParser.parse(myCommands);
 		}
-		double answer = myFactory.runCommands(roots, myTurtle);
+		double answer = myFactory.runCommands(roots, myTurtles);
 		return answer;
 	}
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class VariableManager {
+	public static final String VARIABLE_PROGRAM_SYNTAX = "Variable";
 	
     private Map<String, Double> myVariableMap;
     private ResourceBundle myProgramLanguage;
@@ -15,7 +16,7 @@ public class VariableManager {
     }
     
     public boolean isVariable(String current){
-    	return current.startsWith(myProgramLanguage.getString("Variable"));
+    	return current.startsWith(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX));
     }
     
     public Map<String, Double> getVariableMap(){
@@ -31,7 +32,7 @@ public class VariableManager {
      * Returns the variable name by deleting its Variable syntax (e.g. :)
      */
     private String deleteVariableSyntax(String v){
-    	return v.substring(myProgramLanguage.getString("Variable").length());
+    	return v.substring(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX).length());
     }
     
     /*

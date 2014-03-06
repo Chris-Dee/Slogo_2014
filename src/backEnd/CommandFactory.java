@@ -55,7 +55,7 @@ public class CommandFactory {
 		String answer = "";
 		for(StringNode root: roots){
 			//myParser.printTree(root);
-			answer += processStringNode(root, turtle);	
+			answer = processStringNode(root, turtle);	
 		}
 		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
 	}

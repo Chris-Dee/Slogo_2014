@@ -4,9 +4,14 @@ import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -56,21 +61,46 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		variableList=new JTextArea(20,10);
 		variableList.setEditable(false);
 		variablePanel.add(variableList);
-		variablePanel.add(variableButton());
+		variablePanel.add(saveButton());
+		variablePanel.add(loadButton());
 		return variablePanel;
 	}
-	private Button variableButton(){
-		Button variable=new Button(myResources.getString("SaveVariable"));
+	private Button saveButton(){
+		Button variable=new Button(myResources.getString("LoadVariable"));
 		variable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{  
-				
+				JFileChooser chooser=new JFileChooser();
+				if(chooser.showSaveDialog(variableList)==JFileChooser.APPROVE_OPTION);
+				File file=chooser.getSelectedFile();
+				myVars.readFromFile(file);
 			}
 		});
 		return variable;
 	}
+	private Button loadButton(){
+		Button load=new Button(myResources.getString("SaveVariable"));
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{  
+				JFileChooser chooser=new JFileChooser();
+				//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnCal=chooser.showSaveDialog(variableList);
+				File file=chooser.getSelectedFile();
+				try {
+					BufferedWriter saver=new BufferedWriter(new FileWriter(file));
+					saver.write(myVars.mapToString(" "));
+					saver.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		return load;
+	}
 	public void fillVariables(){
 		System.out.println(myVars);
-		variableList.setText(myVars.mapToString());
+		variableList.setText(myVars.mapToString("="));
 	}
 }

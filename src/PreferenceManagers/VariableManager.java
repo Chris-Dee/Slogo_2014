@@ -64,6 +64,7 @@ public class VariableManager {
 			Scanner scanner=new Scanner(file);
 			while(scanner.hasNext()){
 			myVariableMap.put(scanner.next(),scanner.nextDouble());
+			System.out.println(myVariableMap);
 			if(scanner.hasNext())
 				scanner.nextLine();
 			}
@@ -74,10 +75,10 @@ public class VariableManager {
 			e.printStackTrace();
 		}
     }
-    public String mapToString(){
+    public String mapToString(String separatingCharacter){
     	String result="";
     	for(String s:myVariableMap.keySet()){
-    		result+=(s+"="+getValueOfVariable(s)+"\n");
+    		result+=(s+separatingCharacter+getValueOfVariable(s)+"\n");
     	}
     	return result;
     }

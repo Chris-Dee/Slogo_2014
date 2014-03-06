@@ -1,5 +1,7 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 /*
  * This command makes the turtle move forward by certain pixels
  */
@@ -13,8 +15,7 @@ public class Back extends OneParameterTurtleCommand {
 	}
 
 	@Override
-	public double execute() {
-		myTurtle.goForward(-1.0*myMagnitude);
-		return myMagnitude;
+	protected double executeTurtle(Turtle turtle) {
+		return -1.0*turtle.goForward(-1.0*myMagnitude);
 	}
 }

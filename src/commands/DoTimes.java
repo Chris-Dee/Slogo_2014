@@ -35,9 +35,9 @@ public class DoTimes extends ControlCommand {
 		String variable = myExpression.substring(vStart, vEnd);
 		
 		List<StringNode> expr = myParser.parse(myExpression.substring(vEnd));
-		double loop = myFactory.runCommands(expr, myTurtle);
+		double loop = myFactory.runCommands(expr, myTurtles);
 		List<StringNode> commands = myParser.parse(myCommands);
-		return myFactory.runCommands(commands, variable, loop, myTurtle);
+		return myFactory.runCommands(commands, variable, loop, myTurtles);
 	}
 
 	protected int findIndexOfVariableSyntax(String s) {

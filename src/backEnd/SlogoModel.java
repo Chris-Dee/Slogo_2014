@@ -22,7 +22,7 @@ public class SlogoModel {
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
-    private TurtleManager myManager;
+    private TurtleManager myTurtleManager;
 
     
 	
@@ -34,9 +34,12 @@ public class SlogoModel {
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	
-	public void setParameters(SlogoView viewer, TurtleManager manager){
+	public void setViewer(SlogoView viewer){
 		myViewer = viewer;
-		myManager=manager;
+	}
+	
+	public void setTurtleManager(TurtleManager manager){
+		myTurtleManager=manager;
 	}
 	
 	/*
@@ -53,10 +56,10 @@ public class SlogoModel {
 	 * Receive the list of all turtles on the grid
 	 */
 
-	public double receiveTextInput(String userCommands, List<Turtle> turtles){
+	public double receiveTextInput(String userCommands){
 		try{
 			List<StringNode> roots = myParser.parse(userCommands);
-			return myCommandFactory.runCommands(roots, turtles.get(0));
+			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
 		} catch(IllegalCommandException e){
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {

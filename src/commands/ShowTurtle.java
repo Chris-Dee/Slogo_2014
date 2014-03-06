@@ -1,13 +1,14 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 public class ShowTurtle extends NonParameterTurtleCommand{
 	
 	public ShowTurtle(){}
-
+	
 	@Override
-	public double execute() {
-		System.out.println("Show Turtle Executed");
-		myTurtle.resume();
+	protected double executeTurtle(Turtle turtle) {
+		turtle.resume();
 		return 1;
 	}
 

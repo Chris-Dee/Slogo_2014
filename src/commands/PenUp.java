@@ -1,12 +1,14 @@
 package commands;
 
+import TurtleStuff.Turtle;
+
 public class PenUp extends NonParameterTurtleCommand{
 	
 	public PenUp(){}
-
+	
 	@Override
-	public double execute() {
-		myTurtle.raisePen();
+	protected double executeTurtle(Turtle turtle) {
+		turtle.raisePen();
 		return 0;
 	}
 

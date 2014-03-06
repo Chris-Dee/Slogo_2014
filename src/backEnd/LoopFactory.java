@@ -17,13 +17,13 @@ public class LoopFactory extends CommandFactory{
 	/*
 	 * Should be called by Repeat Command to process its own list of commands
 	 */
-	public double runCommands(List<StringNode> roots, String variable, double loopTimes, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	public double runCommands(List<StringNode> roots, String variable, double loopTimes, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		if(loopTimes <= 0) return 0;
 		String answer = "";
 		for(int i = 0; i < loopTimes; i ++){
 			for(StringNode root: roots){
 				updateCountInfo(root, variable, loopTimes);
-				answer = processStringNode(root, turtle);	
+				answer = processStringNode(root, turtles);	
 			}	
 		}
 		return AbstractParser.convertToDouble(answer); // return the value of the last command tree

@@ -1,14 +1,27 @@
 package commands;
 
+import java.util.List;
+
 import TurtleStuff.Turtle;
 
 public abstract class TwoParameterTurtleCommand extends TwoParameterOperationCommand{
 	
-	protected Turtle myTurtle;
+	protected List<Turtle> myTurtles;
 	
-	public void setTurtle(Turtle turtle){
-		if(turtle != null){
-			myTurtle = turtle;
+	public void setTurtles(List<Turtle> turtles){
+		if(turtles != null){
+			myTurtles = turtles;
 		}
 	}
+	
+	@Override
+	public double execute() {
+		double answer = 0;
+		for(Turtle turtle: myTurtles){
+			answer = executeTurtle(turtle);
+		}
+		return answer;
+	}
+	
+	protected abstract double executeTurtle(Turtle turtle);
 }

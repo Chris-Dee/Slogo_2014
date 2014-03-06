@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backEnd.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
@@ -11,7 +13,7 @@ public abstract class ControlCommand {
 
 	protected AbstractParser myParser;
 	protected String myExpression;
-	protected Turtle myTurtle;
+	protected List<Turtle> myTurtles;
 	protected String myCommands;
 	protected VariableManager myVariableManager;
 	
@@ -27,8 +29,10 @@ public abstract class ControlCommand {
 		myExpression = s;
 	}
 	
-	public void setTurtle(Turtle turtle){
-		myTurtle = turtle;
+	public void setTurtles(List<Turtle> turtles){
+		if(turtles != null){
+			myTurtles = turtles;
+		}
 	}
 	
 	public void setCommands(String s){

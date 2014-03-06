@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import backEnd.VariableManager;
@@ -18,10 +19,21 @@ public class UserCommand extends ControlCommand {
 	public UserCommand(){
 		super();
 		myParameterParser = new ParameterParser();
+		myVariables = new ArrayList<String>();	
+		
+		}
+	
+	/*
+	 * Return true if valid parameter String
+	 */
+	public boolean initializeParameterList(String p){
+		myVariables = myParameterParser.constructVariableList(p); // return null if invalid
+		if(myVariables ==  null) return false;
+		return true;
 	}
 	
-	public void setParameter(String p){
-
+	public void setValueToParameter(String v){
+		
 	}
 
 	@Override

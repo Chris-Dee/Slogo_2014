@@ -19,8 +19,12 @@ public class To extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		// TODO Auto-generated method stub
-		return 0;
+		// check if has name
+		// check if there is a parameter list
+		// check if there is a command list
+		// randomly assign values and see if runs
+		// runs add to myCommandmanager and return 1
+		// has errors return 0
 	}
 
 }

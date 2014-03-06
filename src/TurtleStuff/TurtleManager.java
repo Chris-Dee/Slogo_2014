@@ -14,11 +14,24 @@ import frontEnd.SlogoView;
 public class TurtleManager {
 	private int turtFilter=0;
 	private List<Turtle> turtList=new ArrayList<Turtle>();
+	private List<Turtle> filterList=new ArrayList<Turtle>();
 	private Turtle turt;
 	private String chosenImage;
 	TurtleDrawer myEngine;
 public TurtleManager(){
 	
+}
+public void setFilterList(List<Integer> filters){
+	filterList.clear();
+	for(Integer i:filters)
+		for(Turtle t: turtList)
+			if(t.matchFilter(i))
+				filterList.add(t);
+	
+	
+}
+public List<Turtle> getFilteredTurtles(int id){
+	return filterList;
 }
 public void findEngine(TurtleDrawer t){
 	myEngine=t;
@@ -32,16 +45,7 @@ public void addRotations(double mag){
 			t.addRotation(mag);
 		}
 }
-public List<Turtle> getFilteredTurtles(int id){
-	List<Turtle> filtTurtles=new ArrayList<Turtle>();
-	for(Turtle t :turtList){
-		if(t.matchFilter(id))
-			filtTurtles.add(t);
-	}
-	return filtTurtles;
-}
 public void moveForward(int mag){
-	System.out.println(getTurtlesByID().size());
 	for(Turtle t:getTurtlesByID()){
 			t.goForward(mag);
 		}

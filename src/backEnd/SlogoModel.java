@@ -55,9 +55,12 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands){
 		try{
-			System.out.println(userCommands);
+			System.out.println("User pass input");
+			System.out.println("userCommands: "+userCommands);
 			List<StringNode> roots = myParser.parse(userCommands);
-			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
+			double answer = myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
+			System.out.println("SlogoModel receiveTextInput: " + answer);
+			return answer;
 		} catch(IllegalCommandException e){
 			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());

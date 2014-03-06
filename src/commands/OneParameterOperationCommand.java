@@ -9,7 +9,7 @@ public abstract class OneParameterOperationCommand implements AbstractCommand{
 	protected VariableManager myVariableManager;
 	
 	/*
-	 * Must set setVariableManager before setMagnitude
+	 * Must call setVariableManager before setMagnitude
 	 */
 	public void setMagnitude(String magnitude) {
 		myMagnitude = convertMagnitudeToValue(magnitude);

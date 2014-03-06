@@ -13,4 +13,9 @@ public class Forward extends OneParameterTurtleCommand {
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.goForward(myMagnitude);
 	}
+	
+	@Override
+	public void setMagnitude(String magnitude) {
+		myMagnitude = convertMagnitudeToValue(magnitude);
+	}
 }

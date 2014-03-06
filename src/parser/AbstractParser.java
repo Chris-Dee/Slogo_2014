@@ -44,7 +44,7 @@ public abstract class AbstractParser {
 	 * Used to print the command tree structure for test only
 	 * Should not be called or used in this project
 	 */
-	public void printTree(StringNode current) {
+	public static void printTree(StringNode current) {
 		if (current == null) return;
 		System.out.println(current.getCommandString() +" ");
 		if(current.getChildren().size() > 0){

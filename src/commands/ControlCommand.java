@@ -40,6 +40,4 @@ public abstract class ControlCommand implements AbstractCommand{
 	}
 	
 	public abstract double execute() throws IllegalCommandException, IllegalParameterException;
-	
-	public abstract String getCommandType();
 }

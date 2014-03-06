@@ -4,8 +4,8 @@ import java.util.List;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import factories.CommandFactory;
 import parser.tree.StringNode;
-import backEnd.CommandFactory;
 
 public class IfElse extends ControlCommand{
 	
@@ -19,11 +19,6 @@ public class IfElse extends ControlCommand{
 	
 	public void setElseCommands(String s){
 		if( s != null ) myElseCommands = s;
-	}
-
-	@Override
-	public String getCommandType() {
-		return "IFELSE";
 	}
 
 	@Override

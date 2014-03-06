@@ -2,9 +2,7 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import TurtleStuff.Turtle;
 import TurtleStuff.TurtleManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -58,7 +56,6 @@ public class SlogoModel {
 	public double receiveTextInput(String userCommands){
 		try{
 			List<StringNode> roots = myParser.parse(userCommands);
-
 			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
 		} catch(IllegalCommandException e){
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());

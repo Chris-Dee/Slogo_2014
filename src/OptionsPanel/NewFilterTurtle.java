@@ -3,6 +3,8 @@ package OptionsPanel;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -18,7 +20,8 @@ import frontEnd.SlogoView;
 public class NewFilterTurtle extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;
-	TurtleManager manager;
+	static TurtleManager manager;
+	static JTextField filterInput;
 public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManager manage){
 	super();
 	manager=manage;
@@ -28,17 +31,27 @@ public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManage
 }
 
 	private void makeFilterPanel(JPanel homePanel){
-		JPanel filterPanel=new JPanel();
+		final JPanel filterPanel=new JPanel();
 		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
 		Button filterButton=new Button(myResources.getString("FilterTurtle"));
 		//rotationPanel.setLayout(new BoxLayout(rotationPanel,BoxLayout.Y_AXIS));
-		final JTextField filterInput=new JTextField(3);
+		filterInput=new JTextField(3);
 		filterInput.setText("0");
 		filterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{             
-
-				manager.setFilter(Integer.parseInt(filterInput.getText()));
+				List<Integer> filters=new ArrayList<Integer>();
+				String[] filts=filterInput.getText().split(" ");
+				
+				for(int i=0;i<filts.length;i++)
+					try{
+						System.out.println("num"+filts.length);
+					filters.add(Integer.parseInt(filts[i]));
+					manager.setFilterList(filters);
+					}catch(Exception e1){
+						e1.printStackTrace();
+						//SlogoView.showError(filterPanel, "Number Not Valid");
+					}
 			}
 		});   
 		filterPanel.add(filterButton);
@@ -74,5 +87,15 @@ public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManage
 	public void makePanel(){
 		makeNewTurtleButton(this);
 		makeFilterPanel(this);
+	}
+	public static void setFilterText(List<Integer> turtFilter){
+		String s="";
+		s+=turtFilter.get(0);
+		for(int i=1;i<turtFilter.size();i++){
+			s+=", ";
+			s+=turtFilter.get(i);
+			}
+			
+		filterInput.setText(s);
 	}
 }

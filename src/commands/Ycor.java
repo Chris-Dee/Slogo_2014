@@ -13,9 +13,4 @@ public class Ycor extends NonParameterTurtleCommand {
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.getStats().getPos().yPos();
 	}
-
-	@Override
-	public String getCommandType() {
-		return "YCOR";
-	}
 }

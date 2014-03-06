@@ -11,9 +11,4 @@ public class PenDownP extends NonParameterTurtleCommand{
 		if(turtle.getStats().penBool()) { return 1; }
 		return 0;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "PENDOWNP";
-	}
 }

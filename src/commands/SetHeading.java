@@ -10,9 +10,4 @@ public class SetHeading extends OneParameterTurtleCommand{
 	protected double executeTurtle(Turtle turtle) {
 		return turtle.setRotation(myMagnitude);
 	}
-
-	@Override
-	public String getCommandType() {
-		return "SETH";
-	}
 }

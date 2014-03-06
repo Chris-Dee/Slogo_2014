@@ -11,9 +11,4 @@ public class ShowTurtle extends NonParameterTurtleCommand{
 		turtle.resume();
 		return 1;
 	}
-
-	@Override
-	public String getCommandType() {
-		return "ST";
-	}	
 }

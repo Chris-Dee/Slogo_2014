@@ -4,8 +4,8 @@ import java.util.List;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import factories.CommandFactory;
 import parser.tree.StringNode;
-import backEnd.CommandFactory;
 
 public class If extends ControlCommand{
 	
@@ -14,11 +14,6 @@ public class If extends ControlCommand{
 	public If() {
 		super();
 		myFactory = new CommandFactory();
-	}
-
-	@Override
-	public String getCommandType() {
-		return "IF";
 	}
 
 	@Override

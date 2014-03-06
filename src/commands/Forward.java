@@ -8,11 +8,6 @@ import TurtleStuff.Turtle;
 public class Forward extends OneParameterTurtleCommand {
 	
 	public Forward() {}
-
-	@Override
-	public String getCommandType() {
-		return "FD";
-	}
 	
 	@Override
 	protected double executeTurtle(Turtle turtle) {

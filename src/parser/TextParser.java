@@ -12,7 +12,6 @@ public class TextParser extends AbstractParser {
 	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
 	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
 	private static final String DEFAULT_CONTROL_FILE = "CommandTypes";
-	
 	private ResourceBundle myResources;
 	private ResourceBundle myControlCommands;
 	private StringNode myRoot;

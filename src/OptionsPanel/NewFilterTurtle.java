@@ -88,10 +88,14 @@ public NewFilterTurtle(ResourceBundle myRes,TurtleDrawer TurtSpace, TurtleManage
 		makeNewTurtleButton(this);
 		makeFilterPanel(this);
 	}
-	public static void setFilterText(int[] filters){
+	public static void setFilterText(List<Integer> turtFilter){
 		String s="";
-		for(int i=0;i<filters.length;i++)
-			s+=filters[i];
+		s+=turtFilter.get(0);
+		for(int i=1;i<turtFilter.size();i++){
+			s+=", ";
+			s+=turtFilter.get(i);
+			}
+			
 		filterInput.setText(s);
 	}
 }

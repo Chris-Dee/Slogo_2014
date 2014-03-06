@@ -35,6 +35,10 @@ public class VariableManager {
     	return v.substring(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX).length());
     }
     
+    public void removeVariable(String v){
+    	myVariableMap.remove(v);
+    }
+    
     /*
      * Return the value of the variable v
      * If v is not initialized, return null

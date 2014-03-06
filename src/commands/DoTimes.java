@@ -5,24 +5,19 @@ import java.util.ResourceBundle;
 
 import parser.tree.StringNode;
 import backEnd.LanguageManager;
-import backEnd.LoopFactory;
 import backEnd.VariableManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import factories.LoopFactory;
 
 public class DoTimes extends ControlCommand {
 	protected LoopFactory myFactory;
     protected ResourceBundle myProgramLanguage;
 	
 	public DoTimes(){
-		super();
+		myParser = new DoTimesParameterParser();
 		myFactory = new LoopFactory();
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
-	}
-
-	@Override
-	public String getCommandType() {
-		return "DOTIMES";
 	}
 
 	@Override
@@ -37,7 +32,7 @@ public class DoTimes extends ControlCommand {
 		List<StringNode> expr = myParser.parse(myExpression.substring(vEnd));
 		double loop = myFactory.runCommands(expr, myTurtles);
 		List<StringNode> commands = myParser.parse(myCommands);
-		return myFactory.runCommands(commands, variable, loop, myTurtles);
+		return myFactory.runAutoLoopCommands(commands, variable, loop, myTurtles);
 	}
 
 	protected int findIndexOfVariableSyntax(String s) {

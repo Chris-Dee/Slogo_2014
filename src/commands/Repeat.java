@@ -4,8 +4,8 @@ import java.util.List;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import factories.LoopFactory;
 import parser.tree.StringNode;
-import backEnd.LoopFactory;
 
 public class Repeat extends ControlCommand{
 	
@@ -17,16 +17,11 @@ public class Repeat extends ControlCommand{
 	}
 
 	@Override
-	public String getCommandType() {
-		return "REPEAT";
-	}
-
-	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double loop = myFactory.runCommands(expr, myTurtles);
 		List<StringNode> commands = myParser.parse(myCommands);
-		return myFactory.runCommands(commands, ":repcount", loop, myTurtles);
+		return myFactory.runAutoLoopCommands(commands, ":repcount", loop, myTurtles);
 	}
 }

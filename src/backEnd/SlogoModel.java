@@ -2,14 +2,13 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
 
 import TurtleStuff.Turtle;
 import TurtleStuff.TurtleManager;
-
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import factories.CommandFactory;
 import frontEnd.SlogoView;
 import parser.AbstractParser;
 import parser.TextParser;

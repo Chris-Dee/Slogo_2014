@@ -1,8 +1,12 @@
 package DrawingPanel;
 
+import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -45,10 +49,25 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		fillVariables();
 		return wholePanel;
 }
-	private JTextArea variableList(){
+	private JPanel variableList(){
+		JPanel variablePanel=new JPanel();
+		variablePanel.setBackground(new java.awt.Color(0,0,0));
+		variablePanel.setLayout(new BoxLayout(variablePanel,BoxLayout.Y_AXIS));
 		variableList=new JTextArea(20,10);
 		variableList.setEditable(false);
-		return variableList;
+		variablePanel.add(variableList);
+		variablePanel.add(variableButton());
+		return variablePanel;
+	}
+	private Button variableButton(){
+		Button variable=new Button(myResources.getString("SaveVariable"));
+		variable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{  
+				
+			}
+		});
+		return variable;
 	}
 	public void fillVariables(){
 		System.out.println(myVars);

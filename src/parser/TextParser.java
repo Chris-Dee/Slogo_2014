@@ -33,8 +33,9 @@ public class TextParser extends AbstractParser {
 		formatStringArray(singleLineString);
 		int start = initializeTree(myCommandList);
 		buildTree(myRoot, start);
+		System.out.println("Root: " + myCommands.get(0).getCommandString());
 		for (StringNode s1 : myCommands) {
-			System.out.println(s1.getCommandString());
+			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
 //		while (!myCommandList.isEmpty()) {
 //			buildCommandList(myCommandList);
@@ -268,12 +269,14 @@ public class TextParser extends AbstractParser {
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
 				myRoot = new IfElseNode(commands.get(0), null, null, null);
 				index = handleIfElseNode((IfElseNode) myRoot, 0);
+				myCommands.add(myRoot);
 				return index;
 
 			}
 			else {
 				myRoot = new ControlNode(commands.get(0), null, null);
 				index = handleControlNode((ControlNode) myRoot, 0);
+				myCommands.add(myRoot);
 				return index;
 			}
 

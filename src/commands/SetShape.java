@@ -2,11 +2,12 @@ package commands;
 
 import TurtleStuff.Turtle;
 
-public class SetPenColor extends OneParameterTurtleCommand{
+public class SetShape extends OneParameterTurtleCommand{
 
 	@Override
 	protected double executeTurtle(Turtle turtle) {
-		turtle.setPenColor(myMagnitude);
+		// TODO Auto-generated method stub
+		turtle.setShape(myMagnitude);
 		return myMagnitude;
 	}
 

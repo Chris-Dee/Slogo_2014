@@ -14,7 +14,7 @@ import jgame.JGColor;
 public class ColorManager {
 	ResourceBundle myResources;
  private Map<Integer,JGColor> colorMap=new HashMap<Integer,JGColor>();
- public static final String DEFAULT_COLORPATH="PreferenceManagers.ColorPrefs";
+ public static final String DEFAULT_COLORPATH="src/PreferenceManagers/ColorPrefs";
  public ColorManager(){
 	 readColorFile(new File(DEFAULT_COLORPATH));
  }

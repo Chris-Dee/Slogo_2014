@@ -14,7 +14,7 @@ import frontEnd.Position;
 import frontEnd.SlogoView;
 
 public class TurtleManager {
-	private int[] turtFilter;
+	List<Integer> filter=new ArrayList<Integer>();
 	private List<Turtle> turtList=new ArrayList<Turtle>();
 	private List<Turtle> filterList=new ArrayList<Turtle>();
 	private Turtle turt;
@@ -28,8 +28,7 @@ public void setFilterList(List<Integer> filters){
 		for(Turtle t: turtList)
 			if(t.matchFilter(i))
 				filterList.add(t);
-	setFiltertext();
-	
+	filter=filters;
 }
 public List<Turtle> getFilteredTurtles(){
 	if(filterList.size()!=0)
@@ -38,10 +37,6 @@ public List<Turtle> getFilteredTurtles(){
 }
 public void findEngine(TurtleDrawer t){
 	myEngine=t;
-}
-public void setFiltertext(){
-	if(turtFilter!=null)
-	NewFilterTurtle.setFilterText(turtFilter);
 }
 public void refresh(){
 	for(Turtle t:turtList)
@@ -96,6 +91,11 @@ public void setVelocities(double velocity) {
 public void addTurtle(Turtle t){
 	if(turt==null)
 		turt=t;
+	for(Integer i:filter)
+		if(t.matchFilter(i))
+			filterList.add(t);
+	if(filter.size()==0)
+		filterList.add(t);
 	turtList.add(t);
 	
 }

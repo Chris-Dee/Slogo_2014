@@ -55,11 +55,14 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands){
 		try{
+			System.out.println(userCommands);
 			List<StringNode> roots = myParser.parse(userCommands);
 			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
 		} catch(IllegalCommandException e){
+			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
+			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
 		System.out.println("There is something wrong!!!!!!!!!!");

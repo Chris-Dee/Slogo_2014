@@ -176,6 +176,7 @@ public class CommandFactory {
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
+					System.out.println("Magnitude1: "+magnitude1);
 					m.invoke(command, magnitude1);
 				}
 				if(m.getName().equals("setDoubleMagnitude")){

@@ -40,7 +40,9 @@ public class VariableManager {
      * Returns the variable name by deleting its Variable syntax (e.g. :)
      */
     private String deleteVariableSyntax(String v){
+    	if(v.contains(VARIABLE_PROGRAM_SYNTAX))
     	return v.substring(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX).length());
+    	return v;
     }
     
     public void removeVariable(String v){
@@ -53,6 +55,7 @@ public class VariableManager {
      */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
+    	System.out.println(variable);
     	return myVariableMap.get(variable);
     }
     public void readFromFile(File file){
@@ -70,5 +73,12 @@ public class VariableManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    public String mapToString(){
+    	String result="";
+    	for(String s:myVariableMap.keySet()){
+    		result+=(s+"="+getValueOfVariable(s)+"\n");
+    	}
+    	return result;
     }
 }

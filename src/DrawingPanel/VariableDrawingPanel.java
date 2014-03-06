@@ -28,21 +28,30 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 	this.add(makeDrawingPanel());
 }
 
-	public JPanel makeDrawingPanel(){
+	private JPanel makeDrawingPanel(){
 		JPanel wholePanel=new JPanel();
 		wholePanel.setBackground(new java.awt.Color(0,0,0));
 		JPanel drawingPanel=new JPanel();
 		JScrollPane scroller=new JScrollPane(drawingPanel);
 		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-
 		manager.findEngine(TurtleSpace);
 		drawingPanel.setBackground(new java.awt.Color(100,100,100));
 		drawingPanel.setSize(270,270);
 		drawingPanel.setMinimumSize(new Dimension(270,200));
 		TurtleSpace.setSize(270,200);
 		drawingPanel.add(TurtleSpace);
-		wholePanel.add(new JTextArea(20,10));
+		wholePanel.add(variableList());
 		wholePanel.add(scroller);
+		fillVariables();
 		return wholePanel;
 }
+	private JTextArea variableList(){
+		variableList=new JTextArea(20,10);
+		variableList.setEditable(false);
+		return variableList;
+	}
+	public void fillVariables(){
+		System.out.println(myVars);
+		variableList.setText(myVars.mapToString());
+	}
 }

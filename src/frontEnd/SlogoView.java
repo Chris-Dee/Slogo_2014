@@ -36,9 +36,11 @@ import frontEnd.HelpPage;
 //need to add pen
 
 
+import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
 import PreferenceManagers.ImageManager;
+import PreferenceManagers.VariableManager;
 import StatsPanel.StatsPanel;
 import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
@@ -66,6 +68,7 @@ public class SlogoView extends JFrame{
 	public static final String DEFAULT_COMM_TEXT="CommandPath";
 	TurtleManager manager;
 	ColorManager myColors;
+	VariableManager variables;
 	ImageManager images;
 	public SlogoView(){
 		super();
@@ -74,7 +77,7 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, VariableManager vars){
 		super();
 		model=modelSlog;
 		images=image;
@@ -196,19 +199,23 @@ public class SlogoView extends JFrame{
 			savedBoxes.get(i).setText(savedBoxes.get(i-1).getText());
 		savedBoxes.get(0).setText(textInput.getText());
 	}
-	public JScrollPane makeDrawingPanel(){
-		JPanel drawingPanel=new JPanel();
-		JScrollPane scroller=new JScrollPane(drawingPanel);
-		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
-		TurtleSpace=new TurtleDrawer(manager);
-		manager.findEngine(TurtleSpace);
-		drawingPanel.setBackground(new java.awt.Color(100,100,100));
-		drawingPanel.setSize(270,270);
-		drawingPanel.setMinimumSize(new Dimension(270,270));
-		TurtleSpace.setSize(200,200);
-		drawingPanel.add(TurtleSpace);
-		return scroller;
-	}
+//	public JPanel makeDrawingPanel(){
+//		JPanel wholePanel=new JPanel();
+//		wholePanel.setBackground(new java.awt.Color(0,0,0));
+//		JPanel drawingPanel=new JPanel();
+//		JScrollPane scroller=new JScrollPane(drawingPanel);
+//		drawingPanel.setBackground(new java.awt.Color(200, 200, 200));
+//		TurtleSpace=new TurtleDrawer(manager);
+//		manager.findEngine(TurtleSpace);
+//		drawingPanel.setBackground(new java.awt.Color(100,100,100));
+//		drawingPanel.setSize(270,270);
+//		drawingPanel.setMinimumSize(new Dimension(270,200));
+//		TurtleSpace.setSize(270,200);
+//		drawingPanel.add(TurtleSpace);
+//		wholePanel.add(new JTextArea(20,10));
+//		wholePanel.add(scroller);
+//		return wholePanel;
+//	}
 
 	//Needs refactoring. Look nicer
 	  private  ImageIcon createImageIcon(String path) {
@@ -256,11 +263,11 @@ public class SlogoView extends JFrame{
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.add(makeDrawingPanel(),BorderLayout.CENTER);
+		TurtleSpace=new TurtleDrawer(manager);
+		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
 		rightPanel.add(makeSavedTextBoxes());
 		rightPanel.add(makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
-
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));

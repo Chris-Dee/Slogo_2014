@@ -32,13 +32,14 @@ public class CommandFactory {
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myCommandTypes = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDTYPES);
+		myControlCommands = new ArrayList<String>();
+		myModifyVariableCommands = new ArrayList<String>();
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
 		myVariableManager = new VariableManager();
 	}
 
 	protected void initCommandTypes(List<String> myCmdList, String type) {
-		myCmdList = new ArrayList<String>();
 		String[] controlList = myCommandTypes.getString(type).split(",");
 		for(String s:controlList){
 			myCmdList.add(s);
@@ -97,6 +98,7 @@ public class CommandFactory {
 	 * Used to check if a StringNode is a ControlNode
 	 */
 	protected boolean ifControlCommand(StringNode current){
+		System.out.println(current.getCommandString());
 		return myControlCommands.contains(current.getCommandString());
 	}
 	

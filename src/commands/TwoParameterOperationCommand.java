@@ -17,7 +17,7 @@ public abstract class TwoParameterOperationCommand implements AbstractCommand{
 		myExpression2 = convertMagnitudeToValue(expression2);
 	}
 	
-	public void receiveVariableManager(VariableManager manager){
+	public void setVariableManager(VariableManager manager){
 		myVariableManager = manager;
 	}
 	

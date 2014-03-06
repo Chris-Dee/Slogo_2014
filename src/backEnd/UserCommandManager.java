@@ -11,8 +11,5 @@ public class UserCommandManager {
 
 	public void createNewUserCommand(String name, UserCommand command){
 		myCommandMap.put(name, command);
-
 	}
-	
-
 }

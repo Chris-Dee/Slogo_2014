@@ -3,7 +3,7 @@ package commands;
 import TurtleStuff.Turtle;
 import frontEnd.Position;
 
-public class Home extends TurtleCommand {
+public class Home extends NonParameterTurtleCommand {
 	
 	public static final int HOME_X = 0;
 	public static final int HOME_Y = 0;

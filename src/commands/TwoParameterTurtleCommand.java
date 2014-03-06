@@ -1,12 +1,14 @@
 package commands;
 
-public abstract class TwoParameterTurtleCommand extends TurtleCommand{
+import TurtleStuff.Turtle;
 
-	protected double myExpression1;
-	protected double myExpression2;
+public abstract class TwoParameterTurtleCommand extends TwoParameterOperationCommand{
 	
-	public void setDoubleMagnitude(double expression1, double expression2) {
-		myExpression1 = expression1;
-		myExpression2 = expression2;
+	protected Turtle myTurtle;
+	
+	public void setTurtle(Turtle turtle){
+		if(turtle != null){
+			myTurtle = turtle;
+		}
 	}
 }

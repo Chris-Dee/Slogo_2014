@@ -22,8 +22,6 @@ public class SlogoModel {
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
-    private String myLanguage;
-    private Map<String, StringNode> myVariableCommandMap;
     private TurtleManager myManager;
 
     
@@ -33,7 +31,6 @@ public class SlogoModel {
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
 		myLanguageManager = new LanguageManager();
-//		myVariableCommandMap = new HashMap<String, StringNode>();
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	
@@ -54,7 +51,6 @@ public class SlogoModel {
 	/*
 	 * This method should be called by the front-end "main" class to pass into the text input
 	 * Receive the list of all turtles on the grid
-	 * @return a list of all turtles on the grid
 	 */
 
 	public double receiveTextInput(String userCommands, List<Turtle> turtles){

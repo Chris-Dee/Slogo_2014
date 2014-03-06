@@ -1,10 +1,14 @@
 package commands;
 
-public abstract class OneParameterTurtleCommand extends TurtleCommand{
+import TurtleStuff.Turtle;
 
-	protected double myMagnitude;
+public abstract class OneParameterTurtleCommand extends OneParameterOperationCommand{
 	
-	public void setMagnitude(double magnitude) {
-		myMagnitude = magnitude;
+	protected Turtle myTurtle;
+	
+	public void setTurtle(Turtle turtle){
+		if(turtle != null){
+			myTurtle = turtle;
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class CommandFactory {
     public static final String DEFAULT_COMMANDPATH = "CommandPath";
     public static final String DEFAULT_NUMPARAMETERS = "CommandParameters";
     public static final String DEFAULT_COMMANDTYPES = "CommandTypes";
-    private static final double DEFAULT_MAGNITUDE = 0;
+    private static final String DEFAULT_MAGNITUDE = "0";
     
     protected ResourceBundle myCommands;
     protected ResourceBundle myParameters;
@@ -52,34 +52,36 @@ public class CommandFactory {
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
 	public double runCommands(List<StringNode> roots, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
-		//myParser.printTree(root);
-		double answer = 0;
+		String answer = "";
 		for(StringNode root: roots){
-			answer = processStringNode(root, turtle);	
+			//myParser.printTree(root);
+			answer += processStringNode(root, turtle);	
 		}
-		return answer; // return the value of the last command tree
+		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
 	}
 	
-	private double processVariableNode(StringNode current){
-		double answer = myVariableManager.getValueOfVariable(current.getCommandString());
-		current.setCommandString( Double.toString(answer) );
-		return answer;
-	}
+//	need revision
+//	protected String processVariableNode(StringNode current){
+//		double value = myVariableManager.getValueOfVariable(current.getCommandString());
+//		String answer = Double.toString(value);
+//		current.setCommandString(answer);
+//		return answer;
+//	}
 	
 	/*
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
 	 */
-	protected double processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
-		if(current == null){ return 0; } // make sure the current node is not null
+	protected String processStringNode(StringNode current, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+		if(current == null){ return null; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (AbstractParser.isParameter(current.getCommandString())){ // a number in the leaf
 				//System.out.println("reach a number in the leaf in CommandFactory: "+myParser.convertToDouble(current.getCommandString()));
-				return AbstractParser.convertToDouble(current.getCommandString());	
+				return current.getCommandString();	
 			}
-			else if(myVariableManager.isVariable(current)){ // a variable in the leaf
+			else if(myVariableManager.isVariable(current.getCommandString())){ // a variable in the leaf
 				if(!ifParentModifyVariable(current)){
-					return processVariableNode(current);
+					return current.getCommandString();	
 				}
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
@@ -100,18 +102,15 @@ public class CommandFactory {
 //			return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtle);
 //		}
 		if(hasOneParameter(current)){
-			double answer = processStringNode(current.getChildren().get(0), turtle);
+			String answer = processStringNode(current.getChildren().get(0), turtle);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtle);
 		}
 		else if(hasTwoParameters(current)){
-			double rightAnswer = processStringNode(current.getChildren().get(1), turtle);
-			if(myModifyVariableCommands.contains(current.getCommandString())){ // the current node is Make or Set
-				return makeModifyVariableCommand(current, rightAnswer);
-			}
-			double leftAnswer = processStringNode(current.getChildren().get(0), turtle);
+			String leftAnswer = processStringNode(current.getChildren().get(0), turtle);
+			String rightAnswer = processStringNode(current.getChildren().get(1), turtle);
 			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtle);
 		}
-		return 0; // should not reach here
+		return "0"; // should not reach here
 	}
 	
 	/*
@@ -131,53 +130,51 @@ public class CommandFactory {
 		return myControlCommands.contains(current.getCommandString());
 	}
 	
-	/*
-	 * This method should not be called from the outside.
-	 * Used to make a command that modifies a variable (e.g make, set)
-	 */
-	protected double makeModifyVariableCommand(StringNode node, double magnitude2) throws IllegalCommandException, IllegalParameterException {
-		try { 
-			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
-			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
-			Method[] methods = commandClass.getMethods();
-			for (Method m: methods){
-				if(m.getName().equals("setVariable")){
-					m.invoke(command, node.getChildren().get(0));
-				}
-				if(m.getName().equals("setVariableManager")){
-					m.invoke(command, myVariableManager);
-				}
-				if(m.getName().equals("setExpression")){
-					m.invoke(command, magnitude2);
-				}
-		    }
-			return executeCommand(command, methods);
-		} catch (ClassNotFoundException e) {
-			throw new IllegalCommandException();
-		} catch (InstantiationException e) {
-			throw new IllegalCommandException();
-		} catch (IllegalAccessException e) {
-			throw new IllegalCommandException();
-		} catch (IllegalArgumentException e) {
-			throw new IllegalParameterException();
-		} catch (InvocationTargetException e) {
-			throw new IllegalCommandException();
-		}
-	}
+//	/*
+//	 * This method should not be called from the outside.
+//	 * Used to make a command that modifies a variable (e.g make, set)
+//	 */
+//	protected double makeModifyVariableCommand(StringNode node, double magnitude2) throws IllegalCommandException, IllegalParameterException {
+//		try { 
+//			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
+//			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
+//			Method[] methods = commandClass.getMethods();
+//			for (Method m: methods){
+//				if(m.getName().equals("setVariable")){
+//					m.invoke(command, node.getChildren().get(0));
+//				}
+//				if(m.getName().equals("setVariableManager")){
+//					m.invoke(command, myVariableManager);
+//				}
+//				if(m.getName().equals("setExpression")){
+//					m.invoke(command, magnitude2);
+//				}
+//		    }
+//			return executeCommand(command, methods);
+//		} catch (ClassNotFoundException e) {
+//			throw new IllegalCommandException();
+//		} catch (InstantiationException e) {
+//			throw new IllegalCommandException();
+//		} catch (IllegalAccessException e) {
+//			throw new IllegalCommandException();
+//		} catch (IllegalArgumentException e) {
+//			throw new IllegalParameterException();
+//		} catch (InvocationTargetException e) {
+//			throw new IllegalCommandException();
+//		}
+//	}
 	
 	/*
 	 * This method should not be called from the outside.
 	 * Used to make a control command out of the current ControlNode in the command tree structure
 	 */
-	protected double makeControlCommand(ControlNode node, Turtle turtle) throws IllegalCommandException, IllegalParameterException {
+	protected String makeControlCommand(ControlNode node, Turtle turtle) throws IllegalCommandException, IllegalParameterException {
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
+			firstMethodsExecuted(turtle, command, methods);
 			for (Method m: methods){
-				if(m.getName().equals("setTurtle")){
-					m.invoke(command, turtle);
-				}
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getExpression());
 				}
@@ -202,14 +199,26 @@ public class CommandFactory {
 		}
 	}
 
+	protected void firstMethodsExecuted(Turtle turtle, AbstractCommand command,
+			Method[] methods) throws IllegalAccessException, InvocationTargetException {
+		for(Method m: methods){
+			if(m.getName().equals("setTurtle")){
+				m.invoke(command, turtle);
+			}
+			if(m.getName().equals("receiveVariableManager")){
+				m.invoke(command, myVariableManager);
+			}
+		}
+	}
 
 
-	protected double executeCommand(AbstractCommand command, Method[] methods) 
+
+	protected String executeCommand(AbstractCommand command, Method[] methods) 
 			throws IllegalAccessException, InvocationTargetException {
-		double answer = 0;
+		String answer = "";
 		for (Method cur: methods){
 			if (cur.getName().equals("execute")){
-				answer = (Double) cur.invoke(command);
+				answer += (Double) cur.invoke(command);
 		    }	
 		}
 		return answer;
@@ -221,16 +230,14 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	protected double makeCommand(String cmd, double magnitude1, double magnitude2, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
+	protected String makeCommand(String cmd, String magnitude1, String magnitude2, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
 			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
+			firstMethodsExecuted(turtle, command, methods);
 			for (Method m: methods){
-				if(m.getName().equals("setTurtle")){
-					m.invoke(command, turtle);
-				}
 				if(m.getName().equals("setMagnitude")){
 					m.invoke(command, magnitude1);
 				}
@@ -262,5 +269,12 @@ public class CommandFactory {
 	
 	protected boolean hasTwoParameters(StringNode current){
 		return myParameters.getString(current.getCommandString()).equals("2");
+	}
+	
+	/*
+	 * Called only within the control commands
+	 */
+	public void setVariableManager(VariableManager variableManager){
+		myVariableManager = variableManager;
 	}
 }

@@ -16,40 +16,47 @@ public class VariableManager {
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
     }
     
-    public boolean isVariable(StringNode current){
-    	return current.getCommandString().startsWith(myProgramLanguage.getString("Variable"));
+    public boolean isVariable(String current){
+    	return current.startsWith(myProgramLanguage.getString("Variable"));
     }
     
-    public StringNode replaceWithCurrentValues(StringNode root){
-    	loopTree(root);
-    	return root;
+//    public StringNode replaceWithCurrentValues(StringNode root){
+//    	loopTree(root);
+//    	return root;
+//    }
+    
+    public Map<String, Double> getVariableMap(){
+    	return myVariableMap;
     }
     
-    private void loopTree(StringNode current){
-		if(current == null) return;
-		if(isVariable(current)){
-			processNode(current);	
-		}
-		for(StringNode child: current.getChildren()){
-			loopTree(child);
-		}
-    }
+//    private void loopTree(StringNode current){
+//		if(current == null) return;
+//		if(isVariable(current)){
+//			processNode(current);	
+//		}
+//		for(StringNode child: current.getChildren()){
+//			loopTree(child);
+//		}
+//    }
 
     public void setValueToVariable(String v, double value){
     	String variable = deleteVariableSyntax(v);
     	myVariableMap.put(variable, value);
     }
     
+    /*
+     * Returns the variable name by deleting its Variable syntax (e.g. :)
+     */
     private String deleteVariableSyntax(String v){
     	return v.substring(myProgramLanguage.getString("Variable").length());
     }
     
+    /*
+     * Return the value of the variable v
+     * If v is not initialized, return null
+     */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
     	return myVariableMap.get(variable);
-    }
-    
-    private void processNode(StringNode current){
-    	
     }
 }

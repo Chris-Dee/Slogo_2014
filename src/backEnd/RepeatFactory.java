@@ -3,6 +3,7 @@ package backEnd;
 import java.util.List;
 
 import TurtleStuff.Turtle;
+import parser.AbstractParser;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -17,12 +18,12 @@ public class RepeatFactory extends CommandFactory{
 	 * Should be called by Repeat Command to process its own list of commands
 	 */
 	public double runCommands(List<StringNode> roots, double repCount, Turtle turtle) throws IllegalCommandException, IllegalParameterException{
-		double answer = 0;
+		String answer = "";
 		for(StringNode root: roots){
 			updateCountInfo(root, repCount);
-			answer = processStringNode(root, turtle);	
+			answer += processStringNode(root, turtle);	
 		}
-		return answer; // return the value of the last command tree
+		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
 	}
 	
 	protected void updateCountInfo(StringNode node, double repCount){

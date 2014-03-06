@@ -1,10 +1,8 @@
 package commands;
 
-import java.util.List;
-
 import TurtleStuff.Turtle;
 
-public abstract class TurtleCommand implements AbstractCommand{
+public abstract class NonParameterTurtleCommand implements AbstractCommand{
 	protected Turtle myTurtle;
 	
 	public void setTurtle(Turtle turtle){

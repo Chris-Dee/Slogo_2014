@@ -194,7 +194,9 @@ public class TextParser extends AbstractParser {
 		return true;
 	}
 	
-	
+	/*
+	 * May not be needed anymore; exceptions are passed automatically to SlogoModel
+	 */
 //	public boolean checkForErrors() {
 //		boolean answer = true;
 //		for (StringNode leaf : myLeaves) {

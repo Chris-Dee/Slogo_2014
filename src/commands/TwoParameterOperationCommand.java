@@ -1,12 +1,30 @@
 package commands;
 
+import parser.AbstractParser;
+import backEnd.VariableManager;
+
 public abstract class TwoParameterOperationCommand implements AbstractCommand{
 
 	protected double myExpression1;
 	protected double myExpression2;
+	protected VariableManager myVariableManager;
 	
-	public void setDoubleMagnitude(double expression1, double expression2) {
-		myExpression1 = expression1;
-		myExpression2 = expression2;
+	/*
+	 * Must set setVariableManager before setMagnitude
+	 */
+	public void setDoubleMagnitude(String expression1, String expression2) {
+		myExpression1 = convertMagnitudeToValue(expression1);
+		myExpression2 = convertMagnitudeToValue(expression2);
+	}
+	
+	public void receiveVariableManager(VariableManager manager){
+		myVariableManager = manager;
+	}
+	
+	protected double convertMagnitudeToValue(String magnitude){
+		if(myVariableManager.isVariable(magnitude)){
+			return myVariableManager.getValueOfVariable(magnitude);
+		}
+		return AbstractParser.convertToDouble(magnitude);
 	}
 }

@@ -23,6 +23,7 @@ public class Repeat extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
+		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double loop = myFactory.runCommands(expr, myTurtle);
 		if(loop <= 0) return 0;

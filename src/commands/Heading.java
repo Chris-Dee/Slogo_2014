@@ -1,6 +1,6 @@
 package commands;
 
-public class Heading extends TurtleCommand {
+public class Heading extends NonParameterTurtleCommand {
 
 	public Heading() { }
 

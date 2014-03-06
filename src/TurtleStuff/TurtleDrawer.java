@@ -84,16 +84,16 @@ List<turtles> get turtswithFilter()
 		for(Turtle t: manager.getFilteredTurtles()){
 		//make these call methods from the TurtleManager class
 				if(checkKey('r')){
-					t.setPen(JGColor.red);
+					t.setPen(10,JGColor.red);
 				}
 				if(checkKey('g')){
-					t.setPen(JGColor.green);
+					t.setPen(10,JGColor.green);
 				}
 				if(checkKey('b')){
-					t.setPen(JGColor.blue);
+					t.setPen(10,JGColor.blue);
 				}
 				if(checkKey('o')){
-					t.setPen(JGColor.orange);
+					t.setPen(10, JGColor.orange);
 				}
 				if(checkKey('r')){
 					t.raisePen();

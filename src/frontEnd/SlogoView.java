@@ -37,6 +37,7 @@ import frontEnd.HelpPage;
 
 
 import OptionsPanel.OptionsPanel;
+import PreferenceManagers.ColorManager;
 import StatsPanel.StatsPanel;
 import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
@@ -63,6 +64,7 @@ public class SlogoView extends JFrame{
 	public static final String DEFAULT_COMM_PATH="backEnd/";
 	public static final String DEFAULT_COMM_TEXT="CommandPath";
 	TurtleManager manager;
+	ColorManager myColors;
 	public SlogoView(){
 		super();
 		initiate();
@@ -70,10 +72,11 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors){
 		super();
 		model=modelSlog;
 		manager=manage;
+		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		initiate();
 		
@@ -253,7 +256,7 @@ public class SlogoView extends JFrame{
 		rightPanel.add(makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 
-		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager),BorderLayout.NORTH);
+		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
 		//setSize(1000,400);

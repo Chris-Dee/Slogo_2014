@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import parser.tree.StringNode;
-
 public class VariableManager {
+	public static final String VARIABLE_PROGRAM_SYNTAX = "Variable";
 	
     private Map<String, Double> myVariableMap;
     private ResourceBundle myProgramLanguage;
@@ -16,23 +15,12 @@ public class VariableManager {
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
     }
     
-    public boolean isVariable(StringNode current){
-    	return current.getCommandString().startsWith(myProgramLanguage.getString("Variable"));
+    public boolean isVariable(String current){
+    	return current.startsWith(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX));
     }
     
-    public StringNode replaceWithCurrentValues(StringNode root){
-    	loopTree(root);
-    	return root;
-    }
-    
-    private void loopTree(StringNode current){
-		if(current == null) return;
-		if(isVariable(current)){
-			processNode(current);	
-		}
-		for(StringNode child: current.getChildren()){
-			loopTree(child);
-		}
+    public Map<String, Double> getVariableMap(){
+    	return myVariableMap;
     }
 
     public void setValueToVariable(String v, double value){
@@ -40,16 +28,19 @@ public class VariableManager {
     	myVariableMap.put(variable, value);
     }
     
+    /*
+     * Returns the variable name by deleting its Variable syntax (e.g. :)
+     */
     private String deleteVariableSyntax(String v){
-    	return v.substring(myProgramLanguage.getString("Variable").length());
+    	return v.substring(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX).length());
     }
     
+    /*
+     * Return the value of the variable v
+     * If v is not initialized, return null
+     */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
     	return myVariableMap.get(variable);
-    }
-    
-    private void processNode(StringNode current){
-    	
     }
 }

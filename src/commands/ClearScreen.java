@@ -3,7 +3,7 @@ package commands;
 /*
  * This command erases turtle's trails and sends it to the home position.
  */
-public class ClearScreen extends TurtleCommand{
+public class ClearScreen extends NonParameterTurtleCommand{
 	
 	public ClearScreen(){ }
 

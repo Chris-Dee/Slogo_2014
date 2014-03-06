@@ -5,15 +5,15 @@ import java.util.List;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import parser.tree.StringNode;
-import backEnd.RepeatFactory;
+import backEnd.LoopFactory;
 
 public class Repeat extends ControlCommand{
 	
-	protected RepeatFactory myFactory;
+	protected LoopFactory myFactory;
 	
 	public Repeat(){
 		super();
-		myFactory = new RepeatFactory();
+		myFactory = new LoopFactory();
 	}
 
 	@Override
@@ -23,15 +23,10 @@ public class Repeat extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
+		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double loop = myFactory.runCommands(expr, myTurtle);
-		if(loop <= 0) return 0;
-		
 		List<StringNode> commands = myParser.parse(myCommands);
-		double answer = 0;
-		for(int i = 1; i <= loop; i ++){
-			answer = myFactory.runCommands(commands, loop, myTurtle);
-		}
-		return answer;
+		return myFactory.runCommands(commands, ":repcount", loop, myTurtle);
 	}
 }

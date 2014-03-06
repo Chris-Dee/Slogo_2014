@@ -23,6 +23,7 @@ public class If extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
+		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtle);
 		if (magnitude == 0)

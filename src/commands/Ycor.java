@@ -3,7 +3,7 @@ package commands;
 /*
  * This command is used to get a turtle's Y from the center of the screen
  */
-public class Ycor extends TurtleCommand {
+public class Ycor extends NonParameterTurtleCommand {
 
 	public Ycor() { }
 

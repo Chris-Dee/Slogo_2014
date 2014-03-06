@@ -21,17 +21,18 @@ public class LanguageManager {
 	public LanguageManager(){
 		myProgramLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + DEFAULT_PROGRAM_LANGUAGE);
 		myLanguageMap = new HashMap<String, String>();
-		myLanguage = DEFAULT_LANGUAGE;
+		setLanguage(DEFAULT_LANGUAGE);
 	}
 	
 	public StringNode convertLanguage(StringNode root) {
-		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
-		makeLanguageMap();
 		return loopTree(root);
 	}
 	
 	public void setLanguage(String language){
 		if(language != null) myLanguage = language;
+		myLanguageMap.clear();
+		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
+		makeLanguageMap();
 	}
 	
 	protected void makeLanguageMap(){

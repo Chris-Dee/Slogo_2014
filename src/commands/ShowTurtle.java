@@ -1,6 +1,6 @@
 package commands;
 
-public class ShowTurtle extends TurtleCommand{
+public class ShowTurtle extends NonParameterTurtleCommand{
 	
 	public ShowTurtle(){}
 

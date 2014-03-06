@@ -1,6 +1,6 @@
 package commands;
 
-public class PenDownP extends TurtleCommand{
+public class PenDownP extends NonParameterTurtleCommand{
 
 	public PenDownP() { }
 

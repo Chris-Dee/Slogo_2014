@@ -1,5 +1,6 @@
 package commands;
 
+import backEnd.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -12,9 +13,14 @@ public abstract class ControlCommand {
 	protected String myExpression;
 	protected Turtle myTurtle;
 	protected String myCommands;
+	protected VariableManager myVariableManager;
 	
 	public ControlCommand(){
 		myParser = new TextParser();
+	}
+	
+	public void setVariableManager(VariableManager manager){
+		myVariableManager = manager;
 	}
 	
 	public void setExpression(String s){

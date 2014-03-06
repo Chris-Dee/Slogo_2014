@@ -2,9 +2,7 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import TurtleStuff.Turtle;
 import TurtleStuff.TurtleManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -57,12 +55,17 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands){
 		try{
+			System.out.println("User pass input");
+			System.out.println("userCommands: "+userCommands);
 			List<StringNode> roots = myParser.parse(userCommands);
-
-			return myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
+			double answer = myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
+			System.out.println("SlogoModel receiveTextInput: " + answer);
+			return answer;
 		} catch(IllegalCommandException e){
+			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
+			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
 		System.out.println("There is something wrong!!!!!!!!!!");

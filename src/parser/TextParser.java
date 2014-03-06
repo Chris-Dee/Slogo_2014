@@ -31,37 +31,19 @@ public class TextParser extends AbstractParser {
 		myCommandList.clear();
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
-		//int start = initializeTree(myCommandList);
-		//buildTree(myRoot, start);
-		while (!myCommandList.isEmpty()) {
-			buildCommandList(myCommandList);
+		int start = initializeTree(myCommandList);
+		buildTree(myRoot, start);
+		System.out.println("Root: " + myCommands.get(0).getCommandString());
+		for (StringNode s1 : myCommands) {
+			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
+//		while (!myCommandList.isEmpty()) {
+//			buildCommandList(myCommandList);
+//		}
 		//myRoot = myLanguageManager.convertLanguage(myRoot);
 		return myCommands;
 	}
 
-	private void buildCommandList(List<String> commands) {
-		// TODO Auto-generated method stub
-		StringNode newCommand;
-		if (myControlCommands.containsKey(commands.get(0))) { //control statement
-			if (myControlCommands.getString(commands.get(0)).equals("3")) {
-				newCommand = new IfElseNode(commands.get(0), null, null, null);
-				handleIfElseNode((IfElseNode) newCommand, 0);
-				myCommands.add(newCommand);
-				
-			}
-			else {
-				newCommand = new ControlNode(commands.get(0), null, null);
-				handleControlNode((ControlNode) newCommand, 0);
-				myCommands.add(newCommand);
-			}
-
-		}
-		else {
-			newCommand = new StringNode(commands.get(0));
-		}
-		myCommands.add(newCommand);
-	}
 
 	private void formatStringArray(String s) {
 		int depth = 0;
@@ -96,19 +78,50 @@ public class TextParser extends AbstractParser {
 		int numChildren = 0;
 		
 		if(parameterNumber == 2) {
-			StringNode child1 = current.addChild(myCommandList.get(index+1));
-			numChildren = buildTree(child1, index+1);
-			StringNode child2 = current.addChild(myCommandList.get(index + numChildren + 1));
-			numChildren += buildTree(child2, index + numChildren + 1);
-		}
-		else {
-
 			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
 				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
 					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
 					numChildren = handleIfElseNode(child, index+1);
 					numChildren += buildTree(child, index+numChildren+1);
-					
+
+				}
+				else {
+					ControlNode child = current.addControlChild(myCommandList.get(index+1));
+					numChildren = handleControlNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+				}
+
+			}
+			else {
+				StringNode child1 = current.addChild(myCommandList.get(index+1));
+				numChildren = buildTree(child1, index+1);
+			}
+			if (myControlCommands.containsKey(myCommandList.get(index+numChildren+1))) { //control statement
+				if (myControlCommands.getString(myCommandList.get(index + numChildren+1)).equals("3")) {
+					IfElseNode child = current.addIfElseChild(myCommandList.get(index+numChildren+1));
+					numChildren = handleIfElseNode(child, index+numChildren+1);
+					numChildren += buildTree(child, index+numChildren+1);
+
+				}
+				else {
+					ControlNode child = current.addControlChild(myCommandList.get(index+numChildren+1));
+					numChildren = handleControlNode(child, index+numChildren+1);
+					numChildren += buildTree(child, index+numChildren+1);
+				}
+			}
+			else {
+				StringNode child2 = current.addChild(myCommandList.get(index + numChildren + 1));
+				numChildren += buildTree(child2, index + numChildren + 1);
+			}
+
+		}
+		else if (parameterNumber == 1) {
+			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
+				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
+					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
+					numChildren = handleIfElseNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+
 				}
 				else {
 					ControlNode child = current.addControlChild(myCommandList.get(index+1));
@@ -121,6 +134,12 @@ public class TextParser extends AbstractParser {
 				StringNode child = current.addChild(myCommandList.get(index+1));
 				numChildren += buildTree(child, index+1);
 			}
+		}
+		else {
+			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
+			myCommands.add(nextRoot);
+			buildTree(nextRoot, index+1);
+			
 		}
 		numChildren ++;
 		return numChildren;
@@ -178,6 +197,8 @@ public class TextParser extends AbstractParser {
 		return i-index;
 	}
 
+	
+	
 	private int handleControlNode(ControlNode node, int index) {
 		StringBuilder sb = new StringBuilder();
 		String commands = null;
@@ -211,9 +232,11 @@ public class TextParser extends AbstractParser {
 		node.setCommands(commands.substring(startSpace, endSpace+1));
 
 		i++;
-		myCommandList.clear(); //REMOVE THIS LATER
 		return i-index;
 	}
+	
+	
+
 
 	private boolean allParentsHaveParameters(StringNode current){
 		while(current.getParent() != null){ // not a root
@@ -242,27 +265,27 @@ public class TextParser extends AbstractParser {
 
 	private int initializeTree(List<String> commands) {
 		int index = 0;
-		StringNode newCommand;
 		if (myControlCommands.containsKey(myCommandList.get(0))) { //control statement
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
-				newCommand = new IfElseNode(commands.get(0), null, null, null);
-				index = handleIfElseNode((IfElseNode) newCommand, 0);
-				myCommands.add(newCommand);
+				myRoot = new IfElseNode(commands.get(0), null, null, null);
+				index = handleIfElseNode((IfElseNode) myRoot, 0);
+				myCommands.add(myRoot);
 				return index;
-				
+
 			}
 			else {
-				newCommand = new ControlNode(commands.get(0), null, null);
-				index = handleControlNode((ControlNode) newCommand, 0);
-				myCommands.add(newCommand);
+				myRoot = new ControlNode(commands.get(0), null, null);
+				index = handleControlNode((ControlNode) myRoot, 0);
+				myCommands.add(myRoot);
 				return index;
 			}
 
 		}
 		else {
-			newCommand = new StringNode(commands.get(0));
+			myRoot = new StringNode(commands.get(0));
 		}
-		myCommands.add(newCommand);
+		
+		myCommands.add(myRoot);
 		return index;
 	}
 

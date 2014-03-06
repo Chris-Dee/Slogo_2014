@@ -2,6 +2,8 @@ package commands;
 
 public class Make extends TwoParameterOperationCommand{
 	
+	public Make(){}
+	
 	protected String myVariable;
 	
 	@Override

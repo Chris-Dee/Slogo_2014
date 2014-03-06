@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import backEnd.UserCommandManager;
 import backEnd.VariableManager;
 import TurtleStuff.Turtle;
 import parser.AbstractParser;
@@ -28,6 +29,7 @@ public class CommandFactory {
     protected List<String> myControlCommands;
     protected List<String> myModifyVariableCommands;
     protected VariableManager myVariableManager;
+    protected UserCommandManager myUserCommandManager;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
@@ -38,6 +40,7 @@ public class CommandFactory {
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
 		myVariableManager = new VariableManager();
+		myUserCommandManager = new UserCommandManager();
 	}
 
 	protected void initCommandTypes(List<String> myCmdList, String type) {
@@ -55,11 +58,18 @@ public class CommandFactory {
 	 */
 	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		String answer = "";
+		System.out.println("runCommands turtle size: "+turtles.size());
 		for(StringNode root: roots){
-			//myParser.printTree(root);
+			System.out.println("runCommands tree starts: ");
+			AbstractParser.printTree(root);
+			System.out.println("runCommands tree ends");
 			answer = processStringNode(root, turtles);	
+			System.out.println("CommandFactory.runCommands Answer: "+answer);
 		}
-		return AbstractParser.convertToDouble(answer); // return the value of the last command tree
+		System.out.println("CommandFactory.runCommands Answer: "+answer);
+		return AbstractParser.convertToDouble(answer);
+//		System.out.println("CommandFactory.runCommand value " + value);
+//		return value; // return the value of the last command tree
 	}
 	
 	/*
@@ -71,11 +81,13 @@ public class CommandFactory {
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (AbstractParser.isParameter(current.getCommandString()) // a number in the leaf
 					|| myVariableManager.isVariable(current.getCommandString())){ // or a variable in the leaf
+				System.out.println("Base Case: number of variable");
 				return current.getCommandString();	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
 					ControlNode cur = (ControlNode) current;
+					System.out.println("Base Case: non-parameter command");
 					return makeControlCommand(cur, turtles);
 				}
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
@@ -83,10 +95,12 @@ public class CommandFactory {
 		}
 		
 		if(hasOneParameter(current)){
+//			System.out.println("Has one parameter");
 			String answer = processStringNode(current.getChildren().get(0), turtles);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtles);
 		}
 		else if(hasTwoParameters(current)){ // need revision for modifying variables
+//			System.out.println("Has two parameter");
 			String leftAnswer = processStringNode(current.getChildren().get(0), turtles);
 			String rightAnswer = processStringNode(current.getChildren().get(1), turtles);
 			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtles);
@@ -144,7 +158,7 @@ public class CommandFactory {
 			if(m.getName().equals("setTurtles")){
 				m.invoke(command, turtles);
 			}
-			if(m.getName().equals("receiveVariableManager")){
+			if(m.getName().equals("setVariableManager")){
 				m.invoke(command, myVariableManager);
 			}
 		}
@@ -176,9 +190,13 @@ public class CommandFactory {
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
+					System.out.println("m.getName(): "+m.getName());
+					System.out.println("Magnitude1: "+magnitude1);
 					m.invoke(command, magnitude1);
+					System.out.println("already set magnitude");
 				}
 				if(m.getName().equals("setDoubleMagnitude")){
+					System.out.println("Magnitude 1 and 2: "+magnitude1+" "+magnitude2);
 					m.invoke(command, magnitude1, magnitude2);
 				}
 		    }

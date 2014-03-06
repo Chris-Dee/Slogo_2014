@@ -13,8 +13,8 @@ public abstract class ControlCommand implements AbstractCommand{
 
 	protected AbstractParser myParser;
 	protected String myExpression;
-	protected List<Turtle> myTurtles;
 	protected String myCommands;
+	protected List<Turtle> myTurtles;
 	protected VariableManager myVariableManager;
 	
 	public ControlCommand(){

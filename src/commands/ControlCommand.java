@@ -9,7 +9,7 @@ import exception.IllegalParameterException;
 import parser.AbstractParser;
 import parser.TextParser;
 
-public abstract class ControlCommand {
+public abstract class ControlCommand implements AbstractCommand{
 
 	protected AbstractParser myParser;
 	protected String myExpression;

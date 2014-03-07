@@ -32,6 +32,7 @@ import frontEnd.HelpPage;
 //need to add pen
 
 
+import CommandPanel.CommandPanel;
 import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
@@ -161,7 +162,7 @@ public class SlogoView extends JFrame{
 		textPanel.setBackground(new java.awt.Color(100,100,100));
 		JPanel inputTextPanel=new JPanel();
 		makeDataPanel(textPanel);
-		makeCommandPanel(inputTextPanel);
+		inputTextPanel.add(new CommandPanel(myResources,model,manager,language));
 		textPanel.add(inputTextPanel);
 		return textPanel;
 	}

@@ -60,4 +60,18 @@ public class ParserTest {
 		assertEquals(1, root.size());
 	}
 	
+	@Test
+	public void testVariables() {
+		AbstractParser parser = new TextParser();
+		List<StringNode> root = parser.parse(":a 2 :b 3 :c 5");
+		assertEquals(":A", root.get(0).getCommandString());
+		assertEquals("2", root.get(1).getCommandString());
+		assertEquals(":B", root.get(2).getCommandString());
+		assertEquals("3", root.get(3).getCommandString());
+		assertEquals(":C", root.get(4).getCommandString());
+		assertEquals("5", root.get(5).getCommandString());
+
+
+	}
+	
 }

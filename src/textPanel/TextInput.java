@@ -1,5 +1,6 @@
 package textPanel;
 
+import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ private void createTextInput(JPanel inputTextPanel){
 	JScrollPane inputPane=new JScrollPane(textInput);
 	textInput.setText("");
 	textInput.setSize(100,300);
-	JButton submit=new JButton(myResources.getString("SubmitText"));
+	Button submit=new Button(myResources.getString("SubmitText"));
 	submit.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e)
 		{ 

@@ -11,7 +11,6 @@ public class Id extends TurtleControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		
+		return myTurtleManager.getClickedTurtle().getID();
 	}
-
 }

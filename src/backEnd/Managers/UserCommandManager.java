@@ -37,4 +37,8 @@ public class UserCommandManager {
 	public UserCommand getUserCommand(String commandName){
 		return myCommandMap.get(commandName);
 	}
+	
+	public Map<String, Integer> getCommandParameterMap(){
+		return myCommandParameterMap;
+	}
 }

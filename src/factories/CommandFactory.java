@@ -73,8 +73,6 @@ public class CommandFactory {
 		}
 		System.out.println("CommandFactory.runCommands Answer: "+answer);
 		return AbstractParser.convertToDouble(answer);
-//		System.out.println("CommandFactory.runCommand value " + value);
-//		return value; // return the value of the last command tree
 	}
 	
 	/*

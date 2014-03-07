@@ -2,6 +2,8 @@ package parser;
 
 import java.util.*;
 
+import exception.IllegalCommandException;
+
 import backEnd.Managers.LanguageManager;
 import backEnd.Managers.VariableManager;
 import parser.tree.StringNode;
@@ -22,9 +24,9 @@ public abstract class AbstractParser {
 		mySymbols = ResourceBundle.getBundle(DEFAULT_PROGRAM_LANGUAGE_FILE);
 	}
 
-	public abstract List<StringNode> parse(String s);
+	public abstract List<StringNode> parse(String s) throws IllegalCommandException;
 	
-	protected abstract int buildTree(StringNode node, int index);
+	protected abstract int buildTree(StringNode node, int index) throws IllegalCommandException;
 	protected List<String> myCommandList;
 	
 	public static boolean isParameter(String s) {

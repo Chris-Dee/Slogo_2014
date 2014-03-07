@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import exception.IllegalCommandException;
@@ -62,7 +63,7 @@ public class ParserTest {
 		TextParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
-		List<StringNode> root = parser.parse("Dotimes [:a 10]");
+		List<StringNode> root = parser.parse("Dotimes [:a 10] [fd 50]");
 		assertEquals("DOTIMES", root.get(0).getCommandString());
 		assertEquals(1, root.size());
 	}
@@ -130,12 +131,22 @@ public class ParserTest {
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
 		List<StringNode> root = parser.parse("fd 50 fd 50");
-		System.out.println("testErrorCheck" + " has errors:" + ((TextParser) parser).hasErrors(root));
-		assertFalse(((TextParser) parser).hasErrors(root));
+		//System.out.println("testErrorCheck" + " has errors:" + (parser).hasErrors(root));
+		assertFalse(parser.hasErrors(root));
 	}
 	
-	@Test
-	public void testRepeatWithVar() throws IllegalCommandException {
-		
+	@Ignore
+	public void testPalette() throws IllegalCommandException {
+		TextParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		List<StringNode> root = parser.parse("SetPalette 2 255 255 255 fd 50");
+		assertEquals("SETPALETTE", root.get(0).getCommandString());
+		assertEquals("2", root.get(0).getChildren().get(0).getCommandString());
+		for (int i = 1; i < root.get(0).getChildren().size(); i++) {
+			assertEquals("255", root.get(0).getChildren().get(i).getCommandString());
+		}
+		assertEquals("FD", root.get(1).getCommandString());
+
 	}
 }

@@ -1,10 +1,7 @@
 package commands;
 
 import java.util.List;
-
 import TurtleStuff.Turtle;
-import exception.IllegalCommandException;
-import exception.IllegalParameterException;
 
 public abstract class FourParameterTurtleCommand extends FourParameterOperationCommand {
 	

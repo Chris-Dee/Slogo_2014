@@ -2,8 +2,6 @@ package commands;
 
 import parser.AbstractParser;
 import backEnd.Managers.VariableManager;
-import exception.IllegalCommandException;
-import exception.IllegalParameterException;
 
 public abstract class FourParameterOperationCommand implements AbstractCommand{
 

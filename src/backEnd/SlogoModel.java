@@ -42,6 +42,7 @@ public class SlogoModel {
 	
 	public void setTurtleManager(TurtleManager manager){
 		myTurtleManager=manager;
+		myCommandFactory.setTurtleManager(myTurtleManager);
 	}
 	
 	/*

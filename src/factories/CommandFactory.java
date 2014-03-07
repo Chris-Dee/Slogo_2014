@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import backEnd.Managers.UserCommandManager;
 import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
+import TurtleStuff.TurtleManager;
 import parser.AbstractParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
@@ -31,21 +32,29 @@ public class CommandFactory {
     protected List<String> myModifyVariableCommands;
     protected VariableManager myVariableManager;
     protected UserCommandManager myUserCommandManager;
+    protected TurtleManager myTurtleManager;
 	
 	public CommandFactory(){
 		myCommands = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDPATH);
 		myParameters = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_NUMPARAMETERS);
 		myCommandTypes = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDTYPES);
+		
 		myControlCommands = new ArrayList<String>();
 		myModifyVariableCommands = new ArrayList<String>();
 		myVariableManager = new VariableManager();
 		myUserCommandManager = new UserCommandManager();
+		myTurtleManager = new TurtleManager();
+		
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
 	}
 	
 	public void setUserCommandManager(UserCommandManager manager){
 		myUserCommandManager = manager;
+	}
+	
+	public void setTurtleManager(TurtleManager manager){
+		myTurtleManager = manager;
 	}
 
 	protected void initCommandTypes(List<String> myCmdList, String type) {
@@ -93,20 +102,28 @@ public class CommandFactory {
 					if (isUserCommand(current)){ return makeUserCommand(cur, turtles); }
 					return makeControlCommand(cur, turtles);
 				}
-				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
+				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}
 		
 		if(hasOneParameter(current)){
 //			System.out.println("Has one parameter");
 			String answer = processStringNode(current.getChildren().get(0), turtles);
-			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, turtles);
+			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 		}
-		else if(hasTwoParameters(current)){ // need revision for modifying variables
+		else if(hasTwoParameters(current)){
 //			System.out.println("Has two parameter");
 			String leftAnswer = processStringNode(current.getChildren().get(0), turtles);
 			String rightAnswer = processStringNode(current.getChildren().get(1), turtles);
-			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, turtles);
+			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
+		}
+		else if(hasFourParameters(current)){
+			String firstAnswer = processStringNode(current.getChildren().get(0), turtles);
+			String secondAnswer = processStringNode(current.getChildren().get(1), turtles);
+			String thirdAnswer = processStringNode(current.getChildren().get(2), turtles);
+			String fourthAnswer = processStringNode(current.getChildren().get(3), turtles);
+			return makeCommand(current.getCommandString(), firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, turtles);
+			
 		}
 		return "0"; // should not reach here
 	}
@@ -165,6 +182,10 @@ public class CommandFactory {
 					m.invoke(command, node.getElseCommands());
 					System.out.println("setElseCommands");
 				}
+				if(m.getName().equals("setTurtleManager")){
+					m.invoke(command, myTurtleManager);
+					System.out.println("setTurtleManager");
+				}
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {
@@ -211,7 +232,7 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	protected String makeCommand(String cmd, String magnitude1, String magnitude2, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+	protected String makeCommand(String cmd, String magnitude1, String magnitude2, String magnitude3, String magnitude4, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
 			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);
@@ -220,7 +241,6 @@ public class CommandFactory {
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
-//					System.out.println("m.getName(): "+m.getName());
 //					System.out.println("Magnitude1: "+magnitude1);
 					m.invoke(command, magnitude1);
 //					System.out.println("already set magnitude");
@@ -228,6 +248,9 @@ public class CommandFactory {
 				if(m.getName().equals("setDoubleMagnitude")){
 //					System.out.println("Magnitude 1 and 2: "+magnitude1+" "+magnitude2);
 					m.invoke(command, magnitude1, magnitude2);
+				}
+				if(m.getName().equals("setQuadrupleMagnitude")){
+					m.invoke(command, magnitude1, magnitude2, magnitude3, magnitude4);
 				}
 		    }
 			return executeCommand(command, methods);
@@ -254,6 +277,10 @@ public class CommandFactory {
 	
 	protected boolean hasTwoParameters(StringNode current){
 		return myParameters.getString(current.getCommandString()).equals("2");
+	}
+	
+	protected boolean hasFourParameters(StringNode current){
+		return myParameters.getString(current.getCommandString()).equals("4");
 	}
 	
 	public void setVariableManager(VariableManager variableManager){

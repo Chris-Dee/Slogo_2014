@@ -34,14 +34,16 @@ private static VariableManager myVars;
 private static JTextArea variableList;
 private static TurtleDrawer TurtleSpace;
 private static TurtleManager manager;
+private static UserCommandManager ucManager;
 
 public VariableDrawingPanel(ResourceBundle res, VariableManager vars, 
-		TurtleDrawer turtSpace, TurtleManager manage){
+		TurtleDrawer turtSpace, TurtleManager manage, UserCommandManager ucManage){
 	super();
 	 TurtleSpace=turtSpace;
 	myResources=res;
 	myVars=vars;
 	manager=manage;
+	ucManager=ucManage;
 	this.add(makeDrawingPanel());
 }
 	private JPanel makeDrawingPanel(){
@@ -58,6 +60,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		drawingPanel.add(TurtleSpace);
 		wholePanel.add(variableList());
 		wholePanel.add(scroller);
+		wholePanel.add(new FunctionViewer(ucManager));
 		fillVariables();
 		return wholePanel;
 }

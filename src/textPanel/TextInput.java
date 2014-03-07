@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 
 import backEnd.SlogoModel;
 
+import DrawingPanel.FunctionViewer;
 import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
@@ -53,6 +54,7 @@ private void createTextInput(JPanel inputTextPanel){
 				SlogoView.showError(SlogoView.viewStats(),myResources.getString("IllegalCommand"));
 			}
 			SlogoView.viewStats().updateInfo();
+			FunctionViewer.updateViewer();
 		}
 	});   
 	inputTextPanel.add(inputPane);

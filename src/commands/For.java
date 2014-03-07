@@ -23,9 +23,10 @@ public class For extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		System.out.println("For execute() called");
+//		System.out.println("For execute() called");
 		myFactory.setVariableManager(myVariableManager);
-		System.out.println("myExpression: "+myExpression);
+		myFactory.setUserCommandManager(myUserCommandManager);
+//		System.out.println("myExpression: "+myExpression);
 		List<StringNode> expr = myParser.parse(myExpression);
 		AbstractParser.printListNodes(expr); //
 		List<StringNode> commands = myParser.parse(myCommands);

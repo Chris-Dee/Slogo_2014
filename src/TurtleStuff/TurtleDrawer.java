@@ -53,6 +53,7 @@ List<turtles> get turtswithFilter()
 	public void initGame() {
 		setFrameRate(250, 3);
 		setPFSize(30,30);
+		System.out.println("dd");
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle(0);
 		manager.addTurtle(turt);
@@ -73,51 +74,10 @@ List<turtles> get turtswithFilter()
 		}
 		manager.highlightSelectedTurtles();
 		manager.highlightTurtle();
-		checkColorKeys();
-	}
-	public boolean checkKey(char ch){
-		if(getLastKey()+32==(int)ch||(getLastKey()<60&&getLastKey()==ch)){
-			return true;}
-		return false;
-	}
-	public void checkColorKeys(){
-		for(Turtle t: manager.getFilteredTurtles()){
-		//make these call methods from the TurtleManager class
-				if(checkKey('r')){
-					t.setPen(10,JGColor.red);
-				}
-				if(checkKey('g')){
-					t.setPen(10,JGColor.green);
-				}
-				if(checkKey('b')){
-					t.setPen(10,JGColor.blue);
-				}
-				if(checkKey('o')){
-					t.setPen(10, JGColor.orange);
-				}
-				if(checkKey('r')){
-					t.raisePen();
-				}
-				if(checkKey('m')){
-					t.lowerPen();
-				}}
-		clearLastKey();
-
-	}
-
-	public void newTurtle(String imageFile) {
-		Position newPos=turt.getStats().getPos();
-		double targetx = newPos.xPos();
-		double targety = newPos.yPos();	
-		defineImage("Turtle","Turt",0,imageFile,"-");
-		chosenImage = "Turtle";
-		turt.setImage(chosenImage);
-		turt.setPos(targetx, targety);
-		turt.setEngine(this);
-
 	}
 
 	public void addnewTurtle(int id){
+		
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle(id);
 		manager.addTurtle(turt);

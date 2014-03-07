@@ -16,7 +16,7 @@ public class VariableManager {
     public VariableManager(){
 		myVariableMap = new HashMap<String, Double>();
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
-		}
+	}
     
     public boolean isVariable(String current){
     	return current.startsWith(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX));

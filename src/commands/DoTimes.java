@@ -23,6 +23,7 @@ public class DoTimes extends ControlCommand {
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		myFactory.setVariableManager(myVariableManager);
+		myFactory.setUserCommandManager(myUserCommandManager);
 		
 //		int vStart = findIndexOfVariableSyntax(myExpression); // vStart has the index of ":"
 //		if(vStart == myExpression.length()-1){ throw new IllegalParameterException(); }

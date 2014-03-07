@@ -22,6 +22,8 @@ public class Repeat extends ControlCommand{
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 //		System.out.println("repeat execute() called");
 		myFactory.setVariableManager(myVariableManager);
+		myFactory.setUserCommandManager(myUserCommandManager);
+		myParser.setUserCommandManager(myUserCommandManager);
 //		System.out.println("setVariableManager");
 //		System.out.println("myExpression: "+myExpression);
 		List<StringNode> expr = myParser.parse(myExpression);

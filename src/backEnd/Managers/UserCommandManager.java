@@ -19,4 +19,14 @@ public class UserCommandManager {
 		myCommandMap.put(name, command);
 		myCommandParameterMap.put(name,  parameterNum);
 	}
+	
+	/*
+	 * return -1 if commandName is not stored as a user command
+	 */
+	public int getNumParameterCommand(String commandName){
+		if(!myCommandParameterMap.containsKey(commandName)){
+			return -1;
+		}
+		return myCommandParameterMap.get(commandName);
+	}
 }

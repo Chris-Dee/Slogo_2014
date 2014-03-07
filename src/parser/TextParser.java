@@ -241,13 +241,13 @@ public class TextParser extends AbstractParser {
 	/*
 	 * May not be needed anymore; exceptions are passed automatically to SlogoModel
 	 */
-	public boolean checkForErrors(List<StringNode> roots) {
-		boolean answer = true;
+	public boolean hasErrors(List<StringNode> roots) {
+		boolean answer = false;
 		
 		for (StringNode node: roots) {
 			while(node != null){
 				if( (!hasRightNumChildren(node)) 
-						&& getNumberOfParameters(node.getCommandString()) != 0 ){ answer = false;}	
+						&& getNumberOfParameters(node.getCommandString()) != 0 ){ answer = true;}	
 			}
 		}
 		return answer;

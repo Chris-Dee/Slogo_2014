@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import textPanel.CommandPanel;
 import backEnd.Managers.*;
 import frontEnd.HelpPage;
 //to-do
@@ -32,7 +34,6 @@ import frontEnd.HelpPage;
 //need to add pen
 
 
-import CommandPanel.CommandPanel;
 import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
@@ -128,35 +129,6 @@ public class SlogoView extends JFrame{
 		}
 		return langList.toArray();
 	}
-	private void makeCommandPanel(JPanel inputTextPanel){
-		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
-		makeLangList(inputTextPanel);
-		createSaveButton(inputTextPanel);
-		textInput=new JTextArea(5,20);
-		JScrollPane inputPane=new JScrollPane(textInput);
-		textInput.setText("");
-		textInput.setSize(100,300);
-		JButton submit=new JButton(myResources.getString("SubmitText"));
-		submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{ 
-				try{
-					viewStats().setResultsBox(model.receiveTextInput(textInput.getText())+"");
-					model.updateHistory(textInput.getText());
-					manager.rotateImage();
-					savePanel(textInput);
-
-				}
-				catch(Exception e1){
-					e1.printStackTrace();
-					showError(mainPanel,myResources.getString("IllegalCommand"));
-				}
-				statPage.updateInfo();
-			}
-		});   
-		inputTextPanel.add(inputPane);
-		inputTextPanel.add(submit);
-	}
 	public JPanel makeInputPanel(){
 		JPanel textPanel=new JPanel();
 		textPanel.setBackground(new java.awt.Color(100,100,100));
@@ -188,16 +160,6 @@ public class SlogoView extends JFrame{
 	}
 	public static StatsPanel viewStats(){
 		return statPage;
-	}
-	private void createSaveButton(JPanel savePanel){
-		JButton saveButton=new JButton(myResources.getString("Save"));
-		saveButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{  
-				savePanel(textInput);
-			}
-		});
-		savePanel.add(saveButton);
 	}
 	public JPanel makeSavedTextBoxes(){
 		JPanel savePanel=new JPanel();

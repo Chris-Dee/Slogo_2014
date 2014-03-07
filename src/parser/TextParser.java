@@ -2,6 +2,8 @@ package parser;
 
 import java.util.*;
 
+import exception.IllegalCommandException;
+
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
 import parser.tree.StringNode;
@@ -22,7 +24,7 @@ public class TextParser extends AbstractParser {
  	}
 	
 	@Override
-	public List<StringNode> parse(String s) {
+	public List<StringNode> parse(String s) throws IllegalCommandException {
 		myCommandList.clear();
 		myCommands.clear();
 		String singleLineString = convertTextToSingleLine(s);
@@ -57,8 +59,13 @@ public class TextParser extends AbstractParser {
 	}
 
 	@Override
-	protected int buildTree(StringNode current, int index) {
-		int parameterNumber = getNumberOfParameters(current.getCommandString());
+	protected int buildTree(StringNode current, int index) throws IllegalCommandException {
+		int parameterNumber = 0;
+		try{
+			parameterNumber = getNumberOfParameters(current.getCommandString());	
+		} catch(Exception e){
+			throw new IllegalCommandException();
+		}
 		if(index == myCommandList.size()) return 0;
 		if( (parameterNumber == 0 && !allParentsHaveParameters(current)) || 
 				index + 1 == myCommandList.size()){ // if leaf node
@@ -241,27 +248,30 @@ public class TextParser extends AbstractParser {
 	/*
 	 * May not be needed anymore; exceptions are passed automatically to SlogoModel
 	 */
-	public boolean hasErrors(List<StringNode> roots) {
-		boolean answer = false;
-		
+	public boolean hasErrors(List<StringNode> roots) {	
 		for (StringNode node: roots) {
-			while(node != null){
-				if( (!hasRightNumChildren(node)) 
-						&& getNumberOfParameters(node.getCommandString()) != 0 ){ answer = true;}	
+			if(!childrenAndCommandAreValid(node)) return false;
+		}
+		return true;
+	}
+	private boolean commandIsValid(StringNode node) {
+		// check myUserCommandManager();
+			return mySymbols.keySet().contains(node.getCommandString());
+	}
+	private boolean childrenAndCommandAreValid(StringNode current) {
+		boolean answer = false;
+		if (commandIsValid(current) && hasRightNumChildren(current)) {
+			answer = true;
+			if(current.getChildren() == null){
+				return true;
+			}
+			for(StringNode child: current.getChildren()){
+				if(!childrenAndCommandAreValid(child)){
+					answer = false;
+				}
 			}
 		}
 		return answer;
-	}
-	
-	private boolean allChildrenArePresent(StringNode current) {
-		if(current.getChildren() == null) return true;	
-		while(current.getChildren() != null) {
-			if (hasRightNumChildren(current)) {
-				
-			}
-				
-		}
-		return false;
 	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
@@ -297,6 +307,7 @@ public class TextParser extends AbstractParser {
 	
 
 	private int getNumberOfParameters(String commandString) {
+		// check myUserCommandManager
 		if (isParameter(commandString) || commandString.contains(" ") || isVariable(commandString)) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}

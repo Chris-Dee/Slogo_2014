@@ -16,7 +16,7 @@ public class Ask extends TurtleControlCommand {
 		List<StringNode> expr = myParser.parse(myExpression);
 		List<Turtle> turtles = myTurtleManager.getFilteredTurtles();
 		List<Integer> lastIDs = getIDsOfTurtles(turtles);
-		myTurtleManager.setFilterList(processExprNodes(expr));
+		myTurtleManager.setFilterList(getIDsOfExpression(expr));
 		List<StringNode> commands = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(commands, myTurtleManager.getFilteredTurtles());
 		myTurtleManager.setFilterList(lastIDs);

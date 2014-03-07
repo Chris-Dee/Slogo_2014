@@ -254,6 +254,12 @@ public class TextParser extends AbstractParser {
 		}
 		return answer;
 	}
+	
+	private boolean allChildrenArePresent(StringNode current) {
+		while(current.getChildren() != null) {
+			
+		}
+	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
 		return node.getChildren().size() == getNumberOfParameters(node.getCommandString());

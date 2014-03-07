@@ -36,7 +36,6 @@ public class SlogoModel {
 	
 	public void setViewer(SlogoView viewer){
 		myViewer = viewer;
-		viewer.setLanguageManager(myLanguageManager);
 	}
 	
 	public void setTurtleManager(TurtleManager manager){

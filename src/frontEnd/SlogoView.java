@@ -102,16 +102,13 @@ public class SlogoView extends JFrame{
         
         
     }
-    public void setLanguageManager(LanguageManager lang){
-    	language=lang;
-    }
 	private void makeLangList(JPanel homePanel){
 		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
 		homePanel.add(languagesList);
 		languagesList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
-				language.setLanguage((String) languagesList.getSelectedItem());  
+				model.setLanguage((String) languagesList.getSelectedItem());  
 				System.out.println(language.getLanguage());
 			}
 		});  

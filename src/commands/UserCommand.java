@@ -44,7 +44,8 @@ public class UserCommand extends ControlCommand {
 	 * return false if parameters not set successfully
 	 * the list values should contain either numbers or global variables
 	 */
-	public boolean setValueToParameter(List<String> values){
+	public boolean setValueToParameter(String parameters){
+		List<String> values = AbstractParser.convertFromStringToList(parameters);
 		if(values.size() != myVariables.size()) return false;
 		myLocalVariableManager = new VariableManager();
 		for(int i = 0; i < values.size(); i ++){

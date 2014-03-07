@@ -3,13 +3,10 @@ package parser;
 import java.util.*;
 
 import exception.IllegalCommandException;
-
-import backEnd.Managers.LanguageManager;
 import backEnd.Managers.VariableManager;
 import parser.tree.StringNode;
 
 public abstract class AbstractParser {
-	protected LanguageManager myLanguageManager;
 	protected static final String DEFAULT_PROGRAM_LANGUAGE_FILE = "resources/ProgramLanguage";
 	protected static final String DEFAULT_RESOURCE_PATH = "backEnd/";
 	protected static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
@@ -58,10 +55,6 @@ public abstract class AbstractParser {
 		
 		return singleLineString.toUpperCase();
 	}
-	
-	public void setLanguageManager(LanguageManager manager){
-		myLanguageManager = manager;
-	}
 
 	/*
 	 * Used to print the command tree structure for test only
@@ -85,8 +78,13 @@ public abstract class AbstractParser {
 		}
 	}
 	
-	public void setLanguage(String s) {
-		myLanguageManager.setLanguage(s);
+	public static List<String> convertFromStringToList(String s){
+		List<String> answer = new ArrayList<String>();
+		String[] list = s.split(" ");
+		for(String a: list){
+			answer.add(a);
+		}
+		return answer;
 	}
 	
 	public static void printListNodes(List<StringNode> current){

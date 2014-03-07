@@ -33,6 +33,7 @@ public class SlogoModel {
 	}
 	
 	public void setLanguageManager(LanguageManager manager){
+		myLanguageManager = manager;
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	

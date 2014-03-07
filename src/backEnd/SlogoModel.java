@@ -30,13 +30,14 @@ public class SlogoModel {
 		myParser = new TextParser();
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
-		myLanguageManager = new LanguageManager();
+	}
+	
+	public void setLanguageManager(LanguageManager manager){
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	
 	public void setViewer(SlogoView viewer){
 		myViewer = viewer;
-		viewer.setLanguageManager(myLanguageManager);
 	}
 	
 	public void setTurtleManager(TurtleManager manager){

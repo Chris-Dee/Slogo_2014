@@ -13,6 +13,7 @@ import parser.AbstractParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
 import commands.AbstractCommand;
+import commands.UserCommand;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 
@@ -37,6 +38,8 @@ public class CommandFactory {
 		myCommandTypes = ResourceBundle.getBundle(DEFAULT_BACKEND_PACKAGE + DEFAULT_COMMANDTYPES);
 		myControlCommands = new ArrayList<String>();
 		myModifyVariableCommands = new ArrayList<String>();
+		myVariableManager = new VariableManager();
+		myUserCommandManager = new UserCommandManager();
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
 	}
@@ -89,10 +92,9 @@ public class CommandFactory {
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 				if(ifControlCommand(current)){
 					ControlNode cur = (ControlNode) current;
-					System.out.println("Base Case: non-parameter command");
+					if (isUserCommand(current)){ return makeUserCommand(cur, turtles); }
 					return makeControlCommand(cur, turtles);
 				}
-				
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}
@@ -116,8 +118,45 @@ public class CommandFactory {
 	 * Used to check if a StringNode is a ControlNode
 	 */
 	protected boolean ifControlCommand(StringNode current){
-		System.out.println("ifControlCommand: "+current.getCommandString());
-		return myControlCommands.contains(current.getCommandString());
+//		System.out.println("ifControlCommand: "+current.getCommandString());
+		return isUserCommand(current) || myControlCommands.contains(current.getCommandString());
+	}
+	
+	protected boolean isUserCommand(StringNode current){
+		return myUserCommandManager.hasUserCommand(current.getCommandString());
+	}
+	
+	protected String makeUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+		try { 
+			UserCommand command = myUserCommandManager.getUserCommand(node.getCommandString());
+			Method[] methods = command.getClass().getMethods();
+			firstMethodsExecuted(turtles, command, methods);
+			for (Method m: methods){
+				if(m.getName().equals("setExpression")){
+					m.invoke(command, node.getExpression());
+//					System.out.println("setExpression");
+				}
+				if(m.getName().equals("setCommands")){
+					m.invoke(command, node.getCommands());
+//					System.out.println("setCommands");
+				}
+				if(m.getName().equals("setValueToParameter")){
+					m.invoke(command, node.getValue());
+//					System.out.println("setElseCommands");
+				}
+		    }
+			return executeCommand(command, methods);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalCommandException();
+		} catch (InstantiationException e) {
+			throw new IllegalCommandException();
+		} catch (IllegalAccessException e) {
+			throw new IllegalCommandException();
+		} catch (IllegalArgumentException e) {
+			throw new IllegalParameterException();
+		} catch (InvocationTargetException e) {
+			throw new IllegalCommandException();
+		}
 	}
 	
 	/*
@@ -198,13 +237,13 @@ public class CommandFactory {
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
-					System.out.println("m.getName(): "+m.getName());
-					System.out.println("Magnitude1: "+magnitude1);
+//					System.out.println("m.getName(): "+m.getName());
+//					System.out.println("Magnitude1: "+magnitude1);
 					m.invoke(command, magnitude1);
-					System.out.println("already set magnitude");
+//					System.out.println("already set magnitude");
 				}
 				if(m.getName().equals("setDoubleMagnitude")){
-					System.out.println("Magnitude 1 and 2: "+magnitude1+" "+magnitude2);
+//					System.out.println("Magnitude 1 and 2: "+magnitude1+" "+magnitude2);
 					m.invoke(command, magnitude1, magnitude2);
 				}
 		    }
@@ -223,8 +262,7 @@ public class CommandFactory {
 	}
 	
 	protected boolean hasNoParameter(StringNode current){
-		if(myUserCommandManager.hasUserCommand(current.getCommandString())) return true;
-		return myParameters.getString(current.getCommandString()).equals("0");
+		return isUserCommand(current) || myParameters.getString(current.getCommandString()).equals("0");
 	}
 	
 	protected boolean hasOneParameter(StringNode current){

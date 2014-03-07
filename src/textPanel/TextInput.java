@@ -42,9 +42,7 @@ private void createTextInput(JPanel inputTextPanel){
 			try{
 				SlogoView.viewStats().setResultsBox(model.receiveTextInput(textInput.getText())+"");
 				model.updateHistory(textInput.getText());
-				manager.rotateImage();
-				//savePanel(textInput);
-
+				//manager.rotateImage();
 			}
 			catch(Exception e1){
 				e1.printStackTrace();

@@ -2,6 +2,7 @@ package parser;
 
 import java.util.*;
 
+import backEnd.Managers.LanguageManager;
 import backEnd.Managers.UserCommandManager;
 import exception.IllegalCommandException;
 import parser.tree.ControlNode;
@@ -12,26 +13,40 @@ import parser.tree.UserDefinedCommandNode;
 
 public class TextParser extends AbstractParser {
 	
-
+	protected LanguageManager myLanguageManager;
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	private List<StringNode> myCommands;
 	private UserCommandManager myUserCommandManager;
 	
 	public TextParser() {
-
+		super();
+		myLanguageManager = new LanguageManager();
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
 		myCommands = new ArrayList<StringNode>();
+		myUserCommandManager = new UserCommandManager();
  	}
+	
+	public void setLanguage(String s) {
+		myLanguageManager.setLanguage(s);
+	}
+	
+	public void setLanguageManager(LanguageManager manager){
+		myLanguageManager = manager;
+	}
 	
 	@Override
 	public List<StringNode> parse(String s) throws IllegalCommandException {
+		System.out.println("parse() called");
 		myCommandList.clear();
 		myCommands.clear();
 		String singleLineString = convertTextToSingleLine(s);
+		System.out.println("convertTextToSingleLine() called");
 		formatStringArray(singleLineString);
+		System.out.println("formateStringArray() called");
 		int start = initializeTree(myCommandList);
+		System.out.println("start: "+start);
 		buildTree(myLanguageManager.translateNode(myRoot), start);
 		System.out.println("Root: " + myCommands.get(0).getCommandString());
 		for (StringNode s1 : myCommands) {
@@ -328,6 +343,7 @@ public class TextParser extends AbstractParser {
 			}
 		}
 		else {
+			System.out.println("Not control statement: "+commands.get(0));
 			myRoot = new StringNode(commands.get(0));
 		}
 		myRoot = myLanguageManager.translateNode(myRoot);

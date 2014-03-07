@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import StatsPanel.StatsPanel;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 import backEnd.Managers.LanguageManager;
@@ -26,6 +27,7 @@ private void makeInputPanel(JPanel homePanel){
 	JPanel panel=new JPanel();
 	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	panel.add(new SavePanel(model,myResources));
+	JPanel smallPanel=new JPanel();
 	panel.add(new CommandPanel(myResources, model, manager, language));
 	homePanel.add(panel);
 }

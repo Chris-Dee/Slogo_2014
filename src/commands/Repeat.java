@@ -9,6 +9,8 @@ import parser.tree.StringNode;
 
 public class Repeat extends ControlCommand{
 	
+	public static final String REPCOUNT = ":repcount";
+	
 	protected LoopFactory myFactory;
 	
 	public Repeat(){
@@ -27,6 +29,6 @@ public class Repeat extends ControlCommand{
 		double loop = myFactory.runCommands(expr, myTurtles);
 //		System.out.println("repeat loop: "+ loop);
 		List<StringNode> commands = myParser.parse(myCommands);
-		return myFactory.runAutoLoopCommands(commands, ":repcount", loop, myTurtles);
+		return myFactory.runAutoLoopCommands(commands, REPCOUNT, loop, myTurtles);
 	}
 }

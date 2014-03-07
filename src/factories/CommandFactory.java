@@ -132,24 +132,9 @@ public class CommandFactory {
 			Method[] methods = command.getClass().getMethods();
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
-				if(m.getName().equals("setExpression")){
-					m.invoke(command, node.getExpression());
-//					System.out.println("setExpression");
-				}
-				if(m.getName().equals("setCommands")){
-					m.invoke(command, node.getCommands());
-//					System.out.println("setCommands");
-				}
-				if(m.getName().equals("setValueToParameter")){
-					m.invoke(command, node.getValue());
-//					System.out.println("setElseCommands");
-				}
+				if(m.getName().equals("setValueToParameter")){ m.invoke(command, node.getExpression()); }
 		    }
 			return executeCommand(command, methods);
-		} catch (ClassNotFoundException e) {
-			throw new IllegalCommandException();
-		} catch (InstantiationException e) {
-			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {

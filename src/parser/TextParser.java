@@ -8,6 +8,7 @@ import exception.IllegalCommandException;
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
 import parser.tree.StringNode;
+import parser.tree.UserDefinedCommandNode;
 
 
 public class TextParser extends AbstractParser {
@@ -27,9 +28,6 @@ public class TextParser extends AbstractParser {
 		myUserCommandManager = new UserCommandManager();
  	}
 	
-	public void setLanguage(String s) {
-		myLanguageManager.setLanguage(s);
-	}
 	
 	public void setLanguageManager(LanguageManager manager){
 		myLanguageManager = manager;
@@ -134,8 +132,14 @@ public class TextParser extends AbstractParser {
 
 		}
 		else if (parameterNumber == 1) {
-			if (myControlCommands.containsKey(myCommandList.get(index+1))) { //control statement
-				if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
+			if (myControlCommands.containsKey(myCommandList.get(index+1)) || 
+					myUserCommandManager.hasUserCommand(myCommandList.get(index+1))) { //control statement or user defined
+				if (myUserCommandManager.hasUserCommand(myCommandList.get(index+1))) {
+					UserDefinedCommandNode child = current.addUserDefinedCommandChild(myCommandList.get(index+1));
+					numChildren = handleUserDefinedCommandNode(child, index+1);
+					numChildren += buildTree(child, index+numChildren+1);
+				}
+				else if (myControlCommands.getString(myCommandList.get(index + 1)).equals("3")) {
 					IfElseNode child = current.addIfElseChild(myCommandList.get(index+1));
 					numChildren = handleIfElseNode(child, index+1);
 					numChildren += buildTree(child, index+numChildren+1);
@@ -165,13 +169,31 @@ public class TextParser extends AbstractParser {
 	}
 	
 
+	private int handleUserDefinedCommandNode(UserDefinedCommandNode child, int index) {
+		StringBuilder sb = new StringBuilder();
+		int parameterNumber = myUserCommandManager.getNumParameterCommand(child.getCommandString());
+		int i = index+1;
+		
+		while(parameterNumber != 0) {
+			while (getNumberOfParameters(myCommandList.get(i)) != 0) {
+				sb.append(myCommandList.get(i));
+				i++;
+			}
+			sb.append(myCommandList.get(i));
+			parameterNumber--;
+			i++;
+		}
+
+		return i-index;
+	}
+
 	private int handleIfElseNode(IfElseNode node, int index) {
 		StringBuilder sb = new StringBuilder();
 		String truecommands = null;
 		String falsecommands = null;
 		int i = index+1;
 
-		if (!myControlCommands.containsKey(myCommandList.get(index+1))) {
+		if (!myControlCommands.containsKey(myCommandList.get(i))) {
 			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
@@ -224,9 +246,15 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
-			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
+			if (myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
+			}
+			else {
+				while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
+					sb.append(myCommandList.get(i));
+					i++;
+				}
 			}
 		}
 		else {
@@ -238,8 +266,20 @@ public class TextParser extends AbstractParser {
 			i++;		
 		}
 		commands = myCommandList.get(i);
-
-		node.setExpression(sb.toString());
+		if (sb.toString().startsWith(mySymbols.getString("ListStart"))) {
+			int startSpace = 1;
+			while(sb.toString().charAt(startSpace) == ' ') {
+				startSpace ++;
+			}
+			int endSpace = commands.length()-2;
+			while(sb.toString().charAt(endSpace) == ' ') {
+				endSpace --;
+			}
+			node.setExpression(sb.toString().substring(startSpace, endSpace+1));
+		}
+		else {
+			node.setExpression(sb.toString());
+		}
 		int startSpace = 1;
 		while(commands.charAt(startSpace) == ' ') {
 			startSpace ++;
@@ -253,8 +293,6 @@ public class TextParser extends AbstractParser {
 		i++;
 		return i-index;
 	}
-	
-	
 
 
 	private boolean allParentsHaveParameters(StringNode current){
@@ -275,8 +313,8 @@ public class TextParser extends AbstractParser {
 		return true;
 	}
 	private boolean commandIsValid(StringNode node) {
-		// check myUserCommandManager();
-			return mySymbols.keySet().contains(node.getCommandString());
+			return mySymbols.keySet().contains(node.getCommandString()) || 
+					myUserCommandManager.hasUserCommand(node.getCommandString());
 	}
 	private boolean childrenAndCommandAreValid(StringNode current) {
 		boolean answer = false;
@@ -328,8 +366,8 @@ public class TextParser extends AbstractParser {
 	
 
 	private int getNumberOfParameters(String commandString) {
-		// check myUserCommandManager
-		if (isParameter(commandString) || commandString.contains(" ") || isVariable(commandString)) return 0;
+		if (isParameter(commandString) || commandString.contains(" ") || 
+				isVariable(commandString) || myUserCommandManager.hasUserCommand(commandString)) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

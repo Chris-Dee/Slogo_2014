@@ -27,7 +27,9 @@ public class LanguageManager {
 	public StringNode convertLanguage(StringNode root) {
 		return loopTree(root);
 	}
-	
+	public String getLanguage(){
+		return myLanguage;
+	}
 	public void setLanguage(String language){
 		if(language != null) myLanguage = language;
 		myLanguageMap.clear();

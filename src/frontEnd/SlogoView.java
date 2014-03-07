@@ -7,12 +7,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -60,6 +63,7 @@ public class SlogoView extends JFrame{
 	private ColorManager myColors;
 	private VariableManager variables;
 	private ImageManager images;
+	private LanguageManager language;
 	public SlogoView(){
 		super();
 		initiate();
@@ -98,17 +102,40 @@ public class SlogoView extends JFrame{
         
         
     }
-	
+    public void setLanguageManager(LanguageManager lang){
+    	language=lang;
+    }
+	private void makeLangList(JPanel homePanel){
+		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
+		homePanel.add(languagesList);
+		languagesList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{       
+				language.setLanguage((String) languagesList.getSelectedItem());  
+				System.out.println(language.getLanguage());
+			}
+		});  
+	}
+	private Object[] removeFileNames(String[] s){
+		List<String> langList=new ArrayList<String>();
+		for(int i=0;i<s.length;i++){
+			if(s[i].contains(".properties")){
+			String[] str=s[i].split(".properties");
+			System.out.println(str[0]);
+			langList.add(str[0]);
+			}
+		}
+		return langList.toArray();
+	}
 	private void makeCommandPanel(JPanel inputTextPanel){
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel,BoxLayout.Y_AXIS));
+		makeLangList(inputTextPanel);
 		createSaveButton(inputTextPanel);
-
 		textInput=new JTextArea(5,20);
 		JScrollPane inputPane=new JScrollPane(textInput);
 		textInput.setText("");
-		//"Hit submit a lot.It makes hexagons or octagons or something :D \n TODO \n get changing images working.\n refactor JStuff code in FrameLayout \n work on wall hit conditions \n make lines a little less flaky /n changing Turtle image(?)");
 		textInput.setSize(100,300);
-		Button submit=new Button(myResources.getString("SubmitText"));
+		JButton submit=new JButton(myResources.getString("SubmitText"));
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{ 
@@ -153,7 +180,6 @@ public class SlogoView extends JFrame{
 			{       
 				results.setText(model.receiveTextInput(savedBoxes.get(i).getText())+"");
 				statPage.updateInfo();    
-
 			}
 		});   
 		oneBox.add(loader);
@@ -163,7 +189,7 @@ public class SlogoView extends JFrame{
 		return statPage;
 	}
 	private void createSaveButton(JPanel savePanel){
-		Button saveButton=new Button(myResources.getString("Save"));
+		JButton saveButton=new JButton(myResources.getString("Save"));
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{  

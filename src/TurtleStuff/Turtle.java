@@ -52,7 +52,6 @@ public class Turtle extends JGObject {
 	}
 	public void setImageID(int ID){
 		turtImage=ID;
-		System.out.println(turtImage);
 	}
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);

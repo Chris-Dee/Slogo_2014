@@ -73,11 +73,11 @@ public class TurtleManager {
 	}
 	public void rotateImage() {
 		for(Turtle t:filterList){
-			String imageString= "Turtle" + Math.random();
+			String imageString= t.getImageName()+"i";
 			Stats s= getStats(t);
-			System.out.println(t.getImageID());
-			myEngine.defineImageRotated(t.getImageName(),"-",0, t.getImageName(), s.getRot()%360);
-			t.setImage(imageString);
+			System.out.println("ID "+t.getImageName()+" "+imageString);
+			myEngine.defineImageRotated(t.getImageName()+"i","-",0, t.getImageName(), Math.toRadians(s.getRot()%360));
+			t.setImage(t.getImageName()+"i");
 		}
 	}
 	public Stats getStats(Turtle t){

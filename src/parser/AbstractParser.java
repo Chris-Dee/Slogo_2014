@@ -78,6 +78,10 @@ public abstract class AbstractParser {
 		}
 	}
 	
+	public void setLanguage(String s) {
+		myLanguageManager.setLanguage(s);
+	}
+	
 	public static void printListNodes(List<StringNode> current){
 		System.out.println("List of StringNodes: ");
 		for(StringNode cur: current){

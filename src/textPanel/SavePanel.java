@@ -19,8 +19,9 @@ public class SavePanel extends JPanel{
 	private SlogoModel model;
 	private ResourceBundle myResources;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
-	public SavePanel(SlogoModel modeler, ResourceBundle res){
+	public SavePanel(SlogoModel modeler, ResourceBundle res, List<JTextArea> saveBox){
 		super();
+		savedBoxes=saveBox;
 		model=modeler;
 		myResources=res;
 		this.add(makeSavedTextBoxes());

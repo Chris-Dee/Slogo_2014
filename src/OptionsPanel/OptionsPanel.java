@@ -44,7 +44,6 @@ public void makeOptionsPanel(){
 	this.add(new VeloSlider(myResources, turtleSpace, myManager));
 	this.add(new ColorPanels(myResources, myManager, color));
 	this.add(new ImageChooser(myResources,myManager, turtleSpace, images));
-	this.add(new DirectionButtons(myResources, model, turtleSpace, myManager));
 	this.add(new HelpButton(myResources));
 	this.add(new MoveAndRefresh(myResources,turtleSpace, backNumber,
 			textInput, savedBoxes, myManager));

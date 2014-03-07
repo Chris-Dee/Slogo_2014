@@ -131,7 +131,11 @@ public class ParserTest {
 		parser.setLanguageManager(lang);
 		List<StringNode> root = parser.parse("fd 50 fd 50");
 		System.out.println("testErrorCheck" + " has errors:" + ((TextParser) parser).hasErrors(root));
-		assertTrue(((TextParser) parser).hasErrors(root));
+		assertFalse(((TextParser) parser).hasErrors(root));
 	}
 	
+	@Test
+	public void testRepeatWithVar() throws IllegalCommandException {
+		
+	}
 }

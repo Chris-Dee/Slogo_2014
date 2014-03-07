@@ -29,11 +29,12 @@ public class LanguageManager {
 	}
 	
 	public void setLanguage(String language){
-//		System.out.println("setLanguage: "+language);
+		System.out.println("LanguageManager setLanguage: "+language);
 		if(language != null) myLanguage = language;
 		myLanguageMap.clear();
 		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
 		makeLanguageMap();
+		System.out.println("LangaugeManager setLanguage Done");
 	}
 	
 	protected void makeLanguageMap(){

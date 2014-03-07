@@ -366,6 +366,7 @@ public class TextParser extends AbstractParser {
 	
 
 	private int getNumberOfParameters(String commandString) {
+		System.out.println("getNumeParameters called");
 		if (isParameter(commandString) || commandString.contains(" ") || 
 				isVariable(commandString) || myUserCommandManager.hasUserCommand(commandString)) return 0;
 		System.out.println("getNumberOfParameters: " + myUserCommandManager.hasUserCommand(commandString));

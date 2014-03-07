@@ -7,42 +7,56 @@ import parser.AbstractParser;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
-import backEnd.Managers.UserCommandManager;
 
 public class To extends ControlCommand {
+	
+	public static final int DEFAULT_TEST_PARAMETERNUM = 0;
 	
 	public To(){
 		super();
 	}
-	
-	protected UserCommandManager myCommandManager;
+
 	protected String myName;
 	
 	public void setCommandName(String n){
 		if(n != null) myName = n;
 	}
-	
-	public void setUserCommandManager(UserCommandManager m){
-		myCommandManager = m;
-	}
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		if(myName == null || myExpression == null || myCommands == null) return 0;
+		System.out.println("To executed: "+myName+" "+myExpression+" "+myCommands);
+		if(myName == null || myExpression == null || myCommands == null){
+			System.out.println("null name or expression or commands");
+			return 0;
+		}
 		
 		List<StringNode> exprRoots = myParser.parse(myExpression);
-		if(!ifLegalParameter(exprRoots)) return 0;
-		List<StringNode> commandRoots = myParser.parse(myCommands);
-		if(myParser.hasErrors(commandRoots)) return 0;
-		
-		List<String> cmdVariables = getVariableListFromListNode(commandRoots);
+		if(!ifLegalParameter(exprRoots)) {
+			System.out.println("parameter not legal");
+			return 0;
+		}
 		List<String> paraVariables = getVariableListFromListNode(exprRoots);
+		for(String v: paraVariables){
+			myVariableManager.setValueToVariable(v, DEFAULT_TEST_PARAMETERNUM);	
+		}
+		
+		List<StringNode> commandRoots = myParser.parse(myCommands);
+		if(myParser.hasErrors(commandRoots)){
+			System.out.println("commands not legal");
+			return 0;
+		}
+		List<String> cmdVariables = getVariableListFromListNode(commandRoots);
 		if(!ifTwoStringListsEqual(cmdVariables, paraVariables)) return 0;
-		System.out.println("TO: is Legal");
+		for(String v: paraVariables){
+			myVariableManager.removeVariable(v);	
+		}
+		
+//		System.out.println("TO: is Legal");
+		
 		UserCommand cmd = new UserCommand();
 		cmd.setExpression(myExpression);
 		cmd.setCommands(myCommands);
-		myCommandManager.createNewUserCommand(myName, exprRoots.size(), cmd);
+		myUserCommandManager.createNewUserCommand(myName, exprRoots.size(), cmd);
 		return 1;
 	}
 	

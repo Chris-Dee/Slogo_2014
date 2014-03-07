@@ -93,13 +93,18 @@ public class CommandFactory {
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (AbstractParser.isParameter(current.getCommandString()) // a number in the leaf
 					|| myVariableManager.isVariable(current.getCommandString())){ // or a variable in the leaf
-				System.out.println("Base Case: number of variable");
+//				System.out.println("Base Case: number of variable");
 				return current.getCommandString();	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
+				System.out.println("Non-parameter command in the leaf");
 				if(ifControlCommand(current)){
+					System.out.println("Is a control command");
 					ControlNode cur = (ControlNode) current;
-					if (isUserCommand(current)){ return makeUserCommand(cur, turtles); }
+					if (isUserCommand(current)){ 
+						System.out.println("is a user command");
+						return makeUserCommand(cur, turtles); }
+					System.out.println("not a user command, but a control command");
 					return makeControlCommand(cur, turtles);
 				}
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
@@ -173,20 +178,26 @@ public class CommandFactory {
 			for (Method m: methods){
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getExpression());
-					System.out.println("setExpression");
+//					System.out.println("setExpression");
 				}
 				if(m.getName().equals("setCommands")){
 					m.invoke(command, node.getCommands());
-					System.out.println("setCommands");
+//					System.out.println("setCommands");
 				}
 				if(m.getName().equals("setElseCommands")){
 					m.invoke(command, node.getElseCommands());
-					System.out.println("setElseCommands");
+//					System.out.println("setElseCommands");
 				}
 				if(m.getName().equals("setTurtleManager")){
 					m.invoke(command, myTurtleManager);
-					System.out.println("setTurtleManager");
+//					System.out.println("setTurtleManager");
 				}
+				if(m.getName().equals("setUserCommandManager")){
+					m.invoke(command, myUserCommandManager);
+				}
+//				if(m.getName().equals("setCommandName")){
+//					m.invoke(command, node.getCommandString());
+//				}
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {

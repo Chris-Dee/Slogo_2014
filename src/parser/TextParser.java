@@ -33,22 +33,7 @@ public class TextParser extends AbstractParser {
 		for (StringNode s1 : myCommands) {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
-		//translateNodes();
 		return myCommands;
-	}
-
-
-	private void translateNodes() {
-		for (StringNode node : myCommands) {
-			if (!isParameter(node.getCommandString())) {
-				try {
-					node = myLanguageManager.convertLanguage(node);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 	private void formatStringArray(String s) {
@@ -143,6 +128,7 @@ public class TextParser extends AbstractParser {
 		}
 		else {
 			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
+			nextRoot = myLanguageManager.translateNode(nextRoot);
 			myCommands.add(nextRoot);
 			buildTree(nextRoot, index+1);
 			
@@ -255,15 +241,18 @@ public class TextParser extends AbstractParser {
 	/*
 	 * May not be needed anymore; exceptions are passed automatically to SlogoModel
 	 */
-//	public boolean checkForErrors() {
-//		boolean answer = true;
-//		for (StringNode leaf : myLeaves) {
-//			if( (!hasRightNumChildren(leaf) || !allParentsHaveParameters(leaf)) 
-//					&& getNumberOfParameters(leaf.getCommandString()) != 0 ){ answer = false; }
-//		}
-//		myLeaves.clear();
-//		return answer;
-//	}
+	public boolean checkForErrors(List<StringNode> roots) {
+		boolean answer = true;
+		
+		for (StringNode node: roots) {
+			while(node != null){
+				if( (!hasRightNumChildren(node)) 
+						&& getNumberOfParameters(node.getCommandString()) != 0 ){ answer = false;}	
+			}
+		}
+		myLeaves.clear();
+		return answer;
+	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
 		return node.getChildren().size() == getNumberOfParameters(node.getCommandString());
@@ -275,6 +264,7 @@ public class TextParser extends AbstractParser {
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
 				myRoot = new IfElseNode(commands.get(0), null, null, null);
 				index = handleIfElseNode((IfElseNode) myRoot, 0);
+				myRoot = myLanguageManager.translateNode(myRoot);
 				myCommands.add(myRoot);
 				return index;
 
@@ -282,12 +272,14 @@ public class TextParser extends AbstractParser {
 			else {
 				myRoot = new ControlNode(commands.get(0), null, null);
 				index = handleControlNode((ControlNode) myRoot, 0);
+				myRoot = myLanguageManager.translateNode(myRoot);
 				myCommands.add(myRoot);
 				return index;
 			}
 		}
 		else {
 			myRoot = new StringNode(commands.get(0));
+			myRoot = myLanguageManager.translateNode(myRoot);
 		}
 		
 		myCommands.add(myRoot);

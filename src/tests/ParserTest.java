@@ -80,7 +80,7 @@ public class ParserTest {
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
 		parser.setLanguage("French");
-		List<StringNode> root = parser.parse("forward 50");
+		List<StringNode> root = parser.parse("devant 50");
 		for (StringNode node : root) {
 			System.out.println(node.getCommandString());
 		}

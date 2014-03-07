@@ -1,19 +1,24 @@
-package backEnd;
+package backEnd.Managers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class VariableManager {
 	public static final String VARIABLE_PROGRAM_SYNTAX = "Variable";
 	
     private Map<String, Double> myVariableMap;
     private ResourceBundle myProgramLanguage;
+    private static final String DEFAULT_VARPATH="src/PreferenceManagers/VariablePrefs";
     
     public VariableManager(){
 		myVariableMap = new HashMap<String, Double>();
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
-    }
+		readFromFile(new File(DEFAULT_VARPATH));
+		}
     
     public boolean isVariable(String current){
     	return current.startsWith(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX));
@@ -32,7 +37,9 @@ public class VariableManager {
      * Returns the variable name by deleting its Variable syntax (e.g. :)
      */
     private String deleteVariableSyntax(String v){
+    	if(v.contains(VARIABLE_PROGRAM_SYNTAX))
     	return v.substring(myProgramLanguage.getString(VARIABLE_PROGRAM_SYNTAX).length());
+    	return v;
     }
     
     public void removeVariable(String v){
@@ -45,6 +52,31 @@ public class VariableManager {
      */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
+    	System.out.println(v);
     	return myVariableMap.get(variable);
+    }
+    public void readFromFile(File file){
+    	myVariableMap=new HashMap<String,Double>();
+    	try {
+			Scanner scanner=new Scanner(file);
+			while(scanner.hasNext()){
+			myVariableMap.put(scanner.next(),scanner.nextDouble());
+			System.out.println(myVariableMap);
+			if(scanner.hasNext())
+				scanner.nextLine();
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public String mapToString(String separatingCharacter){
+    	String result="";
+    	for(String s:myVariableMap.keySet()){
+    		result+=(s+separatingCharacter+getValueOfVariable(s)+"\n");
+    	}
+    	return result;
     }
 }

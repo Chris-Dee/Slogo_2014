@@ -7,28 +7,21 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
+import backEnd.Managers.*;
 import frontEnd.HelpPage;
 //to-do
 //need to put in different preferences
@@ -40,10 +33,7 @@ import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;
 import PreferenceManagers.ImageManager;
-import PreferenceManagers.VariableManager;
 import StatsPanel.StatsPanel;
-import TurtleStuff.Stats;
-import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
@@ -77,14 +67,14 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, VariableManager vars){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, backEnd.Managers.VariableManager myVariableManager){
 		super();
 		model=modelSlog;
 		images=image;
 		manager=manage;
 		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
-		variables=vars;
+		variables=myVariableManager;
 		initiate();
 		
 	}

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import backEnd.UserCommandManager;
-import PreferenceManagers.VariableManager;
+import backEnd.Managers.UserCommandManager;
+import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import parser.AbstractParser;
 import parser.tree.ControlNode;
@@ -39,7 +39,6 @@ public class CommandFactory {
 		myModifyVariableCommands = new ArrayList<String>();
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
-		myVariableManager = new VariableManager();
 		myUserCommandManager = new UserCommandManager();
 	}
 
@@ -113,7 +112,7 @@ public class CommandFactory {
 	 * Used to check if a StringNode is a ControlNode
 	 */
 	protected boolean ifControlCommand(StringNode current){
-		System.out.println(current.getCommandString());
+		System.out.println("ifControlCommand: "+current.getCommandString());
 		return myControlCommands.contains(current.getCommandString());
 	}
 	
@@ -130,12 +129,15 @@ public class CommandFactory {
 			for (Method m: methods){
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getExpression());
+					System.out.println("setExpression");
 				}
 				if(m.getName().equals("setCommands")){
 					m.invoke(command, node.getCommands());
+					System.out.println("setCommands");
 				}
 				if(m.getName().equals("setElseCommands")){
 					m.invoke(command, node.getElseCommands());
+					System.out.println("setElseCommands");
 				}
 		    }
 			return executeCommand(command, methods);
@@ -157,9 +159,11 @@ public class CommandFactory {
 		for(Method m: methods){
 			if(m.getName().equals("setTurtles")){
 				m.invoke(command, turtles);
+				System.out.println("setTurtles");
 			}
 			if(m.getName().equals("setVariableManager")){
 				m.invoke(command, myVariableManager);
+				System.out.println("setVariableManager");
 			}
 		}
 	}
@@ -226,9 +230,6 @@ public class CommandFactory {
 		return myParameters.getString(current.getCommandString()).equals("2");
 	}
 	
-	/*
-	 * Called only within the control commands
-	 */
 	public void setVariableManager(VariableManager variableManager){
 		myVariableManager = variableManager;
 	}

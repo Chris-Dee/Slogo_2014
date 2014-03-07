@@ -28,13 +28,16 @@ public void setFilterList(List<Integer> filters){
 		for(Turtle t: turtList)
 			if(t.matchFilter(i))
 				filterList.add(t);
-	filter=filters;
+	if(filterList.size()==0){
+		Turtle t=new Turtle(filters.get(0));
+		addTurtle(t);
+		t.setEngine(myEngine);
+	}
+		filter=filters;
 }
 public List<Turtle> getFilteredTurtles(){
-	if(filterList.size()!=0)
 	return filterList;
-	return turtList;
-}
+	}
 public void findEngine(TurtleDrawer t){
 	myEngine=t;
 }
@@ -71,8 +74,9 @@ public Stats displayStats(){
 public void rotateImage() {
 for(Turtle t:filterList){
 	String imageString= "Turtle" + Math.random();
-	Stats s = getStats(t);
-	myEngine.defineImageRotated(imageString,"-",0, "Turtle", s.getRot()%360);
+	Stats s= getStats(t);
+	System.out.println(t.getImageID());
+	myEngine.defineImageRotated(imageString,"-",0, t.getImageName(), s.getRot()%360);
 	t.setImage(imageString);
 }
 }
@@ -86,7 +90,6 @@ public void suspendTurtles(){
 public void setVelocities(double velocity) {
 	for(Turtle t:filterList)
 			t.setVelocity(velocity);
-	
 }
 public void addTurtle(Turtle t){
 	if(turt==null)

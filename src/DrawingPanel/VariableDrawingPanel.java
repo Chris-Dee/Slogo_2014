@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import PreferenceManagers.VariableManager;
+import backEnd.Managers.*;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
@@ -36,7 +36,6 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 	manager=manage;
 	this.add(makeDrawingPanel());
 }
-
 	private JPanel makeDrawingPanel(){
 		JPanel wholePanel=new JPanel();
 		wholePanel.setBackground(new java.awt.Color(0,0,0));
@@ -60,6 +59,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		variablePanel.setLayout(new BoxLayout(variablePanel,BoxLayout.Y_AXIS));
 		variableList=new JTextArea(20,10);
 		variableList.setEditable(false);
+		variableList.setText(myVars.mapToString("="));
 		variablePanel.add(variableList);
 		variablePanel.add(saveButton());
 		variablePanel.add(loadButton());
@@ -73,7 +73,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 				JFileChooser chooser=new JFileChooser();
 				if(chooser.showSaveDialog(variableList)==JFileChooser.APPROVE_OPTION);
 				File file=chooser.getSelectedFile();
-				myVars.readFromFile(file);
+				(myVars).readFromFile(file);
 			}
 		});
 		return variable;

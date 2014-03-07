@@ -2,7 +2,7 @@ package commands;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
-import backEnd.UserCommandManager;
+import backEnd.Managers.UserCommandManager;
 
 public class To extends ControlCommand {
 	

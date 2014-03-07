@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import backEnd.LanguageManager;
+import backEnd.Managers.LanguageManager;
 
 public class VariableManager {
 	public static final String VARIABLE_PROGRAM_SYNTAX = "Variable";

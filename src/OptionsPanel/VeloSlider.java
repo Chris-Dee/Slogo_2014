@@ -9,6 +9,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
@@ -33,7 +34,8 @@ public class VeloSlider extends JPanel {
 		veloSlider.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				manager.setVelocities(((JSlider)arg0.getSource()).getValue()*0.01);
+				for(Turtle t:manager.getFilteredTurtles())
+				t.setVelocity(((JSlider)arg0.getSource()).getValue()*0.01);
 			}
 		});
 		scrollPanel.add(veloSlider);

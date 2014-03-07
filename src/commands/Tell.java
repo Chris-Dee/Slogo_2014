@@ -24,12 +24,12 @@ public class Tell extends TurtleControlCommand{
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		myFactory.setVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
-		
-		
-		return 0;
+		myTurtleManager.setFilterList(processExprNodes(expr));
+		List<StringNode> last = myParser.parse(expr.get(expr.size()-1).getCommandString());
+		return myFactory.runCommands(last, myTurtleManager.getAllTurtles());
 	}
 	
-	protected List<Integer> processExprNodes(List<StringNode> expr){
+	protected List<Integer> processExprNodes(List<StringNode> expr) throws IllegalCommandException, IllegalParameterException{
 		List<Integer> nextActiveTurtles = new ArrayList<Integer>();
 		for(StringNode node: expr){
 			String current = node.getCommandString();

@@ -27,7 +27,8 @@ class MainSlogo {
 		UserCommandManager myUserCommandManager = new UserCommandManager();
 		LanguageManager myLanguageManager = new LanguageManager();
 		SlogoView display = new SlogoView(model, myTurtleManager,myColorManager, myImages, myVariableManager, myLanguageManager, myUserCommandManager);
-	    model.setViewer(display);
+	    display.setLanguageManager(my);
+		model.setViewer(display);
 	    model.setVariableManager(myVariableManager);
 	    model.setUserCommandManager(myUserCommandManager);
 	    model.setTurtleManager(myTurtleManager);

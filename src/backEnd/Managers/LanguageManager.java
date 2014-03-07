@@ -24,10 +24,6 @@ public class LanguageManager {
 		setLanguage(DEFAULT_LANGUAGE);
 	}
 	
-	public StringNode convertLanguage(StringNode root) {
-		return loopTree(root);
-	}
-	
 	public String getLanguage(){
 		return myLanguage;
 	}
@@ -50,16 +46,7 @@ public class LanguageManager {
 		}
 	}
 	
-	protected StringNode loopTree(StringNode current){
-		if(current == null) return current;
-		current = processNode(current);
-		for(StringNode child: current.getChildren()){
-			loopTree(child);
-		}
-		return current;
-	}
-	
-	protected StringNode processNode(StringNode current){
+	public StringNode translateNode(StringNode current){
 		if(AbstractParser.isParameter(current.getCommandString())) return current;
 		if(current.getCommandString().startsWith(myUserLanguage.getString("Variable"))){
 			current.setCommandString(processVariableNode(current));

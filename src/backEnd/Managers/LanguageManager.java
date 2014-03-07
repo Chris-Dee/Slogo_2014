@@ -54,7 +54,6 @@ public class LanguageManager {
 		return current;
 	}
 	
-	// need revision: check syntax (e.g. a, b, :a) for base case, variableCommmand
 	protected StringNode processNode(StringNode current){
 		if(AbstractParser.isParameter(current.getCommandString())) return current;
 		if(current.getCommandString().startsWith(myUserLanguage.getString("Variable"))){
@@ -62,6 +61,7 @@ public class LanguageManager {
 			return current;
 		}
 		String nonProgramLanguage = myLanguageMap.get(current.getCommandString());
+		if(nonProgramLanguage ==  null){ return current; } // is a User Command
 		current.setCommandString(myProgramLanguage.getString(nonProgramLanguage));
 		return current;
 	}

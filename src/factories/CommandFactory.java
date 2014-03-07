@@ -39,7 +39,10 @@ public class CommandFactory {
 		myModifyVariableCommands = new ArrayList<String>();
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
-		myUserCommandManager = new UserCommandManager();
+	}
+	
+	public void setUserCommandManager(UserCommandManager manager){
+		myUserCommandManager = manager;
 	}
 
 	protected void initCommandTypes(List<String> myCmdList, String type) {

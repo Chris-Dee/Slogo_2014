@@ -22,6 +22,7 @@ public class Repeat extends ControlCommand{
 		myFactory.setVariableManager(myVariableManager);
 		System.out.println("setVariableManager");
 		System.out.println("myExpression: "+myExpression);
+//		if(myParser == null) System.out.println("Parser is null");
 		List<StringNode> expr = myParser.parse(myExpression);
 		System.out.println("expr: " + expr.get(0).getCommandString());
 		double loop = myFactory.runCommands(expr, myTurtles);

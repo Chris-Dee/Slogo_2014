@@ -11,14 +11,13 @@ import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import factories.CommandFactory;
 import frontEnd.SlogoView;
-import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
 
 public class SlogoModel {
 	
 	private CommandFactory myCommandFactory;
-	private AbstractParser myParser;
+	private TextParser myParser;
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
@@ -33,6 +32,7 @@ public class SlogoModel {
 	}
 	
 	public void setLanguageManager(LanguageManager manager){
+		myLanguageManager = manager;
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	
@@ -59,6 +59,7 @@ public class SlogoModel {
 	
 	public void setUserCommandManager(UserCommandManager manager){
 		myCommandFactory.setUserCommandManager(manager);
+		myParser.setUserCommandManager(manager);
 	}
 	
 	/*
@@ -68,11 +69,11 @@ public class SlogoModel {
 
 	public double receiveTextInput(String userCommands){
 		try{
-			System.out.println("User pass input");
-			System.out.println("userCommands: "+userCommands);
+//			System.out.println("User pass input");
+//			System.out.println("userCommands: "+userCommands);
 			List<StringNode> roots = myParser.parse(userCommands);
 			double answer = myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
-			System.out.println("SlogoModel receiveTextInput: " + answer);
+//			System.out.println("SlogoModel receiveTextInput: " + answer);
 			return answer;
 		} catch(IllegalCommandException e){
 			e.printStackTrace();

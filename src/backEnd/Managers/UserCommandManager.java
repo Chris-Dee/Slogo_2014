@@ -29,4 +29,8 @@ public class UserCommandManager {
 		}
 		return myCommandParameterMap.get(commandName);
 	}
+	
+	public boolean hasUserCommand(String commandName){
+		return myCommandParameterMap.containsKey(commandName);
+	}
 }

@@ -92,6 +92,7 @@ public class CommandFactory {
 					System.out.println("Base Case: non-parameter command");
 					return makeControlCommand(cur, turtles);
 				}
+				
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}
@@ -222,6 +223,7 @@ public class CommandFactory {
 	}
 	
 	protected boolean hasNoParameter(StringNode current){
+		if(myUserCommandManager.hasUserCommand(current.getCommandString())) return true;
 		return myParameters.getString(current.getCommandString()).equals("0");
 	}
 	

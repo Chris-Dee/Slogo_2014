@@ -33,7 +33,7 @@ public class To extends ControlCommand {
 		List<StringNode> exprRoots = myParser.parse(myExpression);
 		if(!ifLegalParameter(exprRoots)) return 0;
 		List<StringNode> commandRoots = myParser.parse(myCommands);
-		if(myParser.hasErrors(commandRoots);
+		if(myParser.hasErrors(commandRoots)) return 0;
 		
 		List<String> cmdVariables = getVariableListFromListNode(commandRoots);
 		List<String> paraVariables = getVariableListFromListNode(exprRoots);

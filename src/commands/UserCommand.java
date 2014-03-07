@@ -29,7 +29,7 @@ public class UserCommand extends ControlCommand {
 	/*
 	 * Initialize myVariables list
 	 */
-	public void initializeParameterList(String p) throws IllegalParameterException{
+	public void initializeParameterList(String p) throws IllegalParameterException, IllegalCommandException{
 		List<StringNode> list = myParser.parse(p);
 		for(StringNode node: list){
 			String current = node.getCommandString();

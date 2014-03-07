@@ -6,12 +6,11 @@ import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
-import parser.AbstractParser;
 import parser.TextParser;
 
 public abstract class ControlCommand implements AbstractCommand{
 
-	protected AbstractParser myParser;
+	protected TextParser myParser;
 	protected String myExpression;
 	protected String myCommands;
 	protected List<Turtle> myTurtles;

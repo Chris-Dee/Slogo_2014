@@ -81,13 +81,23 @@ public class ParserTest {
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
-		List<StringNode> root = parser.parse(":a 2 :b 3 :c 5");
-		assertEquals(":A", root.get(0).getCommandString());
+		List<StringNode> root = parser.parse("1 2 3 4 5 6");
+		assertEquals("1", root.get(0).getCommandString());
 		assertEquals("2", root.get(1).getCommandString());
-		assertEquals(":B", root.get(2).getCommandString());
-		assertEquals("3", root.get(3).getCommandString());
-		assertEquals(":C", root.get(4).getCommandString());
-		assertEquals("5", root.get(5).getCommandString());
+		assertEquals("3", root.get(2).getCommandString());
+		assertEquals("4", root.get(3).getCommandString());
+		assertEquals("5", root.get(4).getCommandString());
+		assertEquals("6", root.get(5).getCommandString());
+	}
+	@Test
+	public void testFour() throws IllegalCommandException{
+		AbstractParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		List<StringNode> root = parser.parse("4");
+
+		assertEquals("4", root.get(0).getCommandString());
+		
 	}
 	
 	@Test

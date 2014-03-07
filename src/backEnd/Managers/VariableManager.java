@@ -12,12 +12,10 @@ public class VariableManager {
 	
     private Map<String, Double> myVariableMap;
     private ResourceBundle myProgramLanguage;
-    private static final String DEFAULT_VARPATH="src/PreferenceManagers/VariablePrefs";
     
     public VariableManager(){
 		myVariableMap = new HashMap<String, Double>();
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
-		readFromFile(new File(DEFAULT_VARPATH));
 		}
     
     public boolean isVariable(String current){
@@ -55,7 +53,7 @@ public class VariableManager {
     	System.out.println(v);
     	return myVariableMap.get(variable);
     }
-    public void readFromFile(File file){
+    public void readFromFile(File file) throws FileNotFoundException{
     	myVariableMap=new HashMap<String,Double>();
     	try {
 			Scanner scanner=new Scanner(file);
@@ -67,9 +65,7 @@ public class VariableManager {
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new FileNotFoundException();
 		}
     }
     public String mapToString(String separatingCharacter){

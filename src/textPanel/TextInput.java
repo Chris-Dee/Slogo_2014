@@ -3,6 +3,7 @@ package textPanel;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -22,8 +23,10 @@ JTextArea textInput;
 ResourceBundle myResources;
 TurtleManager manager;
 SlogoModel model;
-public TextInput(ResourceBundle res, TurtleManager manage, SlogoModel modeler){
+List<JTextArea> savedBox;
+public TextInput(ResourceBundle res, TurtleManager manage, SlogoModel modeler, List<JTextArea> savedBoxes){
 	super();
+	savedBox=savedBoxes;
 	myResources=res;
 	manager=manage;
 	model=modeler;
@@ -42,6 +45,7 @@ private void createTextInput(JPanel inputTextPanel){
 			try{
 				SlogoView.viewStats().setResultsBox(model.receiveTextInput(textInput.getText())+"");
 				model.updateHistory(textInput.getText());
+				savedBox.get(0).setText(textInput.getText());
 				//manager.rotateImage();
 			}
 			catch(Exception e1){

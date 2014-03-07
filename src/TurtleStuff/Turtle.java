@@ -164,7 +164,7 @@ public class Turtle extends JGObject {
 			drawingColor=penColor;
 		}
 		//returns distance traveled
-		public double setPosition(Position dest){
+		private double setPosition(Position dest){
 			double dist=Point2D.distance(x, y, dest.xPos(), dest.yPos());
 			x=dest.xPos();
 			y=dest.yPos();

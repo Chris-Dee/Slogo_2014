@@ -195,6 +195,9 @@ public class Turtle extends JGObject {
 		public boolean matchFilter(int id){
 			return turtId==id;
 		}
+		public int getID(){
+			return turtId;
+		}
 		public Stats getStats(){
 			return new Stats(xspeed,yspeed,x,y,myRotation,targetx,targety,drawingColor);
 		}

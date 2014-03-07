@@ -11,7 +11,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import backEnd.SlogoModel;
+import backEnd.Managers.UserCommandManager;
 import frontEnd.SlogoView;
 
 public class SavePanel extends JPanel{
@@ -19,7 +22,7 @@ public class SavePanel extends JPanel{
 	private SlogoModel model;
 	private ResourceBundle myResources;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
-	public SavePanel(SlogoModel modeler, ResourceBundle res, List<JTextArea> saveBox){
+	public SavePanel(SlogoModel modeler, ResourceBundle res, List<JTextArea> saveBox,UserCommandManager ucManager){
 		super();
 		savedBoxes=saveBox;
 		model=modeler;
@@ -47,6 +50,15 @@ public class SavePanel extends JPanel{
 		JScrollPane scrollSave=new JScrollPane(savedText);
 		savedBoxes.add(savedText);
 		savedText.setEditable(false);
+		JPanel saveFunction=new JPanel();
+		JTextField functionName=new JTextField(4);
+		Button functionSaver=new Button(myResources.getString("FunctionSave"));
+		functionSaver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{       
+				
+			}
+		});   
 		Button loader=new Button(myResources.getString("RunScript")+" "+(i+1));
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -55,6 +67,7 @@ public class SavePanel extends JPanel{
 				SlogoView.viewStats().updateInfo();    
 			}
 		});   
+		oneBox.add(saveFunction);
 		oneBox.add(loader);
 		oneBox.add(scrollSave);
 	}

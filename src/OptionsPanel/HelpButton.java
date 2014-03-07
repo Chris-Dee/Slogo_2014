@@ -31,6 +31,7 @@ public class HelpButton extends JPanel {
 				helpPage.setVisible(finalPage);
 			}
 		});   
+		homePanel.add(helpButton);
 	}
 	public void makePanel(){
 		makeHelpButton(this);

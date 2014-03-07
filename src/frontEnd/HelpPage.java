@@ -41,7 +41,7 @@ public class HelpPage extends JFrame {
 		main.add(createHelpPage());
 		pack();
 		setMinimumSize(new Dimension(400,600));
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

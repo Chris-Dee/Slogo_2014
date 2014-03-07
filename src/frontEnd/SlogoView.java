@@ -282,4 +282,7 @@ public class SlogoView extends JFrame{
 		// TODO Auto-generated method stub
 
 	}
+	public void setLanguageManager(LanguageManager myLanguageManager) {
+		language=myLanguageManager;
+	}
 }

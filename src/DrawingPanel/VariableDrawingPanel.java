@@ -21,16 +21,16 @@ import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
 public class VariableDrawingPanel extends JPanel {
-ResourceBundle myResources;
-VariableManager myVars;
-JTextArea variableList;
-TurtleDrawer TurtleSpace;
-TurtleManager manager;
+private static ResourceBundle myResources;
+private static VariableManager myVars;
+private static JTextArea variableList;
+private static TurtleDrawer TurtleSpace;
+private static TurtleManager manager;
 
 public VariableDrawingPanel(ResourceBundle res, VariableManager vars, 
 		TurtleDrawer turtSpace, TurtleManager manage){
 	super();
-	TurtleSpace=turtSpace;
+	 TurtleSpace=turtSpace;
 	myResources=res;
 	myVars=vars;
 	manager=manage;
@@ -74,6 +74,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 				if(chooser.showSaveDialog(variableList)==JFileChooser.APPROVE_OPTION);
 				File file=chooser.getSelectedFile();
 				(myVars).readFromFile(file);
+				fillVariables();
 			}
 		});
 		return variable;
@@ -91,6 +92,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 					BufferedWriter saver=new BufferedWriter(new FileWriter(file));
 					saver.write(myVars.mapToString(" "));
 					saver.close();
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -99,8 +101,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		});
 		return load;
 	}
-	public void fillVariables(){
-		System.out.println(myVars);
+	public static void fillVariables(){
 		variableList.setText(myVars.mapToString("="));
 	}
 }

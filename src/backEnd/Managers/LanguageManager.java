@@ -46,7 +46,7 @@ public class LanguageManager {
 				cmd = cmd.toUpperCase();
 				myLanguageMap.put(cmd, s);
 			}
-		}
+		} 
 	}
 	
 	public StringNode translateNode(StringNode current){

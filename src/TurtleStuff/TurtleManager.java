@@ -68,7 +68,9 @@ public class TurtleManager {
 	}
 	private boolean isClicked(Position p,Stats s){
 		return Point2D.distance(p.xPos(), p.yPos(),s.getPos().xPos()+10 , s.getPos().yPos()+10)<30;
-
+	}
+	public Turtle getClickedTurtle(){
+		return turt;
 	}
 
 	public Stats displayStats(){

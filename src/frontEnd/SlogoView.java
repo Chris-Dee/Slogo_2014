@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import textPanel.CommandPanel;
+import textPanel.InputPanel;
 import backEnd.Managers.*;
 import frontEnd.HelpPage;
 //to-do
@@ -155,8 +156,8 @@ public class SlogoView extends JFrame{
 				statPage.updateInfo();    
 			}
 		});   
-		oneBox.add(loader);
-		oneBox.add(scrollSave);
+		//oneBox.add(loader);
+		//oneBox.add(scrollSave);
 	}
 	public static StatsPanel viewStats(){
 		return statPage;
@@ -228,7 +229,8 @@ public class SlogoView extends JFrame{
 		TurtleSpace=new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
 		rightPanel.add(makeSavedTextBoxes());
-		rightPanel.add(makeInputPanel());
+		rightPanel.add(new InputPanel(model, myResources, manager, language));
+				//makeInputPanel());
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);

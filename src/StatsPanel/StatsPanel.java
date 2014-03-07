@@ -38,6 +38,7 @@ public class StatsPanel extends JPanel {
 		dataPanel.add(new TargetPanel(myResources,xTarget,yTarget));
 		dataPanel.add(new AnglePanel(angle,myResources));
 		add(dataPanel);
+		this.add(dataPanel);
 		}
 	public void updateInfo(){
 		DecimalFormat decFor=new DecimalFormat("0.000");

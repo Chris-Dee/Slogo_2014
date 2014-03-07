@@ -21,10 +21,12 @@ public LanguageBar(LanguageManager langManage){
 	private void makeLangList(JPanel homePanel){
 		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
 		homePanel.add(languagesList);
+		languagesList.setSelectedIndex(1);
 		languagesList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
 				languageManager.setLanguage((String) languagesList.getSelectedItem());  
+				System.out.println(languageManager.getLanguage());
 			}
 		});  
 	}

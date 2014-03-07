@@ -85,6 +85,7 @@ public class SlogoView extends JFrame{
 		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		variables=myVariableManager;
+		language=langManager;
 		initiate();
 
 	}

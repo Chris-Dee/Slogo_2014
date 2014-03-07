@@ -1,8 +1,9 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import parser.ParameterParser;
+import parser.AbstractParser;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -11,7 +12,7 @@ import backEnd.Managers.UserCommandManager;
 public class To extends ControlCommand {
 	
 	public To(){
-		myParser = new ParameterParser();
+		super();
 	}
 	
 	protected UserCommandManager myCommandManager;
@@ -25,28 +26,69 @@ public class To extends ControlCommand {
 		myCommandManager = m;
 	}
 
-	// check if has name
-	// check if there is a parameter list
-	// check if there is a command list
-	// randomly assign values and see if runs
-	// runs add to myCommandmanager and return 1
-	// has errors return 0
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		if(myName == null) return 0;
-		if(myExpression == null) return 0;
-		if(myCommands == null) return 0;
+		if(myName == null || myExpression == null || myCommands == null) return 0;
 		
-		List<StringNode> commandRoots = myParser.parse(myCommands);
 		List<StringNode> exprRoots = myParser.parse(myExpression);
-		myParser.ifLegal(exprRoots);
-		myParser.ifLegal(commandRoots);
+		if(!ifLegalParameter(exprRoots)) return 0;
+		List<StringNode> commandRoots = myParser.parse(myCommands);
+		if(myParser.hasErrors(commandRoots);
 		
+		List<String> cmdVariables = getVariableListFromListNode(commandRoots);
+		List<String> paraVariables = getVariableListFromListNode(exprRoots);
+		if(!ifTwoStringListsEqual(cmdVariables, paraVariables)) return 0;
+		System.out.println("TO: is Legal");
 		UserCommand cmd = new UserCommand();
 		cmd.setExpression(myExpression);
 		cmd.setCommands(myCommands);
-		myCommandManager.createNewUserCommand(myName, cmd);
+		myCommandManager.createNewUserCommand(myName, exprRoots.size(), cmd);
 		return 1;
+	}
+	
+	protected boolean ifTwoStringListsEqual(List<String> a, List<String> b){
+		for(String s: a){
+			if(!b.contains(s)) return false;
+		}
+		return true;
+	}
+	
+	protected boolean ifLegalParameter(List<StringNode> roots){
+		for(StringNode root: roots){
+			if(!myParser.isVariable(root.getCommandString())){
+				if(!AbstractParser.isParameter(root.getCommandString())) return false;
+			}
+		}
+		return true;
+	}
+	
+	protected List<String> getVariableListFromListNode(List<StringNode> roots){
+		List<String> vList = new ArrayList<String>();
+		for(StringNode root: roots){
+			vList = appendTwoLists(vList, getVariables(root));
+		}
+		return vList;
+	}
+	
+	protected List<String> getVariables(StringNode current){
+		if(current == null) return null;
+		List<String> variables = new ArrayList<String>();
+		if(myParser.isVariable(current.getCommandString())){
+			variables.add(current.getCommandString());
+		}
+		if(current.getChildren() != null){
+			for(StringNode child: current.getChildren()){
+				variables = appendTwoLists(variables, getVariables(child));
+			}
+		}
+		return variables;
+	}
+	
+	protected List<String> appendTwoLists(List<String> a, List<String> b){
+		for(String s: b){
+			a.add(s);
+		}
+		return a;
 	}
 
 }

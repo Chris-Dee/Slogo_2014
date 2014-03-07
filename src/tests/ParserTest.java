@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.junit.Test;
 
+import exception.IllegalCommandException;
+
 import backEnd.Managers.LanguageManager;
 
 import parser.AbstractParser;
@@ -17,7 +19,7 @@ public class ParserTest {
 
 	
 	@Test
-	public void testBuildTree() {
+	public void testBuildTree() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -27,7 +29,7 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testRepeat() {
+	public void testRepeat() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -37,7 +39,7 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testIf() {
+	public void testIf() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -47,7 +49,7 @@ public class ParserTest {
 
 	}
 	@Test
-	public void testIfElse() {
+	public void testIfElse() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -56,7 +58,7 @@ public class ParserTest {
 		assertEquals(1, root.size());
 	}
 	@Test
-	public void testDoTimes() {
+	public void testDoTimes() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -65,7 +67,7 @@ public class ParserTest {
 		assertEquals(1, root.size());
 	}
 	@Test
-	public void testFor() {
+	public void testFor() throws IllegalCommandException {
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -75,7 +77,7 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testVariables() {
+	public void testVariables() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -89,7 +91,7 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testLanguage() {
+	public void testLanguage() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -102,7 +104,7 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testTranslate() {
+	public void testTranslate() throws IllegalCommandException{
 		AbstractParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
@@ -110,6 +112,16 @@ public class ParserTest {
 		List<StringNode> root = parser.parse("devant 50");
 		System.out.println(lang.translateNode(root.get(0)).getCommandString());
 		assertEquals("FORWARD", lang.translateNode(root.get(0)).getCommandString());
+	}
+	
+	@Test
+	public void testErrorCheck() throws IllegalCommandException {
+		AbstractParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		List<StringNode> root = parser.parse("fd 50 fd 50");
+		System.out.println("testErrorCheck" + " has errors:" + ((TextParser) parser).hasErrors(root));
+		assertTrue(((TextParser) parser).hasErrors(root));
 	}
 	
 }

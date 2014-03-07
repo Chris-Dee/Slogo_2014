@@ -92,12 +92,6 @@ public class SlogoView extends JFrame{
 	public static void showError(JPanel p,String s){
 		JOptionPane.showMessageDialog(p,s);
 	}
-	private void makeDataPanel(JPanel homePanel){
-		JPanel dataPanel=new JPanel();
-		statPage=new StatsPanel(myResources,TurtleSpace);
-		dataPanel.add(statPage);
-		homePanel.add(dataPanel);
-	}
     protected JPanel makeTextPanel(String text) {
         JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(text);
@@ -108,73 +102,10 @@ public class SlogoView extends JFrame{
         
         
     }
-	private void makeLangList(JPanel homePanel){
-		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
-		homePanel.add(languagesList);
-		languagesList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{       
-				model.setLanguage((String) languagesList.getSelectedItem());  
-				System.out.println(language.getLanguage());
-			}
-		});  
-	}
-	private Object[] removeFileNames(String[] s){
-		List<String> langList=new ArrayList<String>();
-		for(int i=0;i<s.length;i++){
-			if(s[i].contains(".properties")){
-			String[] str=s[i].split(".properties");
-			System.out.println(str[0]);
-			langList.add(str[0]);
-			}
-		}
-		return langList.toArray();
-	}
-	public JPanel makeInputPanel(){
-		JPanel textPanel=new JPanel();
-		textPanel.setBackground(new java.awt.Color(100,100,100));
-		JPanel inputTextPanel=new JPanel();
-		makeDataPanel(textPanel);
-		inputTextPanel.add(new CommandPanel(myResources,model,manager,language));
-		textPanel.add(inputTextPanel);
-		return textPanel;
-	}
-
-
-	private void fillSavedBoxes(JPanel oneBox, final int i){
-
-		oneBox.setLayout(new BoxLayout(oneBox,BoxLayout.Y_AXIS));
-		final JTextArea savedText=new JTextArea(20,10);
-		JScrollPane scrollSave=new JScrollPane(savedText);
-		savedBoxes.add(savedText);
-		savedText.setEditable(false);
-		Button loader=new Button(myResources.getString("RunScript")+" "+(i+1));
-		loader.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{       
-				results.setText(model.receiveTextInput(savedBoxes.get(i).getText())+"");
-				statPage.updateInfo();    
-			}
-		});   
-		//oneBox.add(loader);
-		//oneBox.add(scrollSave);
-	}
 	public static StatsPanel viewStats(){
 		return statPage;
 	}
-	public JPanel makeSavedTextBoxes(){
-		JPanel savePanel=new JPanel();
-		savePanel.setLayout(new BoxLayout(savePanel,BoxLayout.Y_AXIS));
-		JPanel boxPanel=new JPanel();
-		for(int i=0;i<NUM_BOXES;i++){
-			JPanel oneBox=new JPanel();
-			fillSavedBoxes(oneBox,i);
-			boxPanel.add(oneBox);}
-		savePanel.add(boxPanel);
-
-		savePanel.setBackground(new java.awt.Color(100,100,100));
-		return savePanel;
-	}
+	
 	private void savePanel(JTextArea text){
 		for(int i=savedBoxes.size()-1;i>0;i--)
 			savedBoxes.get(i).setText(savedBoxes.get(i-1).getText());
@@ -224,13 +155,13 @@ public class SlogoView extends JFrame{
 		JPanel mainPanel= new JPanel();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
-		
 		mainPanel.setLayout(new BorderLayout());
 		TurtleSpace=new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
-		rightPanel.add(makeSavedTextBoxes());
 		rightPanel.add(new InputPanel(model, myResources, manager, language));
 				//makeInputPanel());
+		statPage=new StatsPanel(myResources, TurtleSpace);
+		mainPanel.add(statPage,BorderLayout.WEST);
 		mainPanel.add(rightPanel,BorderLayout.EAST);
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);

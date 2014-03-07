@@ -33,10 +33,23 @@ public class TextParser extends AbstractParser {
 		for (StringNode s1 : myCommands) {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
-
+		//translateNodes();
 		return myCommands;
 	}
 
+
+	private void translateNodes() {
+		for (StringNode node : myCommands) {
+			if (!isParameter(node.getCommandString())) {
+				try {
+					node = myLanguageManager.convertLanguage(node);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	private void formatStringArray(String s) {
 		int depth = 0;

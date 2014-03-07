@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.junit.Test;
 
+import backEnd.Managers.LanguageManager;
+
 import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
@@ -70,8 +72,20 @@ public class ParserTest {
 		assertEquals("3", root.get(3).getCommandString());
 		assertEquals(":C", root.get(4).getCommandString());
 		assertEquals("5", root.get(5).getCommandString());
-
-
+	}
+	
+	@Test
+	public void testLanguage() {
+		AbstractParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		parser.setLanguage("French");
+		List<StringNode> root = parser.parse("forward 50");
+		for (StringNode node : root) {
+			System.out.println(node.getCommandString());
+		}
+		assertEquals("DEVANT", root.get(0).getCommandString());
+	
 	}
 	
 }

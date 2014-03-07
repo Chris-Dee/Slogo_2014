@@ -85,7 +85,17 @@ public class ParserTest {
 			System.out.println(node.getCommandString());
 		}
 		assertEquals("DEVANT", root.get(0).getCommandString());
+	}
 	
+	@Test
+	public void testTranslate() {
+		AbstractParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		parser.setLanguage("French");
+		List<StringNode> root = parser.parse("devant 50");
+		System.out.println(lang.translateNode(root.get(0)).getCommandString());
+		assertEquals("FORWARD", lang.translateNode(root.get(0)));
 	}
 	
 }

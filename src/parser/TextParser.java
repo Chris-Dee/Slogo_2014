@@ -13,12 +13,14 @@ public class TextParser extends AbstractParser {
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	private List<StringNode> myCommands;
+	private List<StringNode> myTranslatedCommands;
 	
 	public TextParser() {
 
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
 		myCommands = new ArrayList<StringNode>();
+		myTranslatedCommands = new ArrayList<StringNode>();
 	}
 	
 	@Override
@@ -28,12 +30,12 @@ public class TextParser extends AbstractParser {
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
 		int start = initializeTree(myCommandList);
-		buildTree(myRoot, start);
+		buildTree(myLanguageManager.translateNode(myRoot), start);
 		System.out.println("Root: " + myCommands.get(0).getCommandString());
 		for (StringNode s1 : myCommands) {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
-		return myCommands;
+		return myTranslatedCommands;
 	}
 
 	private void formatStringArray(String s) {
@@ -128,7 +130,7 @@ public class TextParser extends AbstractParser {
 		}
 		else {
 			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
-			nextRoot = myLanguageManager.translateNode(nextRoot);
+			myTranslatedCommands.add(myLanguageManager.translateNode(nextRoot));
 			myCommands.add(nextRoot);
 			buildTree(nextRoot, index+1);
 			
@@ -250,7 +252,6 @@ public class TextParser extends AbstractParser {
 						&& getNumberOfParameters(node.getCommandString()) != 0 ){ answer = false;}	
 			}
 		}
-		myLeaves.clear();
 		return answer;
 	}
 
@@ -264,7 +265,7 @@ public class TextParser extends AbstractParser {
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
 				myRoot = new IfElseNode(commands.get(0), null, null, null);
 				index = handleIfElseNode((IfElseNode) myRoot, 0);
-				myRoot = myLanguageManager.translateNode(myRoot);
+				myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
 				myCommands.add(myRoot);
 				return index;
 
@@ -272,14 +273,14 @@ public class TextParser extends AbstractParser {
 			else {
 				myRoot = new ControlNode(commands.get(0), null, null);
 				index = handleControlNode((ControlNode) myRoot, 0);
-				myRoot = myLanguageManager.translateNode(myRoot);
+				myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
 				myCommands.add(myRoot);
 				return index;
 			}
 		}
 		else {
 			myRoot = new StringNode(commands.get(0));
-			myRoot = myLanguageManager.translateNode(myRoot);
+			myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
 		}
 		
 		myCommands.add(myRoot);

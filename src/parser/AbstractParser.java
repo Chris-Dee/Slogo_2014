@@ -27,9 +27,9 @@ public abstract class AbstractParser {
 	protected abstract int buildTree(StringNode node, int index);
 	protected List<String> myCommandList;
 	
-	public boolean isParameter(String s) {
-	    if (isVariable(s))
-	    	return true;
+	public static boolean isParameter(String s) {
+//	    if (isVariable(s))
+//	    	return true;
 	    try { 
 	        Double.parseDouble(s); 
 	    } catch(NumberFormatException e) { 

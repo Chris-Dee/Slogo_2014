@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import textPanel.CommandPanel;
 import backEnd.Managers.*;
 import frontEnd.HelpPage;
 //to-do
@@ -32,7 +34,6 @@ import frontEnd.HelpPage;
 //need to add pen
 
 
-import CommandPanel.CommandPanel;
 import DrawingPanel.VariableDrawingPanel;
 import OptionsPanel.OptionsPanel;
 import PreferenceManagers.ColorManager;

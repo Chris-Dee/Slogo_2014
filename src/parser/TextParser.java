@@ -13,15 +13,13 @@ public class TextParser extends AbstractParser {
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	private List<StringNode> myCommands;
-	private List<StringNode> myTranslatedCommands;
 	
 	public TextParser() {
 
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
 		myCommands = new ArrayList<StringNode>();
-		myTranslatedCommands = new ArrayList<StringNode>();
-	}
+ 	}
 	
 	@Override
 	public List<StringNode> parse(String s) {
@@ -35,7 +33,7 @@ public class TextParser extends AbstractParser {
 		for (StringNode s1 : myCommands) {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
-		return myTranslatedCommands;
+		return myCommands;
 	}
 
 	private void formatStringArray(String s) {
@@ -130,7 +128,7 @@ public class TextParser extends AbstractParser {
 		}
 		else {
 			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
-			myTranslatedCommands.add(myLanguageManager.translateNode(nextRoot));
+			nextRoot = myLanguageManager.translateNode(nextRoot);
 			myCommands.add(nextRoot);
 			buildTree(nextRoot, index+1);
 			
@@ -256,9 +254,14 @@ public class TextParser extends AbstractParser {
 	}
 	
 	private boolean allChildrenArePresent(StringNode current) {
+		if(current.getChildren() == null) return true;	
 		while(current.getChildren() != null) {
-			
+			if (hasRightNumChildren(current)) {
+				
+			}
+				
 		}
+		return false;
 	}
 
 	protected boolean hasRightNumChildren(StringNode node) {
@@ -271,7 +274,7 @@ public class TextParser extends AbstractParser {
 			if (myControlCommands.getString(myCommandList.get(0)).equals("3")) {
 				myRoot = new IfElseNode(commands.get(0), null, null, null);
 				index = handleIfElseNode((IfElseNode) myRoot, 0);
-				myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
+				myRoot = myLanguageManager.translateNode(myRoot);
 				myCommands.add(myRoot);
 				return index;
 
@@ -279,23 +282,22 @@ public class TextParser extends AbstractParser {
 			else {
 				myRoot = new ControlNode(commands.get(0), null, null);
 				index = handleControlNode((ControlNode) myRoot, 0);
-				myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
+				myRoot = myLanguageManager.translateNode(myRoot);
 				myCommands.add(myRoot);
 				return index;
 			}
 		}
 		else {
 			myRoot = new StringNode(commands.get(0));
-			myTranslatedCommands.add(myLanguageManager.translateNode(myRoot));
 		}
-		
+		myRoot = myLanguageManager.translateNode(myRoot);
 		myCommands.add(myRoot);
 		return index;
 	}
 	
 
 	private int getNumberOfParameters(String commandString) {
-		if (isParameter(commandString) || commandString.contains(" ")) return 0;
+		if (isParameter(commandString) || commandString.contains(" ") || isVariable(commandString)) return 0;
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

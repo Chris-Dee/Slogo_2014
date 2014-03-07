@@ -39,7 +39,7 @@ public abstract class AbstractParser {
 	    return true;
 	}
 	
-	private boolean isVariable(String s) {
+	public boolean isVariable(String s) {
 		return s.startsWith(mySymbols.getString(VariableManager.VARIABLE_PROGRAM_SYNTAX));
 	}
 

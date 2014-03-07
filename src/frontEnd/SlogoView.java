@@ -149,7 +149,7 @@ public class SlogoView extends JFrame{
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		mainPanel.setLayout(new BorderLayout());
 		TurtleSpace=new TurtleDrawer(manager);
-		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
+		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
 		statPage=new StatsPanel(myResources, TurtleSpace);
 		mainPanel.add(statPage,BorderLayout.EAST);

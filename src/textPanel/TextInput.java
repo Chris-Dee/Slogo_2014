@@ -45,8 +45,8 @@ private void createTextInput(JPanel inputTextPanel){
 			try{
 				SlogoView.viewStats().setResultsBox(model.receiveTextInput(textInput.getText())+"");
 				model.updateHistory(textInput.getText());
-				savedBox.get(0).setText(textInput.getText());
 				//manager.rotateImage();
+				savePanel();
 			}
 			catch(Exception e1){
 				e1.printStackTrace();
@@ -58,10 +58,10 @@ private void createTextInput(JPanel inputTextPanel){
 	inputTextPanel.add(inputPane);
 	inputTextPanel.add(submit);
 }
-//private void savePanel(JTextArea text){
-//	for(int i=savedBoxes.size()-1;i>0;i--)
-//		savedBoxes.get(i).setText(savedBoxes.get(i-1).getText());
-//	savedBoxes.get(0).setText(textInput.getText());
-//}
+private void savePanel(){
+	for(int i=savedBox.size()-1;i>0;i--)
+		savedBox.get(i).setText(savedBox.get(i-1).getText());
+	savedBox.get(0).setText(textInput.getText());
+}
 
 }

@@ -150,7 +150,7 @@ public class SlogoView extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		TurtleSpace=new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager),BorderLayout.CENTER);
-		rightPanel.add(new InputPanel(model, myResources, manager, language));
+		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
 		statPage=new StatsPanel(myResources, TurtleSpace);
 		mainPanel.add(statPage,BorderLayout.EAST);
 		mainPanel.add(rightPanel,BorderLayout.WEST);
@@ -158,13 +158,11 @@ public class SlogoView extends JFrame{
 				savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));
-		//setSize(1000,400);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		pack();
 		return mainPanel;
 	}
 	public void  initiate() {
-		//createMainPanel();
 		CreateTabs();
 		setVisible(true);
 		// TODO Auto-generated method stub

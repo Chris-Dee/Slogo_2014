@@ -3,6 +3,7 @@ package parser;
 import java.util.*;
 
 import backEnd.Managers.LanguageManager;
+import backEnd.Managers.VariableManager;
 import parser.tree.StringNode;
 
 public abstract class AbstractParser {
@@ -13,7 +14,7 @@ public abstract class AbstractParser {
 	protected static final String DEFAULT_CONTROL_FILE = "CommandTypes";
 	protected ResourceBundle myResources;
 	protected ResourceBundle myControlCommands;
-	protected static ResourceBundle mySymbols;
+	protected ResourceBundle mySymbols;
 	
 	public AbstractParser() {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
@@ -27,8 +28,8 @@ public abstract class AbstractParser {
 	protected List<String> myCommandList;
 	
 	public static boolean isParameter(String s) {
-	    if (s.startsWith(mySymbols.getString("Variable")))
-	    	return true;
+//	    if (isVariable(s))
+//	    	return true;
 	    try { 
 	        Double.parseDouble(s); 
 	    } catch(NumberFormatException e) { 
@@ -38,6 +39,10 @@ public abstract class AbstractParser {
 	    return true;
 	}
 	
+	public boolean isVariable(String s) {
+		return s.startsWith(mySymbols.getString(VariableManager.VARIABLE_PROGRAM_SYNTAX));
+	}
+
 	public static double convertToDouble(String s) {
 		return Double.parseDouble(s);
 	}

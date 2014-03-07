@@ -13,7 +13,7 @@ import factories.ForFactory;
 
 public class For extends ControlCommand {
 	protected ForFactory myFactory;
-    protected ResourceBundle myProgramLanguage;
+    protected ResourceBundle myProgramLanguage; // not used
 	
 	public For(){
 		myParser = new TextParser();

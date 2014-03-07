@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import backEnd.Managers.LanguageManager;
+import backEnd.Managers.UserCommandManager;
 import backEnd.Managers.VariableManager;
 import TurtleStuff.TurtleManager;
 import exception.IllegalCommandException;
@@ -22,7 +23,6 @@ public class SlogoModel {
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;
     private TurtleManager myTurtleManager;
-    private VariableManager myVariableManager;
 
     
 	
@@ -52,8 +52,11 @@ public class SlogoModel {
 	}
 	
 	public void setVariableManager(VariableManager manager){
-		myVariableManager = manager;
-		myCommandFactory.setVariableManager(myVariableManager);
+		myCommandFactory.setVariableManager(manager);
+	}
+	
+	public void setUserCommandManager(UserCommandManager manager){
+		myCommandFactory.setUserCommandManager(manager);
 	}
 	
 	/*

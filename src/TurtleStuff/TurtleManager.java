@@ -38,6 +38,9 @@ public class TurtleManager {
 	public List<Turtle> getFilteredTurtles(){
 		return filterList;
 	}
+	public List<Turtle> getAllTurtles(){
+		return turtList;
+	}
 	public void findEngine(TurtleDrawer t){
 		myEngine=t;
 	}

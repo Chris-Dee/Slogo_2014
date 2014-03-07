@@ -161,8 +161,8 @@ public class SlogoView extends JFrame{
 		rightPanel.add(new InputPanel(model, myResources, manager, language));
 				//makeInputPanel());
 		statPage=new StatsPanel(myResources, TurtleSpace);
-		mainPanel.add(statPage,BorderLayout.WEST);
-		mainPanel.add(rightPanel,BorderLayout.EAST);
+		mainPanel.add(statPage,BorderLayout.EAST);
+		mainPanel.add(rightPanel,BorderLayout.WEST);
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
 		setMinimumSize(new Dimension(1000,500));

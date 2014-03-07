@@ -59,8 +59,6 @@ public class SavePanel extends JPanel{
 				
 			}
 		});   
-		saveFunction.add(functionName);
-		saveFunction.add(functionSaver);
 		Button loader=new Button(myResources.getString("RunScript")+" "+(i+1));
 		loader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)

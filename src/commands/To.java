@@ -1,10 +1,18 @@
 package commands;
 
+import java.util.List;
+
+import parser.ParameterParser;
+import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import backEnd.Managers.UserCommandManager;
 
 public class To extends ControlCommand {
+	
+	public To(){
+		myParser = new ParameterParser();
+	}
 	
 	protected UserCommandManager myCommandManager;
 	protected String myName;
@@ -29,7 +37,10 @@ public class To extends ControlCommand {
 		if(myExpression == null) return 0;
 		if(myCommands == null) return 0;
 		
-		// need revision
+		List<StringNode> commandRoots = myParser.parse(myCommands);
+		List<StringNode> exprRoots = myParser.parse(myExpression);
+		myParser.ifLegal(exprRoots);
+		myParser.ifLegal(commandRoots);
 		
 		UserCommand cmd = new UserCommand();
 		cmd.setExpression(myExpression);

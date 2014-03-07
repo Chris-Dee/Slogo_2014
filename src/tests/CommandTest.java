@@ -1,16 +1,16 @@
-package tests;
-
-import java.util.*;
-
-import TurtleStuff.Turtle;
-import commands.AbstractCommand;
-import commands.Forward;
-
-public class CommandTest {
-	
-	List<Turtle> myTurtles = new ArrayList<Turtle>();
-	Turtle myTurtle = new Turtle();
-
+//package tests;
+//
+//import java.util.*;
+//
+//import TurtleStuff.Turtle;
+//import commands.AbstractCommand;
+//import commands.Forward;
+//
+//public class CommandTest {
+//	
+//	List<Turtle> myTurtles = new ArrayList<Turtle>();
+//	Turtle myTurtle = new Turtle();
+//
 //	@org.junit.Test
 //	public void testFDBKCommand() {
 //		AbstractCommand fd = new Forward();
@@ -82,10 +82,10 @@ public class CommandTest {
 //		assertEquals(0, showingp.execute(), .001);
 //	}
 //	
-//	@Test
-//	public void testSTHTCommand() {
-//		AbstractCommand stht = new STHTCommand("ST", myTurtle);
-//		assertEquals(0, stht.execute(), .001);
-//	}
-
-}
+////	@Test
+////	public void testSTHTCommand() {
+////		AbstractCommand stht = new STHTCommand("ST", myTurtle);
+////		assertEquals(0, stht.execute(), .001);
+////	}
+//
+//}

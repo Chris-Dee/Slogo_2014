@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class VariableManager {
 	public static final String VARIABLE_PROGRAM_SYNTAX = "Variable";
 	
-    private Map<String, Double> myVariableMap;
+    private Map<String, Double> myVariableMap; // map variable name (without syntax) to value
     private ResourceBundle myProgramLanguage;
     
     public VariableManager(){

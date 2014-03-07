@@ -40,7 +40,6 @@ public abstract class AbstractParser {
 	}
 	
 	private boolean isVariable(String s) {
-		// TODO Auto-generated method stub
 		return s.startsWith(mySymbols.getString(VariableManager.VARIABLE_PROGRAM_SYNTAX));
 	}
 

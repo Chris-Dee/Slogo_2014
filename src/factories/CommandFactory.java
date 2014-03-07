@@ -143,6 +143,7 @@ public class CommandFactory {
 	
 	protected String makeUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		try { 
+			System.out.println("CommandFactory makeUserCommand: " + node.getCommandString());
 			UserCommand command = myUserCommandManager.getUserCommand(node.getCommandString());
 			Method[] methods = command.getClass().getMethods();
 			firstMethodsExecuted(turtles, command, methods);

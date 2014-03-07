@@ -64,6 +64,7 @@ public class SlogoView extends JFrame{
 	private VariableManager variables;
 	private ImageManager images;
 	private LanguageManager language;
+	private UserCommandManager commandManager;
 	public SlogoView(){
 		super();
 		initiate();
@@ -71,11 +72,13 @@ public class SlogoView extends JFrame{
 		commResources=ResourceBundle.getBundle(DEFAULT_COMM_PATH+DEFAULT_COMM_TEXT);
 		
 	}
-	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, backEnd.Managers.VariableManager myVariableManager){
+	public SlogoView(SlogoModel modelSlog, TurtleManager manage, ColorManager colors, ImageManager image, 
+			VariableManager myVariableManager,LanguageManager langManager,UserCommandManager commManager){
 		super();
 		model=modelSlog;
 		images=image;
 		manager=manage;
+		commandManager=commManager;
 		myColors=colors;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		variables=myVariableManager;
@@ -102,16 +105,13 @@ public class SlogoView extends JFrame{
         
         
     }
-    public void setLanguageManager(LanguageManager lang){
-    	language=lang;
-    }
 	private void makeLangList(JPanel homePanel){
 		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
 		homePanel.add(languagesList);
 		languagesList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{       
-				language.setLanguage((String) languagesList.getSelectedItem());  
+				model.setLanguage((String) languagesList.getSelectedItem());  
 				System.out.println(language.getLanguage());
 			}
 		});  

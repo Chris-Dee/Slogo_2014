@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import frontEnd.SlogoView;
 
 import backEnd.Managers.*;
 import TurtleStuff.Turtle;
@@ -79,7 +82,12 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 				JFileChooser chooser=new JFileChooser();
 				if(chooser.showSaveDialog(variableList)==JFileChooser.APPROVE_OPTION);
 				File file=chooser.getSelectedFile();
-				(myVars).readFromFile(file);
+				try {
+					(myVars).readFromFile(file);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					SlogoView.showError(SlogoView.viewStats(),myResources.getString("FileNotFoundError"));
+				}
 				fillVariables();
 			}
 		});

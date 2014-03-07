@@ -9,18 +9,13 @@ import parser.tree.StringNode;
 
 public class TextParser extends AbstractParser {
 	
-	private static final String DEFAULT_RESOURCE_PATH = "backEnd/";
-	private static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
-	private static final String DEFAULT_CONTROL_FILE = "CommandTypes";
-	private ResourceBundle myResources;
-	private ResourceBundle myControlCommands;
+
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	private List<StringNode> myCommands;
 	
 	public TextParser() {
-		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
-		myControlCommands = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_CONTROL_FILE);
+
 		myCommandList = new ArrayList<String>();
 		myLeaves = new ArrayList<StringNode>();
 		myCommands = new ArrayList<StringNode>();
@@ -29,6 +24,7 @@ public class TextParser extends AbstractParser {
 	@Override
 	public List<StringNode> parse(String s) {
 		myCommandList.clear();
+		myCommands.clear();
 		String singleLineString = convertTextToSingleLine(s);
 		formatStringArray(singleLineString);
 		int start = initializeTree(myCommandList);
@@ -37,10 +33,7 @@ public class TextParser extends AbstractParser {
 		for (StringNode s1 : myCommands) {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
-//		while (!myCommandList.isEmpty()) {
-//			buildCommandList(myCommandList);
-//		}
-		//myRoot = myLanguageManager.convertLanguage(myRoot);
+
 		return myCommands;
 	}
 
@@ -50,9 +43,9 @@ public class TextParser extends AbstractParser {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 		    char c = s.charAt(i);
-	        if(c=='['){
+	        if((c+"").equals(mySymbols.getString("ListStart"))){
 	            depth++;
-	        }else if(c==']'){
+	        }else if((c+"").equals(mySymbols.getString("ListEnd"))){
 	            depth--;
 	        }else if(c==' ' && depth==0){
 	        	myCommandList.add(sb.toString());
@@ -153,13 +146,13 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(index+1))) {
-			while (!myCommandList.get(i).startsWith("[")) {
+			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
 			}
 		}
 		else {
-			while (!myCommandList.get(i).endsWith("]")) {
+			while (!myCommandList.get(i).endsWith(mySymbols.getString("ListEnd"))) {
 				sb.append(myCommandList.get(i));
 				i++;
 			}
@@ -205,13 +198,13 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
-			while (!myCommandList.get(i).startsWith("[")) {
+			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
 			}
 		}
 		else {
-			while (!myCommandList.get(i).endsWith("]")) {
+			while (!myCommandList.get(i).endsWith(mySymbols.getString("ListEnd"))) {
 				sb.append(myCommandList.get(i));
 				i++;
 			}
@@ -279,7 +272,6 @@ public class TextParser extends AbstractParser {
 				myCommands.add(myRoot);
 				return index;
 			}
-
 		}
 		else {
 			myRoot = new StringNode(commands.get(0));
@@ -288,6 +280,7 @@ public class TextParser extends AbstractParser {
 		myCommands.add(myRoot);
 		return index;
 	}
+	
 
 	private int getNumberOfParameters(String commandString) {
 		if (isParameter(commandString) || commandString.contains(" ")) return 0;

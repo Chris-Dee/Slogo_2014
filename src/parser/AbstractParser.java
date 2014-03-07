@@ -7,14 +7,27 @@ import parser.tree.StringNode;
 
 public abstract class AbstractParser {
 	protected LanguageManager myLanguageManager;
+	protected static final String DEFAULT_PROGRAM_LANGUAGE_FILE = "resources/ProgramLanguage";
+	protected static final String DEFAULT_RESOURCE_PATH = "backEnd/";
+	protected static final String DEFAULT_PARAMETER_FILE = "CommandParameters";
+	protected static final String DEFAULT_CONTROL_FILE = "CommandTypes";
+	protected ResourceBundle myResources;
+	protected ResourceBundle myControlCommands;
+	protected static ResourceBundle mySymbols;
 	
+	public AbstractParser() {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_PARAMETER_FILE);
+		myControlCommands = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + DEFAULT_CONTROL_FILE);
+		mySymbols = ResourceBundle.getBundle(DEFAULT_PROGRAM_LANGUAGE_FILE);
+	}
+
 	public abstract List<StringNode> parse(String s);
 	
 	protected abstract int buildTree(StringNode node, int index);
 	protected List<String> myCommandList;
 	
 	public static boolean isParameter(String s) {
-	    if (s.startsWith(":"))
+	    if (s.startsWith(mySymbols.getString("Variable")))
 	    	return true;
 	    try { 
 	        Double.parseDouble(s); 

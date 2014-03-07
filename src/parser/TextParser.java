@@ -45,10 +45,10 @@ public class TextParser extends AbstractParser {
 		int start = initializeTree(myCommandList);
 		System.out.println("start: "+start);
 		buildTree(myLanguageManager.translateNode(myRoot), start);
-		System.out.println("Root: " + myCommands.get(0).getCommandString());
-		for (StringNode s1 : myCommands) {
-			System.out.println("COMMANDS: " + s1.getCommandString());
-		}
+//		System.out.println("Root: " + myCommands.get(0).getCommandString());
+//		for (StringNode s1 : myCommands) {
+//			System.out.println("COMMANDS: " + s1.getCommandString());
+//		}
 		return myCommands;
 	}
 	
@@ -368,6 +368,7 @@ public class TextParser extends AbstractParser {
 	private int getNumberOfParameters(String commandString) {
 		if (isParameter(commandString) || commandString.contains(" ") || 
 				isVariable(commandString) || myUserCommandManager.hasUserCommand(commandString)) return 0;
+		System.out.println("getNumberOfParameters: " + myUserCommandManager.hasUserCommand(commandString));
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

@@ -12,25 +12,30 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import backEnd.Managers.*;
+import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
 public class VariableDrawingPanel extends JPanel {
-ResourceBundle myResources;
-VariableManager myVars;
-JTextArea variableList;
-TurtleDrawer TurtleSpace;
-TurtleManager manager;
+	private JTextField varInput;
+	private JTextField numInput;
+private static ResourceBundle myResources;
+private static VariableManager myVars;
+private static JTextArea variableList;
+private static TurtleDrawer TurtleSpace;
+private static TurtleManager manager;
 
 public VariableDrawingPanel(ResourceBundle res, VariableManager vars, 
 		TurtleDrawer turtSpace, TurtleManager manage){
 	super();
-	TurtleSpace=turtSpace;
+	 TurtleSpace=turtSpace;
 	myResources=res;
 	myVars=vars;
 	manager=manage;
@@ -57,6 +62,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		JPanel variablePanel=new JPanel();
 		variablePanel.setBackground(new java.awt.Color(0,0,0));
 		variablePanel.setLayout(new BoxLayout(variablePanel,BoxLayout.Y_AXIS));
+		variablePanel.add(addVariable());
 		variableList=new JTextArea(20,10);
 		variableList.setEditable(false);
 		variableList.setText(myVars.mapToString("="));
@@ -74,9 +80,33 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 				if(chooser.showSaveDialog(variableList)==JFileChooser.APPROVE_OPTION);
 				File file=chooser.getSelectedFile();
 				(myVars).readFromFile(file);
+				fillVariables();
 			}
 		});
 		return variable;
+	}
+	private JPanel addVariable(){
+		JPanel wholePanel=new JPanel();
+		wholePanel.setLayout(new BoxLayout(wholePanel, BoxLayout.Y_AXIS));
+		Button adder=new Button(myResources.getString("AddVariable"));
+		wholePanel.add(adder);
+		adder.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				myVars.getVariableMap().put(varInput.getText(), Double.parseDouble(numInput.getText()));
+				fillVariables();
+			}
+		});
+		JPanel addPanel=new JPanel();
+		wholePanel.add(addPanel);
+		 varInput=new JTextField(2);
+		 numInput=new JTextField(4);
+		JLabel equals=new JLabel(" = ");
+		addPanel.add(varInput);
+		addPanel.add(equals);
+		addPanel.add(numInput);
+		wholePanel.add(addPanel);
+		return wholePanel;
 	}
 	private Button loadButton(){
 		Button load=new Button(myResources.getString("SaveVariable"));
@@ -91,6 +121,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 					BufferedWriter saver=new BufferedWriter(new FileWriter(file));
 					saver.write(myVars.mapToString(" "));
 					saver.close();
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -99,8 +130,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		});
 		return load;
 	}
-	public void fillVariables(){
-		System.out.println(myVars);
+	public static void fillVariables(){
 		variableList.setText(myVars.mapToString("="));
 	}
 }

@@ -15,15 +15,15 @@ import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 
 public class OptionsPanel extends JPanel {
-	ResourceBundle myResources;
-	TurtleDrawer turtleSpace;
-	SlogoModel model;
-	int backNumber;
-	JTextArea textInput;
-	TurtleManager myManager;
-	List<JTextArea> savedBoxes;
-	ColorManager color;
-	ImageManager images;
+	private ResourceBundle myResources;
+	private TurtleDrawer turtleSpace;
+	private SlogoModel model;
+	private int backNumber;
+	private JTextArea textInput;
+	private TurtleManager myManager;
+	private List<JTextArea> savedBoxes;
+	private ColorManager color;
+	private ImageManager images;
 public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogModel,
 		int backNum,JTextArea input, List<JTextArea> savedBox, TurtleManager manage, ColorManager colors, ImageManager image){
 	super();

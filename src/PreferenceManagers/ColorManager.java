@@ -16,7 +16,7 @@ public class ColorManager {
  private Map<Integer,JGColor> colorMap=new HashMap<Integer,JGColor>();
  public static final String DEFAULT_COLORPATH="src/PreferenceManagers/ColorPrefs";
  public ColorManager(){
-	 readColorFile(DEFAULT_COLORPATH);
+	 readColorFile(new File(DEFAULT_COLORPATH));
  }
  public void addNewColor(int index,int r, int g, int b){
 	 colorMap.put(index, new JGColor(r,g,b));
@@ -29,11 +29,11 @@ public class ColorManager {
 	 }
 		 return colorMap.get(color);
  }
- public void readColorFile(String string) {
+ public void readColorFile(File file) {
 	 colorMap.clear();
 	try {
 		System.out.println("11");
-		Scanner scanner=new Scanner(new File(string));
+		Scanner scanner=new Scanner(file);
 		while(scanner.hasNext()){
 			addNewColor(scanner.nextInt(),scanner.nextInt(),scanner.nextInt(),scanner.nextInt());
 			if(scanner.hasNext())

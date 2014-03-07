@@ -3,9 +3,14 @@ package OptionsPanel;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,10 +33,23 @@ public class ColorPanels extends JPanel {
 		
 		makePanel();
 	}
-
+private void makeButton(JPanel homePanel){
+	Button loader=new Button(myResources.getString("LoadColor"));
+	loader.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e)
+		{
+			JFileChooser chooser=new JFileChooser();
+			if(chooser.showSaveDialog(SlogoView.viewStats())==JFileChooser.APPROVE_OPTION);
+			File file=chooser.getSelectedFile();
+			(colors).readColorFile(file);
+		}
+	});
+	homePanel.add(loader);
+}
 	private void makeColorChooserButton(JPanel homePanel){
 		final JPanel panel=new JPanel();
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+		makeButton(panel);
 		JPanel smallerPanel=new JPanel();
 		JLabel label=new JLabel(myResources.getString("ColorChooserLabel"));
 		final JTextField colorChooser = new JTextField(3);

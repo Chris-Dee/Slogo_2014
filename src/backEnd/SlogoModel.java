@@ -11,14 +11,13 @@ import exception.IllegalCommandException;
 import exception.IllegalParameterException;
 import factories.CommandFactory;
 import frontEnd.SlogoView;
-import parser.AbstractParser;
 import parser.TextParser;
 import parser.tree.StringNode;
 
 public class SlogoModel {
 	
 	private CommandFactory myCommandFactory;
-	private AbstractParser myParser;
+	private TextParser myParser;
     private List<String> myHistory;
     private SlogoView myViewer;
     private LanguageManager myLanguageManager;

@@ -9,7 +9,9 @@ public class ControlNode extends StringNode{
 	public ControlNode(String data, String expression, String commands) {
 		super(data);
 		myExpression = expression;
+		System.out.println("controlnode: " + myExpression);
 		myCommands = commands;
+		System.out.println("controlnode: " + myCommands);
 		myElseCommands=null;
 	}
 	

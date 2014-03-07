@@ -6,6 +6,6 @@ public class Sin extends OneParameterOperationCommand{
 
 	@Override
 	public double execute() {
-		return Math.toDegrees(Math.sin(Math.toRadians(myMagnitude)));
+		return Math.sin(Math.toRadians(myMagnitude));
 	}
 }

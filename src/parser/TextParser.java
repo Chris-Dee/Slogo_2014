@@ -194,6 +194,7 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
+			System.out.println("handleifelse: " + myCommandList.get(i));
 			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;

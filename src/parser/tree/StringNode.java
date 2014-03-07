@@ -34,6 +34,13 @@ public class StringNode {
 		return child;
 	}
 	
+	public UserDefinedCommandNode addUserDefinedCommandChild(String data) {
+		UserDefinedCommandNode child = new UserDefinedCommandNode(data, null);
+		child.myParent = this;
+		myChildren.add(child);
+		return child;
+	}
+	
 	public StringNode getParent() {
 		return myParent;
 	}

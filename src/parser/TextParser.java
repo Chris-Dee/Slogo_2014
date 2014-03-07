@@ -28,9 +28,6 @@ public class TextParser extends AbstractParser {
 		myUserCommandManager = new UserCommandManager();
  	}
 	
-	public void setLanguage(String s) {
-		myLanguageManager.setLanguage(s);
-	}
 	
 	public void setLanguageManager(LanguageManager manager){
 		myLanguageManager = manager;
@@ -249,9 +246,15 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
-			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
+			if (myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
+			}
+			else {
+				while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
+					sb.append(myCommandList.get(i));
+					i++;
+				}
 			}
 		}
 		else {
@@ -263,8 +266,20 @@ public class TextParser extends AbstractParser {
 			i++;		
 		}
 		commands = myCommandList.get(i);
-
-		node.setExpression(sb.toString());
+		if (sb.toString().startsWith(mySymbols.getString("ListStart"))) {
+			int startSpace = 1;
+			while(sb.toString().charAt(startSpace) == ' ') {
+				startSpace ++;
+			}
+			int endSpace = commands.length()-2;
+			while(sb.toString().charAt(endSpace) == ' ') {
+				endSpace --;
+			}
+			node.setExpression(sb.toString().substring(startSpace, endSpace+1));
+		}
+		else {
+			node.setExpression(sb.toString());
+		}
 		int startSpace = 1;
 		while(commands.charAt(startSpace) == ' ') {
 			startSpace ++;
@@ -278,8 +293,6 @@ public class TextParser extends AbstractParser {
 		i++;
 		return i-index;
 	}
-	
-	
 
 
 	private boolean allParentsHaveParameters(StringNode current){

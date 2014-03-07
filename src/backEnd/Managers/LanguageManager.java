@@ -29,6 +29,7 @@ public class LanguageManager {
 	}
 	
 	public void setLanguage(String language){
+//		System.out.println("setLanguage: "+language);
 		if(language != null) myLanguage = language;
 		myLanguageMap.clear();
 		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
@@ -36,11 +37,13 @@ public class LanguageManager {
 	}
 	
 	protected void makeLanguageMap(){
+//		System.out.println("makeLanguageMap: " + myLanguage);
 		for(String s: myUserLanguage.keySet()){
 			String commands = myUserLanguage.getString(s);
 			String[] commandList = commands.split(",");
 			for(String cmd: commandList){
-				cmd.toUpperCase();
+//				System.out.print(cmd + " ");
+				cmd = cmd.toUpperCase();
 				myLanguageMap.put(cmd, s);
 			}
 		}
@@ -49,22 +52,22 @@ public class LanguageManager {
 	public StringNode translateNode(StringNode current){
 		System.out.println("TanslateNode() called");
 		if(AbstractParser.isParameter(current.getCommandString())){
-			System.out.println("isParameter: " + current.getCommandString());
+			System.out.println("TranslateNode() isParameter: " + current.getCommandString());
 			return current;
 		}
 		if(current.getCommandString().startsWith(myUserLanguage.getString("Variable"))){
-			System.out.println("isVariable: " + current.getCommandString());
+			System.out.println("TranslateNode() isVariable: " + current.getCommandString());
 			current.setCommandString(processVariableNode(current));
-			System.out.println("varialble translated: " + current.getCommandString());
+			System.out.println("TranslateNode() varialble translated: " + current.getCommandString());
 			return current;
 		}
 		String nonProgramLanguage = myLanguageMap.get(current.getCommandString());
 		if(nonProgramLanguage ==  null){ 
-			System.out.println("is a user command: "+current.getCommandString());
+			System.out.println("TranslateNode() is a user command: "+current.getCommandString());
 			return current; 
 		} // is a User Command
 		current.setCommandString(myProgramLanguage.getString(nonProgramLanguage));
-		System.out.println("Node translated: " + current.getCommandString());
+		System.out.println("TranslateNode() Node translated: " + current.getCommandString());
 		return current;
 	}
 	

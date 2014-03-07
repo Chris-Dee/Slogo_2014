@@ -60,6 +60,7 @@ public class SlogoModel {
 	
 	public void setUserCommandManager(UserCommandManager manager){
 		myCommandFactory.setUserCommandManager(manager);
+		myParser.setUserCommandManager(manager);
 	}
 	
 	/*

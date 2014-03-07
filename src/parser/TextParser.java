@@ -2,8 +2,8 @@ package parser;
 
 import java.util.*;
 
+import backEnd.Managers.UserCommandManager;
 import exception.IllegalCommandException;
-
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
 import parser.tree.StringNode;
@@ -15,6 +15,7 @@ public class TextParser extends AbstractParser {
 	private StringNode myRoot;
 	private List<StringNode> myLeaves;
 	private List<StringNode> myCommands;
+	private UserCommandManager myUserCommandManager;
 	
 	public TextParser() {
 
@@ -36,6 +37,10 @@ public class TextParser extends AbstractParser {
 			System.out.println("COMMANDS: " + s1.getCommandString());
 		}
 		return myCommands;
+	}
+	
+	public void setUserCommandManager(UserCommandManager manager){
+		myUserCommandManager = manager;
 	}
 
 	private void formatStringArray(String s) {

@@ -3,9 +3,11 @@ package OptionsPanel;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -33,10 +35,23 @@ public ImageChooser(ResourceBundle myRes,TurtleManager manage,TurtleDrawer turtl
 	makePanel();
 }
 
-
+private void makeButton(JPanel homePanel){
+	Button loader=new Button(myResources.getString("LoadColor"));
+	loader.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e)
+		{
+			JFileChooser chooser=new JFileChooser();
+			if(chooser.showSaveDialog(SlogoView.viewStats())==JFileChooser.APPROVE_OPTION);
+			File file=chooser.getSelectedFile();
+			(images).readImageFile(file);
+		}
+	});
+	homePanel.add(loader);
+}
 private void makeImageChooserButton(JPanel homePanel){
 	final JPanel panel=new JPanel();
 	panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+	makeButton(panel);
 	JPanel smallerPanel=new JPanel();
 	JLabel label=new JLabel(myResources.getString("ImageChooserLabel"));
 	final JTextField imageChooser = new JTextField(3);

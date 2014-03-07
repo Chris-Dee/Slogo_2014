@@ -24,7 +24,7 @@ class MainSlogo {
 		ImageManager myImages=new ImageManager();
 		VariableManager myVariableManager = new VariableManager();
 		UserCommandManager myUserCommandManager = new UserCommandManager();
-		SlogoView display = new SlogoView(model, myTurtleManager,myColorManager, myImages, myVariableManager, myUserCommandManager);
+		SlogoView display = new SlogoView(model, myTurtleManager,myColorManager, myImages, myVariableManager);
 	    model.setViewer(display);
 	    model.setVariableManager(myVariableManager);
 	    model.setUserCommandManager(myUserCommandManager);

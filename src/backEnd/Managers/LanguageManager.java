@@ -27,9 +27,11 @@ public class LanguageManager {
 	public StringNode convertLanguage(StringNode root) {
 		return loopTree(root);
 	}
+	
 	public String getLanguage(){
 		return myLanguage;
 	}
+	
 	public void setLanguage(String language){
 		if(language != null) myLanguage = language;
 		myLanguageMap.clear();
@@ -42,6 +44,7 @@ public class LanguageManager {
 			String commands = myUserLanguage.getString(s);
 			String[] commandList = commands.split(",");
 			for(String cmd: commandList){
+				cmd.toUpperCase();
 				myLanguageMap.put(cmd, s);
 			}
 		}

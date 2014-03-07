@@ -30,7 +30,9 @@ public class SlogoModel {
 		myParser = new TextParser();
 		myHistory = new ArrayList<String>();
 		myCommandFactory = new CommandFactory();
-		myLanguageManager = new LanguageManager();
+	}
+	
+	public void setLanguageManager(LanguageManager manager){
 		myParser.setLanguageManager(myLanguageManager);
 	}
 	

@@ -57,7 +57,6 @@ public abstract class ControlCommand implements AbstractCommand{
 	}
 	
 	protected void initExecute(){
-		myParser.setUserCommandManager(myUserCommandManager);
 //		myParser.setVariableManager(myLocalVariableManager);
 	}
 	

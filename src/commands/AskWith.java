@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import parser.AbstractParser;
 import parser.tree.StringNode;
@@ -40,6 +41,7 @@ public class AskWith extends TurtleControlCommand {
 		initExecute();
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
+		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		List<Turtle> turtles = myTurtleManager.getFilteredTurtles();
 		List<Integer> lastIDs = getIDsOfTurtles(turtles);
@@ -47,6 +49,7 @@ public class AskWith extends TurtleControlCommand {
 		List<StringNode> commands = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(commands, myTurtleManager.getFilteredTurtles());
 		myTurtleManager.setFilterList(lastIDs);
+		backToLastVariableSpace(lastVCopy);
 		return answer;
 	}
 }

@@ -24,10 +24,9 @@ public class DoTimes extends ControlCommand {
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		initExecute();
-		myLoopFactory.setVariableManager(myVariableManager);
+		myLoopFactory.setVariableManager(myLocalVariableManager);
 		myLoopFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
-		
 		List<StringNode> expr = myParser.parse(myExpression);
 		String variable = expr.get(0).getCommandString();
 		expr.remove(0);

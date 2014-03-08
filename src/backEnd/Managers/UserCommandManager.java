@@ -35,7 +35,7 @@ public class UserCommandManager {
 	}
 	
 	public boolean hasUserCommand(String commandName){
-		System.out.println("hasUserCommand: "+commandName);
+//		System.out.println("hasUserCommand: "+commandName);
 		return myCommandParameterMap.containsKey(commandName);
 	}
 	

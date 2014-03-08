@@ -30,6 +30,7 @@ public class CommandFactory {
     protected ResourceBundle myCommandTypes;
     protected List<String> myControlCommands;
     protected List<String> myModifyVariableCommands;
+    protected List<String> myCreateUserCommands;
     protected VariableManager myVariableManager;
     protected UserCommandManager myUserCommandManager;
     protected TurtleManager myTurtleManager;
@@ -44,9 +45,11 @@ public class CommandFactory {
 		myVariableManager = new VariableManager();
 		myUserCommandManager = new UserCommandManager();
 		myTurtleManager = new TurtleManager();
+		myCreateUserCommands = new ArrayList<String>();
 		
 		initCommandTypes(myControlCommands, "Control");
 		initCommandTypes(myModifyVariableCommands, "ModifyVariable");
+		initCommandTypes(myCreateUserCommands, "CreateUserCommand");
 	}
 	
 	public void setUserCommandManager(UserCommandManager manager){
@@ -97,16 +100,20 @@ public class CommandFactory {
 				return current.getCommandString();	
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
-				System.out.println("Non-parameter command in the leaf");
+//				System.out.println("Non-parameter command in the leaf");
 				if(ifControlCommand(current)){
-					System.out.println("Is a control command");
+//					System.out.println("Is a control command");
 					ControlNode cur = (ControlNode) current;
 					if (isUserCommand(current)){ 
-						System.out.println("is a user command");
+//						System.out.println("is a user command");
 						return makeUserCommand(cur, turtles); }
-					System.out.println("not a user command, but a control command");
+					if(isModifyUserCommand(current)){
+						return makeModifyUserCommand(cur, turtles);
+					}
+//					System.out.println("not a user command, but a control command");
 					return makeControlCommand(cur, turtles);
 				}
+				
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}
@@ -142,6 +149,10 @@ public class CommandFactory {
 		return isUserCommand(current) || myControlCommands.contains(current.getCommandString());
 	}
 	
+	protected boolean isModifyUserCommand(StringNode current){
+		return myCreateUserCommands.contains(current.getCommandString());
+	}
+	
 	protected boolean isUserCommand(StringNode current){
 		return myUserCommandManager.hasUserCommand(current.getCommandString());
 	}
@@ -156,6 +167,48 @@ public class CommandFactory {
 				if(m.getName().equals("setValueToParameter")){ m.invoke(command, node.getExpression()); }
 		    }
 			return executeCommand(command, methods);
+		} catch (IllegalAccessException e) {
+			throw new IllegalCommandException();
+		} catch (IllegalArgumentException e) {
+			throw new IllegalParameterException();
+		} catch (InvocationTargetException e) {
+			throw new IllegalCommandException();
+		}
+	}
+	
+	/*
+	 * This method should not be called from the outside.
+	 * Used to make a control command out of the current ControlNode in the command tree structure
+	 */
+	protected String makeModifyUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException {
+		try { 
+			Class<?> commandClass = Class.forName(myCommands.getString(node.getCommandString()));
+			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
+			Method[] methods = commandClass.getMethods();
+			firstMethodsExecuted(turtles, command, methods);
+			for (Method m: methods){
+				if(m.getName().equals("setCommandName")){
+					m.invoke(command, node.getExpression());
+//					System.out.println("setExpression");
+				}
+				if(m.getName().equals("setExpression")){
+					m.invoke(command, node.getCommands());
+//					System.out.println("setCommands");
+				}
+				if(m.getName().equals("setCommands")){
+					m.invoke(command, node.getElseCommands());
+//					System.out.println("setElseCommands");
+				}
+				if(m.getName().equals("setTurtleManager")){
+					m.invoke(command, myTurtleManager);
+//					System.out.println("setTurtleManager");
+				}
+		    }
+			return executeCommand(command, methods);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalCommandException();
+		} catch (InstantiationException e) {
+			throw new IllegalCommandException();
 		} catch (IllegalAccessException e) {
 			throw new IllegalCommandException();
 		} catch (IllegalArgumentException e) {
@@ -192,9 +245,6 @@ public class CommandFactory {
 					m.invoke(command, myTurtleManager);
 //					System.out.println("setTurtleManager");
 				}
-//				if(m.getName().equals("setCommandName")){
-//					m.invoke(command, node.getCommandString());
-//				}
 		    }
 			return executeCommand(command, methods);
 		} catch (ClassNotFoundException e) {

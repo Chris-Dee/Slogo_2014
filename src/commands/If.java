@@ -25,9 +25,7 @@ public class If extends ControlCommand{
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtles);
-		if (magnitude == 0)
-			return 0;
-		
+		if (magnitude == 0) return 0;
 		List<StringNode> roots = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(roots, myTurtles);
 		backToLastVariableSpace(lastVCopy);

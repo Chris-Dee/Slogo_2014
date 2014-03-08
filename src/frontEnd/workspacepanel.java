@@ -57,16 +57,20 @@ public class workspacepanel extends JPanel{
 		workspaceloader.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-						List<Turtle> turtList = TurtleSpace.getAllTurtles();
+						
+						
+						tMap.put(workspaceno, TurtleSpace.getAllTurtles());
+						System.out.print(workspaceno);
+						System.out.print(TurtleSpace.getAllTurtles().size());
 						TurtleSpace.clear();
-						tMap.put(workspaceno, turtList);
 						String s=workspace.getText();
 						workspaceno = Integer.parseInt(s);
-						if(!tMap.containsKey(workspaceno)){
+						if(!(tMap.containsKey(workspaceno))){
 							TurtleSpace.initGame();
 						} else{
-							turtList= tMap.get(workspaceno);
-							TurtleSpace.reAddTurtles(turtList);
+							System.out.print(workspaceno);
+							System.out.print(tMap.get(workspaceno).size());
+							TurtleSpace.reAddTurtles(tMap.get(workspaceno));
 						}
 						
 						

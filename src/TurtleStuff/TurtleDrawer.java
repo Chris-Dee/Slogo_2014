@@ -109,22 +109,23 @@ public Stats displayStats(){
 	public void clear(){
 		removeObjects("Turtle", 0);
 		List<Turtle> turtlist = manager.getAllTurtles();
-		for(Turtle t: turtlist)
+		for(Turtle t: turtlist){
 			t.clearLines();
+		}
+		manager.clearTurtList();
 	}
 	
 public void reAddTurtles(List<Turtle> turtlist){
 		int i=0;
-		manager.clearTurtList();
+		System.out.print(turtlist.size());
 		for(Turtle t: turtlist){
 			Stats currStats = t.getStats();
 			defineImage("Turtle","Turt",0,"turtle.gif","-");
 			turt=new Turtle(i);
+			manager.addTurtle(turt);
 			turt.setEngine(this);
-			turt.setPosition(currStats.getPos());
+			turt.setTarget(currStats.getPos());
 			turt.setRotation(currStats.getRot());
-			//manager.addTurtle(turt);
-			
 			i++;
 		}
 	}

@@ -1,9 +1,11 @@
 package commands;
 
 import java.util.List;
+import java.util.Map;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.CommandFactory;
 import parser.tree.StringNode;
 
@@ -17,16 +19,16 @@ public class If extends ControlCommand{
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
-		myFactory.setVariableManager(myVariableManager);
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
+		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
+		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtles);
-		if (magnitude == 0)
-			return 0;
-		
+		if (magnitude == 0) return 0;
 		List<StringNode> roots = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(roots, myTurtles);
+		backToLastVariableSpace(lastVCopy);
 		return answer;
 	}
 

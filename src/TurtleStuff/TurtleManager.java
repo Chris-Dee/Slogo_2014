@@ -18,7 +18,6 @@ public class TurtleManager {
 	private List<Turtle> turtList=new ArrayList<Turtle>();
 	private List<Turtle> filterList=new ArrayList<Turtle>();
 	private Turtle turt;
-	private String chosenImage;
 	TurtleDrawer myEngine;
 	public TurtleManager(){
 	}
@@ -35,6 +34,8 @@ public class TurtleManager {
 		}
 		filter=filters;
 	}
+	
+	
 	public List<Turtle> getFilteredTurtles(){
 		return filterList;
 	}

@@ -25,6 +25,10 @@ public class VariableManager {
     public Map<String, Double> getVariableMap(){
     	return myVariableMap;
     }
+    
+    public void setVariableMap(Map<String, Double> map){
+    	myVariableMap = map;
+    }
 
     public void setValueToVariable(String v, double value){
     	String variable = deleteVariableSyntax(v);
@@ -50,7 +54,7 @@ public class VariableManager {
      */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
-    	System.out.println(v);
+//    	System.out.println("VariableManager getValueOfVariable: "+v);
     	return myVariableMap.get(variable);
     }
     public void readFromFile(File file) throws FileNotFoundException{

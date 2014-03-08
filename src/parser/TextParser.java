@@ -35,20 +35,21 @@ public class TextParser extends AbstractParser {
 	
 	@Override
 	public List<StringNode> parse(String s) throws IllegalCommandException {
-		System.out.println("parse() called");
+		System.out.println("parse() called: "+ s);
 		myCommandList.clear();
 		myCommands.clear();
 		String singleLineString = convertTextToSingleLine(s);
 		System.out.println("convertTextToSingleLine() called");
+		System.out.println("Input string: " + singleLineString);
 		formatStringArray(singleLineString);
 		System.out.println("formateStringArray() called");
 		int start = initializeTree(myCommandList);
-		System.out.println("start: "+start);
+		System.out.println("parse start index: "+start);
 		buildTree(myLanguageManager.translateNode(myRoot), start);
-//		System.out.println("Root: " + myCommands.get(0).getCommandString());
-//		for (StringNode s1 : myCommands) {
-//			System.out.println("COMMANDS: " + s1.getCommandString());
-//		}
+		System.out.println("Root: " + myCommands.get(0).getCommandString());
+		for (StringNode s1 : myCommands) {
+			System.out.println("COMMANDS: " + s1.getCommandString());
+		}
 		return myCommands;
 	}
 	
@@ -80,8 +81,10 @@ public class TextParser extends AbstractParser {
 	protected int buildTree(StringNode current, int index) throws IllegalCommandException {
 		int parameterNumber = 0;
 		try{
-			parameterNumber = getNumberOfParameters(current.getCommandString());	
+			parameterNumber = getNumberOfParameters(current.getCommandString());
+			System.out.println("ParameterNumber from build tree is: " + parameterNumber);
 		} catch(Exception e){
+			System.out.println("Error: "+current.getCommandString());
 			throw new IllegalCommandException();
 		}
 		if(index == myCommandList.size()) return 0;
@@ -134,7 +137,8 @@ public class TextParser extends AbstractParser {
 		else if (parameterNumber == 1) {
 			if (myControlCommands.containsKey(myCommandList.get(index+1)) || 
 					myUserCommandManager.hasUserCommand(myCommandList.get(index+1))) { //control statement or user defined
-				if (myUserCommandManager.hasUserCommand(myCommandList.get(index+1))) {
+				if (myUserCommandManager.hasUserCommand(myCommandList.get(index+1)) || 
+						myControlCommands.getString(myCommandList.get(index+1)).equals("1")) {
 					UserDefinedCommandNode child = current.addUserDefinedCommandChild(myCommandList.get(index+1));
 					numChildren = handleUserDefinedCommandNode(child, index+1);
 					numChildren += buildTree(child, index+numChildren+1);
@@ -158,6 +162,9 @@ public class TextParser extends AbstractParser {
 			}
 		}
 		else {
+			
+			System.out.println("Next node is: " + myCommandList.get(index+1));
+			System.out.println("There are 0 parameters with " + myCommandList.get(index));
 			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
 			nextRoot = myLanguageManager.translateNode(nextRoot);
 			myCommands.add(nextRoot);
@@ -174,15 +181,31 @@ public class TextParser extends AbstractParser {
 		int parameterNumber = myUserCommandManager.getNumParameterCommand(child.getCommandString());
 		int i = index+1;
 		
-		while(parameterNumber != 0) {
-			while (getNumberOfParameters(myCommandList.get(i)) != 0) {
+		if (myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
+			int startSpace = 1;
+			while(myCommandList.get(i).charAt(startSpace) == ' ') {
+				startSpace ++;
+			}
+			int endSpace = myCommandList.get(i).length()-2;
+			while(myCommandList.get(i).charAt(endSpace) == ' ') {
+				endSpace --;
+			}
+			sb.append(myCommandList.get(i).substring(startSpace, endSpace+1));
+		}
+		else {
+			while(parameterNumber != 0) {
+				while (getNumberOfParameters(myCommandList.get(i)) != 0) {
+					sb.append(myCommandList.get(i));
+					i++;
+				}
 				sb.append(myCommandList.get(i));
+				parameterNumber--;
 				i++;
 			}
-			sb.append(myCommandList.get(i));
-			parameterNumber--;
-			i++;
 		}
+
+		
+		child.setExpression(sb.toString());
 
 		return i-index;
 	}
@@ -194,6 +217,7 @@ public class TextParser extends AbstractParser {
 		int i = index+1;
 
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
+			System.out.println("handleifelse: " + myCommandList.get(i));
 			while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
 				i++;
@@ -248,11 +272,15 @@ public class TextParser extends AbstractParser {
 		if (!myControlCommands.containsKey(myCommandList.get(i))) {
 			if (myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
 				sb.append(myCommandList.get(i));
+				System.out.println("1" + sb.toString());
+
 				i++;
 			}
 			else {
 				while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
-					sb.append(myCommandList.get(i));
+					sb.append(myCommandList.get(i) + " ");
+					System.out.println("2" + sb.toString());
+
 					i++;
 				}
 			}
@@ -260,10 +288,13 @@ public class TextParser extends AbstractParser {
 		else {
 			while (!myCommandList.get(i).endsWith(mySymbols.getString("ListEnd"))) {
 				sb.append(myCommandList.get(i));
+				System.out.println("3" + sb.toString());
+
 				i++;
 			}
 			sb.append(myCommandList.get(i));
-			i++;		
+			i++;	
+			System.out.println("4" + sb.toString());
 		}
 		commands = myCommandList.get(i);
 		if (sb.toString().startsWith(mySymbols.getString("ListStart"))) {
@@ -271,7 +302,7 @@ public class TextParser extends AbstractParser {
 			while(sb.toString().charAt(startSpace) == ' ') {
 				startSpace ++;
 			}
-			int endSpace = commands.length()-2;
+			int endSpace = sb.toString().length()-2;
 			while(sb.toString().charAt(endSpace) == ' ') {
 				endSpace --;
 			}
@@ -347,9 +378,16 @@ public class TextParser extends AbstractParser {
 				return index;
 
 			}
-			else {
+			else if (myControlCommands.getString(myCommandList.get(0)).equals("2")){
 				myRoot = new ControlNode(commands.get(0), null, null);
 				index = handleControlNode((ControlNode) myRoot, 0);
+				myRoot = myLanguageManager.translateNode(myRoot);
+				myCommands.add(myRoot);
+				return index;
+			}
+			else {
+				myRoot = new UserDefinedCommandNode(commands.get(0), null);
+				index = handleUserDefinedCommandNode((UserDefinedCommandNode) myRoot, 0);
 				myRoot = myLanguageManager.translateNode(myRoot);
 				myCommands.add(myRoot);
 				return index;
@@ -366,10 +404,10 @@ public class TextParser extends AbstractParser {
 	
 
 	private int getNumberOfParameters(String commandString) {
-		System.out.println("getNumeParameters called");
+//		System.out.println("getNumberOfParameters called");
 		if (isParameter(commandString) || commandString.contains(" ") || 
 				isVariable(commandString) || myUserCommandManager.hasUserCommand(commandString)) return 0;
-		System.out.println("getNumberOfParameters: " + myUserCommandManager.hasUserCommand(commandString));
+//		System.out.println("getNumberOfParameters hasUserCommand: " + myUserCommandManager.hasUserCommand(commandString));
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

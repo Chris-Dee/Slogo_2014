@@ -149,4 +149,26 @@ public class ParserTest {
 		assertEquals("FD", root.get(1).getCommandString());
 
 	}
+	
+	@Test
+	public void testControls() throws IllegalCommandException {
+		TextParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		List<StringNode> forcommand = parser.parse("for [:a 0 40 10] [ fd :a ]");
+		forcommand.get(0).printParameters();
+		List<StringNode> ifcommand = parser.parse("if equalp 50 50 [ fd 50 ]");
+		ifcommand.get(0).printParameters();
+		List<StringNode> dotimes = parser.parse("Dotimes [:a 10] [fd 50]");
+		dotimes.get(0).printParameters();
+		List<StringNode> tell = parser.parse("tell [1 2 3]");
+		tell.get(0).printParameters();
+		List<StringNode> ask = parser.parse("ask [1 2 3] [fd 50]");
+		ask.get(0).printParameters();
+		List<StringNode> askwith = parser.parse("askwith [equalp pc 3] [fd 50]");
+		askwith.get(0).printParameters();
+		List<StringNode> repeat = parser.parse("repeat 4 [fd 50 rt 90]");
+		repeat.get(0).printParameters();
+
+	}
 }

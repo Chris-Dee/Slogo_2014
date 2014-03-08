@@ -63,6 +63,7 @@ private void makeImageChooserButton(JPanel homePanel){
 		public void actionPerformed(ActionEvent e)
 		{
 			String s=imageChooser.getText();
+			
 			TurtleSpace.defineImage(s, "null",0,images.getPathByIndex(Integer.parseInt(s)), "-");
 			for(Turtle t:manager.getFilteredTurtles()){
 				t.setImage(imageChooser.getText()+"");
@@ -74,6 +75,8 @@ private void makeImageChooserButton(JPanel homePanel){
 	panel.add(smallerPanel);
 	homePanel.add(panel);
 }
+
+
 public void makePanel(){
 	makeImageChooserButton(this);
 }

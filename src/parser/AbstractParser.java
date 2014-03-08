@@ -53,7 +53,16 @@ public abstract class AbstractParser {
 		else
 			singleLineString = s;
 		
-		return singleLineString.toUpperCase();
+		int startSpace = 0;
+		while(singleLineString.charAt(startSpace) == ' ') {
+			startSpace ++;
+		}
+		int endSpace = singleLineString.length()-1;
+		while(singleLineString.charAt(endSpace) == ' ') {
+			endSpace --;
+		}
+		
+		return singleLineString.toUpperCase().substring(startSpace, endSpace+1);
 	}
 
 	/*

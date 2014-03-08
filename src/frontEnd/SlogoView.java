@@ -68,6 +68,9 @@ public class SlogoView extends JFrame{
 	private ImageManager images;
 	private LanguageManager language;
 	private UserCommandManager commandManager;
+	
+	
+	
 	public SlogoView(){
 		super();
 		initiate();
@@ -86,6 +89,7 @@ public class SlogoView extends JFrame{
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		variables=myVariableManager;
 		language=langManager;
+		
 		initiate();
 
 	}
@@ -116,25 +120,26 @@ public class SlogoView extends JFrame{
 	}
 
 	public void CreateTabs(){
-		//createMainPanel();
 		JTabbedPane tabbedPane = new JTabbedPane();
 		setMinimumSize(new Dimension(1000,800));
+		
 		ImageIcon icon = createImageIcon("turtle.gif");
 
 		JPanel panel1 = makeTab();
 		tabbedPane.addTab("Tab 1", icon, panel1,
-				"Does nothing");
+				"Tab 1");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
 		JPanel panel2 = makeTextPanel("Panel #2");
+		//JPanel panel2 = makeTab();
 		tabbedPane.addTab("Tab 2", icon, panel2,
-				"Does twice as much nothing");
-		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+				"Tab 2");
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
 
 		JPanel panel3 = makeTextPanel("Panel #3");
 		tabbedPane.addTab("Tab 3", icon, panel3,
-				"Does twice as much nothing");
-		tabbedPane.setMnemonicAt(1, KeyEvent.VK_3);
+				"Tab 3");
+		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
 		setTitle("Slow Go Team 16");
 
@@ -150,21 +155,28 @@ public class SlogoView extends JFrame{
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		mainPanel.setLayout(new BorderLayout());
-		//add background into constructor--get background by using a dialog
+
 		TurtleSpace=new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
+
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
+		rightPanel.add(new workspacepanel(myResources,manager,TurtleSpace));
 		statPage=new StatsPanel(myResources, TurtleSpace);
 		mainPanel.add(statPage,BorderLayout.EAST);
 		mainPanel.add(rightPanel,BorderLayout.WEST);
 		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, 
 				savedBoxes, manager, myColors, images),BorderLayout.NORTH);
 		setSize(1000,400);
-		setMinimumSize(new Dimension(1000,500));
+		//setMinimumSize(new Dimension(1000,500));
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		pack();
 		return mainPanel;
-	}
+	} 
+	
+	
+	
+	
+
 	public void  initiate() {
 		CreateTabs();
 		setVisible(true);

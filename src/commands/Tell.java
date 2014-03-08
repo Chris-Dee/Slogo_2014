@@ -12,10 +12,12 @@ public class Tell extends TurtleControlCommand{
 	
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		myFactory.setVariableManager(myVariableManager);
+		myFactory.setVariableManager(myLocalVariableManager);
+		myFactory.setUserCommandManager(myUserCommandManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		myTurtleManager.setFilterList(getIDsOfExpression(expr));
-		List<StringNode> last = myParser.parse(expr.get(expr.size()-1).getCommandString());
-		return myFactory.runCommands(last, myTurtleManager.getAllTurtles());
+//		List<StringNode> last = myParser.parse(expr.get(expr.size()-1).getCommandString());
+//		return myFactory.runCommands(last, myTurtleManager.getAllTurtles());
+		return Integer.parseInt(expr.get(expr.size()-1).getCommandString());
 	}
 }

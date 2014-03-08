@@ -1,12 +1,15 @@
 package commands;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import backEnd.Managers.UserCommandManager;
 import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import parser.TextParser;
 
 public abstract class ControlCommand implements AbstractCommand{
@@ -17,11 +20,13 @@ public abstract class ControlCommand implements AbstractCommand{
 	protected List<Turtle> myTurtles;
 	protected VariableManager myVariableManager;
 	protected UserCommandManager myUserCommandManager;
+	protected VariableManager myLocalVariableManager;
 	
 	public ControlCommand(){
 		myParser = new TextParser();
 		myUserCommandManager = new UserCommandManager();
 		myVariableManager = new VariableManager();
+		myLocalVariableManager = new VariableManager();
 	}
 	
 	public void setUserCommandManager(UserCommandManager userCommandManager){
@@ -31,10 +36,20 @@ public abstract class ControlCommand implements AbstractCommand{
 	
 	public void setVariableManager(VariableManager manager){
 		myVariableManager = manager;
+		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
+		myLocalVariableManager.setVariableMap(lastVCopy);
+//		myParser.setVariableManager(myLocalVariableManager);
 	}
 	
 	public void setExpression(String s){
 		myExpression = s;
+	}
+	
+	protected Map<String, Double> getCopyOfMapFromVariableManager(VariableManager manager) {
+		Map<String, Double> lastV = manager.getVariableMap();
+		Map<String, Double> lastVCopy = new HashMap<String, Double>();
+		for(String key: lastV.keySet()){ lastVCopy.put(key, lastV.get(key)); }
+		return lastVCopy;
 	}
 	
 	public void setTurtles(List<Turtle> turtles){
@@ -43,9 +58,17 @@ public abstract class ControlCommand implements AbstractCommand{
 		}
 	}
 	
+	protected void backToLastVariableSpace(Map<String, Double> lastVCopy) {
+		Map<String, Double> newV = myLocalVariableManager.getVariableMap();
+		for(String key: newV.keySet()){
+			if(!lastVCopy.containsKey(key)){ myLocalVariableManager.removeVariable(key); }
+		}
+		myVariableManager.setVariableMap(myLocalVariableManager.getVariableMap());
+	}
+	
 	public void setCommands(String s){
 		if(s != null) myCommands = s;
 	}
 	
-	public abstract double execute() throws IllegalCommandException, IllegalParameterException;
+	public abstract double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException;
 }

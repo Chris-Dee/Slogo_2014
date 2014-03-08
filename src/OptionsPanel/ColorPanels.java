@@ -55,7 +55,7 @@ private void makeButton(JPanel homePanel){
 		final JTextField colorChooser = new JTextField(3);
 		smallerPanel.add(label);
 		smallerPanel.add(colorChooser);
-		System.out.println("ddd");
+		//System.out.println("ddd");
 		Button selectImage= new Button(myResources.getString("ColorChooser"));
 		selectImage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)

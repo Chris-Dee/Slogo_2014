@@ -1,7 +1,7 @@
 Front end API changes-- Our API had originally called for turtle movement methods to be passed directly to the parser, however, the addition of multiple turtles made that plan obsolete, and so our front-end API now includes the TurtleManager class to pick out the correct turtles and to feed the filtered turtles into the command manager. This did not create many new dependencies, as  both the list of turtles and the movement metods themselves are fed into the commands separately. 
 We also had to add several color/image and properties attributes to our API, and had to include more methods than we had originally planned, in order to account for the various panels, buttons and viewers (variables and functions) than we had planned. We also had more turtle commands than expected, as there were signiicantly more commands to be implmented than we had expected.
 
-Back-end API: Our old API does not work for the project very well. More specifically, we underestimate the difficulty and the size of our project. Thus, our API only works for part of the simple moves. We
+Back-end API: Our old API does not work for the project very well. More specifically, we underestimate the difficulty and the size of our project. Thus, our API only works for part of the simple moves. We failed to recognize many aspects of the program, such as the uses of variables and user-defined commands. The new model layout works well. 
 
 Main Layout
   * MainSlogo 
@@ -9,9 +9,15 @@ Main Layout
 
 Model Layout
   * AbstractParser
+    * boolean isVariable(String)
+    * boolean isParameter(String)
+    * double convertToDouble(String)
+    * List<String> convertFromStringToList(String)
     * TextParser
-      * CommandParser()
+      * void setLanguageManager(LanguageManager)
       * List<String> Parse(String s)
+      * void setUserCommandManager(UserCommandManager)
+      * boolean hasErrors(List<StringNode>)
 
   * AbstractCommand
     * void execute()

@@ -147,7 +147,7 @@ public class CommandFactory {
 	 */
 	protected boolean ifControlCommand(StringNode current){
 //		System.out.println("ifControlCommand: "+current.getCommandString());
-		return isUserCommand(current) || myControlCommands.contains(current.getCommandString());
+		return myControlCommands.contains(current.getCommandString());
 	}
 	
 	protected boolean isModifyUserCommand(StringNode current){
@@ -275,6 +275,7 @@ public class CommandFactory {
 			}
 			if(m.getName().equals("setUserCommandManager")){
 				m.invoke(command, myUserCommandManager);
+				System.out.println("setUserCommandManager");
 			}
 		}
 	}
@@ -285,6 +286,7 @@ public class CommandFactory {
 		for (Method cur: methods){
 			if (cur.getName().equals("execute")){
 				answer += (Double) cur.invoke(command);
+				System.out.println("execute");
 		    }	
 		}
 		return answer;
@@ -299,15 +301,14 @@ public class CommandFactory {
 	protected String makeCommand(String cmd, String magnitude1, String magnitude2, String magnitude3, String magnitude4, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
-			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);
+			System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + " "+ magnitude2);
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
-//					System.out.println("Magnitude1: "+magnitude1);
+					System.out.println("setMagnitude: "+magnitude1);
 					m.invoke(command, magnitude1);
-//					System.out.println("already set magnitude");
 				}
 				if(m.getName().equals("setDoubleMagnitude")){
 //					System.out.println("Magnitude 1 and 2: "+magnitude1+" "+magnitude2);

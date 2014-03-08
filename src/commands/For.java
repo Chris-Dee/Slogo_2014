@@ -9,6 +9,7 @@ import parser.tree.StringNode;
 import backEnd.Managers.LanguageManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.ForFactory;
 
 public class For extends ControlCommand {
@@ -22,7 +23,7 @@ public class For extends ControlCommand {
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		System.out.println("For execute called: "+ myExpression + " " + myCommands);
 		myForFactory.setVariableManager(myLocalVariableManager);
 		myForFactory.setUserCommandManager(myUserCommandManager);

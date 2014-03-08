@@ -9,12 +9,13 @@ import parser.tree.StringNode;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 
 public class AskWith extends TurtleControlCommand {
 	
 	public AskWith(){ super(); }
 
-	protected List<Integer> processExprNodes(List<StringNode> expr) throws IllegalCommandException, IllegalParameterException{
+	protected List<Integer> processExprNodes(List<StringNode> expr) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		List<Integer> nextActiveTurtles = new ArrayList<Integer>();
 		for(StringNode node: expr){
 			String current = node.getCommandString();
@@ -37,7 +38,7 @@ public class AskWith extends TurtleControlCommand {
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);

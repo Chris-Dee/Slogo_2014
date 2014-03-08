@@ -9,6 +9,7 @@ import backEnd.Managers.VariableManager;
 import TurtleStuff.TurtleManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.CommandFactory;
 import frontEnd.SlogoView;
 import parser.TextParser;
@@ -80,6 +81,9 @@ public class SlogoModel {
 			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		} catch (IllegalParameterException e) {
+			e.printStackTrace();
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+		} catch( UndefinedVariableException e){
 			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}

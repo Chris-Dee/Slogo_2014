@@ -35,7 +35,7 @@ public class TextParser extends AbstractParser {
 	
 	@Override
 	public List<StringNode> parse(String s) throws IllegalCommandException {
-		System.out.println("parse() called");
+		System.out.println("parse() called: "+ s);
 		myCommandList.clear();
 		myCommands.clear();
 		String singleLineString = convertTextToSingleLine(s);
@@ -44,7 +44,7 @@ public class TextParser extends AbstractParser {
 		formatStringArray(singleLineString);
 		System.out.println("formateStringArray() called");
 		int start = initializeTree(myCommandList);
-		System.out.println("start: "+start);
+		System.out.println("parse start index: "+start);
 		buildTree(myLanguageManager.translateNode(myRoot), start);
 		System.out.println("Root: " + myCommands.get(0).getCommandString());
 		for (StringNode s1 : myCommands) {
@@ -84,6 +84,7 @@ public class TextParser extends AbstractParser {
 			parameterNumber = getNumberOfParameters(current.getCommandString());
 			System.out.println("ParameterNumber from build tree is: " + parameterNumber);
 		} catch(Exception e){
+			System.out.println("Error: "+current.getCommandString());
 			throw new IllegalCommandException();
 		}
 		if(index == myCommandList.size()) return 0;
@@ -403,10 +404,10 @@ public class TextParser extends AbstractParser {
 	
 
 	private int getNumberOfParameters(String commandString) {
-		System.out.println("getNumberOfParameters called");
+//		System.out.println("getNumberOfParameters called");
 		if (isParameter(commandString) || commandString.contains(" ") || 
 				isVariable(commandString) || myUserCommandManager.hasUserCommand(commandString)) return 0;
-		System.out.println("getNumberOfParameters hasUserCommand: " + myUserCommandManager.hasUserCommand(commandString));
+//		System.out.println("getNumberOfParameters hasUserCommand: " + myUserCommandManager.hasUserCommand(commandString));
 		return Integer.parseInt(myResources.getString(commandString));
 	}
 	

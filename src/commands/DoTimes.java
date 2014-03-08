@@ -9,6 +9,7 @@ import parser.tree.StringNode;
 import backEnd.Managers.LanguageManager;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.LoopFactory;
 
 public class DoTimes extends ControlCommand {
@@ -22,7 +23,7 @@ public class DoTimes extends ControlCommand {
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		myLoopFactory.setVariableManager(myLocalVariableManager);
 		myLoopFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);

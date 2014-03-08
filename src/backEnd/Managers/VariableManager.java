@@ -93,7 +93,9 @@ public class VariableManager {
     public String mapToString(String separatingCharacter){
     	String result="";
     	for(String s:myVariableMap.keySet()){
+    		if(s.charAt(0)==':')
     		result+=(s.substring(1)+separatingCharacter+getValueOfVariable(s)+"\n");
+    		else result+=s+separatingCharacter+getValueOfVariable(s)+"\n";
     	}
     	return result;
     }

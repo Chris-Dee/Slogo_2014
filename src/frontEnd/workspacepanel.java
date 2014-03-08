@@ -67,7 +67,11 @@ public class workspacepanel extends JPanel{
 							t.hideTurtle();
 						}
 						String s=workspace.getText();
+						try{
 						workspaceno = Integer.parseInt(s);
+						}catch(Exception e1){
+						SlogoView.showError(SlogoView.viewStats(),myResources.getString("NumberFormat"));
+						}
 						if(!(tMap.containsKey(workspaceno))){
 							manager.getAllTurtles().clear();
 							manager.addTurtle(new Turtle(0));

@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import jgame.JGColor;
+
 import frontEnd.SlogoView;
 
 import backEnd.Managers.*;
@@ -44,6 +46,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 	myVars=vars;
 	manager=manage;
 	ucManager=ucManage;
+
 	this.add(makeDrawingPanel());
 }
 	private JPanel makeDrawingPanel(){
@@ -97,14 +100,18 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		return variable;
 	}
 	private JPanel addVariable(){
-		JPanel wholePanel=new JPanel();
+		final JPanel wholePanel=new JPanel();
 		wholePanel.setLayout(new BoxLayout(wholePanel, BoxLayout.Y_AXIS));
 		Button adder=new Button(myResources.getString("AddVariable"));
 		wholePanel.add(adder);
 		adder.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
+				try{
 				myVars.getVariableMap().put(varInput.getText(), Double.parseDouble(numInput.getText()));
+				}catch(Exception e1){
+					SlogoView.showError(wholePanel,myResources.getString("NumberFormat"));
+				}
 				fillVariables();
 			}
 		});

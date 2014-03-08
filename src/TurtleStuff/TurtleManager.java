@@ -95,18 +95,15 @@ public class TurtleManager {
 	public Stats getStats(Turtle t){
 		return t.getStats();
 	}
-	public void suspendTurtles(){
-		for(Turtle t:filterList)
-			t.suspend();
-	}
+
 	public void setVelocities(double velocity) {
 		for(Turtle t:filterList)
 			t.setVelocity(velocity);
 	}
 	private void resetFilterList(){
 		filterList.clear();
-		if(filter.size()>=0){
-		System.out.println("turts"+filterList.size()+" "+turtList.size());
+		if(filter.size()>0){
+		
 		for(Turtle t:turtList){
 			for(Integer i:filter){
 				if(t.matchFilter(i))
@@ -114,7 +111,10 @@ public class TurtleManager {
 			}
 			}
 		}
-		else filterList=turtList;
+		else {
+			filterList=new ArrayList<Turtle>(turtList);
+		}
+		turt=filterList.get(0);
 	}
 	public void addTurtle(Turtle t){
 		if(turt==null)

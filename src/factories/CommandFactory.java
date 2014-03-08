@@ -75,6 +75,7 @@ public class CommandFactory {
 	 */
 	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		String answer = "";
+		System.out.println();
 //		System.out.println("runCommands turtle size: "+turtles.size());
 		for(StringNode root: roots){
 			System.out.println("runCommands tree starts: ");

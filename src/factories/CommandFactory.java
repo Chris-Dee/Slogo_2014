@@ -104,7 +104,7 @@ public class CommandFactory {
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 //				System.out.println("Non-parameter command in the leaf");
 				if(ifControlCommand(current)){
-//					System.out.println("Is a control command");
+					System.out.println("Is a control command: "+current.getCommandString());
 					ControlNode cur = (ControlNode) current;
 					if (isUserCommand(current)){ 
 //						System.out.println("is a user command");

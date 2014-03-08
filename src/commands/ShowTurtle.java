@@ -8,7 +8,7 @@ public class ShowTurtle extends NonParameterTurtleCommand{
 	
 	@Override
 	protected double executeTurtle(Turtle turtle) {
-		turtle.getImageID()
+		turtle.setImageID(turtle.getImageID());
 		return 1;
 	}
 }

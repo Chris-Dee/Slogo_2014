@@ -72,9 +72,10 @@ public class ParserTest {
 		TextParser parser = new TextParser();
 		LanguageManager lang = new LanguageManager();
 		parser.setLanguageManager(lang);
-		List<StringNode> root = parser.parse("for [:a 0 10 2] [fd 50]");
+		List<StringNode> root = parser.parse("for [ :a 0 40 10 ] [ fd :a ]");
 		assertEquals("FOR", root.get(0).getCommandString());
 		assertEquals(1, root.size());
+		root.get(0).printParameters();
 	}
 	
 	@Test
@@ -89,6 +90,18 @@ public class ParserTest {
 		assertEquals("4", root.get(3).getCommandString());
 		assertEquals("5", root.get(4).getCommandString());
 		assertEquals("6", root.get(5).getCommandString());
+	}
+	
+	@Test
+	public void testVarz() throws IllegalCommandException {
+		TextParser parser = new TextParser();
+		LanguageManager lang = new LanguageManager();
+		parser.setLanguageManager(lang);
+		List<StringNode> root = parser.parse("[ :a 0 40 10 ]");
+		for (StringNode child : root) {
+			System.out.println("sdfd" + child.getCommandString());
+		}
+				
 	}
 	@Test
 	public void testFour() throws IllegalCommandException{

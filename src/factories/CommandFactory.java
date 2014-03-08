@@ -256,6 +256,7 @@ public class CommandFactory {
 		} catch (IllegalArgumentException e) {
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			throw new IllegalCommandException();
 		}
 	}

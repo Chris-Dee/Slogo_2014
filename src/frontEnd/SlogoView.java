@@ -122,6 +122,7 @@ public class SlogoView extends JFrame{
 	public void CreateTabs(){
 		JTabbedPane tabbedPane = new JTabbedPane();
 		setMinimumSize(new Dimension(1000,800));
+		
 		ImageIcon icon = createImageIcon("turtle.gif");
 
 		JPanel panel1 = makeTab();
@@ -156,6 +157,7 @@ public class SlogoView extends JFrame{
 		TurtleDrawer TurtleSpace= new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace, manager,commandManager),BorderLayout.CENTER);
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
+		rightPanel.add(new workspacepanel(myResources,manager,TurtleSpace));
 		statPage=new StatsPanel(myResources, TurtleSpace);
 		mainPanel.add(statPage,BorderLayout.EAST);
 		mainPanel.add(rightPanel,BorderLayout.WEST);

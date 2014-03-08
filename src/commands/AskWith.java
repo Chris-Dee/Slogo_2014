@@ -48,8 +48,11 @@ public class AskWith extends TurtleControlCommand {
 		myTurtleManager.setFilterList(processExprNodes(expr));
 		List<StringNode> commands = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(commands, myTurtleManager.getFilteredTurtles());
+		System.out.println("pass factory");
 		myTurtleManager.setFilterList(lastIDs);
+		System.out.println("pass setFilter");
 		backToLastVariableSpace(lastVCopy);
+		System.out.println("pass backVariable");
 		return answer;
 	}
 }

@@ -2,7 +2,7 @@ package parser.tree;
 
 import java.util.*;
 
-public class StringNode {
+public class StringNode implements IPrintable{
 	protected String myData;
 	protected StringNode myParent;
 	protected List<StringNode> myChildren;
@@ -56,4 +56,13 @@ public class StringNode {
 	public void setCommandString(String s){
 		if(s != null){ myData = s; }
 	}
+
+	@Override
+	public void printParameters() {
+		// TODO Auto-generated method stub
+		for(StringNode child : myChildren) {
+			System.out.println(child.getCommandString());
+		}
+	}
+	
 }

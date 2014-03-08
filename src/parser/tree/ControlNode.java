@@ -1,6 +1,6 @@
 package parser.tree;
 
-public class ControlNode extends StringNode{
+public class ControlNode extends StringNode implements IPrintable{
 	
 	protected String myExpression;
 	protected String myCommands;
@@ -33,6 +33,15 @@ public class ControlNode extends StringNode{
 
 	public String getElseCommands() {
 		return myElseCommands;
+	}
+
+	@Override
+	public void printParameters() {
+		// TODO Auto-generated method stub
+		System.out.println("Control Node \n ============");
+		System.out.println("Parameters 1: " + myExpression);
+		System.out.println("Parameter 2: " + myCommands);
+		System.out.println("Parameter 3: " + myElseCommands);
 	}
 
 }

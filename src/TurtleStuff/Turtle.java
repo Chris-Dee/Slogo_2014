@@ -26,7 +26,8 @@ public class Turtle extends JGObject {
 	private int turtImage=1;
 	private int targetCount=0;
 	private int penColorIndex=0;
-	private int lineStartTarget=0;
+	private String prevImage;
+	private String currImage="Turtle";
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
 	private double targetx=TURTLE_INIT_X;
@@ -57,8 +58,13 @@ public class Turtle extends JGObject {
 	}
 	public void setImageID(int ID){
 		prevturtImage = turtImage;
-		turtImage=ID;	
+		turtImage=ID;
+		prevImage=currImage;
+		currImage=getImageName();
 	}
+public String getPreviousImage(){
+	return prevImage;
+}
 	
 
 	private void  moveToTarget(){

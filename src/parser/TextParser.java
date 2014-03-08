@@ -162,7 +162,8 @@ public class TextParser extends AbstractParser {
 			}
 		}
 		else {
-			//if (isParameter(current.getCommandString())) return 0;
+			
+			System.out.println("Next node is: " + myCommandList.get(index+1));
 			System.out.println("There are 0 parameters with " + myCommandList.get(index));
 			StringNode nextRoot = new StringNode(myCommandList.get(index+1));
 			nextRoot = myLanguageManager.translateNode(nextRoot);

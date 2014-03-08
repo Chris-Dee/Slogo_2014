@@ -34,6 +34,8 @@ public class TurtleManager {
 		}
 		filter=filters;
 	}
+	
+	
 	public List<Turtle> getFilteredTurtles(){
 		return filterList;
 	}

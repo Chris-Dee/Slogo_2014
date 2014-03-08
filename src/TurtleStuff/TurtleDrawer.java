@@ -101,5 +101,16 @@ public Stats displayStats(){
 	public String getImage(){
 		return chosenImage;
 	}
+	
+	public void clearLines(){
+		turt.clearLines();
+	}
+	
+	public void clear(){
+		removeObjects("Turtle", 0);
+		List<Turtle> turtlist = manager.getAllTurtles();
+		for(Turtle t: turtlist)
+			t.clearLines();
+	}
 
 }

@@ -105,6 +105,7 @@ public class CommandFactory {
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 //				System.out.println("Non-parameter command in the leaf");
 				if (isUserCommand(current)){ 
+					System.out.println("User Defined Command: "+current.getCommandString());
 					UserDefinedCommandNode cur = (UserDefinedCommandNode) current;
 					return makeUserCommand(cur, turtles); }
 				if(ifControlCommand(current)){
@@ -114,7 +115,6 @@ public class CommandFactory {
 //					System.out.println("not a user command, but a control command");
 					return makeControlCommand(cur, turtles);
 				}
-				
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 			}
 		}

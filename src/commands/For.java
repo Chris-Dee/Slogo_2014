@@ -26,6 +26,7 @@ public class For extends ControlCommand {
 //		System.out.println("For execute() called");
 		myFactory.setVariableManager(myVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
+		System.out.println("execute called: "+ myExpression + " " + myCommands);
 //		System.out.println("myExpression: "+myExpression);
 		List<StringNode> expr = myParser.parse(myExpression);
 		AbstractParser.printListNodes(expr); //

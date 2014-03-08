@@ -11,19 +11,19 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 public class HelpPage extends JFrame {
-	public HelpPage(){
-		addToMain();
+	public HelpPage(String url){
+		addToMain(url);
 
 	}
 	/**
 	 * @param args
 	 */
-	public JScrollPane createHelpPage(){
+	public JScrollPane createHelpPage(String url){
 		 JEditorPane helpPage;
 	JScrollPane helpPagePane=null;
 		try {
 			helpPage = new  JEditorPane
-					("http://www.cs.duke.edu/courses/compsci308/current/assign/03_slogo/commands.php");
+					(url);
 			helpPage.setEditable(false);
 			helpPage.setVisible(true);
 			JScrollPane helpPanel=new JScrollPane(helpPage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -36,18 +36,11 @@ public class HelpPage extends JFrame {
 
 		return helpPagePane;
 	}
-	public void addToMain(){
+	public void addToMain(String url){
 		JPanel main=(JPanel) getContentPane();
-		main.add(createHelpPage());
+		main.add(createHelpPage(url));
 		pack();
 		setMinimumSize(new Dimension(400,600));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		HelpPage h=new HelpPage();
-		h.setVisible(true);
-		h.addToMain();
-	}
-
 }

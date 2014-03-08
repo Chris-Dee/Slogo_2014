@@ -54,7 +54,6 @@ public class VariableManager {
      */
     public double getValueOfVariable(String v){
     	String variable = deleteVariableSyntax(v);
-//    	System.out.println("VariableManager getValueOfVariable: "+v);
     	return myVariableMap.get(variable);
     }
     public void readFromFile(File file) throws FileNotFoundException{
@@ -63,7 +62,6 @@ public class VariableManager {
 			Scanner scanner=new Scanner(file);
 			while(scanner.hasNext()){
 			myVariableMap.put(scanner.next(),scanner.nextDouble());
-			System.out.println(myVariableMap);
 			if(scanner.hasNext())
 				scanner.nextLine();
 			}

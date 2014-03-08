@@ -142,6 +142,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 		return load;
 	}
 	public static void fillVariables(){
+		if(variableList!=null)
 		variableList.setText(myVars.mapToString("="));
 	}
 }

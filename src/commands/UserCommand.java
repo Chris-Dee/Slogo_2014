@@ -11,6 +11,7 @@ import parser.AbstractParser;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.CommandFactory;
 
 public class UserCommand extends ControlCommand {
@@ -44,7 +45,7 @@ public class UserCommand extends ControlCommand {
 	 * return false if parameters not set successfully
 	 * the list values should contain either numbers or global variables
 	 */
-	public boolean setValueToParameter(String parameters) throws IllegalCommandException, IllegalParameterException{
+	public boolean setValueToParameter(String parameters) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
 		List<String> values = convertParametersToValues(parameters);
@@ -61,7 +62,7 @@ public class UserCommand extends ControlCommand {
 	}
 
 	protected List<String> convertParametersToValues(String parameters)
-			throws IllegalCommandException, IllegalParameterException {
+			throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		List<StringNode> roots = myParser.parse(parameters);
 		List<String> values = new ArrayList<String>();
 		for(StringNode node: roots){
@@ -74,7 +75,7 @@ public class UserCommand extends ControlCommand {
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> roots = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(roots, myTurtles);		

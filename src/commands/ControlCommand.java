@@ -9,6 +9,7 @@ import backEnd.Managers.VariableManager;
 import TurtleStuff.Turtle;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import parser.TextParser;
 
 public abstract class ControlCommand implements AbstractCommand{
@@ -69,5 +70,5 @@ public abstract class ControlCommand implements AbstractCommand{
 		if(s != null) myCommands = s;
 	}
 	
-	public abstract double execute() throws IllegalCommandException, IllegalParameterException;
+	public abstract double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException;
 }

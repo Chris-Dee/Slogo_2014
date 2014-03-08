@@ -7,13 +7,14 @@ import TurtleStuff.Turtle;
 import parser.tree.StringNode;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 
 public class Ask extends TurtleControlCommand {
 
 	public Ask(){ super(); }
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);

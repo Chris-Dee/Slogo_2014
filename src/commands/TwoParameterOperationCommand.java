@@ -1,5 +1,6 @@
 package commands;
 
+import exception.UndefinedVariableException;
 import backEnd.Managers.VariableManager;
 import parser.AbstractParser;
 
@@ -12,7 +13,7 @@ public abstract class TwoParameterOperationCommand implements AbstractCommand{
 	/*
 	 * Must set setVariableManager before setMagnitude
 	 */
-	public void setDoubleMagnitude(String expression1, String expression2) {
+	public void setDoubleMagnitude(String expression1, String expression2) throws UndefinedVariableException {
 		myExpression1 = convertMagnitudeToValue(expression1);
 		myExpression2 = convertMagnitudeToValue(expression2);
 	}
@@ -21,9 +22,13 @@ public abstract class TwoParameterOperationCommand implements AbstractCommand{
 		myVariableManager = manager;
 	}
 	
-	protected double convertMagnitudeToValue(String magnitude){
+	protected double convertMagnitudeToValue(String magnitude) throws UndefinedVariableException{
 		if(myVariableManager.isVariable(magnitude)){
-			return myVariableManager.getValueOfVariable(magnitude);
+			try{
+				return myVariableManager.getValueOfVariable(magnitude);		
+			} catch(Exception e){
+				throw new UndefinedVariableException();
+			}
 		}
 		return AbstractParser.convertToDouble(magnitude);
 	}

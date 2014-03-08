@@ -12,6 +12,8 @@ The unexpectedly large number of commands required a new organization for comman
 
 We also ultimately had to create multiple managers to handle the many features in Slogo, such as a language manager, a user command manager, and a variable manager. As explained before, we did not anticipate these more complex aspects of the language, so we failed to include them in our original design.
 
+As for the parser, we originally did not consider recursively building a tree for the command interpretation, so we ended up having to build a parser tree that consisted of StringNodes (nodes of strings) and other types of nodes that inherited from that. 
+
 Main Layout
   * MainSlogo 
     * main(String[])
@@ -27,6 +29,21 @@ Model Layout
       * List<String> Parse(String s)
       * void setUserCommandManager(UserCommandManager)
       * boolean hasErrors(List<StringNode>)
+    * Parser Tree
+      * StringNode
+        * addChild(String)
+        * addControlChild(String)
+        * addIfElseChild(String)
+        * addUserDefinedCommandChild(String)
+        * getParent()
+        * getCommandString()
+        * getChildren()
+        * setCommandString()
+        * getExpression()
+        * setExpression()
+        * getCommands()
+        * setCommands()
+        * getElseCommands()
 
   * AbstractCommand
     * void execute()

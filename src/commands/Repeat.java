@@ -5,6 +5,7 @@ import java.util.Map;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 import factories.LoopFactory;
 import parser.tree.StringNode;
 
@@ -20,7 +21,7 @@ public class Repeat extends ControlCommand{
 	}
 
 	@Override
-	public double execute() throws IllegalCommandException, IllegalParameterException {
+	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
 		System.out.println("repeat execute() called");
 		System.out.println("myExpression: "+myExpression);
 		System.out.println("myCommands: "+myCommands);

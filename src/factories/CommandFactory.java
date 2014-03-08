@@ -17,6 +17,7 @@ import commands.AbstractCommand;
 import commands.UserCommand;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import exception.UndefinedVariableException;
 
 public class CommandFactory {
     public static final String DEFAULT_BACKEND_PACKAGE = "backEnd/";
@@ -73,7 +74,7 @@ public class CommandFactory {
 	 * return the returned value of the root command
 	 * All passed in command tree has been checked legality and is thus legal
 	 */
-	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		String answer = "";
 		System.out.println();
 //		System.out.println("runCommands turtle size: "+turtles.size());
@@ -92,7 +93,7 @@ public class CommandFactory {
 	 * This method should not be called from the outside.
 	 * Used to build a command or a parameter for the current StringNode
 	 */
-	protected String processStringNode(StringNode current, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+	protected String processStringNode(StringNode current, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		if(current == null){ return null; } // make sure the current node is not null
 		if(current.getChildren().isEmpty()){ // base case: leaf StringNode
 			if (AbstractParser.isParameter(current.getCommandString()) // a number in the leaf
@@ -158,7 +159,7 @@ public class CommandFactory {
 		return myUserCommandManager.hasUserCommand(current.getCommandString());
 	}
 	
-	protected String makeUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+	protected String makeUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException {
 		try { 
 			System.out.println("CommandFactory makeUserCommand: " + node.getCommandString());
 			UserCommand command = myUserCommandManager.getUserCommand(node.getCommandString());
@@ -174,7 +175,7 @@ public class CommandFactory {
 			throw new IllegalParameterException();
 		} catch (InvocationTargetException e) {
 			throw new IllegalCommandException();
-		}
+		} 
 	}
 	
 	/*
@@ -296,7 +297,7 @@ public class CommandFactory {
 	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
 	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
 	 */
-	protected String makeCommand(String cmd, String magnitude1, String magnitude2, String magnitude3, String magnitude4, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
+	protected String makeCommand(String cmd, String magnitude1, String magnitude2, String magnitude3, String magnitude4, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
 			//System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + magnitude2);

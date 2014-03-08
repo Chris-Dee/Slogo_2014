@@ -12,7 +12,9 @@ public class Ask extends TurtleControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		myFactory.setVariableManager(myVariableManager);
+		initExecute();
+		myFactory.setVariableManager(myLocalVariableManager);
+		myFactory.setUserCommandManager(myUserCommandManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		List<Turtle> turtles = myTurtleManager.getFilteredTurtles();
 		List<Integer> lastIDs = getIDsOfTurtles(turtles);

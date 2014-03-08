@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import java.util.Map;
 
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
@@ -18,8 +19,10 @@ public class If extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		myFactory.setVariableManager(myVariableManager);
+		initExecute();
+		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
+		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		double magnitude = myFactory.runCommands(expr, myTurtles);
 		if (magnitude == 0)
@@ -27,6 +30,7 @@ public class If extends ControlCommand{
 		
 		List<StringNode> roots = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(roots, myTurtles);
+		backToLastVariableSpace(lastVCopy);
 		return answer;
 	}
 

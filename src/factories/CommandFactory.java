@@ -72,7 +72,7 @@ public class CommandFactory {
 	 */
 	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException{
 		String answer = "";
-		System.out.println("runCommands turtle size: "+turtles.size());
+//		System.out.println("runCommands turtle size: "+turtles.size());
 		for(StringNode root: roots){
 			System.out.println("runCommands tree starts: ");
 			AbstractParser.printTree(root);
@@ -192,9 +192,6 @@ public class CommandFactory {
 					m.invoke(command, myTurtleManager);
 //					System.out.println("setTurtleManager");
 				}
-				if(m.getName().equals("setUserCommandManager")){
-					m.invoke(command, myUserCommandManager);
-				}
 //				if(m.getName().equals("setCommandName")){
 //					m.invoke(command, node.getCommandString());
 //				}
@@ -223,6 +220,9 @@ public class CommandFactory {
 			if(m.getName().equals("setVariableManager")){
 				m.invoke(command, myVariableManager);
 				System.out.println("setVariableManager");
+			}
+			if(m.getName().equals("setUserCommandManager")){
+				m.invoke(command, myUserCommandManager);
 			}
 		}
 	}

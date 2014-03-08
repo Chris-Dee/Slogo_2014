@@ -47,4 +47,12 @@ public class UserCommandManager {
 	public Map<String, Integer> getCommandParameterMap(){
 		return myCommandParameterMap;
 	}
+	
+	public Map<String, UserCommand> getCommandMap(){
+		return myCommandMap;
+	}
+	
+	public void setCommandMap(Map<String, UserCommand> map){
+		myCommandMap = map;
+	}
 }

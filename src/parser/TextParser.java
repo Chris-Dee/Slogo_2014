@@ -397,8 +397,17 @@ public class TextParser extends AbstractParser {
 			}
 		}
 		else {
-			System.out.println("Not control statement: "+commands.get(0));
-			myRoot = new StringNode(commands.get(0));
+			if (myUserCommandManager.hasUserCommand(myCommandList.get(0))) {
+				myRoot = new UserDefinedCommandNode(commands.get(0), null);
+				index = handleUserDefinedCommandNode((UserDefinedCommandNode) myRoot, 0);
+				myRoot = myLanguageManager.translateNode(myRoot);
+				myCommands.add(myRoot);
+				return index;
+			}
+			else {
+				System.out.println("Not control statement: "+commands.get(0));
+				myRoot = new StringNode(commands.get(0));
+			}
 		}
 		myRoot = myLanguageManager.translateNode(myRoot);
 		myCommands.add(myRoot);

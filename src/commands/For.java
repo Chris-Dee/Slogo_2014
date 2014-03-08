@@ -34,6 +34,7 @@ public class For extends ControlCommand {
 		System.out.println();
 		System.out.println("Pre expression: "+expr.get(0).getCommandString()+" "+expr.get(1).getCommandString()+" "+expr.get(2).getCommandString());
 //		AbstractParser.printListNodes(expr); 
+//		myLocalVariableManager.setValueToVariable(":A", 1);
 		List<StringNode> commands = myParser.parse(myCommands);
 //		AbstractParser.printListNodes(commands); 
 		System.out.println("Post expression: "+expr.get(0).getCommandString()+" "+expr.get(1).getCommandString()+" "+expr.get(2).getCommandString());

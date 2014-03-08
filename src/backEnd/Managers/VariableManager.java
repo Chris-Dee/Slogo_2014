@@ -25,6 +25,10 @@ public class VariableManager {
     public Map<String, Double> getVariableMap(){
     	return myVariableMap;
     }
+    
+    public void setVariableMap(Map<String, Double> map){
+    	myVariableMap = map;
+    }
 
     public void setValueToVariable(String v, double value){
     	String variable = deleteVariableSyntax(v);

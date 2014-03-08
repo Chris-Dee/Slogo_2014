@@ -6,6 +6,6 @@ public class Tan extends OneParameterOperationCommand {
 	
 	@Override
 	public double execute() {
-		return Math.toDegrees(Math.tan(Math.toRadians(myMagnitude)));
+		return Math.tan(Math.toRadians(myMagnitude));
 	}
 }

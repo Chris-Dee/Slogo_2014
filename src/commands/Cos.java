@@ -6,6 +6,6 @@ public class Cos extends OneParameterOperationCommand {
 	
 	@Override
 	public double execute() {
-		return Math.toDegrees(Math.cos(Math.toRadians(myMagnitude)));
+		return Math.cos(Math.toRadians(myMagnitude));
 	}
 }

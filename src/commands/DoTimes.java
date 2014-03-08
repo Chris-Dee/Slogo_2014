@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import parser.TextParser;
@@ -11,53 +12,27 @@ import exception.IllegalParameterException;
 import factories.LoopFactory;
 
 public class DoTimes extends ControlCommand {
-	protected LoopFactory myFactory;
+	protected LoopFactory myLoopFactory;
     protected ResourceBundle myProgramLanguage;
 	
 	public DoTimes(){
 		myParser = new TextParser();
-		myFactory = new LoopFactory();
+		myLoopFactory = new LoopFactory();
 		myProgramLanguage = ResourceBundle.getBundle(LanguageManager.DEFAULT_LANGUAGE_PACKAGE + LanguageManager.DEFAULT_PROGRAM_LANGUAGE);
 	}
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		myFactory.setVariableManager(myVariableManager);
-		myFactory.setUserCommandManager(myUserCommandManager);
-		
-//		int vStart = findIndexOfVariableSyntax(myExpression); // vStart has the index of ":"
-//		if(vStart == myExpression.length()-1){ throw new IllegalParameterException(); }
-//		int vEnd = findIndexOfFirstEmptySpace(myExpression.substring(vStart));
-//		if(vEnd == myExpression.substring(vStart).length()){ throw new IllegalParameterException(); }
-//		String variable = myExpression.substring(vStart, vEnd);
-		
+		myLoopFactory.setVariableManager(myLocalVariableManager);
+		myLoopFactory.setUserCommandManager(myUserCommandManager);
+		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> expr = myParser.parse(myExpression);
 		String variable = expr.get(0).getCommandString();
 		expr.remove(0);
-		double loop = myFactory.runCommands(expr, myTurtles);
+		double loop = myLoopFactory.runCommands(expr, myTurtles);
 		List<StringNode> commands = myParser.parse(myCommands);
-		return myFactory.runAutoLoopCommands(commands, variable, loop, myTurtles);
+		double answer = myLoopFactory.runAutoLoopCommands(commands, variable, loop, myTurtles);
+		backToLastVariableSpace(lastVCopy);
+		return answer;
 	}
-
-//	protected int findIndexOfVariableSyntax(String s) {
-//		int vStart = s.length()-1;
-//		for(int i = 0; i < s.length()-1; i ++){
-//			if(s.substring(i, i+1).equals(myProgramLanguage.getString(VariableManager.VARIABLE_PROGRAM_SYNTAX))){
-//				vStart = i;
-//				break;
-//			}
-//		}
-//		return vStart;
-//	}
-//	
-//	protected int findIndexOfFirstEmptySpace(String s){
-//		int answer = s.length();
-//		for(int i = 0; i < s.length(); i ++){
-//			if(s.charAt(i) == ' '){
-//				answer = i;
-//				break;
-//			}
-//		}
-//		return answer;
-//	}
 }

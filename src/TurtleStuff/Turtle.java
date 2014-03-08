@@ -28,6 +28,7 @@ public class Turtle extends JGObject {
 	private int penColorIndex=0;
 	private String prevImage;
 	private String currImage="Turtle";
+	private boolean hidden=false;
 	public static final int TURTLE_INIT_X=100;
 	public static final int TURTLE_INIT_Y=100;
 	private double targetx=TURTLE_INIT_X;
@@ -56,6 +57,16 @@ public class Turtle extends JGObject {
 			return turtImage;
 		}
 	}
+	public void hideTurtle(){
+	setImage("Empty");
+	raisePen();
+	hidden=true;
+	}
+	public void unhideTurtle(){
+		setImage(currImage);
+		lowerPen();
+		hidden=false;
+	}
 	public void setImageID(int ID){
 		prevturtImage = turtImage;
 		turtImage=ID;
@@ -65,8 +76,6 @@ public class Turtle extends JGObject {
 public String getPreviousImage(){
 	return prevImage;
 }
-	
-
 	private void  moveToTarget(){
 		double dist=Point2D.distance(x, y, targetx, targety);
 		if(dist>2){
@@ -148,6 +157,7 @@ public String getPreviousImage(){
 			return dist;
 		}
 		public void runPen(int thickness, boolean penActive){
+			
 			if(Math.abs(xspeed)>0.01||Math.abs(yspeed)>0.01){
 				List<Position> loc=new ArrayList<Position>();
 
@@ -156,14 +166,14 @@ public String getPreviousImage(){
 				if(xspeed>velocity/2&&yspeed>velocity/2)
 					lines.put((ArrayList<Position>) loc,drawingColor);
 			}
+			if(!hidden){
 			if(origPosition!=null){
+				
 				for(ArrayList<Position> line:lines.keySet())
 					if(lines.get(line)!=null)
 						myEngine.drawLine(line.get(0).xPos()+IMG_OFFSET, line.get(0).yPos()+IMG_OFFSET, line.get(1).xPos()+IMG_OFFSET, line.get(1).yPos()+IMG_OFFSET,thickness,lines.get(line));
 			}
-			
-				
-
+			}
 		}
 		public void clearLines(){
 			lines.clear();

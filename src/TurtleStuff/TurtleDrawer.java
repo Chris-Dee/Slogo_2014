@@ -54,6 +54,7 @@ List<turtles> get turtswithFilter()
 	public void initGame() {
 		setFrameRate(250, 3);
 		setPFSize(30,30);
+		defineImage("Empty", "empty", 0,"Empty.png",".");
 		defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");
 		turt=new Turtle(0);
 		manager.addTurtle(turt);

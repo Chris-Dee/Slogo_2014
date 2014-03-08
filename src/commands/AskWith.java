@@ -39,16 +39,25 @@ public class AskWith extends TurtleControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
+		System.out.println();
+		System.out.println("AskWith executed called: ");
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
+		System.out.println("myExpression: "+myExpression);
+		System.out.println("myCommands: "+myCommands);
 		List<StringNode> expr = myParser.parse(myExpression);
 		List<Turtle> turtles = myTurtleManager.getFilteredTurtles();
 		List<Integer> lastIDs = getIDsOfTurtles(turtles);
+		if(expr == null) System.out.println("expr wrong !!");
 		myTurtleManager.setFilterList(processExprNodes(expr));
+		System.out.println("parse myCommands");
+		System.out.println();
 		List<StringNode> commands = myParser.parse(myCommands);
+		System.out.println("factory runCommands");
+		System.out.println();
 		double answer = myFactory.runCommands(commands, myTurtleManager.getFilteredTurtles());
-		System.out.println("pass factory");
+		System.out.println("pass factory: "+answer);
 		myTurtleManager.setFilterList(lastIDs);
 		System.out.println("pass setFilter");
 		backToLastVariableSpace(lastVCopy);

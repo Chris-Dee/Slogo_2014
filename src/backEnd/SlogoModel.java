@@ -86,6 +86,8 @@ public class SlogoModel {
 		} catch( UndefinedVariableException e){
 			e.printStackTrace();
 			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+		} catch(Exception e){
+			SlogoView.showError(myViewer.getPanel(), e.getMessage());
 		}
 		System.out.println("There is something wrong!!!!!!!!!!");
 		return 0; // should not be reached here

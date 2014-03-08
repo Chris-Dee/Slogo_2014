@@ -53,7 +53,7 @@ public class UserCommand extends ControlCommand {
 		
 		for(int i = 0; i < values.size(); i ++){
 			if(!AbstractParser.isParameter(values.get(i))  // if not a number or a variable
-					|| !values.get(i).startsWith(VariableManager.VARIABLE_PROGRAM_SYNTAX)) return false;
+					|| !values.get(i).startsWith(myProgramLanguage.getString(VariableManager.VARIABLE_PROGRAM_SYNTAX))) return false;
 			if(!myLocalVariableManager.isVariable(values.get(i))){
 				myLocalVariableManager.setValueToVariable(myVariables.get(i), AbstractParser.convertToDouble(values.get(i)));
 			}

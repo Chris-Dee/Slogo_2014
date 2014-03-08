@@ -49,10 +49,10 @@ public class SlogoView extends JFrame{
 	private ResourceBundle myResources;
 	private ResourceBundle commResources;
 	public int backNumber=0;
-	//private JPanel mainPanel;
+	private JPanel mainPanel;
 	private SlogoModel model;
 	private static JTextField results;
-	//private static TurtleDrawer TurtleSpace;
+	private static TurtleDrawer TurtleSpace;
 	private static final int NUM_BOXES=3;
 	private List<JTextArea> savedBoxes=new ArrayList<JTextArea>();
 	private static HelpPage helpPage;
@@ -68,6 +68,9 @@ public class SlogoView extends JFrame{
 	private ImageManager images;
 	private LanguageManager language;
 	private UserCommandManager commandManager;
+	
+	
+	
 	public SlogoView(){
 		super();
 		initiate();
@@ -86,6 +89,7 @@ public class SlogoView extends JFrame{
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH+DEFAULT_BUTTON_TEXT);
 		variables=myVariableManager;
 		language=langManager;
+		
 		initiate();
 
 	}
@@ -116,7 +120,6 @@ public class SlogoView extends JFrame{
 	}
 
 	public void CreateTabs(){
-		//createMainPanel();
 		JTabbedPane tabbedPane = new JTabbedPane();
 		setMinimumSize(new Dimension(1000,800));
 		ImageIcon icon = createImageIcon("turtle.gif");
@@ -126,32 +129,32 @@ public class SlogoView extends JFrame{
 				"Tab 1");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-		//JPanel panel2 = makeTextPanel("Panel #2");
-		JPanel panel2 = makesecondTab();
+		JPanel panel2 = makeTextPanel("Panel #2");
+		//JPanel panel2 = makeTab();
 		tabbedPane.addTab("Tab 2", icon, panel2,
 				"Tab 2");
-		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
 
 		JPanel panel3 = makeTextPanel("Panel #3");
 		tabbedPane.addTab("Tab 3", icon, panel3,
 				"Tab 3");
-		tabbedPane.setMnemonicAt(1, KeyEvent.VK_3);
+		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
 		setTitle("Slow Go Team 16");
 
 		//Add the tabbed pane to this panel.
 		add(tabbedPane);
 	}
-	//public JPanel getPanel(){
-		//return mainPanel;
-	//}
+	public JPanel getPanel(){
+		return mainPanel;
+	}
 	public JPanel makeTab(){
 		JPanel mainPanel= new JPanel();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		mainPanel.setLayout(new BorderLayout());
-		TurtleDrawer TurtleSpace=new TurtleDrawer(manager);
-		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
+		TurtleDrawer TurtleSpace= new TurtleDrawer(manager);
+		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace, manager,commandManager),BorderLayout.CENTER);
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
 		statPage=new StatsPanel(myResources, TurtleSpace);
 		mainPanel.add(statPage,BorderLayout.EAST);
@@ -163,27 +166,10 @@ public class SlogoView extends JFrame{
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		pack();
 		return mainPanel;
-	}
+	} 
 	
-	public JPanel makesecondTab(){
-		JPanel mainPanel= new JPanel();
-		JPanel rightPanel=new JPanel();
-		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
-		mainPanel.setLayout(new BorderLayout());
-		TurtleDrawer TurtleSpace=new TurtleDrawer(manager);
-		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
-		//rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
-		statPage=new StatsPanel(myResources, TurtleSpace);
-		mainPanel.add(statPage,BorderLayout.EAST);
-		mainPanel.add(rightPanel,BorderLayout.WEST);
-		mainPanel.add(new OptionsPanel(myResources, TurtleSpace, model, backNumber, textInput, 
-				savedBoxes, manager, myColors, images),BorderLayout.NORTH);
-		setSize(1000,400);
-		//setMinimumSize(new Dimension(1000,500));
-		setExtendedState(Frame.MAXIMIZED_BOTH);
-		pack();
-		return mainPanel;
-	}
+	
+	
 	
 
 	public void  initiate() {

@@ -36,7 +36,7 @@ public class TurtleManager {
 	}
 	
 	public void clearTurtList(){
-		turtList = null;
+		turtList.clear();
 	}
 	public List<Turtle> getFilteredTurtles(){
 		return filterList;

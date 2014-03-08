@@ -5,6 +5,7 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,20 +61,24 @@ public class workspacepanel extends JPanel{
 			{
 						
 						
-						tMap.put(workspaceno, TurtleSpace.getAllTurtles());
+						tMap.put(workspaceno, new ArrayList(manager.getAllTurtles()));
 						System.out.println(tMap);
 						for(Turtle t:manager.getAllTurtles()){
-							//t.hideTurtle();
+							t.hideTurtle();
 						}
 						String s=workspace.getText();
 						workspaceno = Integer.parseInt(s);
 						if(!(tMap.containsKey(workspaceno))){
-							TurtleSpace.initGame();
-							tMap.put(workspaceno, TurtleSpace.getAllTurtles());
+							manager.getAllTurtles().clear();
+							manager.addTurtle(new Turtle(0));
+							manager.getAllTurtles().get(0).setEngine(TurtleSpace);
+							tMap.put(workspaceno, new ArrayList<Turtle>(manager.getAllTurtles()));
+							manager.makeTurtleSet(tMap.get(workspaceno));
+							
 						} else{
-						//	manager.setAllTurtles(tMap.get(workspaceno));
+							manager.makeTurtleSet(tMap.get(workspaceno));
 							for(Turtle t:manager.getAllTurtles()){
-								//t.unhideTurtle();
+								t.unhideTurtle();
 							}
 						}
 						

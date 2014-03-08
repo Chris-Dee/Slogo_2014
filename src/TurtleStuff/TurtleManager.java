@@ -41,6 +41,10 @@ public class TurtleManager {
 	public List<Turtle> getFilteredTurtles(){
 		return filterList;
 	}
+	public void makeTurtleSet(List<Turtle> all){
+		turtList=all;
+		resetFilterList();
+	}
 	public List<Turtle> getAllTurtles(){
 		return turtList;
 	}
@@ -99,6 +103,19 @@ public class TurtleManager {
 		for(Turtle t:filterList)
 			t.setVelocity(velocity);
 	}
+	private void resetFilterList(){
+		filterList.clear();
+		if(filter.size()>=0){
+		System.out.println("turts"+filterList.size()+" "+turtList.size());
+		for(Turtle t:turtList){
+			for(Integer i:filter){
+				if(t.matchFilter(i))
+					filterList.add(t);
+			}
+			}
+		}
+		else filterList=turtList;
+	}
 	public void addTurtle(Turtle t){
 		if(turt==null)
 			turt=t;
@@ -108,6 +125,5 @@ public class TurtleManager {
 		if(filter.size()==0)
 			filterList.add(t);
 		turtList.add(t);
-
 	}
 }

@@ -34,7 +34,6 @@ public class LanguageManager {
 		myLanguageMap.clear();
 		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
 		makeLanguageMap();
-		System.out.println("LangaugeManager setLanguage Done");
 	}
 	
 	protected void makeLanguageMap(){

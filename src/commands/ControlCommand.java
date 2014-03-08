@@ -37,6 +37,7 @@ public abstract class ControlCommand implements AbstractCommand{
 		myVariableManager = manager;
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		myLocalVariableManager.setVariableMap(lastVCopy);
+//		myParser.setVariableManager(myLocalVariableManager);
 	}
 	
 	public void setExpression(String s){
@@ -54,10 +55,6 @@ public abstract class ControlCommand implements AbstractCommand{
 		if(turtles != null){
 			myTurtles = turtles;
 		}
-	}
-	
-	protected void initExecute(){
-//		myParser.setVariableManager(myLocalVariableManager);
 	}
 	
 	protected void backToLastVariableSpace(Map<String, Double> lastVCopy) {

@@ -24,7 +24,6 @@ public class For extends ControlCommand {
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 		System.out.println("For execute called: "+ myExpression + " " + myCommands);
-		initExecute();
 		myForFactory.setVariableManager(myLocalVariableManager);
 		myForFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);

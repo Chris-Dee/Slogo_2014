@@ -75,7 +75,6 @@ public class UserCommand extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		initExecute();
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		List<StringNode> roots = myParser.parse(myCommands);
 		double answer = myFactory.runCommands(roots, myTurtles);		

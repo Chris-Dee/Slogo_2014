@@ -24,7 +24,6 @@ public class IfElse extends ControlCommand{
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		initExecute();
 		myFactory.setVariableManager(myLocalVariableManager);
 		myFactory.setUserCommandManager(myUserCommandManager);
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);

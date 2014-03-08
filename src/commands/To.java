@@ -24,7 +24,6 @@ public class To extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		initExecute();
 		System.out.println("To executed: "+myName+" "+myExpression+" "+myCommands);
 		if(myName == null || myExpression == null || myCommands == null){
 			System.out.println("null name or expression or commands");

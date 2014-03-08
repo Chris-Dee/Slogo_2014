@@ -112,5 +112,29 @@ public Stats displayStats(){
 		for(Turtle t: turtlist)
 			t.clearLines();
 	}
+	
+public void reAddTurtles(List<Turtle> turtlist){
+		int i=0;
+		manager.clearTurtList();
+		for(Turtle t: turtlist){
+			Stats currStats = t.getStats();
+			defineImage("Turtle","Turt",0,"turtle.gif","-");
+			turt=new Turtle(i);
+			turt.setEngine(this);
+			turt.setPosition(currStats.getPos());
+			turt.setRotation(currStats.getRot());
+			//manager.addTurtle(turt);
+			
+			i++;
+		}
+	}
+
+	public List<Turtle> getAllTurtles(){
+		return manager.getAllTurtles();
+
+	}
+	
+	
+
 
 }

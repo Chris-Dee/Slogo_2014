@@ -24,6 +24,7 @@ public class For extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException, UndefinedVariableException {
+		System.out.println();
 		System.out.println("For execute called: "+ myExpression + " " + myCommands);
 		myForFactory.setVariableManager(myLocalVariableManager);
 		myForFactory.setUserCommandManager(myUserCommandManager);
@@ -31,11 +32,11 @@ public class For extends ControlCommand {
 		List<StringNode> expr = myParser.parse(myExpression);
 		// Pay attention here
 		System.out.println();
-		System.out.println("Pre expr: "+expr.get(0).getCommandString());
+		System.out.println("Pre expression: "+expr.get(0).getCommandString()+" "+expr.get(1).getCommandString()+" "+expr.get(2).getCommandString());
 //		AbstractParser.printListNodes(expr); 
 		List<StringNode> commands = myParser.parse(myCommands);
 //		AbstractParser.printListNodes(commands); 
-		System.out.println("Post expr: "+expr.get(0).getCommandString());
+		System.out.println("Post expression: "+expr.get(0).getCommandString()+" "+expr.get(1).getCommandString()+" "+expr.get(2).getCommandString());
 		System.out.println();
 		System.out.println("commands: "+expr.get(0).getCommandString());
 		String variable = expr.get(0).getCommandString();

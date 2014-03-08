@@ -7,6 +7,10 @@ public class StringNode implements IPrintable{
 	protected StringNode myParent;
 	protected List<StringNode> myChildren;
 	
+	protected String myExpression;
+	protected String myCommands;
+	protected String myElseCommands;
+	
 	public StringNode(String data) {
 		myData = data;
 		myParent = null;
@@ -63,6 +67,27 @@ public class StringNode implements IPrintable{
 		for(StringNode child : myChildren) {
 			System.out.println(child.getCommandString());
 		}
+	}
+	
+	
+	public String getExpression() {
+		return myExpression;
+	}
+	
+	public void setExpression(String s) {
+		myExpression = s;
+	}
+	
+	public String getCommands() {
+		return myCommands;
+	}
+	
+	public void setCommands(String s) {
+		myCommands = s;
+}
+
+	public String getElseCommands() {
+		return myElseCommands;
 	}
 	
 }

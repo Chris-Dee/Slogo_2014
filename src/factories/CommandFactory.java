@@ -13,6 +13,7 @@ import TurtleStuff.TurtleManager;
 import parser.AbstractParser;
 import parser.tree.ControlNode;
 import parser.tree.StringNode;
+import parser.tree.UserDefinedCommandNode;
 import commands.AbstractCommand;
 import commands.UserCommand;
 import exception.IllegalCommandException;
@@ -83,7 +84,7 @@ public class CommandFactory {
 			AbstractParser.printTree(root);
 			System.out.println("runCommands tree ends");
 			answer = processStringNode(root, turtles);	
-			System.out.println("CommandFactory.runCommands Answer: "+answer);
+//			System.out.println("CommandFactory.runCommands Answer: "+answer);
 		}
 		System.out.println("CommandFactory.runCommands Answer: "+answer);
 		return AbstractParser.convertToDouble(answer);
@@ -103,15 +104,13 @@ public class CommandFactory {
 			}
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 //				System.out.println("Non-parameter command in the leaf");
+				if (isUserCommand(current)){ 
+					UserDefinedCommandNode cur = (UserDefinedCommandNode) current;
+					return makeUserCommand(cur, turtles); }
 				if(ifControlCommand(current)){
 					System.out.println("Is a control command: "+current.getCommandString());
 					ControlNode cur = (ControlNode) current;
-					if (isUserCommand(current)){ 
-//						System.out.println("is a user command");
-						return makeUserCommand(cur, turtles); }
-					if(isModifyUserCommand(current)){
-						return makeModifyUserCommand(cur, turtles);
-					}
+					if(isModifyUserCommand(current)){ return makeModifyUserCommand(cur, turtles); }
 //					System.out.println("not a user command, but a control command");
 					return makeControlCommand(cur, turtles);
 				}

@@ -37,7 +37,7 @@ public class Turtle extends JGObject {
 	private JGColor drawingColor=JGColor.black;
 	private JGColor penColor=JGColor.black;
 	private JGEngine myEngine;
-	private LinkedList<Position> targetQueue=new LinkedList<Position>(); 
+	private List<Position> targetQueue=new ArrayList<Position>(); 
 	private double velocity=0.02;
 	public Turtle(int id) {
 		super("Turtle", true, TURTLE_INIT_X, TURTLE_INIT_Y, 0, "Turtle",0, 0);
@@ -114,6 +114,8 @@ public class Turtle extends JGObject {
 			return (int) ((target-curr));
 		}
 		public void move(){
+			if(targetQueue.indexOf(new Position(targetx,targety))>0)
+			origPosition=targetQueue.get(targetQueue.indexOf(new Position(targetx,targety))-1);
 			moveToTarget();
 		}
 		private Position makeInBounds(Position target){
@@ -133,7 +135,9 @@ public class Turtle extends JGObject {
 		}
 		public double setTarget(Position target){
 			double dist=Point2D.distance(x,y,targetx,targety);
-			origPosition=new Position(targetx,targety);
+			if(targetQueue.size()>=2)
+			origPosition=targetQueue.get(targetQueue.indexOf(new Position(targetx,targety))-1);
+			System.out.println(targetQueue);
 			targetQueue.add(makeInBounds(target));
 			return dist;
 		}

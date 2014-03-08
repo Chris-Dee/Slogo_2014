@@ -43,7 +43,6 @@ public void makeRefreshButton(JPanel homePanel){
 		{             
 			//write a static method 'clear'?
 			manager.refresh();
-			textInput.setText("");
 			for(JTextArea text:savedBoxes)
 				text.setText("");
 			manager.refresh();

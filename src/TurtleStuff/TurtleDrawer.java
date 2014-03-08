@@ -4,6 +4,7 @@ import javax.swing.JComponent;
 import frontEnd.Position;
 import frontEnd.SlogoView;
 
+import DrawingPanel.VariableDrawingPanel;
 import backEnd.SlogoModel;
 
 import java.awt.Dimension;
@@ -20,9 +21,7 @@ import jgame.platform.JGEngine;
 public class TurtleDrawer extends JGEngine {
 	private Turtle turt;
 	private String chosenImage;
-	private int turtFilter=0;
 	private TurtleManager manager; 
-	
 	//tempList
 /*
 List<turtles> get turtswithFilter()
@@ -34,7 +33,6 @@ List<turtles> get turtswithFilter()
 		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
-
 		//setMinimumSize(new Dimension(200,200));
 		setBackground(new java.awt.Color(255,255,255));
 
@@ -63,6 +61,7 @@ List<turtles> get turtswithFilter()
 		checkClicked();
 		if(SlogoView.viewStats()!=null)
 		SlogoView.viewStats().updateInfo();
+		VariableDrawingPanel.fillVariables();
 
 
 	}

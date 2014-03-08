@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import frontEnd.HelpPage;
 
+@SuppressWarnings("serial")
 public class HelpButton extends JPanel {
 	HelpPage helpPage;
 	ResourceBundle myResources;

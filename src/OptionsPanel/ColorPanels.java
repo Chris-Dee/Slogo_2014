@@ -3,10 +3,7 @@ package OptionsPanel;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -21,6 +18,7 @@ import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
+@SuppressWarnings("serial")
 public class ColorPanels extends JPanel {
 	ResourceBundle myResources;
 	TurtleManager manager;

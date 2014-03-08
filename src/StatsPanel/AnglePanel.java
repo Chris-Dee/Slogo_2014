@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class AnglePanel extends JPanel {
 ResourceBundle myResources;
 JTextField angle;

@@ -19,15 +19,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import jgame.JGColor;
 
 import frontEnd.SlogoView;
 
 import backEnd.Managers.*;
-import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
+@SuppressWarnings("serial")
 public class VariableDrawingPanel extends JPanel {
 	private JTextField varInput;
 	private JTextField numInput;
@@ -133,6 +132,7 @@ public VariableDrawingPanel(ResourceBundle res, VariableManager vars,
 			{  
 				JFileChooser chooser=new JFileChooser();
 				//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				@SuppressWarnings("unused")
 				int returnCal=chooser.showSaveDialog(variableList);
 				File file=chooser.getSelectedFile();
 				try {

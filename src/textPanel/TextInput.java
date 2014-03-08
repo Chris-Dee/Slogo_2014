@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -19,6 +18,7 @@ import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
+@SuppressWarnings("serial")
 public class TextInput extends JPanel {
 JTextArea textInput;
 ResourceBundle myResources;

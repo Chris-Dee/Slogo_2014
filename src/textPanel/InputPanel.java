@@ -7,13 +7,12 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
-import StatsPanel.StatsPanel;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 import backEnd.Managers.LanguageManager;
 import backEnd.Managers.UserCommandManager;
 
+@SuppressWarnings("serial")
 public class InputPanel extends JPanel {
 SlogoModel model;
 ResourceBundle myResources;
@@ -35,7 +34,6 @@ private void makeInputPanel(JPanel homePanel){
 	JPanel panel=new JPanel();
 	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	panel.add(new SavePanel(model,myResources, savedBoxes, ucManager));
-	JPanel smallPanel=new JPanel();
 	panel.add(new CommandPanel(myResources, model, manager, language,savedBoxes));
 	homePanel.add(panel);
 }

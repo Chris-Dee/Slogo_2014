@@ -79,15 +79,15 @@ public class SlogoModel {
 			return answer;
 		} catch(IllegalCommandException e){
 			e.printStackTrace();
-			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+			SlogoView.showError(SlogoView.viewStats(), e.getMessage());
 		} catch (IllegalParameterException e) {
 			e.printStackTrace();
-			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+			SlogoView.showError(SlogoView.viewStats(), e.getMessage());
 		} catch( UndefinedVariableException e){
 			e.printStackTrace();
-			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+			SlogoView.showError(SlogoView.viewStats(), e.getMessage());
 		} catch(Exception e){
-			SlogoView.showError(myViewer.getPanel(), e.getMessage());
+			SlogoView.showError(SlogoView.viewStats(), e.getMessage());
 		}
 		System.out.println("There is something wrong!!!!!!!!!!");
 		return 0; // should not be reached here

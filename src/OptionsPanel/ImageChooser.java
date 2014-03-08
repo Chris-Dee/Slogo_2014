@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jgame.platform.JGEngine;
-
 import PreferenceManagers.ImageManager;
 import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
@@ -21,6 +19,7 @@ import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
+@SuppressWarnings("serial")
 public class ImageChooser extends JPanel {
 	ResourceBundle myResources;
 	TurtleManager manager;

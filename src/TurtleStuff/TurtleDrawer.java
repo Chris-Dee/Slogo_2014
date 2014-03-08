@@ -1,17 +1,10 @@
 package TurtleStuff;
-import javax.swing.JComponent;
+
 
 import frontEnd.Position;
 import frontEnd.SlogoView;
 
 import DrawingPanel.VariableDrawingPanel;
-import backEnd.SlogoModel;
-
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import jgame.JGColor;

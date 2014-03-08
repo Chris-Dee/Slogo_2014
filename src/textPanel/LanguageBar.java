@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import backEnd.Managers.LanguageManager;
 
+@SuppressWarnings("serial")
 public class LanguageBar extends JPanel {
 	LanguageManager languageManager;
 	public LanguageBar(LanguageManager langManage){
@@ -19,7 +20,7 @@ public class LanguageBar extends JPanel {
 		makeLangList(this);
 	}
 	private void makeLangList(JPanel homePanel){
-		final JComboBox languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
+		final JComboBox<String> languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
 		homePanel.add(languagesList);
 		languagesList.setSelectedIndex(1);
 		languagesList.addActionListener(new ActionListener() {

@@ -14,6 +14,7 @@ import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 
 
+@SuppressWarnings("serial")
 public class VeloSlider extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;

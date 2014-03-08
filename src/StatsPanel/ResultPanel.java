@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class ResultPanel extends JPanel {
  ResourceBundle myResources;
  JTextField results;

@@ -11,12 +11,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import backEnd.SlogoModel;
 import backEnd.Managers.UserCommandManager;
 import frontEnd.SlogoView;
 
+@SuppressWarnings("serial")
 public class SavePanel extends JPanel{
 	private static final int NUM_BOXES=3;
 	private SlogoModel model;
@@ -51,7 +51,6 @@ public class SavePanel extends JPanel{
 		savedBoxes.add(savedText);
 		savedText.setEditable(false);
 		JPanel saveFunction=new JPanel();
-		JTextField functionName=new JTextField(4);
 		Button functionSaver=new Button(myResources.getString("FunctionSave"));
 		functionSaver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)

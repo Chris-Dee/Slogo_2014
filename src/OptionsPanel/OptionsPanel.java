@@ -14,10 +14,10 @@ import TurtleStuff.TurtleDrawer;
 import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 
+@SuppressWarnings("serial")
 public class OptionsPanel extends JPanel {
 	private ResourceBundle myResources;
 	private TurtleDrawer turtleSpace;
-	private SlogoModel model;
 	private int backNumber;
 	private JTextArea textInput;
 	private TurtleManager myManager;
@@ -30,7 +30,6 @@ public OptionsPanel(ResourceBundle myRes,TurtleDrawer turtSpace,SlogoModel slogM
 	color=colors;
 	myResources=myRes;
 	turtleSpace=turtSpace;
-	model=slogModel;
 	backNumber=backNum;
 	textInput=input;
 	savedBoxes=savedBox;

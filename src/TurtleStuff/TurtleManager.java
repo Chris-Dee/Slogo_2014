@@ -4,11 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import OptionsPanel.NewFilterTurtle;
-
 import jgame.JGColor;
-import jgame.JGPoint;
-import jgame.platform.JGEngine;
 
 import frontEnd.Position;
 import frontEnd.SlogoView;

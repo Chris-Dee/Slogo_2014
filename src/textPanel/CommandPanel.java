@@ -11,6 +11,7 @@ import TurtleStuff.TurtleManager;
 import backEnd.SlogoModel;
 import backEnd.Managers.LanguageManager;
 
+@SuppressWarnings("serial")
 public class CommandPanel extends JPanel {
 ResourceBundle myResources;
 SlogoModel model;

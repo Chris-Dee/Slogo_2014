@@ -11,6 +11,7 @@ import TurtleStuff.Stats;
 import TurtleStuff.Turtle;
 import TurtleStuff.TurtleDrawer;
 
+@SuppressWarnings("serial")
 public class StatsPanel extends JPanel {
 	static JTextField xPos;
 	static JTextField yPos ;

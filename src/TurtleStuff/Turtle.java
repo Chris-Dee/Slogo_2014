@@ -1,9 +1,7 @@
 package TurtleStuff;
 
 import java.awt.geom.Point2D;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,7 +18,6 @@ public class Turtle extends JGObject {
 	private static final double THRESHOLD_VOLTAGE = 0.01;
 	private static final int EDGE_OFFSET = 5;
 	private static final int SCREEN_EDGE = 270;
-	private boolean penActive=true;
 	private int turtId;
 	private int prevturtImage;
 	private int turtImage=1;
@@ -184,11 +181,9 @@ public String getPreviousImage(){
 			drawingColor=color;
 		}
 		public void raisePen(){
-			penActive=false;
 			drawingColor=null;
 		}
 		public void lowerPen(){
-			penActive=true;
 			drawingColor=penColor;
 		}
 		//returns distance traveled

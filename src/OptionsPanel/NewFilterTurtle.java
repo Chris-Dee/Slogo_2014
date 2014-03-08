@@ -17,6 +17,7 @@ import TurtleStuff.TurtleManager;
 
 import frontEnd.SlogoView;
 
+@SuppressWarnings("serial")
 public class NewFilterTurtle extends JPanel {
 	ResourceBundle myResources;
 	TurtleDrawer TurtleSpace;

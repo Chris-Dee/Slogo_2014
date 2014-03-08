@@ -5,6 +5,7 @@ import javax.swing.JTextArea;
 
 import backEnd.Managers.UserCommandManager;
 
+@SuppressWarnings("serial")
 public class FunctionViewer extends JPanel {
 private static UserCommandManager ucManage;
 private static JTextArea funViewer;

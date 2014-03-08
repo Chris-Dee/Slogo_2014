@@ -29,7 +29,7 @@ public class LanguageManager {
 	}
 	
 	public void setLanguage(String language){
-		System.out.println("LanguageManager setLanguage: "+language);
+//		System.out.println("LanguageManager setLanguage: "+language);
 		if(language != null) myLanguage = language;
 		myLanguageMap.clear();
 		myUserLanguage = ResourceBundle.getBundle(DEFAULT_LANGUAGE_PACKAGE + myLanguage);
@@ -50,7 +50,7 @@ public class LanguageManager {
 	}
 	
 	public StringNode translateNode(StringNode current){
-		System.out.println("TanslateNode() called");
+//		System.out.println("TanslateNode() called");
 		if(AbstractParser.isParameter(current.getCommandString())){
 			System.out.println("TranslateNode() isParameter: " + current.getCommandString());
 			return current;

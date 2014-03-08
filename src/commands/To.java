@@ -51,7 +51,7 @@ public class To extends ControlCommand {
 			myVariableManager.removeVariable(v);	
 		}
 		
-//		System.out.println("TO: is Legal");
+		System.out.println("TO: is Legal");
 		
 		UserCommand cmd = new UserCommand();
 		cmd.setExpression(myExpression);

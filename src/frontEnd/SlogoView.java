@@ -141,6 +141,7 @@ public class SlogoView extends JFrame{
 		//Add the tabbed pane to this panel.
 		add(tabbedPane);
 	}
+
 	public JPanel getPanel(){
 		return mainPanel;
 	}
@@ -149,6 +150,7 @@ public class SlogoView extends JFrame{
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		mainPanel.setLayout(new BorderLayout());
+		//add background into constructor--get background by using a dialog
 		TurtleSpace=new TurtleDrawer(manager);
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));

@@ -22,7 +22,6 @@ public class TurtleDrawer extends JGEngine {
 	private String chosenImage;
 	private int turtFilter=0;
 	private TurtleManager manager; 
-	
 	//tempList
 /*
 List<turtles> get turtswithFilter()
@@ -34,7 +33,6 @@ List<turtles> get turtswithFilter()
 		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
-
 		//setMinimumSize(new Dimension(200,200));
 		setBackground(new java.awt.Color(255,255,255));
 
@@ -53,7 +51,6 @@ List<turtles> get turtswithFilter()
 	public void initGame() {
 		setFrameRate(250, 3);
 		setPFSize(30,30);
-		System.out.println("dd");
 		defineImage("Turtle","Turt",0,"turtle.gif","-");
 		turt=new Turtle(0);
 		manager.addTurtle(turt);

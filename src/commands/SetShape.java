@@ -9,7 +9,6 @@ public class SetShape extends OneParameterTurtleCommand{
 	
 	@Override
 	protected double executeTurtle(Turtle turtle) {
-		// TODO Auto-generated method stub
 		turtle.setImage(images.getPathByIndex((int) myMagnitude));
 		turtle.setImageID((int) myMagnitude);
 		return myMagnitude;

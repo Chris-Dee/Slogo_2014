@@ -5,6 +5,8 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -26,11 +28,14 @@ public class workspacepanel extends JPanel{
 	TurtleDrawer TurtleSpace;
 	ImageManager images;
 	int i=1;
+	int workspaceno =0;
+	HashMap<Integer , List<Turtle>> tMap= new HashMap<Integer, List<Turtle>>();
 	public workspacepanel(ResourceBundle myRes,TurtleManager manage,TurtleDrawer turtleSpace){
 		super();
 		myResources=myRes;
 		TurtleSpace=turtleSpace;
 		manager=manage;
+		
 		makePanel();
 		
 }
@@ -52,10 +57,19 @@ public class workspacepanel extends JPanel{
 		workspaceloader.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-						//StatsPanel Stats = SlogoView.viewStats();
+						List<Turtle> turtList = TurtleSpace.getAllTurtles();
 						TurtleSpace.clear();
+						tMap.put(workspaceno, turtList);
 						String s=workspace.getText();
-						int workspaceno = Integer.parseInt(s);
+						workspaceno = Integer.parseInt(s);
+						if(!tMap.containsKey(workspaceno)){
+							TurtleSpace.initGame();
+						} else{
+							turtList= tMap.get(workspaceno);
+							TurtleSpace.reAddTurtles(turtList);
+						}
+						
+						
 						
 			}
 		});

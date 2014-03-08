@@ -4,6 +4,7 @@ import java.util.*;
 
 import backEnd.Managers.LanguageManager;
 import backEnd.Managers.UserCommandManager;
+import backEnd.Managers.VariableManager;
 import exception.IllegalCommandException;
 import parser.tree.ControlNode;
 import parser.tree.IfElseNode;
@@ -56,6 +57,7 @@ public class TextParser extends AbstractParser {
 	public void setUserCommandManager(UserCommandManager manager){
 		myUserCommandManager = manager;
 	}
+	
 
 	private void formatStringArray(String s) {
 		int depth = 0;
@@ -347,6 +349,7 @@ public class TextParser extends AbstractParser {
 			return mySymbols.keySet().contains(node.getCommandString()) || 
 					myUserCommandManager.hasUserCommand(node.getCommandString());
 	}
+	
 	private boolean childrenAndCommandAreValid(StringNode current) {
 		boolean answer = false;
 		if (commandIsValid(current) && hasRightNumChildren(current)) {

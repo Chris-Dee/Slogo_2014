@@ -278,7 +278,7 @@ public class TextParser extends AbstractParser {
 			}
 			else {
 				while (!myCommandList.get(i).startsWith(mySymbols.getString("ListStart"))) {
-					sb.append(myCommandList.get(i));
+					sb.append(myCommandList.get(i) + " ");
 					System.out.println("2" + sb.toString());
 
 					i++;

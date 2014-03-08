@@ -25,6 +25,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import jgame.JGColor;
+
 import textPanel.CommandPanel;
 import textPanel.InputPanel;
 import backEnd.Managers.*;
@@ -58,6 +60,7 @@ public class SlogoView extends JFrame{
 	private static HelpPage helpPage;
 	private static StatsPanel statPage;
 	private JTextArea textInput;
+	private String[] backGroundPossib=new String[]{"0 0 255","255 255 255","0 255 0","255 0 0","0 0 0","255 0 255","0 255 255"};
 	public static final String DEFAULT_RESOURCE_PATH="frontEnd/";
 	public static final String DEFAULT_BUTTON_TEXT="Buttons";
 	public static final String DEFAULT_COMM_PATH="backEnd/";
@@ -97,66 +100,17 @@ public class SlogoView extends JFrame{
 	public static void showError(JPanel p,String s){
 		JOptionPane.showMessageDialog(p,s);
 	}
-	protected JPanel makeTextPanel(String text) {
-		JPanel panel = new JPanel(false);
-		JLabel filler = new JLabel(text);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.setLayout(new GridLayout(1, 1));
-		panel.add(filler);
-		return panel;
-	}
 	public static StatsPanel viewStats(){
 		return statPage;
 	}
 	//Needs refactoring. Look nicer
-	private  ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = SlogoView.class.getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL);
-		} else {
-			System.err.println(myResources.getString("FileNotFoundError")+": " + path);
-			return null;
-		}
-	}
-
-	public void CreateTabs(){
-		JTabbedPane tabbedPane = new JTabbedPane();
-		setMinimumSize(new Dimension(1000,800));
-		
-		ImageIcon icon = createImageIcon("turtle.gif");
-
-		JPanel panel1 = makeTab();
-		tabbedPane.addTab("Tab 1", icon, panel1,
-				"Tab 1");
-		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
-		JPanel panel2 = makeTextPanel("Panel #2");
-		//JPanel panel2 = makeTab();
-		tabbedPane.addTab("Tab 2", icon, panel2,
-				"Tab 2");
-		tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
-
-		JPanel panel3 = makeTextPanel("Panel #3");
-		tabbedPane.addTab("Tab 3", icon, panel3,
-				"Tab 3");
-		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-
-		setTitle("Slow Go Team 16");
-
-		//Add the tabbed pane to this panel.
-		add(tabbedPane);
-	}
-
-	public JPanel getPanel(){
-		return mainPanel;
-	}
-	public JPanel makeTab(){
+	private JPanel makeTab(){
 		JPanel mainPanel= new JPanel();
 		JPanel rightPanel=new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		mainPanel.setLayout(new BorderLayout());
 
-		TurtleSpace=new TurtleDrawer(manager);
+		TurtleSpace=new TurtleDrawer(manager,getBackgroundColor());
 		mainPanel.add(new VariableDrawingPanel(myResources,variables,TurtleSpace,manager,commandManager),BorderLayout.CENTER);
 
 		rightPanel.add(new InputPanel(model, myResources, manager, language,commandManager));
@@ -173,12 +127,23 @@ public class SlogoView extends JFrame{
 		return mainPanel;
 	} 
 	
-	
+	private JGColor getBackgroundColor(){
+		String s = (String)JOptionPane.showInputDialog(
+                this,
+                myResources.getString("BackgroundChooser"),
+                myResources.getString("BGTitle"),
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                backGroundPossib,
+                myResources.getString("DefaultColor"));
+		String[] str=s.split(" ");
+		return new JGColor(Integer.parseInt(str[0]),Integer.parseInt(str[1]),Integer.parseInt(str[2]));
+	}
 	
 	
 
-	public void  initiate() {
-		CreateTabs();
+	private void  initiate() {
+		this.getContentPane().add(makeTab());
 		setVisible(true);
 		// TODO Auto-generated method stub
 

@@ -23,6 +23,7 @@ public class TurtleDrawer extends JGEngine {
 	private static final String TILE_ID = "Turt";
 	private static final String TURTLE_ID = "Turtle";
 	private Turtle turt;
+	private JGColor backGroundColor;
 	private String chosenImage;
 	private TurtleManager manager; 
 	//tempList
@@ -30,9 +31,10 @@ public class TurtleDrawer extends JGEngine {
 List<turtles> get turtswithFilter()
 
  */
-	public TurtleDrawer(TurtleManager manage){
+	public TurtleDrawer(TurtleManager manage, JGColor background){
 		dbgShowBoundingBox(true);
 		manager=manage;
+		backGroundColor=background;
 		int height = 900;
 		double aspect = 0.5;
 		initEngineComponent((int) (height * aspect), height);
@@ -48,7 +50,7 @@ List<turtles> get turtswithFilter()
 	}
 	@Override
 	public void initCanvas() {
-		setCanvasSettings(1, 1, 300, 300, null, JGColor.white, null);
+		setCanvasSettings(1, 1, 300, 300, null, backGroundColor, null);
 	}
 	@Override
 	public void initGame() {

@@ -19,6 +19,9 @@ import jgame.JGPoint;
 import jgame.platform.JGEngine;
 @SuppressWarnings("serial")
 public class TurtleDrawer extends JGEngine {
+	private static final String DEFAULT_IMAGE = "turtle.gif";
+	private static final String TILE_ID = "Turt";
+	private static final String TURTLE_ID = "Turtle";
 	private Turtle turt;
 	private String chosenImage;
 	private TurtleManager manager; 
@@ -51,7 +54,7 @@ List<turtles> get turtswithFilter()
 	public void initGame() {
 		setFrameRate(250, 3);
 		setPFSize(30,30);
-		defineImage("Turtle","Turt",0,"turtle.gif","-");
+		defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");
 		turt=new Turtle(0);
 		manager.addTurtle(turt);
 		turt.setEngine(this);
@@ -76,7 +79,7 @@ List<turtles> get turtswithFilter()
 
 	public void addnewTurtle(int id){
 		
-		defineImage("Turtle","Turt",0,"turtle.gif","-");
+		defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");
 		turt=new Turtle(id);
 		manager.addTurtle(turt);
 		//System.out.println(turtList.size());
@@ -106,7 +109,7 @@ public Stats displayStats(){
 	}
 	
 	public void clear(){
-		removeObjects("Turtle", 0);
+		removeObjects(TURTLE_ID, 0);
 		List<Turtle> turtlist = manager.getAllTurtles();
 		for(Turtle t: turtlist){
 			t.clearLines();
@@ -119,9 +122,9 @@ public void reAddTurtles(List<Turtle> turtlist){
 		System.out.print(turtlist.size());
 		for(Turtle t: turtlist){
 			Stats currStats = t.getStats();
-			defineImage("Turtle","Turt",0,"turtle.gif","-");
+			defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");
 			turt=new Turtle(i);
-			manager.addTurtle(turt);
+			manager.addTurtle(t);
 			turt.setEngine(this);
 			turt.setTarget(currStats.getPos());
 			turt.setRotation(currStats.getRot());

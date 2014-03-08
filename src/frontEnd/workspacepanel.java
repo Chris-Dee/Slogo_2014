@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -29,7 +30,7 @@ public class workspacepanel extends JPanel{
 	ImageManager images;
 	int i=1;
 	int workspaceno =0;
-	HashMap<Integer , List<Turtle>> tMap= new HashMap<Integer, List<Turtle>>();
+	Map<Integer , List<Turtle>> tMap= new HashMap<Integer, List<Turtle>>();
 	public workspacepanel(ResourceBundle myRes,TurtleManager manage,TurtleDrawer turtleSpace){
 		super();
 		myResources=myRes;
@@ -60,17 +61,20 @@ public class workspacepanel extends JPanel{
 						
 						
 						tMap.put(workspaceno, TurtleSpace.getAllTurtles());
-						System.out.print(workspaceno);
-						System.out.print(TurtleSpace.getAllTurtles().size());
-						TurtleSpace.clear();
+						System.out.println(tMap);
+						for(Turtle t:manager.getAllTurtles()){
+							//t.hideTurtle();
+						}
 						String s=workspace.getText();
 						workspaceno = Integer.parseInt(s);
 						if(!(tMap.containsKey(workspaceno))){
 							TurtleSpace.initGame();
+							tMap.put(workspaceno, TurtleSpace.getAllTurtles());
 						} else{
-							System.out.print(workspaceno);
-							System.out.print(tMap.get(workspaceno).size());
-							TurtleSpace.reAddTurtles(tMap.get(workspaceno));
+						//	manager.setAllTurtles(tMap.get(workspaceno));
+							for(Turtle t:manager.getAllTurtles()){
+								//t.unhideTurtle();
+							}
 						}
 						
 						

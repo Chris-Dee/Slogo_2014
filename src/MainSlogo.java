@@ -18,7 +18,7 @@ class MainSlogo {
 		newWindow();
 	}
 	
-	public static void newWindow(){
+	private static void newWindow(){
 		SlogoModel model = new SlogoModel();
 		TurtleManager myTurtleManager=new TurtleManager();
 		ColorManager myColorManager=new ColorManager();

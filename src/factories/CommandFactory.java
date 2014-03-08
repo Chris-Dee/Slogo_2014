@@ -285,8 +285,9 @@ public class CommandFactory {
 		String answer = "";
 		for (Method cur: methods){
 			if (cur.getName().equals("execute")){
+				System.out.println("CommandFactory execute called");
 				answer += (Double) cur.invoke(command);
-				System.out.println("execute");
+				System.out.println("CommandFactory execute");
 		    }	
 		}
 		return answer;

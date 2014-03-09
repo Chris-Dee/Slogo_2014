@@ -16,7 +16,7 @@ public class UserCommandManager {
 	}
 
 	public void createNewUserCommand(String name, int parameterNum, UserCommand command){
-		System.out.println("createNewUserCommand: "+name+" "+parameterNum);
+//		System.out.println("createNewUserCommand: "+name+" "+parameterNum);
 		myCommandMap.put(name, command);
 		myCommandParameterMap.put(name,  parameterNum);
 	}
@@ -40,7 +40,7 @@ public class UserCommandManager {
 	}
 	
 	public UserCommand getUserCommand(String commandName){
-		System.out.println("getUserCommand: "+commandName);
+//		System.out.println("getUserCommand: "+commandName);
 		return myCommandMap.get(commandName);
 	}
 	

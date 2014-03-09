@@ -72,8 +72,6 @@ public class SlogoModel {
 	public double receiveTextInput(String userCommands){
 		try{
 //			System.out.println("userCommands: "+userCommands);
-			System.out.println();
-			System.out.println();
 			List<StringNode> roots = myParser.parse(userCommands);
 			double answer = myCommandFactory.runCommands(roots, myTurtleManager.getFilteredTurtles());
 			return answer;
@@ -89,7 +87,7 @@ public class SlogoModel {
 		} catch(Exception e){
 			SlogoView.showError(SlogoView.viewStats(), e.getMessage());
 		}
-		System.out.println("There is something wrong!!!!!!!!!!");
+//		System.out.println("There is something wrong!!!!!!!!!!");
 		return 0; // should not be reached here
 	}
 	

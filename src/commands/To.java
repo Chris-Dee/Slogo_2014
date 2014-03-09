@@ -12,9 +12,7 @@ public class To extends ControlCommand {
 	
 	public static final int DEFAULT_TEST_PARAMETERNUM = 0;
 	
-	public To(){
-		super();
-	}
+	public To(){ super(); }
 
 	protected String myName;
 	
@@ -24,38 +22,26 @@ public class To extends ControlCommand {
 
 	@Override
 	public double execute() throws IllegalCommandException, IllegalParameterException {
-		System.out.println("To executed: "+myName+" "+myExpression+" "+myCommands);
-		if(myName == null || myExpression == null || myCommands == null){
-			System.out.println("null name or expression or commands");
-			return 0;
-		}
+//		System.out.println("To executed: "+myName+" "+myExpression+" "+myCommands);
+		if(myName == null || myExpression == null || myCommands == null){ return 0; }
 		
 		List<StringNode> exprRoots = myParser.parse(myExpression);
-		if(!ifLegalParameter(exprRoots)) {
-			System.out.println("parameter not legal");
-			return 0;
-		}
+		if(!ifLegalParameter(exprRoots)) { return 0; }
 		List<String> paraVariables = getVariableListFromListNode(exprRoots);
 		for(String v: paraVariables){
 			myVariableManager.setValueToVariable(v, DEFAULT_TEST_PARAMETERNUM);	
 		}
 		
 		List<StringNode> commandRoots = myParser.parse(myCommands);
-		if(myParser.hasErrors(commandRoots)){
-			System.out.println("commands not legal");
-			return 0;
-		}
+		if(myParser.hasErrors(commandRoots)){ return 0; }
 		List<String> cmdVariables = getVariableListFromListNode(commandRoots);
 		if(!ifTwoStringListsEqual(cmdVariables, paraVariables)) return 0;
-		for(String v: paraVariables){
-			myVariableManager.removeVariable(v);	
-		}
-		
-		System.out.println("TO: is Legal");
-		
+		for(String v: paraVariables){ myVariableManager.removeVariable(v); }
+
 		UserCommand cmd = new UserCommand();
 		cmd.setExpression(myExpression);
 		cmd.setCommands(myCommands);
+		cmd.initializeParameterList(myExpression);
 		myUserCommandManager.createNewUserCommand(myName, exprRoots.size(), cmd);
 		return 1;
 	}

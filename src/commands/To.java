@@ -24,13 +24,10 @@ public class To extends ControlCommand {
 	public double execute() throws IllegalCommandException, IllegalParameterException {
 //		System.out.println("To executed: "+myName+" "+myExpression+" "+myCommands);
 		if(myName == null || myExpression == null || myCommands == null){ return 0; }
-		
 		List<StringNode> exprRoots = myParser.parse(myExpression);
 		if(!ifLegalParameter(exprRoots)) { return 0; }
 		List<String> paraVariables = getVariableListFromListNode(exprRoots);
-		for(String v: paraVariables){
-			myVariableManager.setValueToVariable(v, DEFAULT_TEST_PARAMETERNUM);	
-		}
+		for(String v: paraVariables){ myVariableManager.setValueToVariable(v, DEFAULT_TEST_PARAMETERNUM); }
 		
 		List<StringNode> commandRoots = myParser.parse(myCommands);
 		if(myParser.hasErrors(commandRoots)){ return 0; }

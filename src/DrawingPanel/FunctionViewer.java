@@ -16,6 +16,7 @@ public FunctionViewer(UserCommandManager ucMan){
 
 private void createViewer(JPanel homePanel){
 	funViewer=new JTextArea(20,10);
+	funViewer.setEditable(false);
 	homePanel.add(funViewer);
 }
 public static void updateViewer(){

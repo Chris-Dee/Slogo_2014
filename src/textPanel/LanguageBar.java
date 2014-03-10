@@ -20,7 +20,7 @@ public class LanguageBar extends JPanel {
 		makeLangList(this);
 	}
 	private void makeLangList(JPanel homePanel){
-		final JComboBox<String> languagesList=new JComboBox((removeFileNames(new File("src/resources").list())));
+		final JComboBox<String> languagesList=new JComboBox<String>((removeFileNames(new File("src/resources").list())));
 		homePanel.add(languagesList);
 		languagesList.setSelectedIndex(1);
 		languagesList.addActionListener(new ActionListener() {
@@ -30,15 +30,16 @@ public class LanguageBar extends JPanel {
 			}
 		});  
 	}
-	private Object[] removeFileNames(String[] s){
+	private String[] removeFileNames(String[] s){
 		List<String> langList=new ArrayList<String>();
 		for(int i=0;i<s.length;i++){
 			if(s[i].contains(".properties")){
 				String[] str=s[i].split(".properties");
-//				System.out.println(str[0]);
 				langList.add(str[0]);
 			}
 		}
-		return langList.toArray();
+		String[] st=new String[0];
+		//This toArray thing is actually just the worst thing ever. WHY CANT IT JUST RETURN A T[] AUTOMATICALLY?!?!?!?!?!?!?
+		return langList.toArray(st);
 	}
 }

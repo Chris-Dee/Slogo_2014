@@ -38,7 +38,6 @@ public abstract class ControlCommand implements AbstractCommand{
 		myVariableManager = manager;
 		Map<String, Double> lastVCopy = getCopyOfMapFromVariableManager(myVariableManager);
 		myLocalVariableManager.setVariableMap(lastVCopy);
-//		myParser.setVariableManager(myLocalVariableManager);
 	}
 	
 	public void setExpression(String s){

@@ -52,21 +52,18 @@ public class LanguageManager {
 	public StringNode translateNode(StringNode current){
 //		System.out.println("TanslateNode() called");
 		if(AbstractParser.isParameter(current.getCommandString())){
-			System.out.println("TranslateNode() is a number: " + current.getCommandString());
+//			System.out.println("TranslateNode() is a number: " + current.getCommandString());
 			return current;
 		}
 		if(current.getCommandString().startsWith(myUserLanguage.getString("Variable"))){
-			System.out.println("TranslateNode() is a variable: " + current.getCommandString());
+//			System.out.println("TranslateNode() is a variable: " + current.getCommandString());
 			current.setCommandString(processVariableNode(current));
 			return current;
 		}
 		String nonProgramLanguage = myLanguageMap.get(current.getCommandString());
-		if(nonProgramLanguage ==  null){ 
-			System.out.println("TranslateNode() is a user command: "+current.getCommandString());
-			return current; 
-		}
+		if(nonProgramLanguage ==  null){  return current; }
 		current.setCommandString(myProgramLanguage.getString(nonProgramLanguage));
-		System.out.println("TranslateNode() Node translated: " + current.getCommandString());
+//		System.out.println("TranslateNode() Node translated: " + current.getCommandString());
 		return current;
 	}
 	

@@ -77,16 +77,11 @@ public class CommandFactory {
 	 */
 	public double runCommands(List<StringNode> roots, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		String answer = "";
-		System.out.println();
-//		System.out.println("runCommands turtle size: "+turtles.size());
+//		System.out.println();
 		for(StringNode root: roots){
-			System.out.println("runCommands tree starts: ");
-			AbstractParser.printTree(root);
-			System.out.println("runCommands tree ends");
 			answer = processStringNode(root, turtles);	
-//			System.out.println("CommandFactory.runCommands Answer: "+answer);
 		}
-		System.out.println("CommandFactory.runCommands Answer: "+answer);
+//		System.out.println("CommandFactory.runCommands Answer: "+answer);
 		return AbstractParser.convertToDouble(answer);
 	}
 	
@@ -105,14 +100,13 @@ public class CommandFactory {
 			else if (hasNoParameter(current)){ // a non-parameter command in the leaf
 //				System.out.println("Non-parameter command in the leaf");
 				if (isUserCommand(current)){ 
-					System.out.println("User Defined Command: "+current.getCommandString());
+//					System.out.println("User Defined Command: "+current.getCommandString());
 					UserDefinedCommandNode cur = (UserDefinedCommandNode) current;
 					return makeUserCommand(cur, turtles); }
 				if(ifControlCommand(current)){
-					System.out.println("Is a control command: "+current.getCommandString());
+//					System.out.println("Is a control command: "+current.getCommandString());
 					ControlNode cur = (ControlNode) current;
 					if(isModifyUserCommand(current)){ return makeModifyUserCommand(cur, turtles); }
-//					System.out.println("not a user command, but a control command");
 					return makeControlCommand(cur, turtles);
 				}
 				return makeCommand(current.getCommandString(), DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
@@ -120,12 +114,10 @@ public class CommandFactory {
 		}
 		
 		if(hasOneParameter(current)){
-//			System.out.println("Has one parameter");
 			String answer = processStringNode(current.getChildren().get(0), turtles);
 			return makeCommand(current.getCommandString(), answer, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
 		}
 		else if(hasTwoParameters(current)){
-//			System.out.println("Has two parameter");
 			String leftAnswer = processStringNode(current.getChildren().get(0), turtles);
 			String rightAnswer = processStringNode(current.getChildren().get(1), turtles);
 			return makeCommand(current.getCommandString(), leftAnswer, rightAnswer, DEFAULT_MAGNITUDE, DEFAULT_MAGNITUDE, turtles);
@@ -146,7 +138,6 @@ public class CommandFactory {
 	 * Used to check if a StringNode is a ControlNode
 	 */
 	protected boolean ifControlCommand(StringNode current){
-//		System.out.println("ifControlCommand: "+current.getCommandString());
 		return myControlCommands.contains(current.getCommandString());
 	}
 	
@@ -160,7 +151,7 @@ public class CommandFactory {
 	
 	protected String makeUserCommand(ControlNode node, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException {
 		try { 
-			System.out.println("CommandFactory makeUserCommand: " + node.getCommandString());
+//			System.out.println("CommandFactory makeUserCommand: " + node.getCommandString());
 			UserCommand command = myUserCommandManager.getUserCommand(node.getCommandString());
 			Method[] methods = command.getClass().getMethods();
 			firstMethodsExecuted(turtles, command, methods);
@@ -190,19 +181,15 @@ public class CommandFactory {
 			for (Method m: methods){
 				if(m.getName().equals("setCommandName")){
 					m.invoke(command, node.getExpression());
-//					System.out.println("setExpression");
 				}
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getCommands());
-//					System.out.println("setCommands");
 				}
 				if(m.getName().equals("setCommands")){
 					m.invoke(command, node.getElseCommands());
-//					System.out.println("setElseCommands");
 				}
 				if(m.getName().equals("setTurtleManager")){
 					m.invoke(command, myTurtleManager);
-//					System.out.println("setTurtleManager");
 				}
 		    }
 			return executeCommand(command, methods);
@@ -232,19 +219,15 @@ public class CommandFactory {
 			for (Method m: methods){
 				if(m.getName().equals("setExpression")){
 					m.invoke(command, node.getExpression());
-//					System.out.println("setExpression");
 				}
 				if(m.getName().equals("setCommands")){
 					m.invoke(command, node.getCommands());
-//					System.out.println("setCommands");
 				}
 				if(m.getName().equals("setElseCommands")){
 					m.invoke(command, node.getElseCommands());
-//					System.out.println("setElseCommands");
 				}
 				if(m.getName().equals("setTurtleManager")){
 					m.invoke(command, myTurtleManager);
-//					System.out.println("setTurtleManager");
 				}
 		    }
 			return executeCommand(command, methods);
@@ -267,15 +250,12 @@ public class CommandFactory {
 		for(Method m: methods){
 			if(m.getName().equals("setTurtles")){
 				m.invoke(command, turtles);
-				System.out.println("setTurtles");
 			}
 			if(m.getName().equals("setVariableManager")){
 				m.invoke(command, myVariableManager);
-				System.out.println("setVariableManager");
 			}
 			if(m.getName().equals("setUserCommandManager")){
 				m.invoke(command, myUserCommandManager);
-				System.out.println("setUserCommandManager");
 			}
 		}
 	}
@@ -285,30 +265,23 @@ public class CommandFactory {
 		String answer = "";
 		for (Method cur: methods){
 			if (cur.getName().equals("execute")){
-				System.out.println("CommandFactory execute called");
 				answer += (Double) cur.invoke(command);
-				System.out.println("CommandFactory execute");
+//				System.out.println("CommandFactory execute");
 		    }	
 		}
 		return answer;
 	}
 	
-	
-	/*
-	 * This method should not be called from the outside.
-	 * If the command has no magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude1 and magnitude2
-	 * If the command has only 1 magnitude variable, then pass in DEFAULT_MAGNITUDE for magnitude2
-	 */
 	protected String makeCommand(String cmd, String magnitude1, String magnitude2, String magnitude3, String magnitude4, List<Turtle> turtles) throws IllegalCommandException, IllegalParameterException, UndefinedVariableException{
 		try { 
 			Class<?> commandClass = Class.forName(myCommands.getString(cmd));
-			System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + " "+ magnitude2);
+//			System.out.println("current command: "+myCommands.getString(cmd) + " " + magnitude1 + " "+ magnitude2);
 			AbstractCommand command = (AbstractCommand)commandClass.newInstance();
 			Method[] methods = commandClass.getMethods();
 			firstMethodsExecuted(turtles, command, methods);
 			for (Method m: methods){
 				if(m.getName().equals("setMagnitude")){
-					System.out.println("setMagnitude: "+magnitude1);
+//					System.out.println("setMagnitude: "+magnitude1);
 					m.invoke(command, magnitude1);
 				}
 				if(m.getName().equals("setDoubleMagnitude")){

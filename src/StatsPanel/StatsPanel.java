@@ -20,7 +20,7 @@ public class StatsPanel extends JPanel {
 	static JTextField results;
 	static JTextField angle;
 	ResourceBundle myResources;
-	private static TurtleDrawer TurtleSpace;
+	private  TurtleDrawer TurtleSpace;
 	public StatsPanel(ResourceBundle resources,TurtleDrawer turtSpace ){
 		super();
 		myResources=resources;

@@ -48,8 +48,17 @@ public class TurtleManager {
 		myEngine=t;
 	}
 	public void refresh(){
-		for(Turtle t:turtList)
-			t.reset();
+		for(Turtle t:turtList){
+			t.hideTurtle();
+		t.destroy();
+		}
+		clearTurtList();
+		turt=myEngine.addnewTurtle(0);
+		System.out.println(turtList.size());
+		filter.clear();
+		filter.add(0);
+		setFilterList(filter);
+		
 	}
 
 	public void selectClicked(Position p){
@@ -112,7 +121,7 @@ public class TurtleManager {
 		}
 		turt=filterList.get(0);
 	}
-	public void addTurtle(Turtle t){
+	public Turtle addTurtle(Turtle t){
 		if(turt==null)
 			turt=t;
 		for(Integer i:filter)
@@ -121,5 +130,6 @@ public class TurtleManager {
 		if(filter.size()==0)
 			filterList.add(t);
 		turtList.add(t);
+		return t;
 	}
 }

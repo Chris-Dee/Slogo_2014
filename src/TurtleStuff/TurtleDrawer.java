@@ -73,13 +73,14 @@ List<turtles> get turtswithFilter()
 		manager.highlightTurtle();
 	}
 
-	public void addnewTurtle(int id){
+	public Turtle addnewTurtle(int id){
 		
 		defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");
 		turt=new Turtle(id);
 		manager.addTurtle(turt);
 		//System.out.println(turtList.size());
 		turt.setEngine(this);
+		return turt;
 	}
 
 private void checkClicked(){
@@ -115,7 +116,6 @@ public Stats displayStats(){
 	
 public void reAddTurtles(List<Turtle> turtlist){
 		int i=0;
-		System.out.print(turtlist.size());
 		for(Turtle t: turtlist){
 			Stats currStats = t.getStats();
 			defineImage(TURTLE_ID,TILE_ID,0,DEFAULT_IMAGE,"-");

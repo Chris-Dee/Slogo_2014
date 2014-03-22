@@ -96,14 +96,12 @@ public class SlogoView extends JFrame{
 		initiate();
 
 	}
-	//Refactor code--especially text boxes with buttons on top. Can make one method that passes in Strings and action Listener objects
 	public static void showError(JPanel p,String s){
 		JOptionPane.showMessageDialog(p,s);
 	}
 	public static StatsPanel viewStats(){
 		return statPage;
 	}
-	//Needs refactoring. Look nicer
 	private JPanel makeTab(){
 		JPanel mainPanel= new JPanel();
 		JPanel rightPanel=new JPanel();

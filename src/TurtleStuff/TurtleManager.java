@@ -119,6 +119,7 @@ public class TurtleManager {
 		else {
 			filterList=new ArrayList<Turtle>(turtList);
 		}
+		if(filterList.size()>0)
 		turt=filterList.get(0);
 	}
 	public Turtle addTurtle(Turtle t){

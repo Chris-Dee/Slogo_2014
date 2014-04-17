@@ -32,7 +32,6 @@ public class ColorManager {
  public void readColorFile(File file) {
 	 colorMap.clear();
 	try {
-		System.out.println("11");
 		Scanner scanner=new Scanner(file);
 		while(scanner.hasNext()){
 			addNewColor(scanner.nextInt(),scanner.nextInt(),scanner.nextInt(),scanner.nextInt());

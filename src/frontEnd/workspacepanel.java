@@ -85,9 +85,6 @@ public class workspacepanel extends JPanel{
 								t.unhideTurtle();
 							}
 						}
-						
-						
-						
 			}
 		});
 		

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Design Goals:
 <br>In terms of modules, the back-end of our program would consist of a text parser for the commands input, a module to run the commands, an interface between the front-end and back-end,  and either an abstract class hierarchy with certain methods implemented and others not, to be able to extensibly implement all instructions that can be input.
 <br>On the front-end, we would have a text input for the commands, and a module to represent the turtle, which would need to consist of a physical turtle (potentially) and the trail that the turtle leaves behind as it moves.  We could also potentially have a run button, so that multiple lines could be input and then run. This would allow for looping and more complex designs. We may also have a help button that serves as a tutorial and shows the user some sample instructions. 
@@ -73,3 +74,11 @@ The view will have an instance of the ModelManager, which will serve as the brid
 
 <br>See image attached for the UML diagram and our intended view interface
 
+=======
+
+
+Empty repository for SLogo project
+
+Slogo_2014
+
+>>>>>>> 826000fdb42448598f1781fcccc5fe3c9791a257
